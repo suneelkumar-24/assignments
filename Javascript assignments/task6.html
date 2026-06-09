@@ -1,0 +1,38 @@
+<!-- Show Name on Screen -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show Name</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f2f2f2;
+        }
+        .box {
+            margin-top: 100px;
+            padding: 20px;
+            background: white;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2 id="text">Your Name Here</h2>
+    <button onclick="showName()">Click Me</button>
+</div>
+
+<script>
+function showName() {
+    let name = "Suneel";
+    document.getElementById("text").innerHTML = name;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Food Blog</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff8f0;
+    }
+
+    header {
+      background-color: #ff6f61;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #ffa48e;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      background-color: white;
+      width: 280px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+      transform: scale(1.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card-content h3 {
+      margin-top: 0;
+      color: #ff6f61;
+    }
+
+    .card-content p {
+      font-size: 14px;
+      color: #444;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #ffe3d9;
+      margin-top: 40px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My Food Blog</h1>
+    <p>Sharing Delicious Recipes!</p>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Recipes</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <img src="pizza-margherita.webp" alt="Pizza">
+      <div class="card-content">
+        <h3>Cheesy Pizza</h3>
+        <p>A delicious homemade pizza with extra cheese and crispy crust. Try it now!</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="Pizza-3007395.jpg" alt="Burger">
+      <div class="card-content">
+        <h3>Juicy Burger</h3>
+        <p>Perfectly grilled beef patty with lettuce, tomato, and homemade sauce.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images.jfif" alt="Salad">
+      <div class="card-content">
+        <h3>Fresh Salad</h3>
+        <p>Healthy green salad with cucumbers, tomatoes, and lemon dressing.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 My Food Blog | Made with HTML & CSS
+  </footer>
+
+</body>
+</html>

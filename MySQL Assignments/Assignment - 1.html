@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL Learning Platform - Assignment #1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .assignment-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        /* Navigation */
+        .nav {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 30px;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 50px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-size: 1.5em;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        /* Command Box */
+        .command-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .command-box pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .copy-btn.copied {
+            background: #2196F3;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        /* Questions Grid */
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .question-command {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .small-copy {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #667eea;
+            color: white;
+        }
+
+        .data-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content {
+                padding: 15px;
+            }
+            
+            .section-content {
+                padding: 15px;
+            }
+            
+            .questions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐬 MySQL Learning Platform</h1>
+            <p>Master SQL with practical examples and exercises</p>
+            <div class="assignment-badge">Assignment #1 - Database Fundamentals</div>
+        </div>
+
+        <div class="nav">
+            <ul>
+                <li><a href="#database">📚 Create Database</a></li>
+                <li><a href="#table">📊 Create Table</a></li>
+                <li><a href="#insert">💾 Insert Data</a></li>
+                <li><a href="#select">🔍 SELECT & DISTINCT</a></li>
+                <li><a href="#questions">❓ Practice Questions</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <!-- Database Creation Section -->
+            <div id="database" class="section">
+                <div class="section-title">
+                    📚 Step 1: Creating a Database
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <strong>💡 What is a Database?</strong><br>
+                        A database is an organized collection of structured data. Think of it as a digital filing cabinet where you can store, manage, and retrieve information efficiently.
+                    </div>
+                    
+                    <h3>Basic Syntax:</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>CREATE DATABASE database_name;</pre>
+                    </div>
+                    
+                    <h3>Example - Creating a Student Database:</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>CREATE DATABASE student_management_system;</pre>
+                    </div>
+                    
+                    <h3>Using the Database:</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>USE student_management_system;</pre>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <strong>⚠️ Important:</strong> Always use the <code>USE</code> command before creating tables or inserting data into your database!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Creation Section -->
+            <div id="table" class="section">
+                <div class="section-title">
+                    📊 Step 2: Creating Tables
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <strong>💡 What is a Table?</strong><br>
+                        A table stores data in rows and columns, similar to an Excel spreadsheet. Each column represents a specific attribute, and each row represents a record.
+                    </div>
+                    
+                    <h3>Basic Syntax:</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>CREATE TABLE table_name (
+    column1 datatype constraint,
+    column2 datatype constraint,
+    column3 datatype constraint
+);</pre>
+                    </div>
+                    
+                    <h3>Example - Creating a Students Table:</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>CREATE TABLE students (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    age INT,
+    grade CHAR(2),
+    city VARCHAR(50),
+    enrollment_date DATE
+);</pre>
+                    </div>
+                    
+                    <h3>Common Data Types:</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>INT          - Integer numbers
+VARCHAR(n)   - Variable text (max n characters)
+DATE         - Date values (YYYY-MM-DD)
+DECIMAL(p,s) - Decimal numbers
+BOOLEAN      - True/False values
+TEXT         - Long text</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insert Data Section -->
+            <div id="insert" class="section">
+                <div class="section-title">
+                    💾 Step 3: Inserting Dummy Data
+                </div>
+                <div class="section-content">
+                    <h3>Basic Syntax:</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>INSERT INTO table_name (column1, column2, column3)
+VALUES (value1, value2, value3);</pre>
+                    </div>
+                    
+                    <h3>Insert Sample Data into Students Table:</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>-- Insert multiple records at once
+INSERT INTO students (first_name, last_name, email, age, grade, city, enrollment_date) VALUES
+('John', 'Doe', 'john.doe@email.com', 20, 'A', 'New York', '2024-01-15'),
+('Jane', 'Smith', 'jane.smith@email.com', 22, 'B', 'Los Angeles', '2024-01-16'),
+('Mike', 'Johnson', 'mike.j@email.com', 21, 'A', 'Chicago', '2024-01-15'),
+('Sarah', 'Williams', 'sarah.w@email.com', 20, 'C', 'Houston', '2024-01-17'),
+('David', 'Brown', 'david.b@email.com', 23, 'B', 'Phoenix', '2024-01-18'),
+('Emma', 'Jones', 'emma.j@email.com', 19, 'A', 'Philadelphia', '2024-01-15'),
+('Chris', 'Garcia', 'chris.g@email.com', 22, 'C', 'San Antonio', '2024-01-19'),
+('Lisa', 'Miller', 'lisa.m@email.com', 21, 'B', 'San Diego', '2024-01-20'),
+('Tom', 'Davis', 'tom.d@email.com', 20, 'A', 'Dallas', '2024-01-15'),
+('Anna', 'Rodriguez', 'anna.r@email.com', 24, 'D', 'San Jose', '2024-01-21');</pre>
+                    </div>
+                    
+                    <h3>View Inserted Data:</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>SELECT * FROM students;</pre>
+                    </div>
+                    
+                    <!-- Sample Data Display -->
+                    <h3>📋 Sample Data Preview:</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>student_id</th><th>first_name</th><th>last_name</th><th>email</th><th>age</th><th>grade</th><th>city</th><th>enrollment_date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>John</td><td>Doe</td><td>john.doe@email.com</td><td>20</td><td>A</td><td>New York</td><td>2024-01-15</td></tr>
+                            <tr><td>2</td><td>Jane</td><td>Smith</td><td>jane.smith@email.com</td><td>22</td><td>B</td><td>Los Angeles</td><td>2024-01-16</td></tr>
+                            <tr><td>3</td><td>Mike</td><td>Johnson</td><td>mike.j@email.com</td><td>21</td><td>A</td><td>Chicago</td><td>2024-01-15</td></tr>
+                            <tr><td>4</td><td>Sarah</td><td>Williams</td><td>sarah.w@email.com</td><td>20</td><td>C</td><td>Houston</td><td>2024-01-17</td></tr>
+                            <tr><td>5</td><td>David</td><td>Brown</td><td>david.b@email.com</td><td>23</td><td>B</td><td>Phoenix</td><td>2024-01-18</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SELECT & DISTINCT Section -->
+            <div id="select" class="section">
+                <div class="section-title">
+                    🔍 Step 4: SELECT and DISTINCT Queries
+                </div>
+                <div class="section-content">
+                    <h3>SELECT Statement - Retrieve Data</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>-- Select all columns
+SELECT * FROM students;
+
+-- Select specific columns
+SELECT first_name, last_name, email FROM students;
+
+-- Select with conditions
+SELECT * FROM students WHERE age > 21;
+
+-- Select with ordering
+SELECT * FROM students ORDER BY last_name ASC;</pre>
+                    </div>
+                    
+                    <h3>DISTINCT Statement - Remove Duplicates</h3>
+                    <div class="command-box">
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <pre>-- Get unique cities
+SELECT DISTINCT city FROM students;
+
+-- Get unique grade values
+SELECT DISTINCT grade FROM students;
+
+-- Get unique age values
+SELECT DISTINCT age FROM students ORDER BY age;</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practice Questions Section -->
+            <div id="questions" class="section">
+                <div class="section-title">
+                    ❓ Practice Questions (30 Questions)
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <strong>🎯 Instructions:</strong> Try to write SQL queries for each question. Click on the "Copy Query" button to copy the answer to your clipboard!
+                    </div>
+                    
+                    <div class="questions-grid" id="questionsGrid">
+                        <!-- Questions will be injected via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🐬 MySQL Learning Platform | Assignment #1 - Database Fundamentals</p>
+            <p>Practice these commands to master SQL basics!</p>
+        </div>
+    </div>
+
+    <script>
+        // Copy command function
+        function copyCommand(button) {
+            const commandBox = button.parentElement;
+            const pre = commandBox.querySelector('pre');
+            const text = pre.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        
+        // Small copy function for question commands
+        function copySmallCommand(button) {
+            const commandText = button.getAttribute('data-command');
+            navigator.clipboard.writeText(commandText).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            });
+        }
+        
+        // Practice Questions Data
+        const questions = [
+            // SELECT Questions (1-10)
+            { q: "Write a query to select all students from the students table.", cmd: "SELECT * FROM students;" },
+            { q: "Write a query to select only first_name, last_name, and email of all students.", cmd: "SELECT first_name, last_name, email FROM students;" },
+            { q: "Write a query to select students who are older than 21 years.", cmd: "SELECT * FROM students WHERE age > 21;" },
+            { q: "Write a query to select students who got grade 'A'.", cmd: "SELECT * FROM students WHERE grade = 'A';" },
+            { q: "Write a query to select students from 'New York' city.", cmd: "SELECT * FROM students WHERE city = 'New York';" },
+            { q: "Write a query to select students ordered by their last name in ascending order.", cmd: "SELECT * FROM students ORDER BY last_name ASC;" },
+            { q: "Write a query to select students ordered by age in descending order.", cmd: "SELECT * FROM students ORDER BY age DESC;" },
+            { q: "Write a query to select students with age between 20 and 22.", cmd: "SELECT * FROM students WHERE age BETWEEN 20 AND 22;" },
+            { q: "Write a query to select students whose first name starts with 'J'.", cmd: "SELECT * FROM students WHERE first_name LIKE 'J%';" },
+            { q: "Write a query to select students from 'Chicago' or 'Houston'.", cmd: "SELECT * FROM students WHERE city IN ('Chicago', 'Houston');" },
+            
+            // DISTINCT Questions (11-15)
+            { q: "Write a query to get all unique cities from the students table.", cmd: "SELECT DISTINCT city FROM students;" },
+            { q: "Write a query to get all unique grade values.", cmd: "SELECT DISTINCT grade FROM students;" },
+            { q: "Write a query to get all unique age values ordered by age.", cmd: "SELECT DISTINCT age FROM students ORDER BY age;" },
+            { q: "Write a query to get unique combinations of grade and city.", cmd: "SELECT DISTINCT grade, city FROM students;" },
+            { q: "Write a query to count the number of unique cities.", cmd: "SELECT COUNT(DISTINCT city) FROM students;" },
+            
+            // Combined WHERE with SELECT (16-20)
+            { q: "Write a query to select students with grade 'A' and age less than 22.", cmd: "SELECT * FROM students WHERE grade = 'A' AND age < 22;" },
+            { q: "Write a query to select students with grade 'B' or from 'Los Angeles'.", cmd: "SELECT * FROM students WHERE grade = 'B' OR city = 'Los Angeles';" },
+            { q: "Write a query to select students who are NOT from 'New York'.", cmd: "SELECT * FROM students WHERE city != 'New York';" },
+            { q: "Write a query to select students enrolled after '2024-01-17'.", cmd: "SELECT * FROM students WHERE enrollment_date > '2024-01-17';" },
+            { q: "Write a query to select students with email ending with '.com'.", cmd: "SELECT * FROM students WHERE email LIKE '%.com';" },
+            
+            // Advanced SELECT (21-25)
+            { q: "Write a query to select the top 3 youngest students.", cmd: "SELECT * FROM students ORDER BY age ASC LIMIT 3;" },
+            { q: "Write a query to select students with 'A' grade and order by age.", cmd: "SELECT * FROM students WHERE grade = 'A' ORDER BY age DESC;" },
+            { q: "Write a query to select students skipping first 2 and showing next 3.", cmd: "SELECT * FROM students LIMIT 3 OFFSET 2;" },
+            { q: "Write a query to select students where age is NULL (if any).", cmd: "SELECT * FROM students WHERE age IS NULL;" },
+            { q: "Write a query to select students with age NOT NULL.", cmd: "SELECT * FROM students WHERE age IS NOT NULL;" },
+            
+            // Aggregation with DISTINCT (26-30)
+            { q: "Write a query to count total number of students.", cmd: "SELECT COUNT(*) FROM students;" },
+            { q: "Write a query to find average age of all students.", cmd: "SELECT AVG(age) FROM students;" },
+            { q: "Write a query to find oldest student's age.", cmd: "SELECT MAX(age) FROM students;" },
+            { q: "Write a query to count students for each grade.", cmd: "SELECT grade, COUNT(*) FROM students GROUP BY grade;" },
+            { q: "Write a query to count distinct students per city.", cmd: "SELECT city, COUNT(DISTINCT student_id) FROM students GROUP BY city;" }
+        ];
+        
+        // Generate questions in grid
+        const questionsGrid = document.getElementById('questionsGrid');
+        
+        questions.forEach((item, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
+            questionCard.innerHTML = `
+                <div class="question-number">Question ${index + 1}</div>
+                <div class="question-text">${item.q}</div>
+                <div class="question-command">
+                    <pre style="margin: 0; font-size: 11px;">${item.cmd}</pre>
+                    <button class="small-copy" data-command="${item.cmd.replace(/"/g, '&quot;')}" onclick="copySmallCommand(this)">Copy Query</button>
+                </div>
+            `;
+            questionsGrid.appendChild(questionCard);
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if(targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

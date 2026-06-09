@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #444;
+      overflow: hidden;
+    }
+
+    nav a {
+      float: left;
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+    }
+
+    nav a:hover {
+      background-color: #666;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .profile-pic {
+      width: 150px;
+      border-radius: 50%;
+      border: 3px solid #333;
+    }
+
+    .about, .contact {
+      background-color: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    form input[type="submit"] {
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    form input[type="submit"]:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to My Profile</h1>
+    <p>HTML & CSS Practice Website</p>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="container">
+    <section class="about" id="about">
+      <h2>About Me</h2>
+      <img src="images (1).jfif" alt="Profile Picture" class="profile-pic">
+      <p>Hello! I’m a beginner web developer practicing HTML and CSS. I love building simple websites to improve my skills.</p>
+      <ul>
+        <li>✅ HTML5</li>
+        <li>✅ CSS3</li>
+        <li>✅ Responsive Design</li>
+      </ul>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2>Contact Me</h2>
+      <form>
+        <label>Your Name:</label>
+        <input type="text" placeholder="Enter your name" required>
+
+        <label>Your Email:</label>
+        <input type="email" placeholder="Enter your email" required>
+
+        <label>Message:</label>
+        <textarea rows="5" placeholder="Write your message here..."></textarea>
+
+        <input type="submit" value="Send Message">
+      </form>
+    </section>
+  </div>
+
+</body>
+</html>

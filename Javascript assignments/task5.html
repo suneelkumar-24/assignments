@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grade Checker</title>
+
+    <style>
+        body {
+            background-color: #eef2f3;
+            font-family: Arial;
+        }
+
+        .card {
+            width: 350px;
+            background-color: white;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: green;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkgreen;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Student Grade Checker</h2>
+
+    <input type="text" id="name" placeholder="Enter your name">
+    <input type="number" id="marks" placeholder="Enter your marks">
+
+    <button onclick="checkGrade()">Check Grade</button>
+
+    <p id="result"></p>
+</div>
+
+<script>
+
+function checkGrade() {
+
+    let name = document.getElementById("name").value;
+    let marks = Number(document.getElementById("marks").value);
+
+    let resultText = "";
+
+    if (name == "" || marks == "") {
+        resultText = "Please fill all fields";
+    }
+    else if (marks >= 80) {
+        resultText = name + " - A Grade 🎉";
+        document.getElementById("result").style.color = "green";
+    }
+    else if (marks >= 60) {
+        resultText = name + " - B Grade 👍";
+        document.getElementById("result").style.color = "blue";
+    }
+    else if (marks >= 40) {
+        resultText = name + " - C Grade 🙂";
+        document.getElementById("result").style.color = "orange";
+    }
+    else {
+        resultText = name + " - Fail ❌";
+        document.getElementById("result").style.color = "red";
+    }
+
+    document.getElementById("result").innerHTML = resultText;
+}
+
+</script>
+
+</body>
+</html>

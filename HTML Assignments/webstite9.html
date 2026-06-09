@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Daily Brew Coffee</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/415/415733.png" type="image/png">
+  <script src="https://kit.fontawesome.com/db76b74b4c.js" crossorigin="anonymous"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fffaf0;
+      color: #2c2c2c;
+    }
+
+    header {
+      background-color: #3e2723;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.8em;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffcc80;
+    }
+
+    .hero {
+      background-image: url('https://images.unsplash.com/photo-1511920170033-f8396924c348');
+      background-size: cover;
+      background-position: center;
+      padding: 100px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 3em;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    .menu {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .menu h3 {
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+
+    .items {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .item {
+      background-color: white;
+      border: 1px solid #ccc;
+      width: 220px;
+      padding: 20px;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .item i {
+      font-size: 40px;
+      color: #795548;
+      margin-bottom: 10px;
+    }
+
+    .item h4 {
+      margin-bottom: 10px;
+    }
+
+    .about {
+      background-color: #fbe9e7;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .about p {
+      width: 60%;
+      margin: auto;
+      font-size: 1.1em;
+    }
+
+    footer {
+      background-color: #3e2723;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .social-icons i {
+      font-size: 20px;
+      margin: 0 10px;
+      color: white;
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .social-icons i:hover {
+      transform: scale(1.3);
+      color: #ffcc80;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><i class="fas fa-mug-hot"></i> Daily Brew</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Menu</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Wake Up With Flavor</h2>
+    <p>Freshly brewed coffee delivered daily</p>
+  </section>
+
+  <section class="menu">
+    <h3>Our Specials</h3>
+    <div class="items">
+      <div class="item">
+        <i class="fas fa-coffee"></i>
+        <h4>Espresso</h4>
+        <p>Rich and bold with deep aroma.</p>
+      </div>
+      <div class="item">
+        <i class="fas fa-mug-hot"></i>
+        <h4>Latte</h4>
+        <p>Creamy blend with steamed milk.</p>
+      </div>
+      <div class="item">
+        <i class="fas fa-ice-cream"></i>
+        <h4>Cold Brew</h4>
+        <p>Chilled perfection for summer vibes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h3>About Us</h3>
+    <p>
+      Daily Brew has been serving handcrafted coffee since 2005. Our beans are sourced ethically and roasted with love.
+      We are committed to delivering a cozy experience for every coffee lover.
+    </p>
+  </section>
+
+  <footer>
+    <p>Contact: hello@dailybrew.com</p>
+    <div class="social-icons">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-twitter"></i>
+    </div>
+  </footer>
+
+</body>
+</html>

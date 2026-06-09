@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Checker</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f0f0f0;
+        }
+
+        .card {
+            width: 350px;
+            background-color: white;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 0px 10px gray;
+            transition: 0.3s;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: purple;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkmagenta;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+    <h2>Age Checker</h2>
+
+    <input type="text" id="name" placeholder="Enter your name">
+    <input type="number" id="age" placeholder="Enter your age">
+
+    <button onclick="checkAge()">Check</button>
+
+    <p id="result"></p>
+</div>
+
+<script>
+
+function checkAge() {
+
+    let name = document.getElementById("name").value;
+    let age = Number(document.getElementById("age").value);
+
+    let result = "";
+    let card = document.getElementById("card");
+
+    if (name == "" || age == "") {
+        result = "Please fill all fields";
+        card.style.backgroundColor = "white";
+    }
+    else if (age < 0) {
+        result = "Invalid age";
+        card.style.backgroundColor = "gray";
+    }
+    else if (age < 13) {
+        result = name + " is a Child 👶";
+        card.style.backgroundColor = "#a2d2ff";
+    }
+    else if (age <= 19) {
+        result = name + " is a Teenager 😎";
+        card.style.backgroundColor = "#cdb4db";
+    }
+    else if (age <= 59) {
+        result = name + " is an Adult 💼";
+        card.style.backgroundColor = "#bde0fe";
+    }
+    else {
+        result = name + " is a Senior 👴";
+        card.style.backgroundColor = "#ffafcc";
+    }
+
+    document.getElementById("result").innerHTML = result;
+}
+
+</script>
+
+</body>
+</html>

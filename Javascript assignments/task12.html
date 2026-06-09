@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Click Counter</title>
+</head>
+<body>
+
+<h1 id="count">0</h1>
+<button onclick="clicks()">Click Me</button>
+
+<script>
+let c = 0;
+
+function clicks() {
+    c = c + 1;
+    document.getElementById("count").innerHTML = c;
+}
+</script>
+
+</body>
+</html>

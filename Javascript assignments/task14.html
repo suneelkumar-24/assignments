@@ -1,0 +1,48 @@
+<!-- TASK 3: Simple Product Quantity (Cart Style) -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart Quantity</title>
+    <style>
+        body { font-family: Arial; background:#eee; text-align:center; }
+        .card {
+            width:300px; margin:100px auto; padding:20px;
+            background:white; border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+        button {
+            padding:10px 15px; margin:5px;
+            border:none; border-radius:5px;
+            cursor:pointer;
+        }
+        .add { background:green; color:white; }
+        .remove { background:red; color:white; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Product</h2>
+    <h1 id="qty">0</h1>
+    <button class="add" onclick="add()">Add</button>
+    <button class="remove" onclick="remove()">Remove</button>
+</div>
+
+<script>
+let q = 0;
+
+function add() {
+    q = q + 1;
+    document.getElementById("qty").innerHTML = q;
+}
+
+function remove() {
+    if (q > 0) {
+        q = q - 1;
+        document.getElementById("qty").innerHTML = q;
+    }
+}
+</script>
+
+</body>
+</html>

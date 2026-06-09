@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Web Studio</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" type="image/png">
+  
+  <!-- ✅ Font Awesome -->
+  <script src="https://kit.fontawesome.com/db76b74b4c.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+    }
+
+    header h1 {
+      display: inline;
+    }
+
+    nav {
+      float: right;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #f1c40f;
+    }
+
+    .hero {
+      background-color: #34495e;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .hero button {
+      padding: 10px 20px;
+      background-color: #f39c12;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .hero button:hover {
+      background-color: #d35400;
+    }
+
+    .services {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .service {
+      display: inline-block;
+      width: 28%;
+      margin: 1%;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+
+    .service:hover {
+      transform: scale(1.05);
+    }
+
+    .service i {
+      font-size: 40px;
+      color: #2980b9;
+      margin-bottom: 10px;
+    }
+
+    .contact {
+      background-color: #ecf0f1;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .contact input,
+    .contact textarea {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #bdc3c7;
+      border-radius: 5px;
+    }
+
+    .contact button {
+      padding: 10px 20px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .contact button:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1><i class="fas fa-laptop-code"></i> Web Studio</h1>
+    <nav>
+      <a href="#"><i class="fas fa-home"></i> Home</a>
+      <a href="#"><i class="fas fa-cogs"></i> Services</a>
+      <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+    <div style="clear: both;"></div>
+  </header>
+
+  <section class="hero">
+    <h2>We Build Simple & Clean Websites</h2>
+    <p>Your success starts with a great website.</p>
+    <button>Learn More</button>
+  </section>
+
+  <section class="services">
+    <div class="service">
+      <i class="fas fa-pencil-ruler"></i>
+      <h3>Design</h3>
+      <p>Creative and clean design for your business.</p>
+    </div>
+    <div class="service">
+      <i class="fas fa-code"></i>
+      <h3>Development</h3>
+      <p>Fast and modern HTML & CSS development.</p>
+    </div>
+    <div class="service">
+      <i class="fas fa-headset"></i>
+      <h3>Support</h3>
+      <p>Quick support anytime you need us.</p>
+    </div>
+  </section>
+
+  <section class="contact">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required><br>
+      <input type="email" placeholder="Your Email" required><br>
+      <textarea rows="4" placeholder="Your Message"></textarea><br>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 Web Studio. All rights reserved.
+  </footer>
+
+</body>
+</html>

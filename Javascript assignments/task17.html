@@ -1,0 +1,44 @@
+<!-- TASK 6: Simple Price Calculator -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Price Calculator</title>
+    <style>
+        body { font-family: Arial; background:#f2f2f2; }
+        .card {
+            width:300px; margin:100px auto; padding:20px;
+            background:white; text-align:center;
+            border-radius:10px; box-shadow:0 0 10px gray;
+        }
+        input {
+            width:90%; padding:10px; margin:10px;
+        }
+        button {
+            padding:10px 15px; background:blue; color:white;
+            border:none; cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Price Calculator</h2>
+    <input type="number" id="price" placeholder="Price">
+    <input type="number" id="qty" placeholder="Quantity">
+    <button onclick="calc()">Total</button>
+    <p id="total"></p>
+</div>
+
+<script>
+function calc() {
+    let p = Number(document.getElementById("price").value);
+    let q = Number(document.getElementById("qty").value);
+
+    let total = p * q;
+
+    document.getElementById("total").innerHTML = "Total: " + total;
+}
+</script>
+
+</body>
+</html>

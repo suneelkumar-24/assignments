@@ -1,0 +1,37 @@
+<!-- TASK 7: Live Username Preview -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Username Preview</title>
+    <style>
+        body { font-family: Arial; background:#eee; text-align:center; }
+        .card {
+            width:300px; margin:100px auto; padding:20px;
+            background:white; border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+        input {
+            width:90%; padding:10px; margin:10px;
+        }
+        #preview {
+            margin-top:10px; font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Live Username</h2>
+    <input type="text" id="name" placeholder="Enter name" onkeyup="show()">
+    <p id="preview"></p>
+</div>
+
+<script>
+function show() {
+    let name = document.getElementById("name").value;
+    document.getElementById("preview").innerHTML = "Hello, " + name;
+}
+</script>
+
+</body>
+</html>

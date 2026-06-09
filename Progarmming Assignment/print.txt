@@ -1,0 +1,100 @@
+1. Print your name.
+2. Print your age.
+3. Print your favorite color.
+4. Print your school or college name.
+5. Print your country name.
+6. Print number 5.
+7. Print number 100.
+8. Print number 9999.
+9. Print 0.
+10. Print -50.
+11. Print the symbol @.
+12. Print the symbol #.
+13. Print the symbol $.
+14. Print the symbol %.
+15. Print all symbols @ # $ % ^ & * in one line.
+16. Print a star: *
+17. Print five stars in one line: *****
+18. Print a square of stars (5x5).
+19. Print a right-angle triangle of stars.
+20. Print a pyramid of stars.
+21. Print "Hello, World!".
+22. Print "Programming is fun".
+23. Print "C is a powerful language".
+24. Print "Logic is everything".
+25. Print "Stay focused and keep learning".
+26. Print "Suneel Kumar is learning programming".
+27. Print "This is the beginning of a journey".
+28. Print "Practice makes perfect".
+29. Print "Think like a programmer".
+30. Print "One step at a time".
+31. Print your name, age, and city on separate lines.
+32. Print a poem of 3 lines.
+33. Print a quote with author in a new line.
+34. Print a formatted menu with 3 items and prices.
+35. Print a formatted receipt with item, quantity, and total.
+36. Print 10 dashes: ----------
+37. Print 5 lines of "I love coding".
+38. Print the alphabet A to Z in a line.
+39. Print all digits from 0 to 9.
+40. Print 10 stars on separate lines.
+41. Print "C Programming" 10 times.
+42. Print your name in all caps.
+43. Print your name in small letters.
+44. Print "Success!" with 3 exclamation marks.
+45. Print the current year (hardcoded).
+46. Print the name of a programming language.
+47. Print a fake address.
+48. Print a fictional company name.
+49. Print a short story title.
+50. Print a mobile phone brand.
+51. Print your favorite movie.
+52. Print your favorite dish.
+53. Print your best friend's name.
+54. Print your favorite season.
+55. Print your favorite game.
+56. Print a single character: A
+57. Print a digit: 9
+58. Print a sentence with a number: "I have 3 apples."
+59. Print a pattern: +--+--+
+60. Print a double line: ========
+61. Print your name in quotes.
+62. Print a sentence with apostrophe: I can't wait.
+63. Print a dialogue: "Hello!" she said.
+64. Print a heading and underline it with "=" symbols.
+65. Print a smiley face symbol (if supported): :)
+66. Print a border with # and your name inside.
+67. Print a fake ID card using output only.
+68. Print the names of 3 cities.
+69. Print a simple table header (e.g. Name | Age).
+70. Print the result of 2 + 2 without calculating.
+71. Print a file path: C:\Users\YourName
+72. Print a date format: 01-07-2025
+73. Print time format: 10:45 AM
+74. Print "Loading..." with three dots.
+75. Print the first 5 odd numbers (1 3 5 7 9).
+76. Print the first 5 even numbers (2 4 6 8 10).
+77. Print a message inside a box made of *.
+78. Print an arrow using characters.
+79. Print a ladder using characters.
+80. Print your name vertically.
+81. Print a triangle made of numbers (1, 22, 333...).
+82. Print “*” triangle pattern with 3 rows.
+83. Print "The End" in all caps.
+84. Print a warning message in uppercase.
+85. Print your favorite quote.
+86. Print a horizontal line of 30 stars.
+87. Print a divider line with hyphens.
+88. Print a list of 5 fruits.
+89. Print a list of 5 animals.
+90. Print a list of 5 countries.
+91. Print "This is line 1", "This is line 2", ..., "This is line 5".
+92. Print the word “OUTPUT” in large spacing.
+93. Print a welcome message in decorated format.
+94. Print today’s date (hardcoded).
+95. Print your initials with dots (e.g., S.K.).
+96. Print a sentence in reverse (manually typed).
+97. Print each word of a sentence on a new line.
+98. Print a diagonal of stars.
+99. Print your full name 3 times in one line.
+100. Print a thank-you message.

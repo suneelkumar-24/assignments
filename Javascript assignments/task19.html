@@ -1,0 +1,28 @@
+<!-- TASK 8: Button Disable After Click -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Disable Button</title>
+    <style>
+        body { text-align:center; font-family:Arial; margin-top:100px; }
+        button {
+            padding:10px 20px;
+            background:green; color:white;
+            border:none; cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<button id="btn" onclick="disableBtn()">Submit</button>
+
+<script>
+function disableBtn() {
+    let b = document.getElementById("btn");
+    b.disabled = true;
+    b.innerHTML = "Submitted";
+}
+</script>
+
+</body>
+</html>

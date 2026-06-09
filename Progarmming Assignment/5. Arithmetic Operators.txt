@@ -1,0 +1,119 @@
+401. Add two integers and print the result.
+402. Subtract two integers and print the result.
+403. Multiply two integers and print the result.
+404. Divide two integers and print the result.
+405. Find remainder of two integers and print the result.
+
+406. Add two float numbers and print the result.
+407. Subtract float from integer and print the result.
+408. Multiply integer with float and print the result.
+409. Divide float by integer and print the result.
+410. Find modulus of two numbers where one is negative.
+
+411. Input two numbers, add and print the sum.
+412. Input two numbers, subtract and print the result.
+413. Input two numbers, multiply and print result.
+414. Input two numbers, divide and print quotient.
+415. Input two numbers and print remainder using %.
+
+416. Declare a = 5, b = 2, print a + b.
+417. Declare a = 10, b = 3, print a - b.
+418. Declare a = 6, b = 4, print a * b.
+419. Declare a = 8, b = 2, print a / b.
+420. Declare a = 9, b = 4, print a % b.
+
+421. Add 5 to a number and print new value.
+422. Subtract 10 from a number and print.
+423. Multiply a number by 3 and print.
+424. Divide a number by 2 and print result.
+425. Find remainder when number is divided by 7.
+
+426. Find sum of 3 numbers and print.
+427. Find product of 3 numbers and print.
+428. Find average of 3 numbers and print.
+429. Use compound operation: (a + b) * c and print.
+430. Use operation: a * b - c and print.
+
+431. Use: (a + b + c) / 3.0 for average.
+432. Find result of: a + b % c.
+433. Find result of: a * b / c.
+434. Print result of: (a + b) % c.
+435. Print result of: (a + b) / (c - d).
+
+436. Calculate area of rectangle: l * w.
+437. Calculate area of triangle: 0.5 * b * h.
+438. Calculate area of circle: π * r * r.
+439. Convert Celsius to Fahrenheit: (c * 9/5) + 32.
+440. Convert Fahrenheit to Celsius: (f - 32) * 5/9.
+
+441. Calculate simple interest: (P * R * T) / 100.
+442. Calculate total price = qty * unit_price.
+443. Add GST: price + price * (tax / 100).
+444. Find square of number: num * num.
+445. Find cube of number: num * num * num.
+
+446. Print result of: a + b - c * d / e.
+447. Demonstrate operator precedence with: a + b * c.
+448. Show difference between (a + b) * c and a + (b * c).
+449. Print result of nested operation: ((a + b) * c) % d.
+450. Calculate total marks = m1 + m2 + m3 + m4 + m5.
+
+451. Calculate average marks of 5 subjects.
+452. Calculate percentage = (obtained / total) * 100.
+453. Calculate perimeter of square = 4 * side.
+454. Calculate perimeter of rectangle = 2 * (l + w).
+455. Calculate volume of cube = side³.
+
+456. Calculate volume of cuboid = l * w * h.
+457. Calculate volume of cylinder = π * r² * h.
+458. Add two characters as numbers and print sum.
+459. Subtract characters as numbers and print difference.
+460. Multiply characters as numbers and print product.
+
+461. Divide characters as numbers and print result.
+462. Find remainder using char as number.
+463. Demonstrate int division (e.g., 7 / 2).
+464. Demonstrate float division (e.g., 7.0 / 2).
+465. Print both int and float division for same values.
+
+466. Check even or odd using %.
+467. Find last digit of number using % 10.
+468. Remove last digit using / 10.
+469. Print sum of digits: (num % 10) + (num / 10).
+470. Print product of digits: (num % 10) * (num / 10).
+
+471. Find remainder of number divided by 2, 3, and 5.
+472. Use + with negative numbers.
+473. Use - with negative numbers.
+474. Multiply negative and positive numbers.
+475. Divide negative number and print result.
+
+476. Calculate difference between two years.
+477. Calculate age: current year - birth year.
+478. Increase salary by 20% and print new salary.
+479. Decrease price by 15% and print new price.
+480. Double a number using multiplication.
+
+481. Halve a number using division.
+482. Use parentheses to change operation order.
+483. Combine all operators in one expression and print.
+484. Add two booleans and print result.
+485. Multiply boolean with int and print result.
+
+486. Add two floats and print 2 decimal places.
+487. Use increment (num = num + 1) and print.
+488. Use decrement (num = num - 1) and print.
+489. Calculate marks needed to get full score.
+490. Find discount amount from price and discount %.
+
+491. Find effective price after applying discount.
+492. Calculate speed = distance / time.
+493. Find time = distance / speed.
+494. Convert minutes to hours = min / 60.
+495. Convert hours to minutes = hours * 60.
+
+496. Convert seconds to minutes = sec / 60.
+497. Convert days to weeks = days / 7.
+498. Calculate percentage of one number over another.
+499. Calculate weighted average of two marks.
+500. Calculate compound interest (basic logic only).

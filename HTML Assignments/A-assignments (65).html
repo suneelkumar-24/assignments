@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Form</title>
+  <style>
+    #loginBox {
+      background-color: #eef;
+      padding: 20px;
+      width: 300px;
+      border: 1px solid #333;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      display: block;
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    #submitBtn {
+      margin-top: 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="loginBox">
+    <h2>Login</h2>
+    <form>
+      <label>Username:</label>
+      <input type="text" id="username">
+
+      <label>Password:</label>
+      <input type="password" id="password">
+
+      <input type="submit" id="submitBtn" value="Login">
+    </form>
+  </div>
+</body>
+</html>

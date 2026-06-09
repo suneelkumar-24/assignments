@@ -1,0 +1,29 @@
+<!-- TASK 5: Character Counter -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Character Counter</title>
+    <style>
+        body { font-family: Arial; text-align:center; background:#eee; }
+        textarea {
+            width:300px; height:100px;
+            margin-top:50px; padding:10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Character Counter</h2>
+
+<textarea id="text" onkeyup="count()"></textarea>
+<p id="result">0 Characters</p>
+
+<script>
+function count() {
+    let t = document.getElementById("text").value;
+    document.getElementById("result").innerHTML = t.length + " Characters";
+}
+</script>
+
+</body>
+</html>

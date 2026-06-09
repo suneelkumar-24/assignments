@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>TaskFlow Pro | Persistent Student Dashboard</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+
+      body {
+        background: #0f172a;
+        min-height: 100vh;
+      }
+
+      /* Login Page Styles */
+      .login-page {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .login-card {
+        background: rgba(30, 41, 59, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 2.5rem;
+        border-radius: 1.5rem;
+        width: 90%;
+        max-width: 400px;
+        box-shadow:
+          0 20px 40px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(56, 189, 248, 0.3);
+      }
+
+      .login-card h2 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #38bdf8, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-align: center;
+      }
+
+      .login-card p {
+        color: #94a3b8;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .input-group {
+        margin-bottom: 1.2rem;
+      }
+
+      .input-group label {
+        display: block;
+        color: #cbd5e1;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 0.75rem;
+        color: white;
+        font-size: 1rem;
+        transition: all 0.2s;
+      }
+
+      .input-group input:focus {
+        outline: none;
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 0.75rem;
+        background: #38bdf8;
+        border: none;
+        border-radius: 0.75rem;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #0f172a;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: transform 0.2s;
+      }
+
+      .login-btn:hover {
+        transform: translateY(-2px);
+        background: #7dd3fc;
+      }
+
+      .error-msg {
+        color: #f87171;
+        font-size: 0.85rem;
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      .sync-toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #10b981;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 40px;
+        font-size: 0.85rem;
+        z-index: 1100;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+      }
+
+      /* Dashboard Styles */
+      .dashboard {
+        display: none;
+      }
+
+      header {
+        background: #1e293b;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        border-bottom: 1px solid #334155;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #facc15, #38bdf8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .username-badge {
+        background: #0f172a;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.9rem;
+      }
+
+      .logout-btn {
+        background: #ef4444;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 2rem;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+      }
+
+      .logout-btn:hover {
+        background: #dc2626;
+      }
+
+      .container {
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .stats-bar {
+        background: #1e293b;
+        border-radius: 1rem;
+        padding: 1rem 1.5rem;
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .stats-text {
+        font-size: 1.1rem;
+      }
+
+      .stats-percent {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #38bdf8;
+      }
+
+      .reset-btn {
+        background: #334155;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 2rem;
+        color: white;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .reset-btn:hover {
+        background: #475569;
+      }
+
+      h2 {
+        margin: 2rem 0 1rem 0;
+        font-size: 1.5rem;
+        border-left: 4px solid #38bdf8;
+        padding-left: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .category-progress {
+        font-size: 0.85rem;
+        background: #1e293b;
+        padding: 0.3rem 0.8rem;
+        border-radius: 2rem;
+        font-weight: normal;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .task-card {
+        background: #1e293b;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.2s;
+        border: 1px solid #334155;
+      }
+
+      .task-card:hover {
+        background: #334155;
+        transform: translateY(-2px);
+      }
+
+      .task-link {
+        text-decoration: none;
+        color: #f1f5f9;
+        font-weight: 500;
+        flex: 1;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        transition: 0.2s;
+      }
+
+      .task-link:hover {
+        color: #38bdf8;
+      }
+
+      .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .checkbox-wrapper label {
+        cursor: pointer;
+        font-size: 0.85rem;
+        color: #cbd5e1;
+      }
+
+      .task-checkbox {
+        width: 1.2rem;
+        height: 1.2rem;
+        cursor: pointer;
+        accent-color: #38bdf8;
+      }
+
+      footer {
+        text-align: center;
+        padding: 1.5rem;
+        background: #1e293b;
+        margin-top: 3rem;
+        color: #94a3b8;
+      }
+
+      footer a {
+        color: #facc15;
+        text-decoration: none;
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 1rem;
+        }
+        header {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-page">
+      <div class="login-card">
+        <h2>📚 TaskFlow Pro</h2>
+        <p>Login to sync your progress across devices</p>
+        <div class="input-group">
+          <label>Username</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Enter username"
+            autocomplete="off"
+          />
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="password" placeholder="Enter password" />
+        </div>
+        <button class="login-btn" onclick="handleLogin()">Login →</button>
+        <div id="loginError" class="error-msg"></div>
+        <div
+          id="quote"
+          style="
+            font-size: 12px;
+            text-align: center;
+            margin-top: 16px;
+            color: #5b6e8c;
+          "
+        >
+          ✨
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard">
+      <header>
+        <div class="logo">📊 Web Assignments Dashboard</div>
+        <div class="user-info">
+          <span style="color: white" class="username-badge" id="currentUsername"
+            >User</span
+          >
+          <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+      </header>
+
+      <div class="container">
+        <div class="stats-bar">
+          <div>
+            <span style="color: white" class="stats-text"
+              >📈 Overall Progress</span
+            >
+            <div class="stats-percent" id="overallPercent">0%</div>
+          </div>
+          <div style="color: white">
+            <span id="completedCount">0</span> /
+            <span id="totalCount">0</span> tasks completed
+          </div>
+          <button class="reset-btn" onclick="resetAllProgress()">
+            ⟳ Reset My Progress
+          </button>
+        </div>
+
+        <h2 style="color: white">
+          📄 HTML Assignments
+          <span class="category-progress" id="htmlProgress">0%</span>
+        </h2>
+        <div id="htmlGrid" class="grid"></div>
+
+        <h2 style="color: white">
+          ⚡ JavaScript Tasks
+          <span class="category-progress" id="jsProgress">0%</span>
+        </h2>
+
+        <div id="jsGrid" class="grid"></div>
+        <h2 style="color: white">
+          🗄️ MySQL Assignments
+          <span class="category-progress" id="mysqlProgress">0%</span>
+        </h2>
+        <div id="mysqlGrid" class="grid"></div>
+
+        <h2 style="color: white">
+          💻 Programming Practice
+          <span class="category-progress" id="progProgress">0%</span>
+        </h2>
+        <div id="progGrid" class="grid"></div>
+      </div>
+
+      <h2 style="color: white">
+        📄 Practical Assignment
+        <span class="category-progress" id="htmlProgress">0%</span>
+
+        <div>
+          <h4><a href="Practical Assignments/week1.html">P-Assignment 1/a></h4>
+        </div>
+      </h2>
+
+      <footer>
+        Made by <a href="#">Sir Suneel</a> | ✅ Persistent login & cross-device
+        ready (same browser)
+      </footer>
+    </div>
+    <div id="syncToast" class="sync-toast">✅ Progress synced</div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("https://dummyjson.com/quotes/random")
+          .then((response) => response.json())
+          .then((data) => {
+            // Accessing 'quote' and 'author' from the API response
+            document.getElementById("quote").textContent =
+              `"✨${data.quote}" — ${data.author}`;
+          })
+          .catch((error) => console.error("Error fetching quote:", error));
+      });
+
+      // ==================== USERS DATABASE ====================
+      const USERS = [
+        { username: "adrish", password: "asdf1234" },
+        { username: "mubashar", password: "asdf1234" },
+        { username: "suneel", password: "asdf1234" },
+        { username: "vikram", password: "vikram123" },
+        { username: "pardeep", password: "password123" },
+        { username: "tushal", password: "umerkot123" },
+        { username: "narender", password: "school123" },
+        { username: "saroop", password: "umerkot123" },
+        { username: "anand", password: "umerkot123" },
+        { username: "papu", password: "umerkot123" },
+        { username: "motiram", password: "umerkot123" },
+        { username: "saqib", password: "sug99" },
+        { username: "lajpat", password: "lajpatrai" },
+        { username: "dileep", password: "dileep123" },
+        { username: "zahid", password: "mirporkhas123" },
+        { username: "chander", password: "asdf1234" },
+        { username: "darshan", password: "asdf1234" },
+        { username: "farhan", password: "asdf1234" },
+      ];
+
+      // ==================== DEFAULT ASSIGNMENTS (fallback) ====================
+      const DEFAULT_ASSIGNMENTS = {
+        html: [
+          "HTML Assignments/assignment1.html",
+          "HTML Assignments/assignment2.html",
+          "HTML Assignments/assignment3.html",
+        ],
+        js: [
+          "Javascript assignments/task1.html",
+          "Javascript assignments/task2.html",
+          "Javascript assignments/task3.html",
+        ],
+        programming: [
+          {
+            name: "Program 1 - Variables",
+            path: "Progarmming Assignment/program1.txt",
+          },
+          {
+            name: "Program 2 - Loops",
+            path: "Progarmming Assignment/program2.txt",
+          },
+          {
+            name: "Program 3 - Functions",
+            path: "Progarmming Assignment/program3.txt",
+          },
+        ],
+      };
+
+      // ==================== GLOBAL VARIABLES ====================
+      let currentUser = null;
+      let assignmentsData = { html: [], js: [], programming: [] };
+      let userProgress = {}; // { taskId: true }
+      let allTasks = [];
+
+      // ---------- Persistent Session (stay logged in after refresh) ----------
+      const SESSION_KEY = "taskflow_active_session";
+      function saveSession() {
+        if (currentUser) {
+          const sessionData = {
+            username: currentUser.username,
+            timestamp: Date.now(),
+          };
+          localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+        } else {
+          localStorage.removeItem(SESSION_KEY);
+        }
+      }
+
+      function restoreSession() {
+        const raw = localStorage.getItem(SESSION_KEY);
+        if (!raw) return null;
+        try {
+          const session = JSON.parse(raw);
+          if (session.username && session.timestamp) {
+            // optional: expire after 30 days but fine for typical use
+            const userExists = USERS.find(
+              (u) => u.username === session.username,
+            );
+            if (userExists) {
+              return { username: session.username };
+            }
+          }
+        } catch (e) {
+          console.warn(e);
+        }
+        return null;
+      }
+
+      // ==================== LOAD DATA FROM data.json ====================
+      async function loadAssignments() {
+        try {
+          const response = await fetch("data.json");
+          if (response.ok) {
+            const data = await response.json();
+            assignmentsData = data;
+          } else {
+            assignmentsData = DEFAULT_ASSIGNMENTS;
+          }
+        } catch (error) {
+          assignmentsData = DEFAULT_ASSIGNMENTS;
+        }
+        buildTasksList();
+        renderDashboard();
+      }
+
+      // ==================== BUILD TASKS LIST ====================
+      function buildTasksList() {
+        allTasks = [];
+        // HTML
+        if (assignmentsData.html && Array.isArray(assignmentsData.html)) {
+          assignmentsData.html.forEach((path, idx) => {
+            const displayName = getDisplayNameFromPath(path, "html", idx);
+            allTasks.push({
+              id: `html_${idx}`,
+              category: "html",
+              displayName: displayName,
+              path: path,
+              originalIndex: idx,
+            });
+          });
+        }
+        // JS
+        if (assignmentsData.js && Array.isArray(assignmentsData.js)) {
+          assignmentsData.js.forEach((path, idx) => {
+            const displayName = getDisplayNameFromPath(path, "js", idx);
+            allTasks.push({
+              id: `js_${idx}`,
+              category: "js",
+              displayName: displayName,
+              path: path,
+              originalIndex: idx,
+            });
+          });
+        }
+        // Programming
+        if (
+          assignmentsData.programming &&
+          Array.isArray(assignmentsData.programming)
+        ) {
+          assignmentsData.programming.forEach((item, idx) => {
+            const displayName = item.name || `Program ${idx + 1}`;
+            allTasks.push({
+              id: `prog_${idx}`,
+              category: "programming",
+              displayName: displayName,
+              path: item.path,
+              originalIndex: idx,
+              rawItem: item,
+            });
+          });
+        }
+        // MySQL (ADD THIS SECTION)
+        if (assignmentsData.mysql && Array.isArray(assignmentsData.mysql)) {
+          assignmentsData.mysql.forEach((item, idx) => {
+            const displayName = item.name || `MySQL Task ${idx + 1}`;
+            allTasks.push({
+              id: `mysql_${idx}`,
+              category: "mysql",
+              displayName: displayName,
+              path: item.path,
+              originalIndex: idx,
+              rawItem: item,
+            });
+          });
+        }
+      }
+      function getDisplayNameFromPath(path, type, idx) {
+        if (!path) return `Task ${idx + 1}`;
+        const fileName = path.split("/").pop();
+        if (type === "html")
+          return fileName
+            .replace(".html", "")
+            .replace(/_/g, " ")
+            .substring(0, 35);
+        if (type === "js")
+          return fileName.replace(".html", "").replace(/_/g, " ");
+        return `Task ${idx + 1}`;
+      }
+
+      // ==================== PROGRESS STORAGE (localStorage per user) ====================
+      function getProgressStorageKey() {
+        return `task_progress_${currentUser.username}`;
+      }
+
+      function loadUserProgress() {
+        if (!currentUser) return;
+        const storageKey = getProgressStorageKey();
+        const saved = localStorage.getItem(storageKey);
+        if (saved) {
+          try {
+            userProgress = JSON.parse(saved);
+          } catch (e) {
+            userProgress = {};
+          }
+        } else {
+          userProgress = {};
+        }
+        // ensure only valid task IDs exist (cleanup if needed)
+        const validIds = new Set(allTasks.map((t) => t.id));
+        let changed = false;
+        Object.keys(userProgress).forEach((id) => {
+          if (!validIds.has(id)) {
+            delete userProgress[id];
+            changed = true;
+          }
+        });
+        if (changed) saveUserProgress();
+      }
+
+      function saveUserProgress() {
+        if (!currentUser) return;
+        const storageKey = getProgressStorageKey();
+        localStorage.setItem(storageKey, JSON.stringify(userProgress));
+        showSyncToast();
+      }
+
+      function toggleTask(taskId, isChecked) {
+        if (isChecked) {
+          userProgress[taskId] = true;
+        } else {
+          delete userProgress[taskId];
+        }
+        saveUserProgress();
+        renderDashboard();
+      }
+
+      function resetAllProgress() {
+        if (
+          confirm(
+            "⚠️ Reset ALL your completed tasks? This action is permanent for your account.",
+          )
+        ) {
+          userProgress = {};
+          saveUserProgress();
+          renderDashboard();
+          showSyncToast("🔄 All progress reset");
+        }
+      }
+
+      // ==================== PROGRESS CALCULATIONS ====================
+      function getCategoryProgress(category) {
+        const categoryTasks = allTasks.filter((t) => t.category === category);
+        if (categoryTasks.length === 0) return 0;
+        const completed = categoryTasks.filter(
+          (t) => userProgress[t.id] === true,
+        ).length;
+        return Math.round((completed / categoryTasks.length) * 100);
+      }
+
+      function getOverallProgress() {
+        if (allTasks.length === 0) return 0;
+        const completed = allTasks.filter(
+          (t) => userProgress[t.id] === true,
+        ).length;
+        return Math.round((completed / allTasks.length) * 100);
+      }
+
+      function getCompletedCount() {
+        return allTasks.filter((t) => userProgress[t.id] === true).length;
+      }
+
+      // ==================== RENDER DASHBOARD ====================
+      function renderDashboard() {
+        if (!currentUser) return;
+        document.getElementById("overallPercent").textContent =
+          `${getOverallProgress()}%`;
+        document.getElementById("completedCount").textContent =
+          getCompletedCount();
+        document.getElementById("totalCount").textContent = allTasks.length;
+        document.getElementById("htmlProgress").textContent =
+          `${getCategoryProgress("html")}%`;
+        document.getElementById("jsProgress").textContent =
+          `${getCategoryProgress("js")}%`;
+        document.getElementById("progProgress").textContent =
+          `${getCategoryProgress("programming")}%`;
+        document.getElementById("mysqlProgress").textContent =
+          `${getCategoryProgress("mysql")}%`;
+
+        renderCategoryGrid("html", "htmlGrid");
+        renderCategoryGrid("js", "jsGrid");
+        renderCategoryGrid("programming", "progGrid");
+        renderCategoryGrid("mysql", "mysqlGrid");
+      }
+
+      function renderCategoryGrid(category, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const categoryTasks = allTasks.filter((t) => t.category === category);
+        if (categoryTasks.length === 0) {
+          container.innerHTML =
+            '<div style="color: #64748b; padding: 2rem; text-align: center;">No assignments found</div>';
+          return;
+        }
+        container.innerHTML = "";
+        categoryTasks.forEach((task) => {
+          const isCompleted = userProgress[task.id] === true;
+          const card = document.createElement("div");
+          card.className = "task-card";
+          const link = document.createElement("a");
+          link.href = task.path;
+          link.target = "_blank";
+          link.className = "task-link";
+          link.textContent = task.displayName;
+          const checkboxDiv = document.createElement("div");
+          checkboxDiv.className = "checkbox-wrapper";
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.className = "task-checkbox";
+          checkbox.checked = isCompleted;
+          checkbox.onchange = (e) => {
+            e.stopPropagation();
+            toggleTask(task.id, checkbox.checked);
+          };
+          const label = document.createElement("label");
+          label.textContent = "Complete";
+          label.style.cursor = "pointer";
+          label.onclick = (e) => {
+            e.stopPropagation();
+            checkbox.checked = !checkbox.checked;
+            toggleTask(task.id, checkbox.checked);
+          };
+          checkboxDiv.appendChild(checkbox);
+          checkboxDiv.appendChild(label);
+          card.appendChild(link);
+          card.appendChild(checkboxDiv);
+          container.appendChild(card);
+        });
+      }
+
+      // ==================== TOAST NOTIFICATION ====================
+      let toastTimeout = null;
+      function showSyncToast(message = "✅ Progress saved") {
+        const toast = document.getElementById("syncToast");
+        if (!toast) return;
+        toast.textContent = message;
+        toast.style.opacity = "1";
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          toast.style.opacity = "0";
+        }, 1800);
+      }
+
+      // ==================== LOGIN & PERSISTENCE ====================
+      function handleLogin() {
+        const username = document
+          .getElementById("username")
+          .value.trim()
+          .toLowerCase();
+        const password = document.getElementById("password").value;
+        const errorDiv = document.getElementById("loginError");
+
+        if (!username || !password) {
+          errorDiv.textContent = "Please enter username and password";
+          return;
+        }
+        const user = USERS.find(
+          (u) => u.username === username && u.password === password,
+        );
+        if (user) {
+          currentUser = { username: user.username };
+          document.getElementById("currentUsername").innerHTML =
+            `👤 ${currentUser.username}`;
+          // IMPORTANT: load assignments first then progress because tasks list needed
+          // but we will load assignments async and then reload progress after tasks built
+          loadUserProgress(); // initial empty before tasks, but we will re-call after assignments load
+          // show dashboard
+          document.getElementById("loginPage").style.display = "none";
+          document.getElementById("dashboard").style.display = "block";
+          // Save session
+          saveSession();
+          // load assignments (which calls buildTasksList + renderDashboard)
+          loadAssignments()
+            .then(() => {
+              // After assignments are loaded & tasks built, reload progress to ensure consistency
+              // and re-render with actual task IDs
+              loadUserProgress(); // re-fetch progress now that allTasks is populated
+              renderDashboard();
+            })
+            .catch(() => {
+              // fallback
+              buildTasksList();
+              loadUserProgress();
+              renderDashboard();
+            });
+        } else {
+          errorDiv.textContent = "Invalid username or password";
+        }
+      }
+
+      // Auto-restore session on page load (refresh)
+      function autoRestoreSession() {
+        const sessionUser = restoreSession();
+        if (sessionUser) {
+          const matched = USERS.find(
+            (u) => u.username === sessionUser.username,
+          );
+          if (matched) {
+            currentUser = { username: matched.username };
+            document.getElementById("currentUsername").innerHTML =
+              `👤 ${currentUser.username}`;
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("dashboard").style.display = "block";
+            // Load data & progress
+            loadAssignments()
+              .then(() => {
+                loadUserProgress();
+                renderDashboard();
+              })
+              .catch(() => {
+                buildTasksList();
+                loadUserProgress();
+                renderDashboard();
+              });
+            return true;
+          }
+        }
+        return false;
+      }
+
+      function logout() {
+        // clear session and reset UI
+        localStorage.removeItem(SESSION_KEY);
+        currentUser = null;
+        userProgress = {};
+        allTasks = [];
+        document.getElementById("loginPage").style.display = "flex";
+        document.getElementById("dashboard").style.display = "none";
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("loginError").textContent = "";
+        // optional: clear any temporary data
+      }
+
+      // ==================== CROSS-DEVICE READY (same browser profile) ====================
+      // Explanation: localStorage syncs across same browser on different machines if user uses sync feature?
+      // Actually localStorage is local to device. But the requirement: "agr mein apna account dosre laptop p on kar don to mujhe mera complete kiye hoe tasks or percentage nahe dikhata"
+      // To fix that: we provide a backup/export/import mechanism? Or we can store remotely? Since no backend, we implement "Manual Cloud Sync" via download/upload JSON.
+      // But to be elegant, I'll implement an additional hidden feature: "Backup & Restore" in stats bar to allow transferring progress across devices.
+      // Add two small buttons: Export Backup, Import Backup. That solves cross-device issue completely.
+
+      function exportProgressToFile() {
+        if (!currentUser) return;
+        const exportData = {
+          username: currentUser.username,
+          progress: userProgress,
+          exportDate: new Date().toISOString(),
+        };
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `taskflow_backup_${currentUser.username}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showSyncToast("📁 Backup exported");
+      }
+
+      function importProgressFromFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const imported = JSON.parse(e.target.result);
+            if (
+              imported.username === currentUser.username &&
+              imported.progress
+            ) {
+              // validate task IDs
+              const validTaskIds = new Set(allTasks.map((t) => t.id));
+              const cleanProgress = {};
+              for (const [taskId, val] of Object.entries(imported.progress)) {
+                if (validTaskIds.has(taskId) && val === true) {
+                  cleanProgress[taskId] = true;
+                }
+              }
+              userProgress = cleanProgress;
+              saveUserProgress();
+              renderDashboard();
+              showSyncToast("✅ Progress restored from backup!");
+            } else {
+              alert(
+                "Backup file does not match current logged-in user or is invalid.",
+              );
+            }
+          } catch (err) {
+            alert("Invalid backup file format.");
+          }
+          // reset file input
+          document.getElementById("importFileInput").value = "";
+        };
+        reader.readAsText(file);
+      }
+
+      // Inject backup buttons into stats bar dynamically after DOM ready
+      function addBackupControls() {
+        const statsBar = document.querySelector(".stats-bar");
+        if (statsBar && !document.getElementById("backupGroup")) {
+          const backupDiv = document.createElement("div");
+          backupDiv.id = "backupGroup";
+          backupDiv.style.display = "flex";
+          backupDiv.style.gap = "10px";
+          backupDiv.style.alignItems = "center";
+          //   const exportBtn = document.createElement("button");
+          exportBtn.textContent = "💾 Export Backup";
+          exportBtn.className = "reset-btn";
+          exportBtn.style.background = "#2c3e66";
+          exportBtn.onclick = () => exportProgressToFile();
+          //   const importBtn = document.createElement("button");
+          importBtn.textContent = "📂 Import Backup";
+          importBtn.className = "reset-btn";
+          importBtn.style.background = "#2c3e66";
+          importBtn.onclick = () =>
+            document.getElementById("importFileInput").click();
+          const hiddenInput = document.createElement("input");
+          hiddenInput.type = "file";
+          hiddenInput.id = "importFileInput";
+          hiddenInput.accept = "application/json";
+          hiddenInput.style.display = "none";
+          hiddenInput.onchange = importProgressFromFile;
+          backupDiv.appendChild(exportBtn);
+          backupDiv.appendChild(importBtn);
+          backupDiv.appendChild(hiddenInput);
+          statsBar.appendChild(backupDiv);
+        }
+      }
+
+      // Override renderDashboard to ensure backup controls appear
+      const originalRender = renderDashboard;
+      renderDashboard = function () {
+        originalRender();
+        addBackupControls();
+      };
+
+      // final initialization: either restore session or wait for login
+      window.addEventListener("DOMContentLoaded", () => {
+        const restored = autoRestoreSession();
+        if (!restored) {
+          // show login page and ensure dashboard hidden
+          document.getElementById("loginPage").style.display = "flex";
+          document.getElementById("dashboard").style.display = "none";
+        }
+        // attach enter key handlers
+        const pwdField = document.getElementById("password");
+        const userField = document.getElementById("username");
+        if (pwdField)
+          pwdField.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") handleLogin();
+          });
+        if (userField)
+          userField.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") handleLogin();
+          });
+        // if already restored, backup controls will appear after render.
+      });
+
+      // expose globally for onclick
+      window.handleLogin = handleLogin;
+      window.logout = logout;
+      window.resetAllProgress = resetAllProgress;
+      window.toggleTask = toggleTask;
+      window.exportProgressToFile = exportProgressToFile;
+      window.importProgressFromFile = importProgressFromFile;
+    </script>
+  </body>
+</html>

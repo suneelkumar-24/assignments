@@ -1,0 +1,109 @@
+201. Declare an integer variable and print its value.
+202. Declare a float variable and print its value.
+203. Declare a character variable and print it.
+204. Declare a string variable and print it.
+205. Declare two integer variables, assign values, and print both.
+206. Declare three float variables and print their sum.
+207. Declare a variable for your age and print it.
+208. Declare a variable for your name and print it.
+209. Declare two variables for first and last name and print full name.
+210. Declare a variable for your country and print a message using it.
+
+211. Declare variables for item name and price and print them.
+212. Declare a variable for number of books and print it.
+213. Declare a variable for your favorite movie and print it.
+214. Declare a variable for marks and print a message using it.
+215. Declare two variables for height and weight and print both.
+216. Declare a variable for a sentence and print it.
+217. Declare a variable for your school name and print it.
+218. Declare a variable for your favorite sport and print it.
+219. Declare a variable and initialize it with 100, then print.
+220. Declare a variable and update its value, then print again.
+
+221. Declare two integer variables and print their sum.
+222. Declare two float variables and print their product.
+223. Declare two numbers and print their average.
+224. Declare two variables, subtract them and print result.
+225. Declare two variables, divide and print the result.
+226. Declare a variable and calculate its square.
+227. Declare a variable and calculate its cube.
+228. Declare a variable for radius and print area of circle.
+229. Declare variables for base and height, print area of triangle.
+230. Declare variables for length and width, print area of rectangle.
+
+231. Declare a variable for salary and print it.
+232. Declare a variable for bonus and calculate total salary.
+233. Declare a variable for number of apples and price per apple, print total.
+234. Declare a variable for Celsius and convert to Fahrenheit.
+235. Declare a variable for Fahrenheit and convert to Celsius.
+236. Declare three variables for marks and calculate average.
+237. Declare three variables for marks and calculate percentage.
+238. Declare a variable for discount and apply it to a price.
+239. Declare a variable for tax and calculate final amount.
+240. Declare a variable for age and print eligibility message.
+
+241. Declare variables and swap values using a third variable.
+242. Declare variables and swap values without third variable.
+243. Declare a variable for distance in km and convert to meters.
+244. Declare a variable for time in hours and convert to minutes.
+245. Declare a variable for age and print how old you’ll be after 10 years.
+246. Declare a constant variable and print its value.
+247. Declare and initialize multiple variables in a single line.
+248. Declare two string variables and print them together.
+249. Declare three integer variables and print the largest.
+250. Declare two float variables and print the smaller one.
+
+251. Declare a character variable and print its ASCII value.
+252. Declare an integer variable and print corresponding ASCII char.
+253. Declare a string variable and print its length (logic only).
+254. Declare a variable and double its value.
+255. Declare a variable and reduce its value by 10.
+256. Declare a variable and multiply it by itself.
+257. Declare a variable and check if it's positive or negative.
+258. Declare a variable and check if it's even or odd.
+259. Declare two variables and print the greater one.
+260. Declare three variables and print them in ascending order.
+
+261. Declare a variable and use it in a formula (e.g., x + 2).
+262. Declare variables for simple interest and calculate it.
+263. Declare a variable for name and use it in a greeting.
+264. Declare and reassign a variable, print before and after values.
+265. Declare a variable and increment its value by 1.
+266. Declare a variable and decrement its value by 1.
+267. Declare a variable and print half of its value.
+268. Declare a variable and check if it's divisible by 5.
+269. Declare a variable for year and print if it's a leap year (basic logic).
+270. Declare a variable and convert it from integer to float.
+
+271. Declare a variable and convert it from float to integer.
+272. Declare a variable and format output using it.
+273. Declare a string and print each character separately (basic logic).
+274. Declare a number and print each digit separately (basic logic).
+275. Declare a number and print its reverse (basic logic).
+276. Declare two strings and swap them.
+277. Declare a boolean variable and print its value.
+278. Declare a variable and assign value using another variable.
+279. Declare variables for a student's name, roll number, and marks, then print them.
+280. Declare a variable and print whether it's greater than 10.
+
+281. Declare a variable and print whether it's less than 100.
+282. Declare variables for item quantity and unit price, then print bill.
+283. Declare a variable and print whether it's divisible by 2 and 3.
+284. Declare a variable and print if it's a multiple of 7.
+285. Declare a variable for speed and convert km/h to m/s.
+286. Declare a variable and check if it’s equal to another variable.
+287. Declare a variable and print whether it’s between 1 and 100.
+288. Declare a variable and print if it is a prime number (basic logic).
+289. Declare three sides and check if it can form a triangle.
+290. Declare three variables and print the smallest number.
+
+291. Declare and use compound assignment operator (+=).
+292. Declare and use compound assignment operator (-=).
+293. Declare and use compound assignment operator (*=).
+294. Declare and use compound assignment operator (/=).
+295. Declare and use compound assignment operator (%=).
+296. Declare and print value of a global variable (if language supports).
+297. Declare and print value of a local variable.
+298. Declare and use constants in a calculation.
+299. Declare a variable and print its value in a sentence.
+300. Declare variables to store and print a complete profile (name, age, city, country).

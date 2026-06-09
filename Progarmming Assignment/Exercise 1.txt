@@ -1,0 +1,109 @@
+1. Print "Welcome to Programming!" 5 times.
+2. Take name and age as input and display: "Hello [name], you are [age] years old."
+3. Input two numbers and display their sum, difference, and product.
+4. Input a character and display its ASCII value.
+5. Declare integer, float, and char variables. Assign and print all.
+6. Input marks in 3 subjects and display the average.
+7. Input marks and check if student passed (>=40).
+8. Input number and check if it’s even or odd.
+9. Input temperature and display whether it’s hot, cold, or moderate.
+10. Input a number and check if it's divisible by 3 and 5 both.
+
+11. Input a number and check if it's prime (basic logic).
+12. Input a year and check if it's a leap year.
+13. Input age and check eligibility for voting.
+14. Input a number and print whether it’s positive, negative, or zero.
+15. Input two numbers and print the greatest.
+16. Input three numbers and print the largest one.
+17. Input three numbers and print them in ascending order.
+18. Input a character and check whether it’s a vowel or consonant.
+19. Input a password and validate it against a hardcoded one.
+20. Input principal, rate, time — calculate simple interest.
+
+21. Input length and breadth — calculate and display area and perimeter of rectangle.
+22. Input radius — calculate and display area and circumference of circle.
+23. Input base and height — calculate area of triangle.
+24. Input number and display multiplication table.
+25. Input marks in 5 subjects — calculate total, percentage, and grade (if-else-if).
+26. Check whether input number is a single-digit, two-digit, or more.
+27. Input salary and calculate bonus (10% if salary > 50000 else 5%).
+28. Input two numbers and swap them using a temporary variable.
+29. Swap two numbers without using a third variable.
+30. Input a number and check if it is a perfect square.
+
+31. Input two numbers and check if their sum is even or odd.
+32. Input a digit and display its word (e.g., 1 = One, 2 = Two...).
+33. Input a number and print the number of digits it has.
+34. Input a 3-digit number and print sum of its digits.
+35. Input three angles and check if they form a triangle.
+36. Input three sides and check if triangle is valid.
+37. Input time in seconds and convert to hours, minutes, seconds.
+38. Input a character and check if it is uppercase or lowercase.
+39. Input a month number and print the number of days in it (if-else-if).
+40. Input electricity units and calculate bill using slab rates.
+
+41. Input day number and print day name using if-else-if.
+42. Calculate gross salary: basic + DA + HRA (with conditions).
+43. Check if a number is palindrome (logic-based).
+44. Calculate factorial of a number using loop (logic only).
+45. Input two float numbers and compare them.
+46. Input 5 student marks and display who got highest marks.
+47. Input 5 numbers and print how many are positive and negative.
+48. Check whether input character is alphabet, digit, or special character.
+49. Validate user login (if username == "admin" and password == "123").
+50. Calculate grade based on percentage using if-else-if ladder.
+
+51. Take 3 subject marks and check if student passed all (logical AND).
+52. Check if a number is divisible by 2 OR 7 (logical OR).
+53. Input total salary and check tax category (slabs).
+54. Take an input number and check if it lies within range 10 to 50.
+55. Take 3 numbers and check for any duplicates.
+56. Take a character and check if it's a digit or not.
+57. Calculate net price after applying discount on input price.
+58. Determine whether triangle is equilateral, isosceles, or scalene.
+59. Input character and determine if it's a symbol, digit, or letter.
+60. Input a sentence (no spaces) and find length manually (logic only).
+
+61. Validate user input: if value is negative, print invalid.
+62. Input a number and print whether it's between 50 and 100 (inclusive).
+63. Find the smallest of 4 input numbers using nested if.
+64. Input marks and show “Distinction”, “Merit”, “Pass”, or “Fail” using if-else-if.
+65. Calculate BMI and categorize health status.
+66. Convert input minutes to hours and remaining minutes.
+67. Input a 4-digit number and print the sum of digits.
+68. Input exam score and check if eligible for scholarship (>= 85 and <= 100).
+69. Input two ages and print who is elder.
+70. Convert temperature between Celsius and Fahrenheit based on user choice.
+
+71. Input coordinates and determine the quadrant.
+72. Input base and exponent and calculate power (basic logic).
+73. Input a number and print if it's a special number (sum of digits + product = number).
+74. Check if input number is Armstrong (basic 3-digit logic).
+75. Print day type: Weekday/Weekend based on input number.
+76. Input total shopping amount and apply discount based on amount (slab).
+77. Check if two numbers are co-prime (basic logic).
+78. Input 5 numbers and print second largest (logic-based).
+79. Print the nature of roots of quadratic equation.
+80. Input income and calculate income tax based on range.
+
+81. Validate if the entered mobile number has exactly 11 digits.
+82. Input number and check if it ends with 5.
+83. Find HCF of two numbers (basic logic).
+84. Find LCM of two numbers (basic logic).
+85. Calculate total purchase cost with delivery charges based on location.
+86. Input year and check if century year.
+87. Take two numbers and determine if one is square of other.
+88. Input character and determine if it's alphanumeric.
+89. Display calendar month title for a given number.
+90. Input three numbers and check if they can form an arithmetic progression.
+
+91. Input 5-digit number and reverse it.
+92. Find absolute value of a number using condition.
+93. Take name and age, print category: Child, Teen, Adult, Senior.
+94. Take a number and print how many even and odd digits it has.
+95. Input character and print next and previous characters.
+96. Take three marks and check if total is greater than 200 AND each subject >= 50.
+97. Input ticket type and calculate total fare (e.g., Economy, Business).
+98. Check if a person is eligible for army: age between 18–25 AND height >= 5.5.
+99. Take any 2-digit number and print it in reverse.
+100. Input a choice and perform arithmetic operation using if-else.

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Calculator</title>
+
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        .card {
+            background-color: white;
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkblue;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>Calculator</h2>
+
+        <input type="number" id="num1" placeholder="First number">
+        <input type="number" id="num2" placeholder="Second number">
+
+        <br>
+
+        <button onclick="add()">+</button>
+        <button onclick="sub()">-</button>
+        <button onclick="mul()">*</button>
+        <button onclick="div()">/</button>
+
+        <p id="result"></p>
+    </div>
+
+<script>
+
+function add() {
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+
+    document.getElementById("result").innerHTML = "Result: " + (a + b);
+}
+
+function sub() {
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+
+    document.getElementById("result").innerHTML = "Result: " + (a - b);
+}
+
+function mul() {
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+
+    document.getElementById("result").innerHTML = "Result: " + (a * b);
+}
+
+function div() {
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+
+    if (b == 0) {
+        document.getElementById("result").innerHTML = "Cannot divide by zero";
+    } else {
+        document.getElementById("result").innerHTML = "Result: " + (a / b);
+    }
+}
+
+</script>
+
+</body>
+</html>

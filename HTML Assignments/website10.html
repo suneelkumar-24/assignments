@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portfolio</title>
+  <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/1077/1077012.png">
+  <script src="https://kit.fontawesome.com/db76b74b4c.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: #222;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    nav {
+      background: #333;
+      text-align: center;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ff9800;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 40px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: white;
+      width: 250px;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+
+    .card h2 {
+      margin: 15px 0 10px;
+    }
+
+    .card p {
+      color: #666;
+    }
+
+    .icons i {
+      margin: 10px;
+      font-size: 20px;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+
+    .icons i:hover {
+      color: #ff9800;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Portfolio</h1>
+    <p>Frontend Developer | Designer</p>
+  </header>
+
+  <nav>
+    <a href="#"><i class="fas fa-home"></i> Home</a>
+    <a href="#"><i class="fas fa-user"></i> About</a>
+    <a href="#"><i class="fas fa-briefcase"></i> Projects</a>
+    <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <img src="istockphoto-1471845315-612x612.jpg" alt="Profile">
+      <h2>John Doe</h2>
+      <p>Web Developer passionate about clean design.</p>
+      <div class="icons">
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-github"></i>
+        <i class="fab fa-linkedin"></i>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="istockphoto-1682296067-612x612.jpg" alt="Profile">
+      <h2>Jane Smith</h2>
+      <p>Creative UI/UX designer with love for animations.</p>
+      <div class="icons">
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-dribbble"></i>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 My Portfolio | Made with ❤️</p>
+  </footer>
+</body>
+</html>

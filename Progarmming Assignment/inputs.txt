@@ -1,0 +1,122 @@
+Perfect! Here's the next clean and copy-ready list of **100 programming logic-building exercises** for the second topic: **Input**.
+
+---
+
+## ✅ Topic 2: Input (Questions 101–200)
+
+> Focus: Practice taking input from the user (using `scanf` in C, `cin` in C++, `input()` in Python, etc.).
+
+```
+101. Input your name and print it.
+102. Input your age and print it.
+103. Input your city name and print it.
+104. Input your school/college name and print it.
+105. Input your favorite color and print it.
+106. Input your favorite movie and print it.
+107. Input your country and print it.
+108. Input a single character and print it.
+109. Input your favorite food and print it.
+110. Input your friend's name and print it.
+111. Input your height and print it.
+112. Input your weight and print it.
+113. Input your birth year and print it.
+114. Input your mobile number and print it.
+115. Input your email address and print it.
+116. Input two numbers and print both.
+117. Input three numbers and print all.
+118. Input two words and print them on separate lines.
+119. Input a sentence and print it.
+120. Input your address and print it.
+
+121. Input your name and age, then print a message: "Hello [name], you are [age] years old."
+122. Input city and country, then print "You live in [city], [country]."
+123. Input two numbers and print their sum.
+124. Input two numbers and print their product.
+125. Input two numbers and print their difference.
+126. Input two numbers and print their division result.
+127. Input two numbers and print their modulus (remainder).
+128. Input a number and print it squared.
+129. Input a number and print it cubed.
+130. Input three numbers and print their total.
+
+131. Input your first and last name separately and print full name.
+132. Input your age and print next year’s age.
+133. Input your current year and birth year, then print your age.
+134. Input two float numbers and print their sum.
+135. Input two characters and print them in reverse order.
+136. Input a number and print the next number.
+137. Input a number and print the previous number.
+138. Input two numbers and print their average.
+139. Input your marks in a subject and print it.
+140. Input marks of 3 subjects and print total.
+
+141. Input marks of 3 subjects and print average.
+142. Input marks of 5 subjects and print percentage.
+143. Input item name and price, print: "Item: X, Price: Y"
+144. Input a quantity and unit price, print total cost.
+145. Input hours and rate per hour, print wage.
+146. Input your name and print a welcome message.
+147. Input a sentence and count number of words (basic logic).
+148. Input a number and print whether it’s positive.
+149. Input a number and print whether it’s negative.
+150. Input a number and print whether it’s zero.
+
+151. Input an even number and confirm it is even.
+152. Input an odd number and confirm it is odd.
+153. Input a character and print its ASCII value.
+154. Input an ASCII value and print the corresponding character.
+155. Input a password and print "Password received".
+156. Input 5 numbers one by one and print all.
+157. Input 5 numbers and print them in reverse order.
+158. Input a string and print its length (basic logic).
+159. Input a temperature in Celsius and print it.
+160. Input a temperature in Fahrenheit and print it.
+
+161. Input hours and convert to minutes.
+162. Input minutes and convert to hours.
+163. Input days and convert to weeks.
+164. Input weeks and convert to days.
+165. Input kilometers and convert to meters.
+166. Input meters and convert to centimeters.
+167. Input cm and convert to mm.
+168. Input price and discount %, print discounted price.
+169. Input base and height, print area of triangle.
+170. Input radius, print circumference of circle.
+
+171. Input radius, print area of circle.
+172. Input length and width, print area of rectangle.
+173. Input number of apples and price per apple, print total.
+174. Input number of pens and cost per pen, print total.
+175. Input name and age, print "Hi [name], you are [age]".
+176. Input any value and print its type (if language supports).
+177. Input a yes/no answer and print confirmation.
+178. Input two words and print them joined with a hyphen.
+179. Input your birth month and print it.
+180. Input your favorite sport and print a cheer message.
+
+181. Input a product name, quantity, and unit price. Print total.
+182. Input marks of a student and print grade logic (basic).
+183. Input current time (hours and minutes) and print it.
+184. Input username and password and print login message.
+185. Input principal, rate, time — calculate simple interest.
+186. Input name and 3 hobbies, print all hobbies line by line.
+187. Input three numbers and print the biggest one.
+188. Input two strings and check if they are equal.
+189. Input your mood and print a related emoji (text-based).
+190. Input a number and print if it's greater than 100.
+
+191. Input a character and print if it's a vowel or consonant.
+192. Input 3 numbers and check if they can form a triangle.
+193. Input 3 numbers and print them in ascending order.
+194. Input 3 numbers and print them in descending order.
+195. Input day, month, and year — print full date.
+196. Input a price and apply 17% tax, print final amount.
+197. Input weight in kg, convert to grams.
+198. Input number of pages, print estimated reading time.
+199. Input two digits and print them swapped.
+200. Input your age and print eligibility to vote (age ≥ 18).
+```
+
+---
+
+Let me know when you're ready for the **next 100 questions on “Variables”** or if you’d like to receive them in a downloadable file too!

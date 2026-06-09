@@ -1,0 +1,46 @@
+<!-- TASK 4: Password Strength Checker -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Strength</title>
+    <style>
+        body { font-family: Arial; background:#f3f3f3; }
+        .card {
+            width:300px; margin:100px auto; padding:20px;
+            background:white; text-align:center;
+            border-radius:10px; box-shadow:0 0 10px gray;
+        }
+        input {
+            width:90%; padding:10px; margin:10px;
+            border:1px solid gray; border-radius:5px;
+        }
+        #msg { font-weight:bold; margin-top:10px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Password Strength</h2>
+    <input type="password" id="pass" placeholder="Enter password" onkeyup="check()">
+    <p id="msg"></p>
+</div>
+
+<script>
+function check() {
+    let p = document.getElementById("pass").value;
+
+    if (p.length < 5) {
+        msg.innerHTML = "Weak";
+        msg.style.color = "red";
+    } else if (p.length < 8) {
+        msg.innerHTML = "Medium";
+        msg.style.color = "orange";
+    } else {
+        msg.innerHTML = "Strong";
+        msg.style.color = "green";
+    }
+}
+</script>
+
+</body>
+</html>

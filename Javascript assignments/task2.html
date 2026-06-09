@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Even Odd Checker</title>
+</head>
+<body>
+
+    <h2>Even or Odd Checker</h2>
+
+    <input type="number" id="num" placeholder="Enter number">
+    <br><br>
+
+    <button onclick="check()">Check</button>
+
+    <h3 id="result"></h3>
+
+<script>
+
+function check() {
+    let num = document.getElementById("num").value;
+
+    if (num % 2 == 0) {
+        document.getElementById("result").innerHTML = "Even Number";
+    } else {
+        document.getElementById("result").innerHTML = "Odd Number";
+    }
+}
+
+</script>
+
+</body>
+</html>

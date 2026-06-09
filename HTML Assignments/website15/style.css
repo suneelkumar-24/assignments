@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  background: #222;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+}
+
+.navbar ul li {
+  margin-left: 20px;
+}
+
+.navbar ul li a {
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.navbar ul li a:hover {
+  color: tomato;
+}
+
+/* Hero Split */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px;
+  background: #f4f4f4;
+}
+
+.hero-text {
+  max-width: 50%;
+}
+
+.hero-text h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  margin-bottom: 20px;
+}
+
+.hero-text button {
+  padding: 10px 20px;
+  border: none;
+  background: tomato;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.hero-text button:hover {
+  background: darkred;
+}
+
+.hero-img img {
+  border-radius: 10px;
+}
+
+/* Services */
+.services {
+  padding: 50px 30px;
+  text-align: center;
+}
+
+.service-row {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.service-box {
+  background: #fff;
+  padding: 20px;
+  width: 28%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.service-box i {
+  font-size: 2rem;
+  color: tomato;
+  margin-bottom: 15px;
+}
+
+.service-box:hover {
+  transform: translateY(-5px);
+}
+
+/* Testimonials */
+.testimonials {
+  background: #eee;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.testimonial-box {
+  background: white;
+  margin: 15px auto;
+  padding: 20px;
+  width: 60%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Footer */
+footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}

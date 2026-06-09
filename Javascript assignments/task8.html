@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Counter App</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .card {
+            width: 300px;
+            background-color: white;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h1 {
+            font-size: 50px;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .inc { background-color: green; }
+        .dec { background-color: red; }
+        .reset { background-color: gray; }
+
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Counter App</h2>
+
+    <h1 id="count">0</h1>
+
+    <button class="inc" onclick="increase()">+</button>
+    <button class="dec" onclick="decrease()">-</button>
+    <button class="reset" onclick="reset()">Reset</button>
+</div>
+
+<script>
+
+let count = 0;
+
+function updateColor() {
+    let countText = document.getElementById("count");
+
+    if (count > 0) {
+        countText.style.color = "green";
+    }
+    else if (count < 0) {
+        countText.style.color = "red";
+    }
+    else {
+        countText.style.color = "black";
+    }
+}
+
+function increase() {
+    count = count + 1;
+    document.getElementById("count").innerHTML = count;
+    updateColor();
+}
+
+function decrease() {
+    count = count - 1;
+    document.getElementById("count").innerHTML = count;
+    updateColor();
+}
+
+function reset() {
+    count = 0;
+    document.getElementById("count").innerHTML = count;
+    updateColor();
+}
+
+</script>
+
+</body>
+</html>

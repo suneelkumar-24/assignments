@@ -1,0 +1,119 @@
+301. Declare an int variable and print it.
+302. Declare a float variable and print it.
+303. Declare a char variable and print it.
+304. Declare a string variable and print it.
+305. Declare a bool variable and print it.
+
+306. Assign integer value to a float variable and print it.
+307. Assign float value to an int variable and print it.
+308. Assign integer to char and print character.
+309. Assign character to int and print ASCII.
+310. Assign a string to a char variable and observe error (or print logic).
+
+311. Declare two int variables, add and print result.
+312. Declare two float variables, add and print result.
+313. Declare one int and one float, add and print result.
+314. Declare char variables and add them (ASCII sum).
+315. Declare and print true/false using boolean.
+
+316. Check size of int type (if language supports).
+317. Check size of float type.
+318. Check size of char type.
+319. Check size of bool type.
+320. Check size of string (using length or sizeof).
+
+321. Declare int a = 5, float b = 2.5, add and print result.
+322. Declare int and bool, print both.
+323. Declare float and char, print both.
+324. Declare int, float, and char, and print in one line.
+325. Assign true to bool and print it.
+
+326. Assign false to bool and print it.
+327. Declare a string and find its length.
+328. Declare a string and print its first character.
+329. Declare a string and print its last character.
+330. Declare a string and print it in uppercase (logic only).
+
+331. Declare string and print in lowercase.
+332. Declare char as digit and print it.
+333. Declare char as symbol and print it.
+334. Assign int to bool and print result.
+335. Assign float to bool and print result.
+
+336. Assign 0 to bool and print it.
+337. Assign non-zero to bool and print it.
+338. Use implicit type conversion in a sum.
+339. Use explicit type casting from float to int.
+340. Use explicit type casting from int to float.
+
+341. Add int and bool, print result.
+342. Add float and bool, print result.
+343. Multiply int and bool, print result.
+344. Declare and print binary equivalent (logic).
+345. Declare and print hexadecimal value (logic).
+
+346. Declare octal and print it (if supported).
+347. Convert float to int and print both values.
+348. Convert int to char and print both.
+349. Convert char to int and print both.
+350. Print type of a variable (using typeof or manual comment).
+
+351. Store 'A' in char and print ASCII.
+352. Store 66 in int and print as char.
+353. Declare float price = 99.99 and print.
+354. Declare int x = 'A' and print x.
+355. Declare int as sum of ASCII chars and print.
+
+356. Declare float and divide by int, print result.
+357. Assign double value to float (if language supports).
+358. Assign long int and print (if language supports).
+359. Declare a boolean and check if it’s true.
+360. Declare a boolean and check if it’s false.
+
+361. Convert char to uppercase (manual logic).
+362. Convert char to lowercase.
+363. Declare and print special characters using char.
+364. Store sentence in string and print.
+365. Add two chars and print numeric result.
+
+366. Subtract two chars and print difference.
+367. Multiply int and char and print.
+368. Store decimal in float and print.
+369. Use scientific notation in float and print.
+370. Declare int, convert to string (basic logic).
+
+371. Declare string, convert to int (basic logic).
+372. Concatenate two strings and print.
+373. Concatenate string and int (basic logic).
+374. Use bool in condition and print result.
+375. Use char in condition and print result.
+
+376. Use string in condition and print result.
+377. Declare float, multiply with int and print.
+378. Declare char array (if applicable) and print.
+379. Use input to assign different types and print.
+380. Declare and print negative float.
+
+381. Declare and print large int number.
+382. Use int division and print result.
+383. Use float division and print result.
+384. Declare a number as string and print it.
+385. Use int in logical expression and print result.
+
+386. Use float in logical expression and print result.
+387. Use bool in arithmetic expression and print.
+388. Use string as loop condition (basic logic).
+389. Convert uppercase letter to lowercase using ASCII.
+390. Convert lowercase letter to uppercase using ASCII.
+
+391. Print min and max value of int (logic only).
+392. Print min and max value of float (logic only).
+393. Check if two strings are equal (manual logic).
+394. Check if two chars are equal.
+395. Check if float is equal to int (e.g., 5.0 == 5).
+
+396. Assign a large number to float and print.
+397. Assign a decimal to int and observe truncation.
+398. Use char in math expression and print.
+399. Use bool in math expression and print.
+400. Declare all types together and print all in one line.

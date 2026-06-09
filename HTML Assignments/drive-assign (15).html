@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Polaroid Photo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .polaroid {
+            background: white;
+            padding: 15px 15px 40px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .polaroid img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+        .caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="polaroid">
+           <img src="https://picsum.photos/200/120" alt="Product">
+
+        <div class="caption">Summer 2023</div>
+    </div>
+</body>
+</html>

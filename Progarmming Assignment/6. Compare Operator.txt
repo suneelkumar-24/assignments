@@ -1,0 +1,119 @@
+501. Check if 10 is greater than 5.
+502. Check if 3 is less than 8.
+503. Check if 7 is equal to 7.
+504. Check if 4 is not equal to 9.
+505. Check if 6 is greater than or equal to 6.
+
+506. Check if 5 is less than or equal to 4.
+507. Input two numbers and check if the first is greater.
+508. Input two numbers and check if the first is smaller.
+509. Input two numbers and check if they are equal.
+510. Input two numbers and check if they are not equal.
+
+511. Declare a = 10, b = 20, check a < b.
+512. Declare a = 15, b = 15, check a >= b.
+513. Declare x = 30, y = 10, check x > y.
+514. Check if an input number is greater than 100.
+515. Check if an input number is less than 0.
+
+516. Check if an input number is between 1 and 10.
+517. Check if a number is not between 1 and 10.
+518. Check if a number is greater than or equal to 50.
+519. Check if a number is less than or equal to 18.
+520. Compare two characters using ==.
+
+521. Compare two characters using !=.
+522. Input a number and check if it equals 10.
+523. Input a number and check if it is not equal to 100.
+524. Input two floats and check if they are equal.
+525. Check if 3.14 == 3.
+
+526. Check if 'A' == 65 (ASCII comparison).
+527. Check if 'a' > 'A'.
+528. Compare lengths of two strings (basic logic).
+529. Check if a string is equal to another (logic only).
+530. Check if two strings are not equal.
+
+531. Input age and check if eligible for voting (>= 18).
+532. Input marks and check if greater than 40 (pass/fail).
+533. Input temperature and check if greater than 100.
+534. Input weight and check if less than 50.
+535. Input height and check if >= 5.5.
+
+536. Input salary and check if > 50000.
+537. Input bill amount and check if >= 1000.
+538. Input quantity and check if less than 5.
+539. Check if two variables are equal.
+540. Check if three variables are equal (a == b && b == c).
+
+541. Input number and check if it's not equal to zero.
+542. Check if number is less than 10 and not equal to 0.
+543. Compare two variables: is a > b and a != b?
+544. Use result of a < b in an if-statement.
+545. Use result of a == b in a print statement.
+
+546. Input score and check if it's 100 (perfect score).
+547. Input year and check if it’s less than current year.
+548. Compare integer and float: 10 == 10.0.
+549. Check if 0 == false (if language supports).
+550. Check if 1 == true (if language supports).
+
+551. Input age and check if it’s 60 or above (senior).
+552. Check if item price is not equal to 0.
+553. Check if two float numbers differ by more than 0.01.
+554. Input quantity and check if more than stock.
+555. Input guess and check if it equals secret number.
+
+556. Compare two input strings using ==.
+557. Compare two input strings using !=.
+558. Compare ASCII values of two characters.
+559. Check if one word is lexicographically greater (logic only).
+560. Check if 'Z' > 'A'.
+
+561. Input two digits and compare them.
+562. Check if (5 + 3) > (4 + 2).
+563. Check if (a + b) == (c + d).
+564. Compare expression results: a * b vs. c * d.
+565. Compare using <= between two expressions.
+
+566. Use < and > together in a condition (a < b && b > c).
+567. Compare int and char ('9' == 57).
+568. Compare char to string (logic only).
+569. Input day number and check if it is weekend (6 or 7).
+570. Input grade and check if it equals 'A'.
+
+571. Check if current year == birth year (logic only).
+572. Compare name string to "admin" for login.
+573. Compare password input to "1234".
+574. Check if entered value == predefined constant.
+575. Check if a person’s weight is ideal (e.g. == 60).
+
+576. Compare float division result to a value.
+577. Compare modulo result: (x % y == 0).
+578. Check if sum of two numbers equals a third.
+579. Input three numbers and check if all are equal.
+580. Input three numbers and check if any two are equal.
+
+581. Input age and check if between 13 and 19 (teenager).
+582. Check if a number is between two values using <= and >=.
+583. Compare result of expression with another variable.
+584. Compare value before and after update.
+585. Check if a discount is applicable (price > 1000).
+
+586. Compare two boolean values.
+587. Compare result of logical expressions.
+588. Compare two variables with same values but different types.
+589. Input a month number and check if it's December (== 12).
+590. Input a number and check if it's not even (num % 2 != 0).
+
+591. Compare a variable to itself + 1 (a == a + 1).
+592. Compare string to empty string ("" == str).
+593. Check if a number is positive and less than 100.
+594. Compare sum of digits to original number (basic logic).
+595. Compare square of number with original (num * num == num).
+
+596. Compare two ratios: a/b == c/d.
+597. Use comparison inside printf or print function.
+598. Use comparison in loop condition.
+599. Use != to check if loop should continue.
+600. Check if user is not admin using != operator.

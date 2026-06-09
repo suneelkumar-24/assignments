@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animated Checkmark</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f0f0f0;
+        }
+        .checkmark {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #4CAF50;
+            position: relative;
+            animation: scale 0.5s ease;
+        }
+        .checkmark:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            border: solid white;
+            border-width: 0 5px 5px 0;
+            top: 15px;
+            left: 35px;
+            transform: rotate(45deg);
+        }
+        @keyframes scale {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="checkmark"></div>
+</body>
+</html>

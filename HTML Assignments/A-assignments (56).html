@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tag vs ID Styling</title>
+  <style>
+   
+    h1 {
+      color: red;
+      font-family: Arial;
+    }
+    p {
+      color: blue;
+    }
+ 
+    #mainTitle {
+      color: green;
+      text-decoration: underline;
+    }
+
+    #introPara {
+      color: darkorange;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="mainTitle">Welcome to My Page</h1>
+  <h1>Another Heading (styled by tag)</h1>
+
+  <p id="introPara">This paragraph uses ID styling.</p>
+  <p>This paragraph uses tag styling only.</p>
+</body>
+</html>

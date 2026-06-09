@@ -1,0 +1,253 @@
+101. Input the number of electricity units consumed and calculate the bill using:
+     - First 100 units: Rs. 5/unit
+     - Next 100 units (101–200): Rs. 7/unit
+     - Above 200 units: Rs. 10/unit
+
+102. Input product price and category (A, B, or C):
+     - A = electronics (18% tax)
+     - B = groceries (5% tax)
+     - C = clothes (12% tax)
+     Calculate and display total price including tax.
+
+103. Input a 3-digit number and check if the sum of the first and last digit equals the middle digit.
+
+104. Input two numbers and check if their absolute difference is less than 10.
+
+105. Input a 4-digit year and print which century it belongs to.
+
+106. Input two times (hours and minutes) and print which time is later.
+
+107. Input coordinates (x, y) and check if they lie on X-axis, Y-axis, or origin.
+
+108. Input a character and check if it is a lowercase vowel.
+
+109. Input two numbers and check if one is the square of the other.
+
+110. Input an integer and check if it ends with 0.
+
+111. Input the base and height of a triangle and determine if it’s right-angled (use Pythagoras logic).
+
+112. Input a date (dd, mm) and determine the season (Spring, Summer, Fall, Winter).
+
+113. Input a character and print its category: alphabet, digit, or special symbol.
+
+114. Input a 3-digit number and check if it is a palindrome.
+
+115. Input three sides of a triangle and check if it’s a valid triangle, then check type (Equilateral, Isosceles, Scalene).
+
+116. Input amount and calculate discount:
+     - >1000: 10%
+     - >500: 5%
+     - else: no discount
+
+117. Input price and whether customer is a member (Y/N). Apply:
+     - Members: 15% discount
+     - Non-members: 5% discount
+
+118. Input salary and job level (1, 2, 3), apply:
+     - Level 1: 10% bonus
+     - Level 2: 20% bonus
+     - Level 3: 30% bonus
+
+119. Input a number and check if it’s a perfect number (equal to sum of divisors excluding itself).
+
+120. Input a 4-digit number and check if its digits are in ascending order.
+
+121. Input a single digit and print its word (e.g., 3 → Three).
+
+122. Input marks and assign division:
+     - >=60: First
+     - >=45: Second
+     - >=33: Third
+     - <33: Fail
+
+123. Input temperature and print health warning:
+     - >103: High fever
+     - 99–103: Mild fever
+     - <99: Normal
+
+124. Input 3 subject marks, check if each is >= 33 and total >= 120 to pass.
+
+125. Input angle and determine if it’s acute, obtuse, right, or straight.
+
+126. Input blood group and print eligibility for blood donation:
+     - O: Universal donor
+     - AB: Universal receiver
+
+127. Input character and print if it’s a digit using ASCII range.
+
+128. Input electricity units and calculate bill with:
+     - Fixed charge = Rs. 50
+     - Rs. 6/unit
+
+129. Input a number and check if it is a multiple of 3 or ends with 3.
+
+130. Input username and password. Check if both match preset values.
+
+131. Input two float numbers and compare which is greater using if-else.
+
+132. Input time (24-hour format) and convert to 12-hour format (AM/PM).
+
+133. Input score and print grade with remarks using if-else-if:
+     - A: Excellent
+     - B: Good
+     - C: Average
+     - D: Poor
+
+134. Input character and check if it’s a capital vowel (A, E, I, O, U).
+
+135. Input 5 marks and check how many are >= 40 (count passes).
+
+136. Input a 5-digit number and reverse it (logic only, no loop).
+
+137. Input two characters and compare which has higher ASCII.
+
+138. Input an item price and discount %, then calculate final price.
+
+139. Input 2 integers and an operator (+, -, *, /), perform calculation using if-else.
+
+140. Input year and month number, print number of days in the month.
+
+141. Input car speed. If > 120, print “Over Speeding”.
+
+142. Input number of working hours. If < 40, print “Underworked”.
+
+143. Input distance in km and print estimated travel time using speed = 60 km/h.
+
+144. Input quantity and item rate. Calculate total price and apply:
+     - If total > 1000, apply 10% discount.
+
+145. Input day number and print weekday name (1 → Monday, ..., 7 → Sunday).
+
+146. Input score and print “Pass” if >= 33, else “Fail”.
+
+147. Input exam name and print eligibility:
+     - "matric": eligible for inter
+     - "inter": eligible for university
+
+148. Input percentage and print scholarship status:
+     - >=85: Full
+     - >=75: Half
+     - else: None
+
+149. Input letter grade and print description:
+     - A → Excellent
+     - B → Good
+     - C → Average
+     - D → Poor
+     - F → Fail
+
+150. Input a number and print the cube only if it is even.
+
+151. Input 3 numbers and print sum only if all are positive.
+
+152. Input float number and check if it's between 0 and 1.
+
+153. Input score and subject name. If score < 40, print “Reappear in [subject]”.
+
+154. Input a sentence (string) and print length using variable only (no library function).
+
+155. Input 2 numbers and check:
+     - If equal → print “Same”
+     - Else → print larger one
+
+156. Input employee type (‘P’ or ‘T’) and salary, calculate:
+     - P → tax 10%
+     - T → tax 5%
+
+157. Input student type (local/hostel) and total marks, calculate fee:
+     - Local: base fee Rs. 2000
+     - Hostel: base fee Rs. 5000
+     - If marks >= 90, apply 20% scholarship
+
+158. Input customer age. If < 18, print “Minor”, else “Adult”.
+
+159. Input number of attempts. If > 3, print “Too many attempts”.
+
+160. Input a 2-digit number and swap its digits.
+
+161. Input 3 numbers. Print “Valid AP” if they form arithmetic progression.
+
+162. Input time in hours. If between 6–11, print “Good Morning”.
+
+163. Input amount. If >1000, print “Eligible for lucky draw”.
+
+164. Input score and if score < 40, ask to reattempt.
+
+165. Input a word. If it’s "exit", print “Goodbye” and terminate (logic only).
+
+166. Input password twice. If both match, print “Verified”, else “Mismatch”.
+
+167. Input a roll number and check if it’s even AND less than 500.
+
+168. Input gender ('M' or 'F') and age. If F and age > 18, print “Eligible”.
+
+169. Input two strings. If both are same length, print “Equal Length”.
+
+170. Input city name and check if it is "Lahore", "Karachi", or "Islamabad".
+
+171. Input account balance. If < 500, print “Low Balance Warning”.
+
+172. Input complaint type (1 = billing, 2 = service), print respective message.
+
+173. Input basic salary and allowances, compute gross salary.
+
+174. Input 3 numbers and check if any two are equal.
+
+175. Input income and print tax based on slab:
+     - <=10000: No tax
+     - <=50000: 10%
+     - >50000: 20%
+
+176. Input 5 subject marks and print total and percentage.
+
+177. Input year and print whether it is century year (ends with 00).
+
+178. Input time (HH:MM) and determine if it’s AM or PM.
+
+179. Input two integers and print which has more digits.
+
+180. Input mobile number. If not 11 digits, print “Invalid”.
+
+181. Input product name and check if it starts with 'A'.
+
+182. Input a number and check if it's divisible by 3 AND ends in 3.
+
+183. Input 4 numbers and print the average of the two highest numbers.
+
+184. Input a string and check if first and last characters are the same.
+
+185. Input a number and print “Fizz” if divisible by 3, “Buzz” if by 5, “FizzBuzz” if both.
+
+186. Input car brand and price, give discount:
+     - Toyota: 5%
+     - Honda: 7%
+     - Other: 3%
+
+187. Input total fee and scholarship %; calculate final payable fee.
+
+188. Input item weight and category. If fragile AND >10kg, print “Handle with care”.
+
+189. Input exam score. If <33, print "Fail", else check grade as well.
+
+190. Input student ID. If even, assign Lab A. Else, Lab B.
+
+191. Input a number. If greater than 999 and all digits unique, print “Strong Number”.
+
+192. Input number and if divisible by both 4 and 6, print “Common Multiple”.
+
+193. Input two names. If both start with same letter, print “Matched Initials”.
+
+194. Input electricity units. If units > 300, apply 15% surcharge.
+
+195. Input exam scores of 2 students. If equal, print “Tie”. Else, print topper.
+
+196. Input a date. If day = 1 and month = 1, print “Happy New Year”.
+
+197. Input an integer. If it is square of an odd number, print “Odd Square”.
+
+198. Input three characters. If they form a valid word (like “cat”), print “Word Valid” (logic only).
+
+199. Input a number. If it’s prime AND ends in 7, print “Special Prime”.
+
+200. Input two integers. If one divides the other exactly, print “Divisible”.

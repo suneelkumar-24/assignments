@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tag Styling Drawback</title>
+  <style>
+    /* Avoid this in real projects */
+    p {
+      color: red;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <p>This paragraph should be red.</p>
+  <div>
+    <p>This paragraph is also red, even if we didn’t want it!</p>
+  </div>
+</body>
+</html>
