@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Weather Simulator</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.65);
+      --border: rgba(255, 255, 255, 0.1);
+      --primary: #38bdf8;
+      --text: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .weather-card {
+      width: 100%;
+      max-width: 450px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    select {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .weather-icon {
+      font-size: 5rem;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .temp {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .city {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 15px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .detail-item {
+      text-align: left;
+    }
+
+    .detail-label {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+
+    .detail-val {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="weather-card">
+    <div class="search-box">
+      <select id="citySelect" onchange="updateWeather()">
+        <option value="Karachi">Karachi</option>
+        <option value="Lahore">Lahore</option>
+        <option value="Islamabad">Islamabad</option>
+        <option value="Umerkot">Umerkot</option>
+        <option value="Murree">Murree</option>
+      </select>
+    </div>
+
+    <div class="weather-icon" id="icon">☀️</div>
+    <div class="temp" id="temp">32°C</div>
+    <div class="city" id="cityName">Karachi</div>
+
+    <div class="details-grid">
+      <div class="detail-item">
+        <div class="detail-label">Condition</div>
+        <div class="detail-val" id="condition">Sunny & Clear</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Humidity</div>
+        <div class="detail-val" id="humidity">65%</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Wind Speed</div>
+        <div class="detail-val" id="wind">14 km/h</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Visibility</div>
+        <div class="detail-val" id="visibility">10 km</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const weatherData = {
+      Karachi: {
+        temp: "32°C",
+        icon: "☀️",
+        condition: "Sunny & Clear",
+        humidity: "65%",
+        wind: "18 km/h",
+        visibility: "10 km"
+      },
+      Lahore: {
+        temp: "36°C",
+        icon: "💨",
+        condition: "Hazy & Hot",
+        humidity: "40%",
+        wind: "12 km/h",
+        visibility: "6 km"
+      },
+      Islamabad: {
+        temp: "28°C",
+        icon: "🌦️",
+        condition: "Mild Showers",
+        humidity: "75%",
+        wind: "10 km/h",
+        visibility: "9 km"
+      },
+      Umerkot: {
+        temp: "39°C",
+        icon: "🔥",
+        condition: "Extreme Heat",
+        humidity: "30%",
+        wind: "22 km/h",
+        visibility: "12 km"
+      },
+      Murree: {
+        temp: "18°C",
+        icon: "🌧️",
+        condition: "Heavy Rain",
+        humidity: "90%",
+        wind: "25 km/h",
+        visibility: "3 km"
+      }
+    };
+
+    function updateWeather() {
+      const select = document.getElementById("citySelect");
+      const city = select.value;
+      const data = weatherData[city];
+
+      document.getElementById("cityName").textContent = city;
+      document.getElementById("temp").textContent = data.temp;
+      document.getElementById("icon").textContent = data.icon;
+      document.getElementById("condition").textContent = data.condition;
+      document.getElementById("humidity").textContent = data.humidity;
+      document.getElementById("wind").textContent = data.wind;
+      document.getElementById("visibility").textContent = data.visibility;
+    }
+
+    // Initialize
+    updateWeather();
+  </script>
+
+<!-- Floating Download Button -->
+<div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
+  <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+    Download File
+  </button>
+</div>
+<script>
+  function downloadCurrentAssignmentFile() {
+    const url = window.location.href;
+    const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
+    fetch(url)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.blob();
+      })
+      .then(blob => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(err => {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+  }
+</script>
+</body>
+</html>

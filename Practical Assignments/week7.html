@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Typing Speed Tester</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --border: rgba(255, 255, 255, 0.1);
+      --primary: #38bdf8;
+      --text: #f8fafc;
+      --success: #10b981;
+      --error: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .tester-card {
+      width: 100%;
+      max-width: 650px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 15px;
+    }
+
+    .stat-badge {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .text-display {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 1.25rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      user-select: none;
+      word-break: break-word;
+      font-family: monospace;
+    }
+
+    .text-display span {
+      position: relative;
+    }
+
+    .text-display .correct {
+      color: var(--success);
+    }
+
+    .text-display .incorrect {
+      color: var(--error);
+      background: rgba(239, 68, 68, 0.15);
+      border-radius: 4px;
+    }
+
+    .text-display .current {
+      border-bottom: 2px solid var(--primary);
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      color: white;
+      font-size: 1.1rem;
+      outline: none;
+      resize: none;
+      font-family: monospace;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 15px;
+    }
+
+    button {
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tester-card">
+    <div class="header">
+      <h1>Typing Speed Tester</h1>
+      <div class="stats-row">
+        <div class="stat-badge">⏱️ <span id="timer">60</span>s</div>
+        <div class="stat-badge">⚡ <span id="wpm">0</span> WPM</div>
+        <div class="stat-badge">🎯 <span id="accuracy">100</span>%</div>
+      </div>
+    </div>
+
+    <div class="text-display" id="textDisplay"></div>
+    <textarea id="textInput" placeholder="Start typing the text above to begin the test..." oninput="handleInput()"></textarea>
+
+    <div class="controls">
+      <button onclick="resetTest()">⟳ Restart Test</button>
+    </div>
+  </div>
+
+  <script>
+    const sampleTexts = [
+      "JavaScript is a lightweight, interpreted, or just-in-time compiled programming language with first-class functions.",
+      "Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in HTML.",
+      "MySQL is an open-source relational database management system that operates on SQL queries and connection statements.",
+      "Hypertext Markup Language is the standard markup language for documents designed to be displayed in a web browser."
+    ];
+
+    let timer = null;
+    let timeLeft = 60;
+    let timerStarted = false;
+    let currentText = "";
+    let characterIndex = 0;
+    let mistakes = 0;
+
+    const textDisplay = document.getElementById("textDisplay");
+    const textInput = document.getElementById("textInput");
+    const timerSpan = document.getElementById("timer");
+    const wpmSpan = document.getElementById("wpm");
+    const accuracySpan = document.getElementById("accuracy");
+
+    function loadNewText() {
+      const randomIdx = Math.floor(Math.random() * sampleTexts.length);
+      currentText = sampleTexts[randomIdx];
+      textDisplay.innerHTML = "";
+      
+      currentText.split("").forEach(char => {
+        const span = document.createElement("span");
+        span.textContent = char;
+        textDisplay.appendChild(span);
+      });
+      
+      textDisplay.children[0].classList.add("current");
+    }
+
+    function startTimer() {
+      timerStarted = true;
+      timer = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          timerSpan.textContent = timeLeft;
+          
+          // Calculate WPM
+          let wordsTyped = (characterIndex - mistakes) / 5;
+          let timeElapsedMinutes = (60 - timeLeft) / 60;
+          let wpm = Math.round(wordsTyped / timeElapsedMinutes);
+          wpmSpan.textContent = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
+        } else {
+          clearInterval(timer);
+          textInput.disabled = true;
+        }
+      }, 1000);
+    }
+
+    function handleInput() {
+      if (!timerStarted) {
+        startTimer();
+      }
+
+      const inputChars = textInput.value.split("");
+      const displaySpans = textDisplay.children;
+      
+      characterIndex = inputChars.length;
+
+      // Reset styles
+      for (let i = 0; i < displaySpans.length; i++) {
+        displaySpans[i].className = "";
+      }
+
+      mistakes = 0;
+      for (let i = 0; i < inputChars.length; i++) {
+        if (displaySpans[i]) {
+          if (inputChars[i] === displaySpans[i].textContent) {
+            displaySpans[i].classList.add("correct");
+          } else {
+            displaySpans[i].classList.add("incorrect");
+            mistakes++;
+          }
+        }
+      }
+
+      if (displaySpans[characterIndex]) {
+        displaySpans[characterIndex].classList.add("current");
+      }
+
+      // Accuracy calculation
+      const accuracy = characterIndex > 0 ? Math.round(((characterIndex - mistakes) / characterIndex) * 100) : 100;
+      accuracySpan.textContent = accuracy < 0 ? 0 : accuracy;
+    }
+
+    function resetTest() {
+      clearInterval(timer);
+      timeLeft = 60;
+      timerStarted = false;
+      characterIndex = 0;
+      mistakes = 0;
+      textInput.value = "";
+      textInput.disabled = false;
+      timerSpan.textContent = timeLeft;
+      wpmSpan.textContent = 0;
+      accuracySpan.textContent = 100;
+      loadNewText();
+    }
+
+    // Initialize
+    loadNewText();
+  </script>
+
+<!-- Floating Download Button -->
+<div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
+  <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+    Download File
+  </button>
+</div>
+<script>
+  function downloadCurrentAssignmentFile() {
+    const url = window.location.href;
+    const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
+    fetch(url)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.blob();
+      })
+      .then(blob => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(err => {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+  }
+</script>
+</body>
+</html>

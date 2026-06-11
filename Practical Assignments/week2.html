@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Interactive Quiz Arena</title>
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a, #1e1b4b);
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --primary: #38bdf8;
+      --secondary: #a855f7;
+      --success: #10b981;
+      --error: #ef4444;
+      --text: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .quiz-container {
+      width: 100%;
+      max-width: 650px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .timer {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    .question-box {
+      margin-bottom: 25px;
+    }
+
+    .question-text {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .option-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      padding: 16px 20px;
+      border-radius: 14px;
+      text-align: left;
+      color: var(--text);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .option-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .option-btn.selected {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--primary);
+    }
+
+    .option-btn.correct {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--success);
+    }
+
+    .option-btn.wrong {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: var(--error);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 30px;
+    }
+
+    .btn-next {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+    }
+
+    .result-screen {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 4px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 25px;
+    }
+
+    .score-num {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .score-total {
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+
+    .result-msg {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    .btn-restart {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text);
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-restart:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container" id="quizContainer">
+    <!-- Quiz Screen -->
+    <div id="quizScreen">
+      <div class="header">
+        <div class="title">JS Quiz Arena</div>
+        <div class="timer" id="timerBox">
+          ⏱️ <span id="timeLeft">15</span>s
+        </div>
+      </div>
+
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text" id="questionText">Question goes here?</div>
+        <div class="options-grid" id="optionsGrid">
+          <!-- Options will be generated dynamically -->
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn-next" id="nextBtn" onclick="handleNextQuestion()">Next Question</button>
+      </div>
+    </div>
+
+    <!-- Result Screen (Hidden initially) -->
+    <div id="resultScreen" style="display: none;">
+      <div class="result-screen">
+        <div class="score-circle">
+          <div class="score-num" id="finalScore">0</div>
+          <div class="score-total">out of <span id="totalQuestionsCount">5</span></div>
+        </div>
+        <div class="result-msg" id="resultMessage">Great attempt!</div>
+        <button class="btn-restart" onclick="restartQuiz()">Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "Which of the following is correct about features of JavaScript?",
+        options: [
+          "It is a lightweight, interpreted programming language.",
+          "It is designed for creating network-centric applications.",
+          "It is complementary to and integrated with Java.",
+          "All of the above."
+        ],
+        answer: 3
+      },
+      {
+        question: "How do you write 'Hello World' in an alert box in JavaScript?",
+        options: [
+          "msg('Hello World');",
+          "alertBox('Hello World');",
+          "alert('Hello World');",
+          "msgBox('Hello World');"
+        ],
+        answer: 2
+      },
+      {
+        question: "Which scope refers to variables defined outside any function?",
+        options: [
+          "Local Scope",
+          "Block Scope",
+          "Global Scope",
+          "Functional Scope"
+        ],
+        answer: 2
+      },
+      {
+        question: "What will the following code return: Boolean(10 > 9)?",
+        options: [
+          "true",
+          "false",
+          "NaN",
+          "undefined"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which array method adds a new element to the end of the array?",
+        options: [
+          "pop()",
+          "push()",
+          "shift()",
+          "unshift()"
+        ],
+        answer: 1
+      }
+    ];
+
+    let currentQuestionIdx = 0;
+    let score = 0;
+    let timer = null;
+    let timeLeft = 15;
+    let selectedOptionIdx = null;
+
+    const questionText = document.getElementById("questionText");
+    const optionsGrid = document.getElementById("optionsGrid");
+    const progressBar = document.getElementById("progressBar");
+    const timeLeftSpan = document.getElementById("timeLeft");
+    const quizScreen = document.getElementById("quizScreen");
+    const resultScreen = document.getElementById("resultScreen");
+    const finalScore = document.getElementById("finalScore");
+    const resultMessage = document.getElementById("resultMessage");
+    const totalQuestionsCount = document.getElementById("totalQuestionsCount");
+
+    function startTimer() {
+      timeLeft = 15;
+      timeLeftSpan.textContent = timeLeft;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        timeLeft--;
+        timeLeftSpan.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          revealAnswers(null);
+        }
+      }, 1000);
+    }
+
+    function loadQuestion() {
+      selectedOptionIdx = null;
+      const currentQ = quizData[currentQuestionIdx];
+      
+      // Update progress bar
+      const progressPercent = ((currentQuestionIdx) / quizData.length) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+
+      questionText.textContent = `${currentQuestionIdx + 1}. ${currentQ.question}`;
+      optionsGrid.innerHTML = "";
+
+      currentQ.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerHTML = `<span>${opt}</span>`;
+        btn.onclick = () => selectOption(idx);
+        optionsGrid.appendChild(btn);
+      });
+
+      startTimer();
+    }
+
+    function selectOption(idx) {
+      if (selectedOptionIdx !== null) return; // already answered
+      clearInterval(timer);
+      selectedOptionIdx = idx;
+      revealAnswers(idx);
+    }
+
+    function revealAnswers(selectedIdx) {
+      const correctIdx = quizData[currentQuestionIdx].answer;
+      const options = optionsGrid.children;
+
+      for (let i = 0; i < options.length; i++) {
+        if (i === correctIdx) {
+          options[i].classList.add("correct");
+        } else if (i === selectedIdx) {
+          options[i].classList.add("wrong");
+        }
+        options[i].style.cursor = "default";
+      }
+
+      if (selectedIdx === correctIdx) {
+        score++;
+      }
+    }
+
+    function handleNextQuestion() {
+      if (selectedOptionIdx === null && timeLeft > 0) {
+        alert("Please select an option before moving to the next question!");
+        return;
+      }
+
+      currentQuestionIdx++;
+      if (currentQuestionIdx < quizData.length) {
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      progressBar.style.width = "100%";
+      quizScreen.style.display = "none";
+      resultScreen.style.display = "block";
+      finalScore.textContent = score;
+      totalQuestionsCount.textContent = quizData.length;
+
+      if (score === quizData.length) {
+        resultMessage.textContent = "🏆 Perfect Score! You are a JavaScript Master!";
+      } else if (score >= quizData.length / 2) {
+        resultMessage.textContent = "✨ Well Done! Great effort!";
+      } else {
+        resultMessage.textContent = "📚 Keep practicing and try again!";
+      }
+    }
+
+    function restartQuiz() {
+      currentQuestionIdx = 0;
+      score = 0;
+      quizScreen.style.display = "block";
+      resultScreen.style.display = "none";
+      loadQuestion();
+    }
+
+    // Initialize
+    loadQuestion();
+  </script>
+
+<!-- Floating Download Button -->
+<div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
+  <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+    Download File
+  </button>
+</div>
+<script>
+  function downloadCurrentAssignmentFile() {
+    const url = window.location.href;
+    const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
+    fetch(url)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.blob();
+      })
+      .then(blob => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(err => {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+  }
+</script>
+</body>
+</html>

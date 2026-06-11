@@ -233,6 +233,14 @@
         background: #475569;
       }
 
+      .roadmap-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(56, 189, 248, 0.4) !important;
+      }
+      .roadmap-btn:active {
+        transform: translateY(0);
+      }
+
       h2 {
         margin: 2rem 0 1rem 0;
         font-size: 1.5rem;
@@ -369,7 +377,12 @@
     <!-- Dashboard -->
     <div id="dashboard" class="dashboard">
       <header>
-        <div class="logo">📊 Web Assignments Dashboard</div>
+        <div class="logo" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <span>📊 Web Assignments Dashboard</span>
+          <a href="roadmap.html" class="roadmap-btn" style="text-decoration: none; font-size: 0.85rem; padding: 6px 14px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border-radius: 50px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(56, 189, 248, 0.2);">
+            🗺️ Learning Roadmap
+          </a>
+        </div>
         <div class="user-info">
           <span style="color: white" class="username-badge" id="currentUsername"
             >User</span
@@ -418,17 +431,13 @@
           <span class="category-progress" id="progProgress">0%</span>
         </h2>
         <div id="progGrid" class="grid"></div>
-      </div>
 
-      <h2 style="color: white">
-        📄 Practical Assignment
-        <span class="category-progress" id="htmlProgress">0%</span>
-<br><br>
-        <div>
-          <br>
-          <h3><a style="display: block; color: white; border: 2px solid black; padding: 30px;" href="Practical Assignments/week1.html">P-Assignment 1/<a></h3>
-        </div>
-      </h2>
+        <h2 style="color: white">
+          🧪 Practical Assignments
+          <span class="category-progress" id="practicalProgress">0%</span>
+        </h2>
+        <div id="practicalGrid" class="grid"></div>
+      </div>
 
       <footer>
         Made by <a href="#">Sir Suneel</a> | ✅ Persistent login & cross-device
@@ -437,6 +446,7 @@
     </div>
     <div id="syncToast" class="sync-toast">✅ Progress synced</div>
 
+    <script src="data.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         fetch("https://dummyjson.com/quotes/random")
@@ -500,8 +510,7 @@
       };
 
       // ==================== GLOBAL VARIABLES ====================
-      let currentUser = null;
-      let assignmentsData = { html: [], js: [], programming: [] };
+      let assignmentsData = { html: [], js: [], programming: [], mysql: [], practical: [] };
       let userProgress = {}; // { taskId: true }
       let allTasks = [];
 
@@ -541,8 +550,16 @@
 
       // ==================== LOAD DATA FROM data.json ====================
       async function loadAssignments() {
+        if (window.assignmentsData) {
+          assignmentsData = window.assignmentsData;
+          buildTasksList();
+          renderDashboard();
+          return;
+        }
         try {
-          const response = await fetch("data.json");
+          const isFileProtocol = window.location.protocol === "file:";
+          const url = isFileProtocol ? "data.json" : "data.json?t=" + new Date().getTime();
+          const response = await fetch(url);
           if (response.ok) {
             const data = await response.json();
             assignmentsData = data;
@@ -609,6 +626,20 @@
             allTasks.push({
               id: `mysql_${idx}`,
               category: "mysql",
+              displayName: displayName,
+              path: item.path,
+              originalIndex: idx,
+              rawItem: item,
+            });
+          });
+        }
+        // Practical Assignments
+        if (assignmentsData.practical && Array.isArray(assignmentsData.practical)) {
+          assignmentsData.practical.forEach((item, idx) => {
+            const displayName = item.name || `Practical Assignment ${idx + 1}`;
+            allTasks.push({
+              id: `practical_${idx}`,
+              category: "practical",
               displayName: displayName,
               path: item.path,
               originalIndex: idx,
@@ -728,11 +759,14 @@
           `${getCategoryProgress("programming")}%`;
         document.getElementById("mysqlProgress").textContent =
           `${getCategoryProgress("mysql")}%`;
+        document.getElementById("practicalProgress").textContent =
+          `${getCategoryProgress("practical")}%`;
 
         renderCategoryGrid("html", "htmlGrid");
         renderCategoryGrid("js", "jsGrid");
         renderCategoryGrid("programming", "progGrid");
         renderCategoryGrid("mysql", "mysqlGrid");
+        renderCategoryGrid("practical", "practicalGrid");
       }
 
       function renderCategoryGrid(category, containerId) {
@@ -749,13 +783,38 @@
           const isCompleted = userProgress[task.id] === true;
           const card = document.createElement("div");
           card.className = "task-card";
+          
           const link = document.createElement("a");
           link.href = task.path;
           link.target = "_blank";
           link.className = "task-link";
           link.textContent = task.displayName;
+          
+          const controlsDiv = document.createElement("div");
+          controlsDiv.style.display = "flex";
+          controlsDiv.style.alignItems = "center";
+          controlsDiv.style.gap = "12px";
+
+          // Direct Download button
+          const downloadBtn = document.createElement("a");
+          downloadBtn.href = task.path || "#";
+          downloadBtn.download = task.path ? task.path.split("/").pop() : "file";
+          downloadBtn.className = "card-download-btn";
+          downloadBtn.title = "Download Source File";
+          downloadBtn.style.color = "#64748b";
+          downloadBtn.style.display = "flex";
+          downloadBtn.style.alignItems = "center";
+          downloadBtn.style.transition = "color 0.2s";
+          downloadBtn.style.cursor = "pointer";
+          downloadBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          `;
+          downloadBtn.addEventListener("mouseover", () => downloadBtn.style.color = "#38bdf8");
+          downloadBtn.addEventListener("mouseout", () => downloadBtn.style.color = "#64748b");
+          
           const checkboxDiv = document.createElement("div");
           checkboxDiv.className = "checkbox-wrapper";
+          
           const checkbox = document.createElement("input");
           checkbox.type = "checkbox";
           checkbox.className = "task-checkbox";
@@ -764,6 +823,7 @@
             e.stopPropagation();
             toggleTask(task.id, checkbox.checked);
           };
+          
           const label = document.createElement("label");
           label.textContent = "Complete";
           label.style.cursor = "pointer";
@@ -772,10 +832,15 @@
             checkbox.checked = !checkbox.checked;
             toggleTask(task.id, checkbox.checked);
           };
+          
           checkboxDiv.appendChild(checkbox);
           checkboxDiv.appendChild(label);
+          
+          controlsDiv.appendChild(downloadBtn);
+          controlsDiv.appendChild(checkboxDiv);
+          
           card.appendChild(link);
-          card.appendChild(checkboxDiv);
+          card.appendChild(controlsDiv);
           container.appendChild(card);
         });
       }
@@ -957,12 +1022,12 @@
           backupDiv.style.display = "flex";
           backupDiv.style.gap = "10px";
           backupDiv.style.alignItems = "center";
-          //   const exportBtn = document.createElement("button");
+          const exportBtn = document.createElement("button");
           exportBtn.textContent = "💾 Export Backup";
           exportBtn.className = "reset-btn";
           exportBtn.style.background = "#2c3e66";
           exportBtn.onclick = () => exportProgressToFile();
-          //   const importBtn = document.createElement("button");
+          const importBtn = document.createElement("button");
           importBtn.textContent = "📂 Import Backup";
           importBtn.className = "reset-btn";
           importBtn.style.background = "#2c3e66";

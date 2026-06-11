@@ -222,12 +222,42 @@
   ],
   "mysql": [
     {
-      "name": "Assignment - 1.html",
-      "path": "MySQL Assignments/Assignment - 1.html"
-    },
-    {
       "name": "Assignment - 2.html",
       "path": "MySQL Assignments/Assignment - 2.html"
+    },
+    {
+      "name": "MySQL Learning Platform - Assignment #1",
+      "path": "MySQL Assignments/Assignment - 1.html"
+    }
+  ],
+  "practical": [
+    {
+      "name": "Calculator Learning Hub",
+      "path": "Practical Assignments/week1.html"
+    },
+    {
+      "name": "JavaScript Interactive Quiz Arena",
+      "path": "Practical Assignments/week2.html"
+    },
+    {
+      "name": "CSS Flexbox & Box Model Visualizer",
+      "path": "Practical Assignments/week3.html"
+    },
+    {
+      "name": "Interactive Canvas Drawing Board",
+      "path": "Practical Assignments/week4.html"
+    },
+    {
+      "name": "Dynamic Weather Simulator",
+      "path": "Practical Assignments/week5.html"
+    },
+    {
+      "name": "CSS Gradient & Shadow Designer",
+      "path": "Practical Assignments/week6.html"
+    },
+    {
+      "name": "Interactive Typing Speed Tester",
+      "path": "Practical Assignments/week7.html"
     }
   ]
 }
