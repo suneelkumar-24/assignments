@@ -159,6 +159,7 @@
     "HTML Assignments/webstite9.html"
   ],
   "js": [
+    "Javascript assignments/roadmap_assignments.html",
     "Javascript assignments/task0-0.html",
     "Javascript assignments/task0-1.html",
     "Javascript assignments/task0-2.html",
@@ -236,28 +237,28 @@
       "path": "Practical Assignments/week1.html"
     },
     {
-      "name": "JavaScript Interactive Quiz Arena",
-      "path": "Practical Assignments/week2.html"
-    },
-    {
-      "name": "CSS Flexbox & Box Model Visualizer",
+      "name": "CSS Box Model & Flexbox Visualizer",
       "path": "Practical Assignments/week3.html"
     },
     {
-      "name": "Interactive Canvas Drawing Board",
-      "path": "Practical Assignments/week4.html"
+      "name": "CSS Design Generator",
+      "path": "Practical Assignments/week6.html"
     },
     {
       "name": "Dynamic Weather Simulator",
       "path": "Practical Assignments/week5.html"
     },
     {
-      "name": "CSS Gradient & Shadow Designer",
-      "path": "Practical Assignments/week6.html"
+      "name": "HTML5 Interactive Canvas Board",
+      "path": "Practical Assignments/week4.html"
     },
     {
       "name": "Interactive Typing Speed Tester",
       "path": "Practical Assignments/week7.html"
+    },
+    {
+      "name": "JavaScript Interactive Quiz Arena",
+      "path": "Practical Assignments/week2.html"
     }
   ]
 }
