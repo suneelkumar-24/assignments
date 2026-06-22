@@ -1,49 +1,195 @@
-<!-- TASK 3: Simple Product Quantity (Cart Style) -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cart Quantity</title>
+    <title>Shopping Cart & Shipping Calculator - Task 14</title>
     <style>
-        body { font-family: Arial; background:#eee; text-align:center; }
-        .card {
-            width:300px; margin:100px auto; padding:20px;
-            background:white; border-radius:10px;
-            box-shadow:0 0 10px gray;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
         }
+
+        .container {
+            width: 450px;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        p.desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .code-box {
+            background: #090d16;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+        }
+
+        .screen {
+            background: #020617;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 18px;
+            min-height: 100px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #eab308;
+            text-shadow: 0 0 5px rgba(234, 179, 8, 0.4);
+            text-align: left;
+            line-height: 1.5;
+            transition: all 0.3s;
+        }
+
         button {
-            padding:10px 15px; margin:5px;
-            border:none; border-radius:5px;
-            cursor:pointer;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-        .add { background:green; color:white; }
-        .remove { background:red; color:white; }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
+        }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Product</h2>
-    <h1 id="qty">0</h1>
-    <button class="add" onclick="add()">Add</button>
-    <button class="remove" onclick="remove()">Remove</button>
+<div class="container">
+    <h2>Shopping Cart & Shipping Calculator</h2>
+    <p class="desc">Prompts for total items, price, warehouse distance, membership rank, and coupon code. Computes cumulative discounts and shipping rates.</p>
+
+    <div class="code-box">
+        <strong>Tested Syllabus Concepts:</strong><br>
+        • alert(), prompt(), console.log()<br>
+        • let, const variable declarations<br>
+        • Arithmetic, Comparison, and Assignment operators<br>
+        • Logical AND (&&), OR (||), and NOT (!)<br>
+        • Stepped discount and delivery pricing rules
+    </div>
+
+    <div class="screen" id="display">
+        System Status: READY<br>
+        Click the button to process your cart.
+    </div>
+
+    <button onclick="calculateCart()">Process Cart Calculator</button>
 </div>
 
 <script>
-let q = 0;
+function calculateCart() {
+    console.log("Initializing Cart Logic...");
 
-function add() {
-    q = q + 1;
-    document.getElementById("qty").innerHTML = q;
-}
+    // Prompts
+    let price = Number(prompt("Enter average item price ($):"));
+    let qty = Number(prompt("Enter quantity of items:"));
+    let distance = Number(prompt("Enter shipping distance (km):"));
+    let memberType = prompt("Enter membership ('regular', 'vip', 'gold'):");
+    let coupon = prompt("Enter discount code (e.g. SAVEMORE):");
 
-function remove() {
-    if (q > 0) {
-        q = q - 1;
-        document.getElementById("qty").innerHTML = q;
+    if (isNaN(price) || price <= 0 || isNaN(qty) || qty <= 0 || isNaN(distance) || distance < 0) {
+        alert("Error: Price, quantity, and distance must be valid positive numbers.");
+        return;
     }
+
+    if (memberType === null) memberType = "regular";
+    memberType = memberType.toLowerCase();
+
+    // Calculations & Variables
+    let subtotal = price * qty;
+    let discountPercent = 0;
+
+    // Membership check using comparisons
+    if (memberType === "gold") {
+        discountPercent = 0.20; // 20% discount
+    } else if (memberType === "vip") {
+        discountPercent = 0.10; // 10% discount
+    } else {
+        discountPercent = 0.0;
+    }
+
+    // Additional discount based on total size using Comparison and Assignment operators
+    if (subtotal >= 200) {
+        discountPercent += 0.05; // 5% extra discount
+    }
+
+    let discountAmount = subtotal * discountPercent;
+    let priceAfterMemberDiscount = subtotal - discountAmount;
+
+    // Coupon verification using comparison and logical operations
+    if (coupon === "SAVEMORE" && priceAfterMemberDiscount > 50) {
+        priceAfterMemberDiscount -= 15; // subtract fixed $15
+        alert("Coupon code 'SAVEMORE' successfully applied! -$15");
+    }
+
+    // Shipping cost calculation using Logical OR (||) and NOT (!)
+    let shippingCost = 0;
+    let freeShippingEligible = (priceAfterMemberDiscount > 300 || memberType === "gold");
+
+    if (freeShippingEligible) {
+        shippingCost = 0;
+        alert("Congratulations! Free shipping has been applied.");
+    } else {
+        shippingCost = distance * 2; // $2 per km
+    }
+
+    // Check logical NOT (!) for regular member logs
+    if (!(memberType === "vip" || memberType === "gold")) {
+        console.log("Processing order for Standard Member.");
+    } else {
+        console.log("Processing order for Premium Member.");
+    }
+
+    let finalTotal = priceAfterMemberDiscount + shippingCost;
+
+    // Rendering output using screen and alert
+    alert("Checkout completed. Total: $" + finalTotal.toFixed(2));
+    
+    document.getElementById("display").innerHTML = 
+        "CHECKOUT REPORT<br>" +
+        "------------------------<br>" +
+        "Subtotal: $" + subtotal.toFixed(2) + "<br>" +
+        "Member Discount: " + (discountPercent * 100) + "% (-$" + discountAmount.toFixed(2) + ")<br>" +
+        "Shipping Cost: $" + shippingCost.toFixed(2) + "<br>" +
+        "Total Bill: $" + finalTotal.toFixed(2);
 }
 </script>
-
 
 <!-- Floating Download Button -->
 <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
@@ -78,6 +224,10 @@ function remove() {
         document.body.removeChild(link);
       });
   }
+</script>
+
+<script>
+  document.write("<p style='text-align:center; color:#475569; font-size:0.85rem; margin-top:30px; font-family: monospace;'>System Diagnostic: Calculator Loaded via document.write()</p>");
 </script>
 
 </body>

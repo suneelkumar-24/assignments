@@ -1,100 +1,189 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Smart Panel</title>
-
+    <title>Salary Tax & Net Pay Calculator - Task 20</title>
     <style>
         body {
-            font-family: Arial;
-            background:#eef2f3;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
         }
 
         .container {
-            width:350px;
-            margin:80px auto;
-            padding:20px;
-            background:white;
-            border-radius:10px;
-            text-align:center;
-            box-shadow:0 0 10px gray;
+            width: 450px;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
         }
 
-        input {
-            width:90%;
-            padding:10px;
-            margin:10px;
-            border-radius:5px;
-            border:1px solid gray;
+        h2 {
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        p.desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .code-box {
+            background: #090d16;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+        }
+
+        .screen {
+            background: #020617;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 18px;
+            min-height: 100px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #ef4444;
+            text-shadow: 0 0 5px rgba(239, 68, 68, 0.4);
+            text-align: left;
+            line-height: 1.5;
+            transition: all 0.3s;
         }
 
         button {
-            padding:10px 15px;
-            margin:5px;
-            border:none;
-            border-radius:5px;
-            cursor:pointer;
-            background:blue;
-            color:white;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        #result {
-            margin-top:15px;
-            font-weight:bold;
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
         }
     </style>
 </head>
-
 <body>
 
-<div class="container" id="box">
+<div class="container">
+    <h2>Salary Tax Calculator</h2>
+    <p class="desc">A program evaluating gross salary brackets, regional tax tables, and fixed deductions using assignments and logical conditions.</p>
 
-    <h2>User Panel</h2>
+    <div class="code-box">
+        <strong>Tested Syllabus Concepts:</strong><br>
+        • prompt(), alert(), console.log()<br>
+        • let, const variables<br>
+        • Arithmetic, Comparison, and Assignment operators<br>
+        • Logical AND (&&), OR (||), and NOT (!)<br>
+        • Regional tax tables
+    </div>
 
-    <input type="text" id="name" placeholder="Enter Name">
-    <input type="number" id="num1" placeholder="Number 1">
-    <input type="number" id="num2" placeholder="Number 2">
+    <div class="screen" id="display">
+        System Status: READY<br>
+        Click to run the tax calculator.
+    </div>
 
-    <button onclick="process()">Submit</button>
-
-    <p id="result"></p>
-
+    <button onclick="calculateTax()">Calculate Net Salary</button>
 </div>
 
 <script>
+function calculateTax() {
+    console.log("Starting tax calculation engine...");
 
-function process() {
+    // Prompts
+    let gross = Number(prompt("Enter gross monthly salary ($):"));
+    let region = prompt("Enter region ('US', 'EU', or 'Global'):");
 
-    let name = document.getElementById("name").value;
-    let n1 = Number(document.getElementById("num1").value);
-    let n2 = Number(document.getElementById("num2").value);
-
-    let res = document.getElementById("result");
-    let box = document.getElementById("box");
-
-    if (name == "" || n1 == "" || n2 == "") {
-        res.innerHTML = "Please fill all fields";
-        res.style.color = "red";
-        box.style.backgroundColor = "#ffe0e0";
+    if (isNaN(gross) || gross <= 0) {
+        alert("Error: Gross salary must be a valid positive number.");
+        return;
     }
-    else {
 
-        let sum = n1 + n2;
+    if (region === null) region = "Global";
+    region = region.toUpperCase();
 
-        if (sum > 100) {
-            res.innerHTML = name + " your sum is HIGH: " + sum;
-            res.style.color = "green";
-            box.style.backgroundColor = "#d4edda";
+    let taxRate = 0;
+
+    // Nested regional conditions using comparisons
+    if (region === "US") {
+        if (gross <= 3000) {
+            taxRate = 0.10; // 10%
+        } else if (gross <= 8000) {
+            taxRate = 0.20; // 20%
+        } else {
+            taxRate = 0.30; // 30%
         }
-        else {
-            res.innerHTML = name + " your sum is LOW: " + sum;
-            res.style.color = "orange";
-            box.style.backgroundColor = "#fff3cd";
+    } else if (region === "EU") {
+        if (gross <= 4000) {
+            taxRate = 0.15; // 15%
+        } else if (gross <= 9000) {
+            taxRate = 0.25; // 25%
+        } else {
+            taxRate = 0.35; // 35%
         }
+    } else {
+        taxRate = 0.12; // Flat 12% global tax rate
+        alert("Global flat tax rate (12%) applied.");
     }
+
+    // Logical OR (||) and AND (&&) checking for high income tax surcharge
+    if (gross > 10000 && (region === "US" || region === "EU")) {
+        taxRate += 0.03; // Add 3% surcharge tax
+        alert("High-income surcharge tax (3%) applied.");
+    }
+
+    let taxAmount = gross * taxRate;
+    let netSalary = gross - taxAmount;
+
+    // Deduct standard health insurance using assignment operators (-=)
+    const insuranceDeduction = 120;
+    netSalary -= insuranceDeduction;
+
+    // Output using console and alert
+    alert("Net Pay computed: $" + netSalary.toFixed(2));
+    console.log("Gross: $" + gross + " | Tax Rate: " + (taxRate * 100) + "% | Deductions: $" + insuranceDeduction + " | Net: $" + netSalary.toFixed(2));
+
+    // Output display render
+    let display = document.getElementById("display");
+    display.style.color = "#10b981";
+    display.style.borderColor = "#10b981";
+    display.style.textShadow = "0 0 5px rgba(16, 185, 129, 0.4)";
+    display.innerHTML = 
+        "SALARY STATEMENT REPORT<br>" +
+        "------------------------<br>" +
+        "Gross Pay: $" + gross.toFixed(2) + "<br>" +
+        "Tax Rate: " + (taxRate * 100).toFixed(0) + "%<br>" +
+        "Tax Deducted: -$" + taxAmount.toFixed(2) + "<br>" +
+        "Health Insurance: -$" + insuranceDeduction.toFixed(2) + "<br>" +
+        "Net Salary: $" + netSalary.toFixed(2);
 }
-
 </script>
-
 
 <!-- Floating Download Button -->
 <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
@@ -129,6 +218,10 @@ function process() {
         document.body.removeChild(link);
       });
   }
+</script>
+
+<script>
+  document.write("<p style='text-align:center; color:#475569; font-size:0.85rem; margin-top:30px; font-family: monospace;'>System Diagnostic: Finance Module Online via document.write()</p>");
 </script>
 
 </body>

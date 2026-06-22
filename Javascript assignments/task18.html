@@ -1,38 +1,189 @@
-<!-- TASK 7: Live Username Preview -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Username Preview</title>
+    <title>Temperature & Weather Advisor - Task 18</title>
     <style>
-        body { font-family: Arial; background:#eee; text-align:center; }
-        .card {
-            width:300px; margin:100px auto; padding:20px;
-            background:white; border-radius:10px;
-            box-shadow:0 0 10px gray;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
         }
-        input {
-            width:90%; padding:10px; margin:10px;
+
+        .container {
+            width: 450px;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
         }
-        #preview {
-            margin-top:10px; font-weight:bold;
+
+        h2 {
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        p.desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .code-box {
+            background: #090d16;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+        }
+
+        .screen {
+            background: #020617;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 18px;
+            min-height: 100px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #f59e0b;
+            text-shadow: 0 0 5px rgba(245, 158, 11, 0.4);
+            text-align: left;
+            line-height: 1.5;
+            transition: all 0.3s;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Live Username</h2>
-    <input type="text" id="name" placeholder="Enter name" onkeyup="show()">
-    <p id="preview"></p>
+<div class="container">
+    <h2>Temperature & Weather Advisor</h2>
+    <p class="desc">A converter implementing physical temperature formulas and determining warning advices using compound conditionals.</p>
+
+    <div class="code-box">
+        <strong>Tested Syllabus Concepts:</strong><br>
+        • alert(), prompt(), console.log()<br>
+        • let and const variables<br>
+        • Temperature formulas (*, /, +)<br>
+        • logic brackets and boundary checks (&&, ||)<br>
+        • DOM state color & text rewriting
+    </div>
+
+    <div class="screen" id="display">
+        System Status: READY<br>
+        Click to run the temperature advisor.
+    </div>
+
+    <button onclick="checkWeather()">Evaluate Temperature</button>
 </div>
 
 <script>
-function show() {
-    let name = document.getElementById("name").value;
-    document.getElementById("preview").innerHTML = "Hello, " + name;
+function checkWeather() {
+    console.log("Analyzing weather parameters...");
+
+    // Prompts
+    let tempInput = Number(prompt("Enter temperature value:"));
+    let scale = prompt("Enter scale ('C' for Celsius, 'F' for Fahrenheit):");
+
+    if (isNaN(tempInput)) {
+        alert("Error: Temperature value must be a valid number.");
+        return;
+    }
+
+    if (scale === null) scale = "C";
+    scale = scale.toUpperCase();
+
+    // Check invalid inputs using logical AND (&&) / NOT (!)
+    if (scale !== "C" && scale !== "F") {
+        alert("Error: Invalid scale type entered.");
+        return;
+    }
+
+    // Convert variables
+    let celsius = 0;
+    let fahrenheit = 0;
+
+    if (scale === "C") {
+        celsius = tempInput;
+        fahrenheit = (celsius * 9/5) + 32;
+    } else {
+        fahrenheit = tempInput;
+        celsius = (fahrenheit - 32) * 5/9;
+    }
+
+    // Determine advice and color scheme based on Celsius
+    let advice = "";
+    let colorTheme = "";
+
+    // Stepped logic with comparison bounds
+    if (celsius >= 38) {
+        advice = "CRITICAL: Extreme heat alert! Keep hydrated and stay indoors.";
+        colorTheme = "#ef4444"; // Red
+        alert("Warning: Extreme Heat!");
+    } else if (celsius >= 22 && celsius < 38) {
+        advice = "Comfortable weather. Enjoy your outdoor activities.";
+        colorTheme = "#10b981"; // Green
+    } else if (celsius >= 5 && celsius < 22) {
+        advice = "Cool weather. Wearing warm clothing is recommended.";
+        colorTheme = "#38bdf8"; // Sky Blue
+    } else {
+        advice = "WARNING: Freezing cold temperatures! Wear heavy coats and stay warm.";
+        colorTheme = "#818cf8"; // Indigo
+        alert("Warning: Extreme Cold!");
+    }
+
+    // Output to console
+    console.log("Input: " + tempInput + " | Scale: " + scale + " | Celsius: " + celsius.toFixed(1) + " | Theme: " + colorTheme);
+
+    // Output to DOM
+    let display = document.getElementById("display");
+    display.style.color = colorTheme;
+    display.style.borderColor = colorTheme;
+    display.style.textShadow = "0 0 5px " + colorTheme + "88";
+    display.innerHTML = 
+        "WEATHER REPORT<br>" +
+        "------------------------<br>" +
+        "Celsius: " + celsius.toFixed(1) + "°C<br>" +
+        "Fahrenheit: " + fahrenheit.toFixed(1) + "°F<br>" +
+        "------------------------<br>" +
+        "Advice: " + advice;
 }
 </script>
-
 
 <!-- Floating Download Button -->
 <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
@@ -67,6 +218,10 @@ function show() {
         document.body.removeChild(link);
       });
   }
+</script>
+
+<script>
+  document.write("<p style='text-align:center; color:#475569; font-size:0.85rem; margin-top:30px; font-family: monospace;'>System Diagnostic: Weather Module Online via document.write()</p>");
 </script>
 
 </body>

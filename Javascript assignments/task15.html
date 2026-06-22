@@ -1,47 +1,178 @@
-<!-- TASK 4: Password Strength Checker -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Password Strength</title>
+    <title>Electricity Bill Calculator - Task 15</title>
     <style>
-        body { font-family: Arial; background:#f3f3f3; }
-        .card {
-            width:300px; margin:100px auto; padding:20px;
-            background:white; text-align:center;
-            border-radius:10px; box-shadow:0 0 10px gray;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
         }
-        input {
-            width:90%; padding:10px; margin:10px;
-            border:1px solid gray; border-radius:5px;
+
+        .container {
+            width: 450px;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
         }
-        #msg { font-weight:bold; margin-top:10px; }
+
+        h2 {
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        p.desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .code-box {
+            background: #090d16;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+        }
+
+        .screen {
+            background: #020617;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 18px;
+            min-height: 100px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #ef4444;
+            text-shadow: 0 0 5px rgba(239, 68, 68, 0.4);
+            text-align: left;
+            line-height: 1.5;
+            transition: all 0.3s;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
+        }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Password Strength</h2>
-    <input type="password" id="pass" placeholder="Enter password" onkeyup="check()">
-    <p id="msg"></p>
+<div class="container">
+    <h2>Electricity Bill Calculator</h2>
+    <p class="desc">Practice computing tiered costs based on residential/commercial rates and surcharges for high usage.</p>
+
+    <div class="code-box">
+        <strong>Tested Syllabus Concepts:</strong><br>
+        • alert(), prompt(), console.log()<br>
+        • variables (let, var, const)<br>
+        • operators (arithmetic, assignments, comparison)<br>
+        • conditions (if, else, else-if)<br>
+        • AND (&&) & OR (||) logical operators
+    </div>
+
+    <div class="screen" id="display">
+        System Status: READY<br>
+        Click the button to input units.
+    </div>
+
+    <button onclick="calculateBill()">Calculate Utility Bill</button>
 </div>
 
 <script>
-function check() {
-    let p = document.getElementById("pass").value;
+function calculateBill() {
+    console.log("Starting bill calculation program...");
 
-    if (p.length < 5) {
-        msg.innerHTML = "Weak";
-        msg.style.color = "red";
-    } else if (p.length < 8) {
-        msg.innerHTML = "Medium";
-        msg.style.color = "orange";
-    } else {
-        msg.innerHTML = "Strong";
-        msg.style.color = "green";
+    // Prompts
+    let units = Number(prompt("Enter units consumed:"));
+    let type = prompt("Enter customer type ('residential', 'commercial'):");
+
+    if (isNaN(units) || units < 0) {
+        alert("Error: Units consumed must be a valid positive number.");
+        return;
     }
+
+    if (type === null) type = "residential";
+    type = type.toLowerCase();
+
+    let totalCost = 0;
+    const residentialRates = [5, 8, 12]; // first 100, next 200, above 300
+    const commercialRates = [8, 12, 16];
+
+    let activeRates = (type === "commercial") ? commercialRates : residentialRates;
+
+    // Stepped logic calculations using comparisons
+    if (units <= 100) {
+        totalCost = units * activeRates[0];
+    } else if (units <= 300) {
+        totalCost = (100 * activeRates[0]) + ((units - 100) * activeRates[1]);
+    } else {
+        totalCost = (100 * activeRates[0]) + (200 * activeRates[1]) + ((units - 300) * activeRates[2]);
+    }
+
+    // Logical AND (&&) and OR (||) checking surcharge
+    let surcharge = 0;
+    if (type === "commercial" && units > 500) {
+        surcharge = totalCost * 0.20; // 20% surcharge
+        alert("20% Commercial surcharge tax applied for high usage.");
+    }
+
+    // Flat connection fee using assignment operators
+    let finalBill = totalCost + surcharge;
+    finalBill += 50; // flat fee
+
+    // Log the output using console, alert, and DOM
+    alert("Bill calculated: $" + finalBill.toFixed(2));
+    console.log("Calculated bill for type " + type + " units: " + units + ". Final bill: $" + finalBill);
+
+    let displayElement = document.getElementById("display");
+    displayElement.style.color = "#10b981";
+    displayElement.style.borderColor = "#10b981";
+    displayElement.style.textShadow = "0 0 5px rgba(16, 185, 129, 0.4)";
+    displayElement.innerHTML = 
+        "UTILITY REPORT<br>" +
+        "------------------------<br>" +
+        "Type: " + type.toUpperCase() + "<br>" +
+        "Units: " + units + "<br>" +
+        "Usage Cost: $" + totalCost.toFixed(2) + "<br>" +
+        "Surcharge: $" + surcharge.toFixed(2) + "<br>" +
+        "Fixed Connection: $50.00<br>" +
+        "Final Amount: $" + finalBill.toFixed(2);
 }
 </script>
-
 
 <!-- Floating Download Button -->
 <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
@@ -76,6 +207,10 @@ function check() {
         document.body.removeChild(link);
       });
   }
+</script>
+
+<script>
+  document.write("<p style='text-align:center; color:#475569; font-size:0.85rem; margin-top:30px; font-family: monospace;'>System Diagnostic: Bill Module Online via document.write()</p>");
 </script>
 
 </body>

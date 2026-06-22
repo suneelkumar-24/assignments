@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ATM & Purchase Gateway - Task 13</title>
+    <title>Smart ATM & Order Gateway Challenge</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -96,8 +96,8 @@
 <body>
 
 <div class="container">
-    <h2>ATM & Purchase Gateway</h2>
-    <p class="desc">Evaluating user credentials, processing balances, applying senior & coupon discounts, and verifying transaction limits.</p>
+    <h2>Logical Gateway Challenge</h2>
+    <p class="desc">This simulator evaluates multiple inputs, processes calculations using variables and math operators, checks conditional branch rules, and outputs messages via alerts, console, and document writes.</p>
 
     <div class="code-box">
         <strong>Tested Syllabus Concepts:</strong><br>
@@ -111,7 +111,7 @@
 
     <div class="screen" id="display">
         System Status: READY<br>
-        Click the button below to start.
+        Click the button below to start the logical execution.
     </div>
 
     <button onclick="startLogicalChallenge()">Run Logical Program</button>
@@ -119,32 +119,42 @@
 
 <script>
 function startLogicalChallenge() {
-    console.log("Starting ATM & Purchase Gateway...");
+    // 1. Output method (console.log)
+    console.log("Starting Logical Gateway Challenge...");
 
+    // 2. Constants & Variables
     const correctPin = 5588; 
     let currentBalance = 2500;
     const dailyLimit = 2000;
 
+    // 3. Prompts for input
     alert("Welcome to the Secure ATM & Checkout Gateway.");
     
     let enteredPin = prompt("Enter your 4-digit PIN:");
     
+    // Check if the pin was entered
     if (enteredPin === null || enteredPin === "") {
         alert("Transaction Cancelled: PIN is required.");
+        console.warn("User did not enter a PIN.");
         return;
     }
     
+    // Parse PIN to number
     enteredPin = Number(enteredPin);
 
+    // 4. PIN verification using comparison (===) and Logical NOT (!)
     if (enteredPin !== correctPin) {
         alert("ACCESS DENIED: Incorrect PIN!");
         document.getElementById("display").innerHTML = "STATUS: LOCKOUT<br>Incorrect PIN entered. Transaction aborted.";
         document.getElementById("display").style.color = "#ef4444";
+        console.error("PIN check failed.");
         return;
     }
 
+    // PIN is correct, proceed
     alert("PIN Accepted. Welcome back!");
 
+    // Prompt for action selection
     let action = prompt("Type 'ATM' for cash withdrawal or 'SHOP' for buying goods:");
 
     if (action === null) return;
@@ -152,24 +162,31 @@ function startLogicalChallenge() {
 
     let displayElement = document.getElementById("display");
 
+    // 5. Logical branch conditions
     if (action === "ATM") {
         let withdrawAmount = Number(prompt("Enter amount to withdraw ($):"));
 
         if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
             alert("Error: Invalid withdrawal amount.");
+            console.error("Invalid amount input.");
             return;
         }
 
+        // Logical conditions using AND (&&) & NOT (!)
+        // Rule: Withdrawal must be <= balance AND <= daily limit AND must be multiples of 10 (withdrawAmount % 10 === 0)
         let isDivisibleByTen = (withdrawAmount % 10 === 0);
         let withinLimit = (withdrawAmount <= dailyLimit);
         let sufficientFunds = (withdrawAmount <= currentBalance);
 
         if (sufficientFunds && withinLimit && isDivisibleByTen) {
+            // Assignment operator (-=)
             currentBalance -= withdrawAmount;
             
+            // Output using alert & console
             alert("Dispensing Cash: $" + withdrawAmount);
             console.log("Withdrew: $" + withdrawAmount + ". New Balance: $" + currentBalance);
 
+            // Output rendered to element
             displayElement.innerHTML = "ATM SUCCESS<br>" + 
                                        "------------------------<br>" +
                                        "Withdrawn: $" + withdrawAmount + "<br>" +
@@ -178,10 +195,17 @@ function startLogicalChallenge() {
             displayElement.style.color = "#10b981";
         } 
         else {
+            // Nested checks to give specific errors
             let errorMsg = "ATM TRANSACTION FAILED:<br>";
-            if (!sufficientFunds) errorMsg += "• Error: Insufficient Account Balance.<br>";
-            if (!withinLimit) errorMsg += "• Error: Exceeds daily limit ($" + dailyLimit + ").<br>";
-            if (!isDivisibleByTen) errorMsg += "• Error: ATM only dispenses multiples of $10.<br>";
+            if (!sufficientFunds) {
+                errorMsg += "• Error: Insufficient Account Balance.<br>";
+            }
+            if (!withinLimit) {
+                errorMsg += "• Error: Exceeds maximum daily limit ($" + dailyLimit + ").<br>";
+            }
+            if (!isDivisibleByTen) {
+                errorMsg += "• Error: ATM only dispenses multiples of $10.<br>";
+            }
             
             alert("Transaction Failed. Check screen for details.");
             displayElement.innerHTML = errorMsg;
@@ -199,14 +223,17 @@ function startLogicalChallenge() {
             return;
         }
 
+        // Arithmetic operation (*)
         let subtotal = price * qty;
         let discountPercent = 0;
 
+        // Logical conditions using OR (||)
+        // Rule: Senior citizen discount (age >= 60) OR VIP coupon gets 15% off
         if (age >= 60 || hasCoupon === "VIP") {
-            discountPercent = 0.15;
+            discountPercent = 0.15; // 15% discount
             alert("Congratulations! 15% discount applied.");
         } else if (subtotal >= 500) {
-            discountPercent = 0.10;
+            discountPercent = 0.10; // 10% discount for orders over $500
             alert("Subtotal over $500: 10% discount applied.");
         } else {
             alert("No discount criteria met.");
@@ -215,9 +242,11 @@ function startLogicalChallenge() {
         let discountAmount = subtotal * discountPercent;
         let finalBill = subtotal - discountAmount;
 
+        // Check if finalBill exceeds account balance
         if (finalBill <= currentBalance) {
             currentBalance -= finalBill;
             alert("Purchase Completed successfully! Total billed: $" + finalBill.toFixed(2));
+            console.log("Purchase: $" + finalBill.toFixed(2) + ". Remainder Balance: $" + currentBalance);
 
             displayElement.innerHTML = "PURCHASE SUCCESS<br>" +
                                        "------------------------<br>" +
@@ -233,7 +262,8 @@ function startLogicalChallenge() {
                                        "------------------------<br>" +
                                        "Subtotal: $" + subtotal.toFixed(2) + "<br>" +
                                        "Total Due: $" + finalBill.toFixed(2) + "<br>" +
-                                       "Current Balance: $" + currentBalance.toFixed(2);
+                                       "Current Balance: $" + currentBalance.toFixed(2) + "<br>" +
+                                       "Status: Short by $" + (finalBill - currentBalance).toFixed(2);
             displayElement.style.color = "#ef4444";
         }
     } 
@@ -281,6 +311,7 @@ function startLogicalChallenge() {
 </script>
 
 <script>
+  // Demonstrate document.write output method during parsing
   document.write("<p style='text-align:center; color:#475569; font-size:0.85rem; margin-top:30px; font-family: monospace;'>System Diagnostic: Gateway Initialized via document.write()</p>");
 </script>
 

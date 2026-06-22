@@ -575,6 +575,186 @@ Console: "7 is an odd number."</div>
 Total: "Alert: Your total bill is $900."</div>
       </div>
 
+      <!-- ASSIGNMENT 13 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">ATM & Purchase Gateway</span>
+          <span class="card-badge">Task 13</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Process PIN authentication, withdrawal validation checks, and shopping cart discount algorithms using comparisons and nested conditions.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Authenticate user PIN (default 5588) using strict equality (<code>===</code>).</li>
+          <li>Validate withdrawal limits ($2000 daily limit) and account balances using logical AND (<code>&&</code>).</li>
+          <li>Apply discount calculations using logical OR (<code>||</code>) for senior citizen age or VIP coupons.</li>
+          <li>Output logs to <code>console.log()</code>, <code>alert()</code>, and the screen display.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Input: ATM -> Amount: $500 -> Alert: "Dispensing Cash: $500"</div>
+      </div>
+
+      <!-- ASSIGNMENT 14 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Cart & Shipping Calculator</span>
+          <span class="card-badge">Task 14</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Determine cumulative discounts based on VIP/Gold membership levels, coupons, and distance-based delivery rates.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Accept price, quantity, membership, and delivery distance from prompts.</li>
+          <li>Calculate progressive discount levels (VIP gets 10%, Gold gets 20%, subtotal >= $200 gets extra 5%).</li>
+          <li>Verify coupon code "SAVEMORE" and deduct a flat $15.</li>
+          <li>Apply free shipping if total > $300 OR member is Gold, else charge $2 per km.</li>
+          <li>Print final receipt values using <code>alert()</code>.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">If Subtotal: $250, VIP:
+"Alert: Total bill is $210 (Discount applied + Shipping charged)"</div>
+      </div>
+
+      <!-- ASSIGNMENT 15 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Utility Bill Calculator</span>
+          <span class="card-badge">Task 15</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Compute tiered commercial and residential electricity consumption utility bills.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Collect consumed units and customer type (residential or commercial) via prompts.</li>
+          <li>Apply stepped rates (First 100 units: $5/$8, next 200 units: $8/$12, above 300 units: $12/$16).</li>
+          <li>Charge an extra 20% surcharge using logical AND (<code>&&</code>) if type is commercial and units > 500.</li>
+          <li>Add a flat standard connection fee ($50) using assignment operators.</li>
+          <li>Display the full tiered breakdown on the page.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Units: 150, Residential:
+"Alert: Bill calculated: $950"</div>
+      </div>
+
+      <!-- ASSIGNMENT 16 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Leap Year & Century Detector</span>
+          <span class="card-badge">Task 16</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Verify if a year is a century boundary, check leap year constraints, and predict temporal status.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Prompt the user to enter any calendar year.</li>
+          <li>Detect century boundaries (ends in 00, i.e., <code>year % 100 === 0</code>).</li>
+          <li>Evaluate leap conditions (divisible by 4 but NOT 100, OR divisible by 400).</li>
+          <li>Classify the input year as history, present, or future relative to 2026.</li>
+          <li>Output full logs to <code>console.log()</code> and alert status.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Year: 2000:
+"Alert: 2000 is indeed a Leap Year!"</div>
+      </div>
+
+      <!-- ASSIGNMENT 17 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Rock Paper Scissors Game</span>
+          <span class="card-badge">Task 17</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Build a complete console match against computer random choices with persistent score trackings.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Get player choice and validate choice (rock, paper, scissors) using logical NOT (<code>!</code>).</li>
+          <li>Generate a random computer choice using <code>Math.random()</code>.</li>
+          <li>Compare combinations using logical AND/OR to declare win, loss, or tie.</li>
+          <li>Increment persistent score variables (<code>playerScore++</code>) on scoreboard.</li>
+          <li>Display current match score on page display.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Input: rock -> CPU: scissors:
+"Alert: You won! rock beats scissors."</div>
+      </div>
+
+      <!-- ASSIGNMENT 18 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Temperature & Weather Advisor</span>
+          <span class="card-badge">Task 18</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Translate physical temperature metrics and issue alerts for extreme climates.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Prompt for temperature and scale ('C' or 'F').</li>
+          <li>Convert between scales using arithmetic equations (e.g. <code>C = (F - 32) * 5 / 9</code>).</li>
+          <li>Check range categories: Hot (>= 38°C), Comfortable (22°C-38°C), Cool (5°C-22°C), Freezing (< 5°C).</li>
+          <li>Alert warning notifications for hot/freezing conditions and adjust display color.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">If 45°F:
+"Celsius: 7.2°C. Advice: Cool weather. Wear warm clothing."</div>
+      </div>
+
+      <!-- ASSIGNMENT 19 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Grade & GPA Calculator</span>
+          <span class="card-badge">Task 19</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Process grade performance index reports from multi-subject user inputs.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Request marks for Math, Science, and English via separate prompts.</li>
+          <li>Check that all inputs are valid numbers between 0 and 100.</li>
+          <li>Calculate arithmetic average and assign grades: A (>=90), B (>=80), C (>=70), F (<70).</li>
+          <li>Alert distinction/failure warnings and render details to screen.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Math: 95, Science: 88, English: 91:
+"Alert: Distinction! Awarded Grade A."</div>
+      </div>
+
+      <!-- ASSIGNMENT 20 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Salary Tax Calculator</span>
+          <span class="card-badge">Task 20</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Calculate net monthly salary after regional taxes and fixed health deductions.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Prompt for monthly gross pay and country tax region (US, EU, or Global).</li>
+          <li>Apply US rates (10% under 3k, 20% under 8k, 30% above) or EU rates (15% under 4k, 25% under 9k, 35% above).</li>
+          <li>Charge an extra 3% high-income surcharge tax if gross is > $10,000.</li>
+          <li>Apply a fixed health insurance deduction ($120) using subtraction assignments.</li>
+          <li>Alert net pay and display the salary statement receipt.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Gross: $5000, US region:
+"Alert: Net Pay computed: $3880"</div>
+      </div>
+
     </div>
   </div>
 

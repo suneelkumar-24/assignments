@@ -1,29 +1,176 @@
-<!-- TASK 8: Button Disable After Click -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Disable Button</title>
+    <title>Grade & GPA Calculator - Task 19</title>
     <style>
-        body { text-align:center; font-family:Arial; margin-top:100px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 450px;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        p.desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .code-box {
+            background: #090d16;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+        }
+
+        .screen {
+            background: #020617;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 18px;
+            min-height: 100px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #10b981;
+            text-shadow: 0 0 5px rgba(16, 185, 129, 0.4);
+            text-align: left;
+            line-height: 1.5;
+            transition: all 0.3s;
+        }
+
         button {
-            padding:10px 20px;
-            background:green; color:white;
-            border:none; cursor:pointer;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
         }
     </style>
 </head>
 <body>
 
-<button id="btn" onclick="disableBtn()">Submit</button>
+<div class="container">
+    <h2>Grade & GPA Calculator</h2>
+    <p class="desc">A program calculating subject aggregates, checking boundary ranges, and deciding passing flags.</p>
+
+    <div class="code-box">
+        <strong>Tested Syllabus Concepts:</strong><br>
+        • alert(), prompt(), console.log()<br>
+        • let and const variables<br>
+        • Math average formulas (+, /)<br>
+        • Comparison & logic gates (&&, ||)<br>
+        • Screen formatting outputs
+    </div>
+
+    <div class="screen" id="display">
+        System Status: READY<br>
+        Click to run the grade calculation program.
+    </div>
+
+    <button onclick="calculateGrades()">Start Grade Calculator</button>
+</div>
 
 <script>
-function disableBtn() {
-    let b = document.getElementById("btn");
-    b.disabled = true;
-    b.innerHTML = "Submitted";
+function calculateGrades() {
+    console.log("Starting grade processing module...");
+
+    // Prompts
+    let math = Number(prompt("Enter Math marks (0-100):"));
+    let science = Number(prompt("Enter Science marks (0-100):"));
+    let english = Number(prompt("Enter English marks (0-100):"));
+
+    // Validation using OR (||) and comparisons
+    if (
+        isNaN(math) || math < 0 || math > 100 ||
+        isNaN(science) || science < 0 || science > 100 ||
+        isNaN(english) || english < 0 || english > 100
+    ) {
+        alert("Error: All subject marks must be numbers between 0 and 100.");
+        return;
+    }
+
+    // Arithmetic average
+    let average = (math + science + english) / 3;
+    let grade = "";
+    let colorTheme = "";
+
+    // Grade logic using AND (&&)
+    if (average >= 90) {
+        grade = "A (Excellent)";
+        colorTheme = "#10b981"; // Green
+        alert("Distinction! Awarded Grade A.");
+    } else if (average >= 80 && average < 90) {
+        grade = "B (Good)";
+        colorTheme = "#38bdf8"; // Sky Blue
+    } else if (average >= 70 && average < 80) {
+        grade = "C (Pass)";
+        colorTheme = "#eab308"; // Yellow
+    } else {
+        grade = "F (Fail)";
+        colorTheme = "#ef4444"; // Red
+        alert("Warning: Failed! Grade F. Seek academic advisory.");
+    }
+
+    console.log("Math: " + math + " | Science: " + science + " | English: " + english + " | Avg: " + average.toFixed(1));
+
+    // Display updates
+    let display = document.getElementById("display");
+    display.style.color = colorTheme;
+    display.style.borderColor = colorTheme;
+    display.style.textShadow = "0 0 5px " + colorTheme + "88";
+    display.innerHTML = 
+        "GRADE REPORT CARD<br>" +
+        "------------------------<br>" +
+        "Math: " + math + " / 100<br>" +
+        "Science: " + science + " / 100<br>" +
+        "English: " + english + " / 100<br>" +
+        "------------------------<br>" +
+        "Average: " + average.toFixed(1) + "%<br>" +
+        "Final Grade: " + grade;
 }
 </script>
-
 
 <!-- Floating Download Button -->
 <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
@@ -58,6 +205,10 @@ function disableBtn() {
         document.body.removeChild(link);
       });
   }
+</script>
+
+<script>
+  document.write("<p style='text-align:center; color:#475569; font-size:0.85rem; margin-top:30px; font-family: monospace;'>System Diagnostic: Grading Module Online via document.write()</p>");
 </script>
 
 </body>

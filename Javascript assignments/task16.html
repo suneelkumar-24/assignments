@@ -1,30 +1,177 @@
-<!-- TASK 5: Character Counter -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Character Counter</title>
+    <title>Leap Year & Century Detector - Task 16</title>
     <style>
-        body { font-family: Arial; text-align:center; background:#eee; }
-        textarea {
-            width:300px; height:100px;
-            margin-top:50px; padding:10px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 450px;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        p.desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .code-box {
+            background: #090d16;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+        }
+
+        .screen {
+            background: #020617;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 18px;
+            min-height: 100px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #38bdf8;
+            text-shadow: 0 0 5px rgba(56, 189, 248, 0.4);
+            text-align: left;
+            line-height: 1.5;
+            transition: all 0.3s;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
         }
     </style>
 </head>
 <body>
 
-<h2>Character Counter</h2>
+<div class="container">
+    <h2>Leap Year & Century Detector</h2>
+    <p class="desc">Evaluating century intervals and leap year mathematical conditions using modulo division and combined comparison logic.</p>
 
-<textarea id="text" onkeyup="count()"></textarea>
-<p id="result">0 Characters</p>
+    <div class="code-box">
+        <strong>Tested Syllabus Concepts:</strong><br>
+        • prompt(), alert(), console.log()<br>
+        • Modulo arithmetic operator (%)<br>
+        • Comparative strict equality (===)<br>
+        • Logical AND (&&), OR (||), and NOT (!)<br>
+        • Calendar system conditional algorithms
+    </div>
+
+    <div class="screen" id="display">
+        System Status: READY<br>
+        Click to run the detector program.
+    </div>
+
+    <button onclick="detectYear()">Analyze Year</button>
+</div>
 
 <script>
-function count() {
-    let t = document.getElementById("text").value;
-    document.getElementById("result").innerHTML = t.length + " Characters";
+function detectYear() {
+    console.log("Starting calendar detection algorithm...");
+
+    // Prompts
+    let year = Number(prompt("Enter any calendar year (e.g. 2000):"));
+
+    if (isNaN(year) || year <= 0) {
+        alert("Error: Please enter a valid calendar year.");
+        return;
+    }
+
+    // Calculations & Variables
+    const currentYear = 2026;
+    
+    // Check if it is a century year (divisible by 100) using comparison
+    let isCentury = (year % 100 === 0);
+
+    // Leap year logic check using AND (&&) and OR (||)
+    let isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+
+    // Future year status using logic comparison
+    let isFuture = (year > currentYear);
+
+    // Log diagnostic states
+    console.log("Analyzing Year: " + year + " | Century: " + isCentury + " | Leap: " + isLeap + " | Future: " + isFuture);
+
+    // Build the status report string
+    let statusText = "CALENDAR ANALYSIS REPORT<br>------------------------<br>";
+    statusText += "Year Analyzed: " + year + "<br>";
+
+    if (isLeap) {
+        statusText += "Leap Year Status: YES (Leap Year)<br>";
+        alert(year + " is indeed a Leap Year!");
+    } else {
+        statusText += "Leap Year Status: NO (Common Year)<br>";
+        alert(year + " is a standard common year.");
+    }
+
+    if (isCentury) {
+        statusText += "Century Boundary: YES (Ends in 00)<br>";
+    } else {
+        statusText += "Century Boundary: NO<br>";
+    }
+
+    if (isFuture) {
+        statusText += "Temporal State: FUTURE (Ahead of " + currentYear + ")<br>";
+    } else if (year === currentYear) {
+        statusText += "Temporal State: PRESENT YEAR<br>";
+    } else {
+        statusText += "Temporal State: HISTORICAL PAST<br>";
+    }
+
+    // Set element content
+    let display = document.getElementById("display");
+    display.innerHTML = statusText;
+    display.style.color = isLeap ? "#10b981" : "#38bdf8";
+    display.style.borderColor = isLeap ? "#10b981" : "#334155";
 }
 </script>
-
 
 <!-- Floating Download Button -->
 <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
@@ -59,6 +206,10 @@ function count() {
         document.body.removeChild(link);
       });
   }
+</script>
+
+<script>
+  document.write("<p style='text-align:center; color:#475569; font-size:0.85rem; margin-top:30px; font-family: monospace;'>System Diagnostic: Calendar Module Online via document.write()</p>");
 </script>
 
 </body>

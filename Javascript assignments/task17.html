@@ -1,45 +1,195 @@
-<!-- TASK 6: Simple Price Calculator -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Price Calculator</title>
+    <title>Rock Paper Scissors - Task 17</title>
     <style>
-        body { font-family: Arial; background:#f2f2f2; }
-        .card {
-            width:300px; margin:100px auto; padding:20px;
-            background:white; text-align:center;
-            border-radius:10px; box-shadow:0 0 10px gray;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
         }
-        input {
-            width:90%; padding:10px; margin:10px;
+
+        .container {
+            width: 450px;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
         }
+
+        h2 {
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        p.desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .code-box {
+            background: #090d16;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+        }
+
+        .screen {
+            background: #020617;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 18px;
+            min-height: 100px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #a855f7;
+            text-shadow: 0 0 5px rgba(168, 85, 247, 0.4);
+            text-align: left;
+            line-height: 1.5;
+            transition: all 0.3s;
+        }
+
         button {
-            padding:10px 15px; background:blue; color:white;
-            border:none; cursor:pointer;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Price Calculator</h2>
-    <input type="number" id="price" placeholder="Price">
-    <input type="number" id="qty" placeholder="Quantity">
-    <button onclick="calc()">Total</button>
-    <p id="total"></p>
+<div class="container">
+    <h2>Rock Paper Scissors</h2>
+    <p class="desc">A game checking multiple logical conditions to determine the winner of a match against the computer.</p>
+
+    <div class="code-box">
+        <strong>Tested Syllabus Concepts:</strong><br>
+        • alert(), prompt(), console.log()<br>
+        • global variables & score counters<br>
+        • Math.random() logic<br>
+        • logical AND (&&), OR (||) combinations<br>
+        • increment assignment operators (+=)
+    </div>
+
+    <div class="screen" id="display">
+        SCOREBOARD:<br>
+        Player: 0 | CPU: 0<br>
+        ------------------------<br>
+        Click to play!
+    </div>
+
+    <button onclick="playRound()">Play Game Round</button>
 </div>
 
 <script>
-function calc() {
-    let p = Number(document.getElementById("price").value);
-    let q = Number(document.getElementById("qty").value);
+// Global score state variables
+let playerScore = 0;
+let cpuScore = 0;
 
-    let total = p * q;
+function playRound() {
+    console.log("Starting new match round...");
 
-    document.getElementById("total").innerHTML = "Total: " + total;
+    // Prompts
+    let userChoice = prompt("Type 'rock', 'paper', or 'scissors':");
+
+    if (userChoice === null) return;
+    userChoice = userChoice.toLowerCase();
+
+    // Check invalid inputs using logical OR (||)
+    if (userChoice !== "rock" && userChoice !== "paper" && userChoice !== "scissors") {
+        alert("Error: Invalid input choice. You must type rock, paper, or scissors.");
+        return;
+    }
+
+    // Computer choice using Math.random
+    let randomNum = Math.random();
+    let cpuChoice = "";
+
+    if (randomNum < 0.34) {
+        cpuChoice = "rock";
+    } else if (randomNum < 0.67) {
+        cpuChoice = "paper";
+    } else {
+        cpuChoice = "scissors";
+    }
+
+    let resultMsg = "";
+    let colorTheme = "";
+
+    // Determine winner using comparisons and logic
+    if (userChoice === cpuChoice) {
+        resultMsg = "IT'S A TIE!";
+        colorTheme = "#eab308"; // Yellow
+        alert("Both chose " + userChoice + "! It is a tie.");
+    } 
+    // Check player winning conditions using AND (&&) & OR (||)
+    else if (
+        (userChoice === "rock" && cpuChoice === "scissors") ||
+        (userChoice === "paper" && cpuChoice === "rock") ||
+        (userChoice === "scissors" && cpuChoice === "paper")
+    ) {
+        playerScore += 1; // Increment user score
+        resultMsg = "YOU WIN!";
+        colorTheme = "#10b981"; // Green
+        alert("You won! " + userChoice + " beats " + cpuChoice + ".");
+    } 
+    else {
+        cpuScore += 1; // Increment CPU score
+        resultMsg = "CPU WINS!";
+        colorTheme = "#ef4444"; // Red
+        alert("You lost! " + cpuChoice + " beats " + userChoice + ".");
+    }
+
+    // Console logs
+    console.log("Player: " + userChoice + " | CPU: " + cpuChoice + " | Result: " + resultMsg);
+
+    // Update screen DOM
+    let display = document.getElementById("display");
+    display.style.color = colorTheme;
+    display.style.borderColor = colorTheme;
+    display.style.textShadow = "0 0 5px " + colorTheme + "88";
+    display.innerHTML = 
+        "SCOREBOARD:<br>" +
+        "Player: " + playerScore + " | CPU: " + cpuScore + "<br>" +
+        "------------------------<br>" +
+        "Player: " + userChoice.toUpperCase() + "<br>" +
+        "CPU: " + cpuChoice.toUpperCase() + "<br>" +
+        "Result: " + resultMsg;
 }
 </script>
-
 
 <!-- Floating Download Button -->
 <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
@@ -74,6 +224,10 @@ function calc() {
         document.body.removeChild(link);
       });
   }
+</script>
+
+<script>
+  document.write("<p style='text-align:center; color:#475569; font-size:0.85rem; margin-top:30px; font-family: monospace;'>System Diagnostic: Game Engine Online via document.write()</p>");
 </script>
 
 </body>

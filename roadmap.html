@@ -3,17 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detailed Web Development Roadmap</title>
+  <title>Complete Web Development Roadmap</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
 
     :root {
       --bg-color: #0b0f19;
       --card-bg: rgba(17, 24, 39, 0.7);
       --border-color: rgba(255, 255, 255, 0.08);
       --primary: #38bdf8;
+      --secondary: #a855f7;
+      --accent-pink: #ec4899;
       --text: #f8fafc;
       --text-muted: #94a3b8;
+      
+      --html-color: #e34c26;
+      --css-color: #38bdf8;
+      --js-color: #f7df1e;
+      --project-color: #10b981;
+      --order-color: #f59e0b;
     }
 
     * {
@@ -31,31 +39,13 @@
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
     header {
       text-align: center;
-      margin-bottom: 50px;
-    }
-
-    h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 12px;
-      letter-spacing: -1px;
-    }
-
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 1.15rem;
-      max-width: 600px;
-      margin: 0 auto 25px;
-      line-height: 1.6;
+      margin-bottom: 40px;
     }
 
     .back-btn {
@@ -71,6 +61,7 @@
       font-weight: 600;
       font-size: 0.9rem;
       transition: all 0.3s ease;
+      margin-bottom: 25px;
     }
 
     .back-btn:hover {
@@ -79,32 +70,78 @@
       transform: translateX(-4px);
     }
 
-    /* Roadmap Timeline */
-    .timeline {
-      position: relative;
-      margin: 40px 0;
-      padding-left: 35px;
-      border-left: 2px dashed rgba(255, 255, 255, 0.1);
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
     }
 
-    .node {
-      position: relative;
-      margin-bottom: 60px;
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
     }
 
-    .node::before {
-      content: '';
-      position: absolute;
-      left: -46px;
-      top: 0;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #0f172a;
-      border: 4px solid var(--color);
-      box-shadow: 0 0 15px var(--color);
-      z-index: 10;
+    /* Tab Switcher */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 12px 24px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
       transition: all 0.3s ease;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      color: var(--text);
+      border-color: var(--active-color);
+      box-shadow: 0 0 20px var(--active-shadow);
+      background: var(--active-bg);
+    }
+
+    /* Roadmap Sections */
+    .roadmap-section {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .roadmap-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Grid Layouts */
+    .syllabus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
     }
 
     .card {
@@ -112,115 +149,288 @@
       backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
       border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--section-color);
     }
 
     .card:hover {
-      border-color: var(--color);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(var(--color-rgb), 0.15);
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 0 20px var(--section-shadow);
     }
 
-    .badge-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
+    .card-num {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.04);
+      line-height: 1;
+      user-select: none;
     }
 
-    .badge {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--color);
-      border: 1px solid var(--color);
-      padding: 4px 12px;
-      border-radius: 50px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .badge-info {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 4px 12px;
-      border-radius: 50px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    .node-title {
-      font-size: 1.8rem;
+    .card-title {
+      font-size: 1.35rem;
       font-weight: 700;
       color: var(--text);
-      margin-bottom: 12px;
-    }
-
-    .node-desc {
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 20px;
-      font-size: 1rem;
-    }
-
-    .section-title {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--color);
-      margin-bottom: 10px;
-      margin-top: 15px;
-    }
-
-    .topics-list {
+      margin-bottom: 18px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
+      align-items: center;
+      gap: 10px;
     }
 
-    .topic-tag {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-color);
-      color: var(--text);
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 500;
+    .card-title span {
+      background: var(--section-bg);
+      color: var(--section-color);
+      font-size: 0.8rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
     }
 
     .bullet-list {
-      margin-left: 20px;
-      margin-bottom: 20px;
-      color: var(--text-muted);
-      font-size: 0.95rem;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .bullet-list li {
-      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.98rem;
       line-height: 1.5;
     }
 
-    .project-box {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px dashed var(--color);
-      border-radius: 12px;
-      padding: 15px 20px;
-      margin-top: 15px;
+    .bullet-list li::before {
+      content: "•";
+      color: var(--section-color);
+      font-weight: bold;
+      font-size: 1.2rem;
+      line-height: 1;
     }
 
-    .project-title {
-      font-size: 0.95rem;
+    /* Projects Styling */
+    .section-headline {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin: 30px 0 20px;
+      color: var(--text);
+      border-left: 5px solid var(--project-color);
+      padding-left: 15px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 30px 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--project-color);
+      box-shadow: 0 15px 35px rgba(16, 185, 129, 0.15);
+    }
+
+    .project-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--project-color);
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+
+    .project-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      display: inline-block;
+    }
+
+    .project-name {
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--text);
-      margin-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    /* Learning Order Styling */
+    .flow-container {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 40px;
+      margin-bottom: 40px;
+    }
+
+    .flow-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+      color: var(--text);
+    }
+
+    .flow-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .flow-step-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .flow-step-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--order-color);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.1);
+    }
+
+    .flow-step-num {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--order-color);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .flow-step-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Timeline View for Learning Order */
+    .timeline-view {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 700px;
+      margin: 40px auto 0;
+      padding-left: 20px;
+      border-left: 2px dashed rgba(245, 158, 11, 0.3);
+    }
+
+    .timeline-node {
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .timeline-node::before {
+      content: '';
+      position: absolute;
+      left: -31px;
+      top: 4px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #0f172a;
+      border: 3px solid var(--order-color);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+      z-index: 2;
+    }
+
+    .timeline-content {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .timeline-content span.step-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .timeline-content span.step-count {
+      color: var(--order-color);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    /* Floating Download Button */
+    #assignment-download-btn-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999999;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    #assignment-download-btn-container button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #38bdf8, #a855f7);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+    #assignment-download-btn-container button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(56, 189, 248, 0.5);
     }
   </style>
 </head>
@@ -232,248 +442,1074 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Back to Dashboard
       </a>
-      <h1 style="margin-top: 25px;">Ultimate Web Development Roadmap</h1>
-      <p class="subtitle">A detailed breakdown of every single key concept, project recommendation, and learning target for modern frontend and backend development.</p>
+      <h1>Full Stack Frontend Roadmap</h1>
+      <p class="subtitle">A clean and professional web development curriculum. Master the building blocks of the web, step-by-step.</p>
     </header>
 
-    <div class="timeline">
-      <!-- HTML5 -->
-      <div class="node" style="--color: #e34c26; --color-rgb: 227, 76, 38;">
+    <!-- Tab Switcher Navigation -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('html', this)" style="--active-color: var(--html-color); --active-bg: rgba(227, 76, 38, 0.1); --active-shadow: rgba(227, 76, 38, 0.2)">
+        HTML
+      </button>
+      <button class="tab-btn" onclick="switchTab('css', this)" style="--active-color: var(--css-color); --active-bg: rgba(56, 189, 248, 0.1); --active-shadow: rgba(56, 189, 248, 0.2)">
+        CSS
+      </button>
+      <button class="tab-btn" onclick="switchTab('js', this)" style="--active-color: var(--js-color); --active-bg: rgba(247, 223, 30, 0.1); --active-shadow: rgba(247, 223, 30, 0.2)">
+        JavaScript & DOM
+      </button>
+      <button class="tab-btn" onclick="switchTab('projects', this)" style="--active-color: var(--project-color); --active-bg: rgba(16, 185, 129, 0.1); --active-shadow: rgba(16, 185, 129, 0.2)">
+        Projects
+      </button>
+      <button class="tab-btn" onclick="switchTab('order', this)" style="--active-color: var(--order-color); --active-bg: rgba(245, 158, 11, 0.1); --active-shadow: rgba(245, 158, 11, 0.2)">
+        Learning Order
+      </button>
+    </div>
+
+    <!-- HTML SECTION -->
+    <div id="html-section" class="roadmap-section active">
+      <div class="syllabus-grid" style="--section-color: var(--html-color); --section-shadow: rgba(227, 76, 38, 0.15); --section-bg: rgba(227, 76, 38, 0.1);">
+        
         <div class="card">
-          <div class="badge-row">
-            <span class="badge">Phase 1</span>
-            <span class="badge-info">⏱️ Duration: 1-2 Weeks</span>
-            <span class="badge-info">Difficulty: Beginner</span>
-          </div>
-          <h2 class="node-title">📄 HTML5 (Structuring the Web)</h2>
-          <p class="node-desc">Learn the skeleton of web design. Understand semantic layout containers, form validations, multimedia structures, and critical SEO tags.</p>
-          
-          <div class="section-title">Core Subtopics</div>
-          <div class="topics-list">
-            <span class="topic-tag">Semantic Structure (header, section, footer)</span>
-            <span class="topic-tag">Forms & Input Types</span>
-            <span class="topic-tag">Attributes & Global Values</span>
-            <span class="topic-tag">SEO Meta tags</span>
-            <span class="topic-tag">Inline vs Block elements</span>
-          </div>
-
-          <div class="section-title">Key Learning Outcomes</div>
+          <div class="card-num">01</div>
+          <h2 class="card-title"><span>HTML</span> 1. HTML Structure</h2>
           <ul class="bullet-list">
-            <li>Build structurally correct layouts that search engines can easily parse.</li>
-            <li>Implement complex form validation patterns natively using HTML5 patterns.</li>
-            <li>Understand accessibility attributes (ARIA) for screen readers.</li>
+            <li>DOCTYPE</li>
+            <li>html</li>
+            <li>head</li>
+            <li>body</li>
+            <li>title</li>
           </ul>
+        </div>
 
-          <div class="project-box">
-            <div class="project-title">🎯 Recommended Task</div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Build a multi-tab student admission form using advanced validation constraints and nested tables for course listings.</p>
-          </div>
+        <div class="card">
+          <div class="card-num">02</div>
+          <h2 class="card-title"><span>HTML</span> 2. Content Tags</h2>
+          <ul class="bullet-list">
+            <li>h1 to h6</li>
+            <li>p</li>
+            <li>br</li>
+            <li>hr</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">03</div>
+          <h2 class="card-title"><span>HTML</span> 3. Text Formatting</h2>
+          <ul class="bullet-list">
+            <li>b</li>
+            <li>i</li>
+            <li>u</li>
+            <li>mark</li>
+            <li>del</li>
+            <li>sub</li>
+            <li>sup</li>
+            <li>small</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">04</div>
+          <h2 class="card-title"><span>HTML</span> 4. Links & Media</h2>
+          <ul class="bullet-list">
+            <li>a</li>
+            <li>img</li>
+            <li>favicon (link)</li>
+            <li>iframe</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">05</div>
+          <h2 class="card-title"><span>HTML</span> 5. Lists</h2>
+          <ul class="bullet-list">
+            <li>ul</li>
+            <li>ol</li>
+            <li>li</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">06</div>
+          <h2 class="card-title"><span>HTML</span> 6. Tables</h2>
+          <ul class="bullet-list">
+            <li>table</li>
+            <li>tr</li>
+            <li>th</li>
+            <li>td</li>
+            <li>colspan</li>
+            <li>rowspan</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">07</div>
+          <h2 class="card-title"><span>HTML</span> 7. Layout Elements</h2>
+          <ul class="bullet-list">
+            <li>div</li>
+            <li>span</li>
+            <li>Block Elements</li>
+            <li>Inline Elements</li>
+            <li>class</li>
+            <li>id</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">08</div>
+          <h2 class="card-title"><span>HTML</span> 8. Forms</h2>
+          <ul class="bullet-list">
+            <li>form</li>
+            <li>label</li>
+            <li>input</li>
+            <li>textarea</li>
+            <li>select</li>
+            <li>option</li>
+            <li>button</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">09</div>
+          <h2 class="card-title"><span>HTML</span> 9. Input Types</h2>
+          <ul class="bullet-list">
+            <li>text</li>
+            <li>password</li>
+            <li>email</li>
+            <li>number</li>
+            <li>tel</li>
+            <li>url</li>
+            <li>search</li>
+            <li>date</li>
+            <li>time</li>
+            <li>color</li>
+            <li>range</li>
+            <li>file</li>
+            <li>radio</li>
+            <li>checkbox</li>
+            <li>submit</li>
+            <li>reset</li>
+            <li>button</li>
+            <li>hidden</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CSS SECTION -->
+    <div id="css-section" class="roadmap-section">
+      <div class="syllabus-grid" style="--section-color: var(--css-color); --section-shadow: rgba(56, 189, 248, 0.15); --section-bg: rgba(56, 189, 248, 0.1);">
+        
+        <div class="card">
+          <div class="card-num">10</div>
+          <h2 class="card-title"><span>CSS</span> 10. CSS Introduction</h2>
+          <ul class="bullet-list">
+            <li>Inline CSS</li>
+            <li>Internal CSS</li>
+            <li>External CSS</li>
+            <li>Selectors</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">11</div>
+          <h2 class="card-title"><span>CSS</span> 11. Colors & Backgrounds</h2>
+          <ul class="bullet-list">
+            <li>color</li>
+            <li>background-color</li>
+            <li>background-image</li>
+            <li>opacity</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">12</div>
+          <h2 class="card-title"><span>CSS</span> 12. Borders</h2>
+          <ul class="bullet-list">
+            <li>border</li>
+            <li>border-width</li>
+            <li>border-style</li>
+            <li>border-color</li>
+            <li>border-radius</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">13</div>
+          <h2 class="card-title"><span>CSS</span> 13. Spacing</h2>
+          <ul class="bullet-list">
+            <li>margin</li>
+            <li>padding</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">14</div>
+          <h2 class="card-title"><span>CSS</span> 14. Dimensions</h2>
+          <ul class="bullet-list">
+            <li>width</li>
+            <li>height</li>
+            <li>min-width</li>
+            <li>max-width</li>
+            <li>min-height</li>
+            <li>max-height</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">15</div>
+          <h2 class="card-title"><span>CSS</span> 15. Box Model</h2>
+          <ul class="bullet-list">
+            <li>content</li>
+            <li>padding</li>
+            <li>border</li>
+            <li>margin</li>
+            <li>box-sizing</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">16</div>
+          <h2 class="card-title"><span>CSS</span> 16. Outline</h2>
+          <ul class="bullet-list">
+            <li>outline</li>
+            <li>outline-width</li>
+            <li>outline-style</li>
+            <li>outline-color</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">17</div>
+          <h2 class="card-title"><span>CSS</span> 17. Text Styling</h2>
+          <ul class="bullet-list">
+            <li>text-align</li>
+            <li>text-decoration</li>
+            <li>text-transform</li>
+            <li>line-height</li>
+            <li>letter-spacing</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">18</div>
+          <h2 class="card-title"><span>CSS</span> 18. Fonts</h2>
+          <ul class="bullet-list">
+            <li>font-family</li>
+            <li>font-size</li>
+            <li>font-weight</li>
+            <li>font-style</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">19</div>
+          <h2 class="card-title"><span>CSS</span> 19. Icons</h2>
+          <ul class="bullet-list">
+            <li>Font Awesome</li>
+            <li>Bootstrap Icons</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">20</div>
+          <h2 class="card-title"><span>CSS</span> 20. Links Styling</h2>
+          <ul class="bullet-list">
+            <li>:link</li>
+            <li>:visited</li>
+            <li>:hover</li>
+            <li>:active</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">21</div>
+          <h2 class="card-title"><span>CSS</span> 21. Lists Styling</h2>
+          <ul class="bullet-list">
+            <li>list-style-type</li>
+            <li>list-style-position</li>
+            <li>list-style-image</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">22</div>
+          <h2 class="card-title"><span>CSS</span> 22. Table Styling</h2>
+          <ul class="bullet-list">
+            <li>border-collapse</li>
+            <li>border-spacing</li>
+            <li>width</li>
+            <li>height</li>
+            <li>padding</li>
+            <li>text-align</li>
+            <li>background-color</li>
+            <li>hover effects</li>
+            <li>striped tables</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">23</div>
+          <h2 class="card-title"><span>CSS</span> 23. Display Property</h2>
+          <ul class="bullet-list">
+            <li>block</li>
+            <li>inline</li>
+            <li>inline-block</li>
+            <li>none</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">24</div>
+          <h2 class="card-title"><span>CSS</span> 24. Flexbox</h2>
+          <ul class="bullet-list">
+            <li>display:flex</li>
+            <li>flex-direction</li>
+            <li>justify-content</li>
+            <li>align-items</li>
+            <li>align-content</li>
+            <li>flex-wrap</li>
+            <li>gap</li>
+            <li>flex-grow</li>
+            <li>flex-shrink</li>
+            <li>flex-basis</li>
+            <li>order</li>
+            <li>align-self</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">25</div>
+          <h2 class="card-title"><span>CSS</span> 25. Positioning</h2>
+          <ul class="bullet-list">
+            <li>static</li>
+            <li>relative</li>
+            <li>absolute</li>
+            <li>fixed</li>
+            <li>sticky</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">26</div>
+          <h2 class="card-title"><span>CSS</span> 26. z-index</h2>
+          <ul class="bullet-list">
+            <li>Layer Management</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">27</div>
+          <h2 class="card-title"><span>CSS</span> 27. Overflow</h2>
+          <ul class="bullet-list">
+            <li>visible</li>
+            <li>hidden</li>
+            <li>scroll</li>
+            <li>auto</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">28</div>
+          <h2 class="card-title"><span>CSS</span> 28. Float</h2>
+          <ul class="bullet-list">
+            <li>float:left</li>
+            <li>float:right</li>
+            <li>clear</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">29</div>
+          <h2 class="card-title"><span>CSS</span> 29. CSS Transform (2D)</h2>
+          <ul class="bullet-list">
+            <li>translate()</li>
+            <li>rotate()</li>
+            <li>scale()</li>
+            <li>skew()</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">30</div>
+          <h2 class="card-title"><span>CSS</span> 30. Transition</h2>
+          <ul class="bullet-list">
+            <li>transition-property</li>
+            <li>transition-duration</li>
+            <li>transition-delay</li>
+            <li>transition-timing-function</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">31</div>
+          <h2 class="card-title"><span>CSS</span> 31. Animation</h2>
+          <ul class="bullet-list">
+            <li>@keyframes</li>
+            <li>animation-name</li>
+            <li>animation-duration</li>
+            <li>animation-delay</li>
+            <li>animation-iteration-count</li>
+            <li>animation-direction</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- JAVASCRIPT & DOM SECTION -->
+    <div id="js-section" class="roadmap-section">
+      <div class="syllabus-grid" style="--section-color: var(--js-color); --section-shadow: rgba(247, 223, 30, 0.15); --section-bg: rgba(247, 223, 30, 0.1);">
+        
+        <div class="card">
+          <div class="card-num">36</div>
+          <h2 class="card-title"><span>JS</span> 36. JavaScript Introduction</h2>
+          <ul class="bullet-list">
+            <li>What is JavaScript</li>
+            <li>Adding JavaScript to HTML</li>
+            <li>Internal JS</li>
+            <li>External JS</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">37</div>
+          <h2 class="card-title"><span>JS</span> 37. Output Methods</h2>
+          <ul class="bullet-list">
+            <li>console.log()</li>
+            <li>document.write()</li>
+            <li>alert()</li>
+            <li>prompt()</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">38</div>
+          <h2 class="card-title"><span>JS</span> 38. Variables</h2>
+          <ul class="bullet-list">
+            <li>var</li>
+            <li>let</li>
+            <li>const</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">39</div>
+          <h2 class="card-title"><span>JS</span> 39. Data Types</h2>
+          <ul class="bullet-list">
+            <li>String</li>
+            <li>Number</li>
+            <li>Boolean</li>
+            <li>Undefined</li>
+            <li>Null</li>
+            <li>Object</li>
+            <li>Array</li>
+            <li>Primitive vs Reference Types</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">40</div>
+          <h2 class="card-title"><span>JS</span> 40. Operators</h2>
+          <ul class="bullet-list">
+            <li>Arithmetic Operators</li>
+            <li>Assignment Operators</li>
+            <li>Comparison Operators</li>
+            <li>Logical Operators</li>
+            <li>Ternary Operator</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">41</div>
+          <h2 class="card-title"><span>JS</span> 41. Conditions</h2>
+          <ul class="bullet-list">
+            <li>if</li>
+            <li>else</li>
+            <li>else if</li>
+            <li>Nested if</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">42</div>
+          <h2 class="card-title"><span>JS</span> 42. Logical Conditions</h2>
+          <ul class="bullet-list">
+            <li>AND (&&)</li>
+            <li>OR (||)</li>
+            <li>NOT (!)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">43</div>
+          <h2 class="card-title"><span>JS</span> 43. Switch Statement</h2>
+          <ul class="bullet-list">
+            <li>switch</li>
+            <li>case</li>
+            <li>break</li>
+            <li>default</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">44</div>
+          <h2 class="card-title"><span>JS</span> 44. Loops</h2>
+          <ul class="bullet-list">
+            <li>for</li>
+            <li>while</li>
+            <li>do while</li>
+            <li>for in</li>
+            <li>for of</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">45</div>
+          <h2 class="card-title"><span>JS</span> 45. Functions</h2>
+          <ul class="bullet-list">
+            <li>Function Declaration</li>
+            <li>Parameters</li>
+            <li>Arguments</li>
+            <li>Return Function</li>
+            <li>Function Expressions</li>
+            <li>Arrow Functions</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">46</div>
+          <h2 class="card-title"><span>JS</span> 46. Scope</h2>
+          <ul class="bullet-list">
+            <li>Global Scope</li>
+            <li>Local Scope</li>
+            <li>Block Scope</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">47</div>
+          <h2 class="card-title"><span>JS</span> 47. Objects</h2>
+          <ul class="bullet-list">
+            <li>Object Properties</li>
+            <li>Object Methods</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">48</div>
+          <h2 class="card-title"><span>JS</span> 48. Arrays</h2>
+          <ul class="bullet-list">
+            <li>Creating Arrays</li>
+            <li>Array Methods</li>
+            <li>Looping Arrays</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">49</div>
+          <h2 class="card-title"><span>JS</span> 49. Dates</h2>
+          <ul class="bullet-list">
+            <li>Date Object</li>
+            <li>Date Methods</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">50</div>
+          <h2 class="card-title"><span>JS</span> 50. Math Object</h2>
+          <ul class="bullet-list">
+            <li>Math.random()</li>
+            <li>Math.floor()</li>
+            <li>Math.ceil()</li>
+            <li>Math.round()</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">51</div>
+          <h2 class="card-title"><span>JS</span> 51. Errors & Debugging</h2>
+          <ul class="bullet-list">
+            <li>Syntax Errors</li>
+            <li>Runtime Errors</li>
+            <li>try...catch</li>
+            <li>Debugging Tools</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">52</div>
+          <h2 class="card-title"><span>JS</span> 52. JavaScript Style Guide</h2>
+          <ul class="bullet-list">
+            <li>Naming Conventions</li>
+            <li>Code Formatting</li>
+            <li>Best Practices</li>
+            <li>References (MDN, W3Schools)</li>
+          </ul>
+        </div>
+
+        <!-- DOM MODULES -->
+        <div class="card">
+          <div class="card-num">53</div>
+          <h2 class="card-title"><span>DOM</span> 53. DOM Introduction</h2>
+          <ul class="bullet-list">
+            <li>What is DOM</li>
+            <li>DOM Tree</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">54</div>
+          <h2 class="card-title"><span>DOM</span> 54. DOM Selectors</h2>
+          <ul class="bullet-list">
+            <li>getElementById()</li>
+            <li>getElementsByClassName()</li>
+            <li>getElementsByTagName()</li>
+            <li>querySelector()</li>
+            <li>querySelectorAll()</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">55</div>
+          <h2 class="card-title"><span>DOM</span> 55. DOM Manipulation</h2>
+          <ul class="bullet-list">
+            <li>innerHTML</li>
+            <li>textContent</li>
+            <li>style</li>
+            <li>attributes</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">56</div>
+          <h2 class="card-title"><span>DOM</span> 56. HTML Events</h2>
+          <ul class="bullet-list">
+            <li>onclick</li>
+            <li>ondblclick</li>
+            <li>onmouseover</li>
+            <li>onmouseout</li>
+            <li>onkeydown</li>
+            <li>onkeyup</li>
+            <li>onchange</li>
+            <li>onsubmit</li>
+          </ul>
+        </div>
+
+        <!-- ADVANCED JS -->
+        <div class="card">
+          <div class="card-num">57</div>
+          <h2 class="card-title"><span>ADV</span> 57. Advanced Functions</h2>
+          <ul class="bullet-list">
+            <li>Callback Functions</li>
+            <li>Higher Order Functions</li>
+            <li>Closures</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">58</div>
+          <h2 class="card-title"><span>ADV</span> 58. Advanced Objects</h2>
+          <ul class="bullet-list">
+            <li>Object Methods</li>
+            <li>Destructuring</li>
+            <li>Spread Operator</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">59</div>
+          <h2 class="card-title"><span>ADV</span> 59. Classes</h2>
+          <ul class="bullet-list">
+            <li>class</li>
+            <li>constructor</li>
+            <li>inheritance</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">60</div>
+          <h2 class="card-title"><span>ADV</span> 60. Modules</h2>
+          <ul class="bullet-list">
+            <li>import</li>
+            <li>export</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">61</div>
+          <h2 class="card-title"><span>ADV</span> 61. Typed Arrays</h2>
+          <ul class="bullet-list">
+            <li>Typed Array buffers</li>
+            <li>Int8Array, Uint8Array etc.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">62</div>
+          <h2 class="card-title"><span>DOM</span> 62. DOM Navigation</h2>
+          <ul class="bullet-list">
+            <li>parentElement</li>
+            <li>children</li>
+            <li>nextElementSibling</li>
+            <li>previousElementSibling</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">63</div>
+          <h2 class="card-title"><span>ADV</span> 63. Window Object</h2>
+          <ul class="bullet-list">
+            <li>window</li>
+            <li>location</li>
+            <li>history</li>
+            <li>navigator</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">64</div>
+          <h2 class="card-title"><span>ADV</span> 64. JavaScript Web APIs</h2>
+          <ul class="bullet-list">
+            <li>Fetch API</li>
+            <li>Local Storage</li>
+            <li>Session Storage</li>
+            <li>Geolocation API</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">65</div>
+          <h2 class="card-title"><span>ADV</span> 65. Async JavaScript</h2>
+          <ul class="bullet-list">
+            <li>setTimeout()</li>
+            <li>setInterval()</li>
+            <li>Promises</li>
+            <li>async / await</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">66</div>
+          <h2 class="card-title"><span>ADV</span> 66. jQuery Basics</h2>
+          <ul class="bullet-list">
+            <li>Selectors</li>
+            <li>Events</li>
+            <li>Effects</li>
+            <li>DOM Manipulation</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PROJECTS SECTION -->
+    <div id="projects-section" class="roadmap-section">
+      <!-- HTML & CSS Projects -->
+      <h2 class="section-headline" style="--project-color: var(--html-color);">HTML & CSS Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <span class="project-badge">Project 1</span>
+          <div class="project-icon">👤</div>
+          <h3 class="project-name">Personal Profile Page</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Build a page showcasing your introduction, hobbies, skills, and contact form.</p>
+        </div>
+        <div class="project-card">
+          <span class="project-badge">Project 2</span>
+          <div class="project-icon">🍔</div>
+          <h3 class="project-name">Restaurant Menu</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Create a styled food menu card dashboard layout with images, descriptions, and pricing.</p>
+        </div>
+        <div class="project-card">
+          <span class="project-badge">Project 3</span>
+          <div class="project-icon">📊</div>
+          <h3 class="project-name">Product Table</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Organize data with rowspans, colspans, custom borders, and alternate zebra-striping.</p>
+        </div>
+        <div class="project-card">
+          <span class="project-badge">Project 4</span>
+          <div class="project-icon">🔑</div>
+          <h3 class="project-name">Login Form</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Create a secure-looking, styled login box interface with validated email/password inputs.</p>
+        </div>
+        <div class="project-card">
+          <span class="project-badge">Project 5</span>
+          <div class="project-icon">📝</div>
+          <h3 class="project-name">Registration Form</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Build a detailed form containing checkboxes, radio buttons, dropdown selectors, and textareas.</p>
+        </div>
+        <div class="project-card">
+          <span class="project-badge">Project 6</span>
+          <div class="project-icon">📁</div>
+          <h3 class="project-name">Portfolio Website</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Assemble your work, qualifications, projects, and styling skills into a single complete portal.</p>
+        </div>
+        <div class="project-card">
+          <span class="project-badge">Project 7</span>
+          <div class="project-icon">🚀</div>
+          <h3 class="project-name">Landing Page</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Design a modern sales or product landing page showcasing features, testimonials, and a CTA.</p>
+        </div>
+        <div class="project-card">
+          <span class="project-badge">Project 8</span>
+          <div class="project-icon">📱</div>
+          <h3 class="project-name">Responsive Website</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Make a multi-device layout that responds perfectly to mobile, tablet, and desktop viewports.</p>
         </div>
       </div>
 
-      <!-- CSS3 -->
-      <div class="node" style="--color: #264de4; --color-rgb: 38, 77, 228;">
-        <div class="card">
-          <div class="badge-row">
-            <span class="badge">Phase 2</span>
-            <span class="badge-info">⏱️ Duration: 2-3 Weeks</span>
-            <span class="badge-info">Difficulty: Medium</span>
-          </div>
-          <h2 class="node-title">🎨 CSS3 (Styling & Modern Layouts)</h2>
-          <p class="node-desc">Style your layout containers. Master responsive grid layouts, animations, transitions, variable scopes, and media design patterns.</p>
-          
-          <div class="section-title">Core Subtopics</div>
-          <div class="topics-list">
-            <span class="topic-tag">Flexbox & Grid Alignments</span>
-            <span class="topic-tag">Custom Transitions & Keyframes</span>
-            <span class="topic-tag">Media Queries (Desktop/Mobile)</span>
-            <span class="topic-tag">Box Model Calculations</span>
-            <span class="topic-tag">Pseudo-Classes & Selectors</span>
-          </div>
-
-          <div class="section-title">Key Learning Outcomes</div>
-          <ul class="bullet-list">
-            <li>Create fully responsive card components that adjust dynamically to mobile displays.</li>
-            <li>Write fluid hover transitions, loading spinners, and fading slides without JavaScript.</li>
-            <li>Standardize custom properties (Variables) for dark/light themes.</li>
-          </ul>
-
-          <div class="project-box">
-            <div class="project-title">🎯 Recommended Task</div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Design a responsive e-commerce product gallery with custom hover grid transitions, filtering layout grids, and a dark mode toggle.</p>
-          </div>
+      <!-- JavaScript Projects -->
+      <h2 class="section-headline" style="--project-color: var(--js-color);">JavaScript Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" style="border-color: rgba(247,223,30,0.15)">
+          <span class="project-badge" style="background: rgba(247,223,30,0.1); color: var(--js-color);">Project 1</span>
+          <div class="project-icon">🧮</div>
+          <h3 class="project-name">Calculator</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Design a fully functional arithmetic calculator with screen outputs and key triggers.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(247,223,30,0.15)">
+          <span class="project-badge" style="background: rgba(247,223,30,0.1); color: var(--js-color);">Project 2</span>
+          <div class="project-icon">⏰</div>
+          <h3 class="project-name">Digital Clock</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Build an active clock tracking hours, minutes, and seconds using Date intervals.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(247,223,30,0.15)">
+          <span class="project-badge" style="background: rgba(247,223,30,0.1); color: var(--js-color);">Project 3</span>
+          <div class="project-icon">🔢</div>
+          <h3 class="project-name">Counter App</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Create a numeric tracker dashboard supporting increments, decrements, and reset handlers.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(247,223,30,0.15)">
+          <span class="project-badge" style="background: rgba(247,223,30,0.1); color: var(--js-color);">Project 4</span>
+          <div class="project-icon">📝</div>
+          <h3 class="project-name">To-Do List</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Build an interactive task planner supporting add, delete, and checkmark toggles.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(247,223,30,0.15)">
+          <span class="project-badge" style="background: rgba(247,223,30,0.1); color: var(--js-color);">Project 5</span>
+          <div class="project-icon">✅</div>
+          <h3 class="project-name">Form Validation</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Check email patterns, password constraints, and display immediate visual errors.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(247,223,30,0.15)">
+          <span class="project-badge" style="background: rgba(247,223,30,0.1); color: var(--js-color);">Project 6</span>
+          <div class="project-icon">❓</div>
+          <h3 class="project-name">Quiz App</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Build an interactive multiple choice quiz featuring timer limits and scoreboard logs.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(247,223,30,0.15)">
+          <span class="project-badge" style="background: rgba(247,223,30,0.1); color: var(--js-color);">Project 7</span>
+          <div class="project-icon">🌦️</div>
+          <h3 class="project-name">Weather App</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Connect with external weather REST APIs using fetch to render city temperatures.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(247,223,30,0.15)">
+          <span class="project-badge" style="background: rgba(247,223,30,0.1); color: var(--js-color);">Project 8</span>
+          <div class="project-icon">🗒️</div>
+          <h3 class="project-name">Notes App</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Design a memo board using LocalStorage to persist note cards across refreshes.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(247,223,30,0.15)">
+          <span class="project-badge" style="background: rgba(247,223,30,0.1); color: var(--js-color);">Project 9</span>
+          <div class="project-icon">💵</div>
+          <h3 class="project-name">Expense Tracker</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Track budgets, list logs of transactions, and compute total savings dynamically.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(247,223,30,0.15)">
+          <span class="project-badge" style="background: rgba(247,223,30,0.1); color: var(--js-color);">Project 10</span>
+          <div class="project-icon">🛒</div>
+          <h3 class="project-name">E-Commerce Cart</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Create a product selector that inserts items into an active checkout order list.</p>
         </div>
       </div>
+    </div>
 
-      <!-- JavaScript -->
-      <div class="node" style="--color: #f7df1e; --color-rgb: 247, 223, 30;">
-        <div class="card">
-          <div class="badge-row">
-            <span class="badge">Phase 3</span>
-            <span class="badge-info">⏱️ Duration: 4-5 Weeks</span>
-            <span class="badge-info">Difficulty: Advanced</span>
+    <!-- LEARNING ORDER SECTION -->
+    <div id="order-section" class="roadmap-section">
+      <div class="flow-container">
+        <h2 class="flow-title">Complete Frontend Roadmap Pipeline</h2>
+        
+        <div class="flow-steps-grid">
+          <div class="flow-step-card">
+            <span class="flow-step-num">1</span>
+            <span class="flow-step-name">HTML</span>
           </div>
-          <h2 class="node-title">⚡ JavaScript (Logical Interactions)</h2>
-          <p class="node-desc">Write logic for actions. Master closures, arrays, promises, async operations, API fetches, localStorage, and dynamic DOM manipulation.</p>
-          
-          <div class="section-title">Core Subtopics</div>
-          <div class="topics-list">
-            <span class="topic-tag">DOM Nodes & Events</span>
-            <span class="topic-tag">Asynchronous JavaScript (fetch)</span>
-            <span class="topic-tag">LocalStorage & Session persistence</span>
-            <span class="topic-tag">Scope, Closures & Variables (let/const)</span>
-            <span class="topic-tag">ES6+ array methods (map, filter)</span>
+          <div class="flow-step-card">
+            <span class="flow-step-num">2</span>
+            <span class="flow-step-name">CSS Basics</span>
           </div>
-
-          <div class="section-title">Key Learning Outcomes</div>
-          <ul class="bullet-list">
-            <li>Intercept form submissions, manipulate node lists, and render layout items dynamically.</li>
-            <li>Process external API resources asynchronously using promises or async/await syntax.</li>
-            <li>Persist login states and user activity details securely in local storage.</li>
-          </ul>
-
-          <div class="project-box">
-            <div class="project-title">🎯 Recommended Task</div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Build a persistent dashboard app with real-time stats tracking, task checklists, and JSON-based export backups.</p>
+          <div class="flow-step-card">
+            <span class="flow-step-num">3</span>
+            <span class="flow-step-name">Box Model</span>
           </div>
-        </div>
-      </div>
-
-      <!-- jQuery -->
-      <div class="node" style="--color: #0769ad; --color-rgb: 7, 105, 173;">
-        <div class="card">
-          <div class="badge-row">
-            <span class="badge">Phase 4</span>
-            <span class="badge-info">⏱️ Duration: 1 Week</span>
-            <span class="badge-info">Difficulty: Medium</span>
+          <div class="flow-step-card">
+            <span class="flow-step-num">4</span>
+            <span class="flow-step-name">Display</span>
           </div>
-          <h2 class="node-title">⚙️ jQuery (Simplified Dom Manipulation)</h2>
-          <p class="node-desc">Simplify your scripting. Master quick selectors, basic fades, simple AJAX requests, and interactive plugins.</p>
-          
-          <div class="section-title">Core Subtopics</div>
-          <div class="topics-list">
-            <span class="topic-tag">jQuery Selectors ($)</span>
-            <span class="topic-tag">Fade/Slide/Hide Effects</span>
-            <span class="topic-tag">Event Handlers (.on)</span>
-            <span class="topic-tag">$.ajax() API calls</span>
+          <div class="flow-step-card">
+            <span class="flow-step-num">5</span>
+            <span class="flow-step-name">Flexbox</span>
           </div>
-
-          <div class="section-title">Key Learning Outcomes</div>
-          <ul class="bullet-list">
-            <li>Write less JS code for simple DOM traversal and animations.</li>
-            <li>Handle AJAX calls with cleaner syntax and handle cross-browser compatibilities.</li>
-          </ul>
-
-          <div class="project-box">
-            <div class="project-title">🎯 Recommended Task</div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Build an interactive FAQ dropdown board with smooth slide transitions and dynamic JSON content loading.</p>
+          <div class="flow-step-card">
+            <span class="flow-step-num">6</span>
+            <span class="flow-step-name">Positioning</span>
           </div>
-        </div>
-      </div>
-
-      <!-- PHP -->
-      <div class="node" style="--color: #777bb4; --color-rgb: 119, 123, 180;">
-        <div class="card">
-          <div class="badge-row">
-            <span class="badge">Phase 5</span>
-            <span class="badge-info">⏱️ Duration: 3-4 Weeks</span>
-            <span class="badge-info">Difficulty: Advanced</span>
+          <div class="flow-step-card">
+            <span class="flow-step-num">7</span>
+            <span class="flow-step-name">Animation</span>
           </div>
-          <h2 class="node-title">🐘 PHP (Server-Side Logic)</h2>
-          <p class="node-desc">Program the server. Master sessions, session security, form request processing (GET/POST), file operations, object-oriented concepts, and custom API creation.</p>
-          
-          <div class="section-title">Core Subtopics</div>
-          <div class="topics-list">
-            <span class="topic-tag">Sessions & Cookies</span>
-            <span class="topic-tag">Form Handlers (GET/POST)</span>
-            <span class="topic-tag">File System operations</span>
-            <span class="topic-tag">Object-Oriented Programming (OOP)</span>
-            <span class="topic-tag">Password Hash APIs</span>
+          <div class="flow-step-card">
+            <span class="flow-step-num">8</span>
+            <span class="flow-step-name">Responsive Design</span>
           </div>
-
-          <div class="section-title">Key Learning Outcomes</div>
-          <ul class="bullet-list">
-            <li>Handle user accounts, session states, and secure login verifications.</li>
-            <li>Structure clean server codebases using Object-Oriented principles.</li>
-            <li>Create clean API endpoints to deliver JSON payloads to your frontend.</li>
-          </ul>
-
-          <div class="project-box">
-            <div class="project-title">🎯 Recommended Task</div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Create a secure user login, profile update, and avatar upload system with server-side validation and password encryption.</p>
+          <div class="flow-step-card">
+            <span class="flow-step-num">9</span>
+            <span class="flow-step-name">CSS Grid</span>
+          </div>
+          <div class="flow-step-card">
+            <span class="flow-step-num">10</span>
+            <span class="flow-step-name">Advanced CSS</span>
+          </div>
+          <div class="flow-step-card">
+            <span class="flow-step-num">11</span>
+            <span class="flow-step-name">JavaScript Basics</span>
+          </div>
+          <div class="flow-step-card">
+            <span class="flow-step-num">12</span>
+            <span class="flow-step-name">DOM</span>
+          </div>
+          <div class="flow-step-card">
+            <span class="flow-step-num">13</span>
+            <span class="flow-step-name">Advanced JavaScript</span>
+          </div>
+          <div class="flow-step-card">
+            <span class="flow-step-num">14</span>
+            <span class="flow-step-name">Web APIs</span>
+          </div>
+          <div class="flow-step-card">
+            <span class="flow-step-num">15</span>
+            <span class="flow-step-name">jQuery</span>
+          </div>
+          <div class="flow-step-card">
+            <span class="flow-step-num">16</span>
+            <span class="flow-step-name">Projects</span>
+          </div>
+          <div class="flow-step-card" style="border-color: var(--secondary);">
+            <span class="flow-step-num" style="background: rgba(168,85,247,0.15); color: var(--secondary);">17</span>
+            <span class="flow-step-name">Frontend Development (React / Next.js)</span>
           </div>
         </div>
-      </div>
 
-      <!-- MySQL -->
-      <div class="node" style="--color: #00758f; --color-rgb: 0, 117, 143;">
-        <div class="card">
-          <div class="badge-row">
-            <span class="badge">Phase 6</span>
-            <span class="badge-info">⏱️ Duration: 2-3 Weeks</span>
-            <span class="badge-info">Difficulty: Advanced</span>
+        <div class="timeline-view">
+          <div class="timeline-node">
+            <div class="timeline-content">
+              <span class="step-title">Phase 1: Basic Page Structuring</span>
+              <span class="step-count">HTML (Step 1)</span>
+            </div>
           </div>
-          <h2 class="node-title">🗄️ MySQL (Database Engineering)</h2>
-          <p class="node-desc">Manage data storage. Master SQL queries, database normalizing, keys, tables, joins, operations, and security protocols.</p>
-          
-          <div class="section-title">Core Subtopics</div>
-          <div class="topics-list">
-            <span class="topic-tag">CRUD Operations</span>
-            <span class="topic-tag">Relational Joins (INNER, LEFT)</span>
-            <span class="topic-tag">Primary & Foreign Keys</span>
-            <span class="topic-tag">Prepared Statements (SQLi Prevention)</span>
-            <span class="topic-tag">Normalization Rules</span>
+          <div class="timeline-node">
+            <div class="timeline-content">
+              <span class="step-title">Phase 2: Styling & Core Layouts</span>
+              <span class="step-count">CSS Basics, Box Model, Display, Flexbox, Positioning, Animation (Steps 2-7)</span>
+            </div>
           </div>
-
-          <div class="section-title">Key Learning Outcomes</div>
-          <ul class="bullet-list">
-            <li>Build fully parameterized queries to completely block SQL Injection threats.</li>
-            <li>Structure and design relational schemas with foreign keys and cascade rules.</li>
-            <li>Perform highly efficient relational data joins across multiple tables.</li>
-          </ul>
-
-          <div class="project-box">
-            <div class="project-title">🎯 Recommended Task</div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Design and implement the database schema for a full shopping catalog, supporting relational tables for products, categories, users, and orders.</p>
+          <div class="timeline-node">
+            <div class="timeline-content">
+              <span class="step-title">Phase 3: Advanced Responsive Systems</span>
+              <span class="step-count">Responsive Design, CSS Grid, Advanced CSS (Steps 8-10)</span>
+            </div>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-content">
+              <span class="step-title">Phase 4: Logical Interactivity & DOM</span>
+              <span class="step-count">JavaScript Basics, DOM (Steps 11-12)</span>
+            </div>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-content">
+              <span class="step-title">Phase 5: Modern Engine Logic & Web Integrations</span>
+              <span class="step-count">Advanced JS, Web APIs, jQuery (Steps 13-15)</span>
+            </div>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-content">
+              <span class="step-title">Phase 6: Real-World Experience</span>
+              <span class="step-count">Practice Projects (Step 16)</span>
+            </div>
+          </div>
+          <div class="timeline-node" style="--order-color: var(--secondary);">
+            <div class="timeline-content" style="border-color: rgba(168,85,247,0.2)">
+              <span class="step-title" style="color: var(--text);">Phase 7: Industry Frameworks</span>
+              <span class="step-count" style="color: var(--secondary);">React & Next.js (Step 17)</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-<!-- Floating Download Button -->
-<div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
-  <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-    Download File
-  </button>
-</div>
-<script>
-  function downloadCurrentAssignmentFile() {
-    const url = window.location.href;
-    const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
-    fetch(url)
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.blob();
-      })
-      .then(blob => {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      })
-      .catch(err => {
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+  <!-- Floating Download Button -->
+  <div id="assignment-download-btn-container">
+    <button onclick="downloadCurrentAssignmentFile()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Download File
+    </button>
+  </div>
+
+  <script>
+    function switchTab(sectionId, element) {
+      // Hide all sections
+      document.querySelectorAll('.roadmap-section').forEach(section => {
+        section.classList.remove('active');
       });
-  }
-</script>
+
+      // Show targeted section
+      document.getElementById(sectionId + '-section').classList.add('active');
+
+      // Update active tab styling
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.borderColor = 'var(--border-color)';
+        btn.style.boxShadow = 'none';
+        btn.style.background = 'rgba(255, 255, 255, 0.03)';
+      });
+
+      // Style selected tab
+      element.classList.add('active');
+      const activeColor = element.style.getPropertyValue('--active-color');
+      const activeBg = element.style.getPropertyValue('--active-bg');
+      const activeShadow = element.style.getPropertyValue('--active-shadow');
+      
+      element.style.borderColor = activeColor;
+      element.style.background = activeBg;
+      element.style.boxShadow = `0 0 20px ${activeShadow}`;
+    }
+
+    function downloadCurrentAssignmentFile() {
+      const url = window.location.href;
+      const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.blob();
+        })
+        .then(blob => {
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch(err => {
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+    }
+  </script>
 </body>
 </html>
