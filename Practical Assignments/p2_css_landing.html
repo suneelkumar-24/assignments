@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 2.1 - HTML + CSS Landing Page Project</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
+    .hero { background: linear-gradient(135deg, #0284c7, #38bdf8); padding: 50px 20px; text-align: center; border-bottom: 1px solid #1e293b; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; color: #f8fafc; margin-bottom: 24px; }
+    .badge-tech { background: #38bdf8; color: #0f172a; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; }
+    .code-box { background: #090d16; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: monospace; white-space: pre-wrap; border: 1px solid #1e293b; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="container">
+      <span class="badge-tech mb-3 d-inline-block">LEVEL 2: HTML + CSS</span>
+      <h1 class="fw-bold">Level 2.1: Product Showcase Landing Page</h1>
+      <p class="lead text-light">Combine semantic HTML with CSS Flexbox, custom color schemes, gradients, and buttons.</p>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card p-4">
+          <h3 class="text-info fw-bold mb-3">🎯 Project Objective</h3>
+          <p>Style an HTML page into a sleek product landing page using external or internal CSS.</p>
+          
+          <h4 class="mt-4 fw-bold">Requirements Checklist:</h4>
+          <ul>
+            <li>Build a header with a flexbox navigation bar (<code>display: flex; justify-content: space-between;</code>).</li>
+            <li>Create a hero section with a linear background gradient and call-to-action (CTA) buttons.</li>
+            <li>Design 3 product feature cards using Flexbox or CSS Grid layout.</li>
+            <li>Add subtle CSS hover effects (<code>transform: translateY(-5px); transition: all 0.3s ease;</code>).</li>
+            <li>Use Google Fonts (e.g. Outfit, Inter, or Roboto) instead of browser defaults.</li>
+          </ul>
+        </div>
+
+        <div class="card p-4">
+          <h3 class="text-warning fw-bold mb-3">💻 Starter CSS Code Guide</h3>
+          <div class="code-box">/* Flexbox Navbar Header */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #1e293b;
+}
+
+/* Card Hover Animation */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3);
+}</div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card p-4">
+          <h4 class="text-success fw-bold">📌 Level Metadata</h4>
+          <hr class="border-secondary">
+          <p><strong>Category:</strong> HTML + CSS</p>
+          <p><strong>Difficulty:</strong> Intermediate</p>
+          <p><strong>Prerequisite:</strong> Level 1 (HTML Semantics & Forms)</p>
+          <p><strong>Next Step:</strong> Level 2.2 Portfolio Grid</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999;">
+    <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer;">
+      📥 Download Assignment File
+    </button>
+  </div>
+
+  <script>
+    function downloadCurrentAssignmentFile() {
+      const url = window.location.href;
+      const filename = url.substring(url.lastIndexOf('/') + 1) || 'p2_css_landing.html';
+      fetch(url).then(res => res.blob()).then(blob => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>

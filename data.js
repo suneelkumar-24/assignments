@@ -260,5 +260,59 @@ window.assignmentsData = {
       "name": "JavaScript Interactive Quiz Arena",
       "path": "Practical Assignments/week2.html"
     }
+  ],
+  "progressive": [
+    {
+      "name": "Level 1.1: Personal Resume & Profile Page [HTML]",
+      "path": "Practical Assignments/p1_html_resume.html"
+    },
+    {
+      "name": "Level 1.2: Student Admission & Course Form [HTML]",
+      "path": "Practical Assignments/p1_html_form.html"
+    },
+    {
+      "name": "Level 1.3: Course Timetable & Fee Structure [HTML]",
+      "path": "Practical Assignments/p1_html_table.html"
+    },
+    {
+      "name": "Level 2.1: Product Showcase Landing Page [HTML + CSS]",
+      "path": "Practical Assignments/p2_css_landing.html"
+    },
+    {
+      "name": "Level 2.2: Multi-Page Corporate Portfolio [HTML + CSS]",
+      "path": "Practical Assignments/p2_css_portfolio.html"
+    },
+    {
+      "name": "Level 2.3: Responsive Web Layout & Media Queries [HTML + CSS]",
+      "path": "Practical Assignments/p2_css_responsive.html"
+    },
+    {
+      "name": "Level 3.1: Interactive Quiz & Grade Calculator [HTML + CSS + JS]",
+      "path": "Practical Assignments/p3_js_quiz.html"
+    },
+    {
+      "name": "Level 3.2: Smart Task & Habit Planner (LocalStorage) [HTML + CSS + JS]",
+      "path": "Practical Assignments/p3_js_todo.html"
+    },
+    {
+      "name": "Level 3.3: Weather & Currency REST API App [HTML + CSS + JS]",
+      "path": "Practical Assignments/p3_js_weather_api.html"
+    },
+    {
+      "name": "Level 4.1: Dynamic Student Portal & File Uploader [HTML + CSS + JS + PHP]",
+      "path": "Practical Assignments/p4_php_portal.html"
+    },
+    {
+      "name": "Level 4.2: Secure Auth & Session Management System [HTML + CSS + JS + PHP]",
+      "path": "Practical Assignments/p4_php_auth.html"
+    },
+    {
+      "name": "Level 5.1: Full-Stack Student Management System (SMS) [HTML + CSS + JS + PHP + MySQL]",
+      "path": "Practical Assignments/p5_fullstack_sms.html"
+    },
+    {
+      "name": "Level 5.2: Complete E-Commerce Store & Admin Panel [HTML + CSS + JS + PHP + MySQL]",
+      "path": "Practical Assignments/p5_fullstack_ecommerce.html"
+    }
   ]
 };

@@ -409,6 +409,12 @@
         </div>
 
         <h2 style="color: white">
+          🚀 Progressive Full-Stack Projects Pathway
+          <span class="category-progress" id="progressiveProgress" style="background: linear-gradient(135deg, #ec4899, #a855f7); color: white; border-radius: 50px; padding: 4px 12px; font-weight: 700;">0%</span>
+        </h2>
+        <div id="progressiveGrid" class="grid"></div>
+
+        <h2 style="color: white">
           📄 HTML Assignments
           <span class="category-progress" id="htmlProgress">0%</span>
         </h2>
@@ -510,7 +516,7 @@
       };
 
       // ==================== GLOBAL VARIABLES ====================
-      let assignmentsData = { html: [], js: [], programming: [], mysql: [], practical: [] };
+      let assignmentsData = { html: [], js: [], programming: [], mysql: [], practical: [], progressive: [] };
       let userProgress = {}; // { taskId: true }
       let allTasks = [];
 
@@ -647,6 +653,20 @@
             });
           });
         }
+        // Progressive Projects Pathway
+        if (assignmentsData.progressive && Array.isArray(assignmentsData.progressive)) {
+          assignmentsData.progressive.forEach((item, idx) => {
+            const displayName = item.name || `Progressive Project ${idx + 1}`;
+            allTasks.push({
+              id: `progressive_${idx}`,
+              category: "progressive",
+              displayName: displayName,
+              path: item.path,
+              originalIndex: idx,
+              rawItem: item,
+            });
+          });
+        }
       }
       function getDisplayNameFromPath(path, type, idx) {
         if (!path) return `Task ${idx + 1}`;
@@ -761,7 +781,10 @@
           `${getCategoryProgress("mysql")}%`;
         document.getElementById("practicalProgress").textContent =
           `${getCategoryProgress("practical")}%`;
+        document.getElementById("progressiveProgress").textContent =
+          `${getCategoryProgress("progressive")}%`;
 
+        renderCategoryGrid("progressive", "progressiveGrid");
         renderCategoryGrid("html", "htmlGrid");
         renderCategoryGrid("js", "jsGrid");
         renderCategoryGrid("programming", "progGrid");
