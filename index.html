@@ -122,6 +122,75 @@
         text-align: center;
       }
 
+      .auth-tabs {
+        display: flex;
+        background: #0f172a;
+        border-radius: 0.75rem;
+        padding: 4px;
+        margin-bottom: 1.2rem;
+        border: 1px solid #334155;
+        gap: 4px;
+      }
+
+      .auth-tab {
+        flex: 1;
+        text-align: center;
+        padding: 8px 10px;
+        border-radius: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #94a3b8;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        background: transparent;
+      }
+
+      .auth-tab.active {
+        background: #38bdf8;
+        color: #0f172a;
+        box-shadow: 0 2px 8px rgba(56, 189, 248, 0.35);
+      }
+
+      .cloud-status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 50px;
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .cloud-status-pill:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 10px rgba(56, 189, 248, 0.25);
+      }
+
+      .cloud-status-pill.offline {
+        background: rgba(245, 158, 11, 0.15);
+        color: #fbbf24;
+        border-color: rgba(245, 158, 11, 0.3);
+      }
+
+      .cloud-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #34d399;
+        box-shadow: 0 0 8px #34d399;
+      }
+
+      .cloud-status-pill.offline .cloud-dot {
+        background: #fbbf24;
+        box-shadow: 0 0 8px #fbbf24;
+      }
+
       .sync-toast {
         position: fixed;
         bottom: 20px;
@@ -145,107 +214,246 @@
 
       /* ==================== ELEGANT UNIFIED HEADER ==================== */
       header.app-header {
-        background: rgba(15, 23, 42, 0.9);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        padding: 0.8rem 2rem;
+        background: rgba(11, 17, 32, 0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 0.6rem 1.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #334155;
+        border-bottom: 1px solid rgba(51, 65, 85, 0.6);
         position: sticky;
         top: 0;
         z-index: 1000;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+        width: 100%;
+        gap: 12px;
       }
 
       .header-left {
         display: flex;
         align-items: center;
-        gap: 1.25rem;
+        gap: 12px;
+        flex-shrink: 0;
       }
 
       .brand-box {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         text-decoration: none;
       }
 
       .brand-logo-icon {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #38bdf8, #818cf8);
-        border-radius: 12px;
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, #38bdf8, #6366f1);
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.3rem;
-        box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4);
+        font-size: 1.2rem;
+        box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+        flex-shrink: 0;
       }
 
       .brand-info {
         display: flex;
         flex-direction: column;
+        justify-content: center;
       }
 
       .brand-title {
-        font-size: 1.2rem;
+        font-size: 1.05rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #ffffff, #cbd5e1);
+        background: linear-gradient(135deg, #ffffff, #e2e8f0);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         letter-spacing: -0.3px;
+        line-height: 1.1;
       }
 
       .brand-mentors {
-        font-size: 0.72rem;
+        font-size: 0.7rem;
         color: #38bdf8;
         font-weight: 600;
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 3px;
       }
 
       .roadmap-header-btn {
         text-decoration: none;
-        font-size: 0.82rem;
-        padding: 6px 14px;
-        background: linear-gradient(135deg, #38bdf8, #a855f7);
-        color: white;
+        font-size: 0.78rem;
+        padding: 0 12px;
+        height: 34px;
+        background: rgba(56, 189, 248, 0.12);
+        border: 1px solid rgba(56, 189, 248, 0.35);
+        color: #38bdf8;
         border-radius: 50px;
         font-weight: 600;
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: 5px;
         cursor: pointer;
-        transition: all 0.25s ease;
-        box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+        box-sizing: border-box;
       }
 
       .roadmap-header-btn:hover {
+        background: #38bdf8;
+        color: #0f172a;
         transform: translateY(-1px);
-        box-shadow: 0 6px 16px rgba(56, 189, 248, 0.4);
+        box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
       }
 
       .header-right {
         display: flex;
         align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
+        gap: 6px;
+        flex-shrink: 0;
+        flex-wrap: nowrap;
       }
 
-      .user-profile-pill {
-        display: flex;
+      .cloud-status-pill {
+        display: inline-flex;
         align-items: center;
-        gap: 8px;
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid #334155;
-        padding: 4px 12px 4px 6px;
+        gap: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0 10px;
+        height: 34px;
+        border-radius: 50px;
+        background: rgba(16, 185, 129, 0.12);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        box-sizing: border-box;
+        flex-shrink: 0;
+      }
+
+      .cloud-status-pill.offline {
+        background: rgba(245, 158, 11, 0.12);
+        color: #fbbf24;
+        border-color: rgba(245, 158, 11, 0.3);
+      }
+
+      .cloud-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #34d399;
+        box-shadow: 0 0 6px #34d399;
+      }
+
+      .cloud-status-pill.offline .cloud-dot {
+        background: #fbbf24;
+        box-shadow: 0 0 6px #fbbf24;
+      }
+
+      /* Timer Widget in Header */
+      .timer-widget {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(51, 65, 85, 0.7);
+        padding: 0 8px;
+        height: 34px;
+        border-radius: 50px;
+        font-size: 0.78rem;
+        color: #e2e8f0;
+        box-sizing: border-box;
+        flex-shrink: 0;
+      }
+
+      .timer-display {
+        font-family: monospace;
+        font-weight: 700;
+        font-size: 0.82rem;
+        color: #38bdf8;
+        letter-spacing: 0.5px;
+      }
+
+      .timer-btn {
+        background: rgba(51, 65, 85, 0.6);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        color: #e2e8f0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+        cursor: pointer;
+        transition: all 0.15s;
+        padding: 0;
+      }
+
+      .timer-btn:hover {
+        background: #38bdf8;
+        color: #0f172a;
+      }
+
+      /* Header Smart Buttons (Achievements & Theme) */
+      .smart-btn {
+        background: rgba(30, 41, 59, 0.65);
+        border: 1px solid rgba(51, 65, 85, 0.7);
+        color: #e2e8f0;
+        padding: 0 10px;
+        height: 34px;
+        border-radius: 50px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+        flex-shrink: 0;
+      }
+
+      .smart-btn:hover {
+        background: rgba(56, 189, 248, 0.15);
+        border-color: rgba(56, 189, 248, 0.4);
+        color: #ffffff;
+        transform: translateY(-1px);
+      }
+
+      /* Rank Badge */
+      .rank-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 0 10px;
+        height: 34px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        box-sizing: border-box;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+
+      /* User Profile Pill */
+      .user-profile-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(30, 41, 59, 0.75);
+        border: 1px solid rgba(51, 65, 85, 0.8);
+        padding: 0 10px 0 4px;
+        height: 34px;
         border-radius: 50px;
         cursor: pointer;
         transition: all 0.2s ease;
+        box-sizing: border-box;
+        flex-shrink: 0;
       }
 
       .user-profile-pill:hover {
@@ -256,8 +464,8 @@
       }
 
       .user-avatar-circle {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
         background: linear-gradient(135deg, #facc15, #f97316);
         color: #0f172a;
@@ -265,28 +473,34 @@
         align-items: center;
         justify-content: center;
         font-weight: 800;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        flex-shrink: 0;
       }
 
       .user-name-label {
         color: #f8fafc;
-        font-weight: 600;
-        font-size: 0.85rem;
+        font-weight: 700;
+        font-size: 0.8rem;
+        white-space: nowrap;
       }
 
       .logout-action-btn {
         background: rgba(239, 68, 68, 0.12);
         border: 1px solid rgba(239, 68, 68, 0.35);
         color: #f87171;
-        padding: 6px 14px;
+        padding: 0 11px;
+        height: 34px;
         border-radius: 50px;
-        font-size: 0.82rem;
+        font-size: 0.76rem;
         font-weight: 600;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: 5px;
         transition: all 0.2s ease;
+        box-sizing: border-box;
+        flex-shrink: 0;
+        white-space: nowrap;
       }
 
       .logout-action-btn:hover {
@@ -294,6 +508,25 @@
         color: white;
         border-color: #ef4444;
         box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+      }
+
+      @media (max-width: 1024px) {
+        header.app-header {
+          padding: 0.5rem 1rem;
+          flex-direction: column;
+          gap: 8px;
+          align-items: stretch;
+        }
+        .header-left {
+          justify-content: space-between;
+          width: 100%;
+        }
+        .header-right {
+          justify-content: flex-start;
+          overflow-x: auto;
+          padding-bottom: 4px;
+          width: 100%;
+        }
       }
 
       .container {
@@ -1029,23 +1262,33 @@
     <!-- Login Page -->
     <div id="loginPage" class="login-page">
       <div class="login-card">
+        <div style="text-align: center; margin-bottom: 0.8rem;">
+          <span style="font-size: 0.78rem; font-weight: 700; color: #38bdf8; letter-spacing: 0.5px;">⚡ STUDENT PORTAL</span>
+        </div>
+
         <h2>📚 TaskFlow Pro</h2>
-        <p>Login to sync your progress across devices</p>
-        <div class="input-group">
-          <label>Username</label>
-          <input
-            type="text"
-            id="username"
-            placeholder="Enter username"
-            autocomplete="off"
-          />
-        </div>
-        <div class="input-group">
-          <label>Password</label>
-          <input type="password" id="password" placeholder="Enter password" />
-        </div>
-        <button class="login-btn" onclick="handleLogin()">Login →</button>
+        <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">Sign in with your student credentials assigned by your instructor/admin</p>
+
+        <!-- Student Login Form -->
+        <form onsubmit="event.preventDefault(); handleLogin();">
+          <div class="input-group">
+            <label>Username</label>
+            <input
+              type="text"
+              id="username"
+              placeholder="Enter student username (e.g. papu, saqib)"
+              autocomplete="username"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter password" autocomplete="current-password" required />
+          </div>
+          <button type="submit" id="loginSubmitBtn" class="login-btn">Login to TaskFlow →</button>
+        </form>
         <div id="loginError" class="error-msg"></div>
+
         <div
           id="quote"
           style="
@@ -1058,7 +1301,7 @@
           ✨
         </div>
         <div style="text-align: center; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(51, 65, 85, 0.4);">
-          <a href="admin.html" style="color: #38bdf8; font-size: 0.82rem; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+          <a href="admin.html" style="color: #38bdf8; font-size: 0.82rem; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
             🛡️ Admin Control Panel →
           </a>
         </div>
@@ -1069,7 +1312,7 @@
     <div id="dashboard" class="dashboard">
       <!-- Elegant Unified Header -->
       <header class="app-header">
-        <!-- Left: Brand Title & Mentors + Roadmap Button -->
+        <!-- Left: Brand Title & Mentors -->
         <div class="header-left">
           <div class="brand-box">
             <div class="brand-logo-icon">📊</div>
@@ -1080,14 +1323,16 @@
               </span>
             </div>
           </div>
-
-          <a href="roadmap.html" class="roadmap-header-btn">
-            🗺️ Learning Roadmap
-          </a>
         </div>
 
         <!-- Right: Study Timer, Badges, Theme, Rank, User & Logout -->
         <div class="header-right">
+          <!-- Supabase Cloud Status Indicator -->
+          <div class="cloud-status-pill" id="headerCloudStatus" onclick="openSupabaseModal()" title="Supabase Database - Click to configure">
+            <span class="cloud-dot"></span>
+            <span id="headerCloudStatusText">Supabase Synced</span>
+          </div>
+
           <!-- Focus Timer Widget -->
           <div class="timer-widget">
             <span>⏱️</span>
@@ -1141,6 +1386,11 @@
           </div>
 
           <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <!-- Learning Roadmap Button -->
+            <a href="roadmap.html" class="smart-btn" style="background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(168,85,247,0.25)); border-color: rgba(56,189,248,0.45); color: #38bdf8; text-decoration: none;" title="Open Learning Roadmap">
+              🗺️ Learning Roadmap
+            </a>
+
             <!-- Jump to Next Uncompleted Task -->
             <button class="smart-btn smart-btn-primary" onclick="jumpToNextTask()">
               🎯 Continue Learning →
@@ -1445,6 +1695,46 @@
         </div>
       </div>
 
+      <!-- Supabase Configuration Modal -->
+      <div id="supabaseModal" class="modal-overlay" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-card" style="max-width: 500px; padding: 1.4rem 1.6rem;">
+          <div class="modal-header" style="margin-bottom: 0.8rem;">
+            <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.1rem;">
+              <span style="color: #34d399;">⚡</span> Supabase Database Configuration
+            </h3>
+            <button class="modal-close" onclick="closeSupabaseModal()">&times;</button>
+          </div>
+
+          <p style="color: #94a3b8; font-size: 0.82rem; margin-bottom: 1rem; line-height: 1.4;">
+            Connect your PostgreSQL Supabase cloud database to persist students, real-time login activity, and assignment task history across all devices.
+          </p>
+
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; border-radius: 8px; padding: 10px 12px; margin-bottom: 1rem; font-size: 0.8rem; color: #cbd5e1;">
+            <div style="font-weight: 700; color: #38bdf8; margin-bottom: 4px;">📋 Database Schema:</div>
+            <div>Run the SQL script from <code style="color: #facc15;">supabase_schema.sql</code> in your Supabase SQL Editor to create tables.</div>
+          </div>
+
+          <form onsubmit="handleSaveSupabaseConfig(event)">
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; font-size: 0.75rem; color: #94a3b8; margin-bottom: 3px; font-weight: 600;">Supabase Project URL</label>
+              <input type="url" id="modalSupabaseUrl" style="width: 100%; background: #090d16; border: 1px solid #334155; border-radius: 8px; padding: 7px 10px; color: white; outline: none; font-size: 0.85rem;" placeholder="https://xyzproject.supabase.co" />
+            </div>
+
+            <div style="margin-bottom: 12px;">
+              <label style="display: block; font-size: 0.75rem; color: #94a3b8; margin-bottom: 3px; font-weight: 600;">Supabase Anon Public API Key</label>
+              <input type="password" id="modalSupabaseKey" style="width: 100%; background: #090d16; border: 1px solid #334155; border-radius: 8px; padding: 7px 10px; color: white; outline: none; font-size: 0.85rem;" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
+            </div>
+
+            <div id="supabaseConfigMsg" style="min-height: 20px; font-size: 0.82rem; margin-bottom: 10px; text-align: center;"></div>
+
+            <div style="display: flex; gap: 8px;">
+              <button type="button" class="smart-btn" style="flex: 1; justify-content: center; padding: 7px;" onclick="testSupabaseConnectionUI()">🔌 Test</button>
+              <button type="submit" class="smart-btn smart-btn-primary" style="flex: 1; justify-content: center; padding: 7px;">💾 Save & Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
       <!-- Premium Multi-Column Footer -->
       <footer class="app-footer">
         <div class="footer-container">
@@ -1490,8 +1780,8 @@
                 <span id="footerTotalTasks">243 Active</span>
               </div>
               <div class="footer-stat-pill">
-                <span>Storage Security</span>
-                <span>Encrypted Local</span>
+                <span>Database Engine</span>
+                <span id="footerDbEngine">⚡ Supabase Cloud</span>
               </div>
               <div class="footer-stat-pill">
                 <span>Environment</span>
@@ -1521,6 +1811,9 @@
     </div>
     <div id="syncToast" class="sync-toast">✅ Progress synced</div>
 
+    <!-- Supabase JS Client & Database Layer -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
     <script src="data.js"></script>
     <script>
       // Curated Knowledge & Tech Motivational Quotes
@@ -1808,7 +2101,7 @@
         document.getElementById("profileModal").style.display = "none";
       }
 
-      function handleChangePassword(e) {
+      async function handleChangePassword(e) {
         e.preventDefault();
         const currentPass = document.getElementById("currentPasswordInput").value.trim();
         const newPass = document.getElementById("newPasswordInput").value.trim();
@@ -1827,22 +2120,19 @@
           return;
         }
 
-        let users = getRegisteredUsersList();
-        const userObj = users.find((u) => u.username === currentUser.username);
+        msgEl.style.color = "#38bdf8";
+        msgEl.textContent = "Updating password in database...";
 
-        if (!userObj || userObj.password !== currentPass) {
+        const result = await TaskFlowDB.changePassword(currentUser.username, currentPass, newPass);
+
+        if (!result.success) {
           msgEl.style.color = "#f87171";
-          msgEl.textContent = "❌ Current password is incorrect.";
+          msgEl.textContent = `❌ ${result.message}`;
           return;
         }
 
-        // Update password in database
-        userObj.password = newPass;
-        localStorage.setItem("taskflow_users_db", JSON.stringify(users));
-        USERS = users;
-
         msgEl.style.color = "#34d399";
-        msgEl.textContent = "✅ Password updated successfully!";
+        msgEl.textContent = "✅ Password updated successfully in Supabase!";
         showSyncToast("✅ Password changed successfully!");
         setTimeout(() => {
           closeProfileModal();
@@ -1858,6 +2148,9 @@
         }
         if (e.target.id === "profileModal") {
           closeProfileModal();
+        }
+        if (e.target.id === "supabaseModal") {
+          closeSupabaseModal();
         }
       }
 
@@ -2141,63 +2434,49 @@
         return `Task ${idx + 1}`;
       }
 
-      // ==================== PROGRESS STORAGE (localStorage per user) ====================
-      function getProgressStorageKey() {
-        return `taskflow_progress_${currentUser.username}`;
-      }
-
-      function loadUserProgress() {
+      // ==================== PROGRESS STORAGE (Supabase Cloud + Local Mirror) ====================
+      async function loadUserProgress() {
         if (!currentUser) return;
-        const storageKey = getProgressStorageKey();
-        const stored = localStorage.getItem(storageKey);
-        if (stored) {
-          try {
-            userProgress = JSON.parse(stored) || {};
-          } catch (e) {
-            userProgress = {};
-          }
-        } else {
+        try {
+          userProgress = (await TaskFlowDB.getUserProgress(currentUser.username)) || {};
+        } catch (e) {
           userProgress = {};
         }
-        // ensure only valid task IDs exist (cleanup if needed)
+        // ensure only valid task IDs exist
         const validIds = new Set(allTasks.map((t) => t.id));
-        let changed = false;
         Object.keys(userProgress).forEach((id) => {
           if (!validIds.has(id)) {
             delete userProgress[id];
-            changed = true;
           }
         });
-        if (changed) saveUserProgress();
       }
 
-      function saveUserProgress() {
-        if (!currentUser) return;
-        const storageKey = getProgressStorageKey();
-        localStorage.setItem(storageKey, JSON.stringify(userProgress));
-        showSyncToast();
-      }
-
-      function toggleTask(taskId, isChecked) {
+      async function toggleTask(taskId, isChecked) {
         if (isChecked) {
           userProgress[taskId] = true;
         } else {
           delete userProgress[taskId];
         }
-        saveUserProgress();
         renderDashboard();
+
+        const task = allTasks.find((t) => t.id === taskId);
+        const category = task ? task.category : "general";
+        const displayName = task ? task.displayName : taskId;
+
+        showSyncToast(isChecked ? "💾 Saved to Supabase ✅" : "💾 Updated in Supabase");
+        await TaskFlowDB.setTaskProgress(currentUser.username, taskId, category, isChecked, displayName);
       }
 
-      function resetAllProgress() {
+      async function resetAllProgress() {
         if (
           confirm(
-            "⚠️ Reset ALL your completed tasks? This action is permanent for your account.",
+            "⚠️ Reset ALL your completed tasks? This action will clear your progress in Supabase.",
           )
         ) {
           userProgress = {};
-          saveUserProgress();
           renderDashboard();
-          showSyncToast("🔄 All progress reset");
+          showSyncToast("🔄 All progress reset in database");
+          await TaskFlowDB.resetUserProgress(currentUser.username);
         }
       }
 
@@ -2434,87 +2713,91 @@
         }, 1800);
       }
 
-      // ==================== LOGIN & PERSISTENCE ====================
-      function handleLogin() {
-        const username = document
-          .getElementById("username")
-          .value.trim()
-          .toLowerCase();
+      // ==================== LOGIN & SESSION (SUPABASE CLOUD) ====================
+      async function handleLogin() {
+        const username = document.getElementById("username").value.trim().toLowerCase();
         const password = document.getElementById("password").value;
         const errorDiv = document.getElementById("loginError");
+        const submitBtn = document.getElementById("loginSubmitBtn");
 
         if (!username || !password) {
           errorDiv.textContent = "Please enter username and password";
           return;
         }
-        USERS = getRegisteredUsersList();
-        const user = USERS.find(
-          (u) => u.username === username && u.password === password,
-        );
-        if (user) {
-          currentUser = { username: user.username };
-          document.getElementById("currentUsername").innerHTML =
-            `👤 ${currentUser.username}`;
-          // IMPORTANT: load assignments first then progress because tasks list needed
-          // but we will load assignments async and then reload progress after tasks built
-          loadUserProgress(); // initial empty before tasks, but we will re-call after assignments load
-          // show dashboard
-          document.getElementById("loginPage").style.display = "none";
-          document.getElementById("dashboard").style.display = "block";
-          // Save session
-          saveSession();
-          // load assignments (which calls buildTasksList + renderDashboard)
-          loadAssignments()
-            .then(() => {
-              // After assignments are loaded & tasks built, reload progress to ensure consistency
-              // and re-render with actual task IDs
-              loadUserProgress(); // re-fetch progress now that allTasks is populated
-              renderDashboard();
-            })
-            .catch(() => {
-              // fallback
-              buildTasksList();
-              loadUserProgress();
-              renderDashboard();
-            });
-        } else {
-          errorDiv.textContent = "Invalid username or password";
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Connecting to Supabase...";
+        }
+        errorDiv.textContent = "";
+
+        const result = await TaskFlowDB.login(username, password);
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Login to TaskFlow →";
+        }
+
+        if (!result.success) {
+          errorDiv.textContent = `❌ ${result.message}`;
+          return;
+        }
+
+        currentUser = {
+          username: result.user.username,
+          name: result.user.name,
+          role: result.user.role || "student",
+          source: result.user.source || "supabase",
+        };
+
+        document.getElementById("currentUsername").innerHTML = `👤 ${currentUser.username}`;
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+
+        saveSession();
+        updateCloudStatusBadges();
+
+        try {
+          await loadAssignments();
+          await loadUserProgress();
+          renderDashboard();
+          showSyncToast(`👋 Welcome back, ${currentUser.name}!`);
+        } catch (e) {
+          buildTasksList();
+          await loadUserProgress();
+          renderDashboard();
         }
       }
 
-      // Auto-restore session on page load (refresh)
-      function autoRestoreSession() {
+      // Auto-restore session on page load
+      async function autoRestoreSession() {
         const sessionUser = restoreSession();
-        if (sessionUser) {
-          USERS = getRegisteredUsersList();
-          const matched = USERS.find(
-            (u) => u.username === sessionUser.username,
-          );
-          if (matched) {
-            currentUser = { username: matched.username };
-            document.getElementById("currentUsername").innerHTML =
-              `👤 ${currentUser.username}`;
-            document.getElementById("loginPage").style.display = "none";
-            document.getElementById("dashboard").style.display = "block";
-            // Load data & progress
-            loadAssignments()
-              .then(() => {
-                loadUserProgress();
-                renderDashboard();
-              })
-              .catch(() => {
-                buildTasksList();
-                loadUserProgress();
-                renderDashboard();
-              });
-            return true;
+        if (sessionUser && sessionUser.username) {
+          currentUser = {
+            username: sessionUser.username,
+            name: sessionUser.username,
+            role: "student",
+          };
+          document.getElementById("currentUsername").innerHTML = `👤 ${currentUser.username}`;
+          document.getElementById("loginPage").style.display = "none";
+          document.getElementById("dashboard").style.display = "block";
+          updateCloudStatusBadges();
+
+          try {
+            await loadAssignments();
+            await loadUserProgress();
+            renderDashboard();
+          } catch (e) {
+            buildTasksList();
+            await loadUserProgress();
+            renderDashboard();
           }
+          return true;
         }
         return false;
       }
 
       function logout() {
-        // clear session and reset UI
         localStorage.removeItem(SESSION_KEY);
         currentUser = null;
         userProgress = {};
@@ -2524,31 +2807,132 @@
         document.getElementById("username").value = "";
         document.getElementById("password").value = "";
         document.getElementById("loginError").textContent = "";
-        // optional: clear any temporary data
+        updateCloudStatusBadges();
       }
 
-      // Final initialization: either restore session or wait for login
-      window.addEventListener("DOMContentLoaded", () => {
-        const restored = autoRestoreSession();
-        if (!restored) {
-          // show login page and ensure dashboard hidden
-          document.getElementById("loginPage").style.display = "flex";
-          document.getElementById("dashboard").style.display = "none";
+      // ==================== SUPABASE CONFIG MODAL ====================
+      function openSupabaseModal() {
+        const config = TaskFlowDB.getConfig();
+        const urlInput = document.getElementById("modalSupabaseUrl");
+        const keyInput = document.getElementById("modalSupabaseKey");
+        const msgDiv = document.getElementById("supabaseConfigMsg");
+
+        if (urlInput) urlInput.value = config.url || "";
+        if (keyInput) keyInput.value = config.anonKey || "";
+        if (msgDiv) msgDiv.textContent = "";
+
+        document.getElementById("supabaseModal").style.display = "flex";
+      }
+
+      function closeSupabaseModal() {
+        document.getElementById("supabaseModal").style.display = "none";
+      }
+
+      async function handleSaveSupabaseConfig(e) {
+        e.preventDefault();
+        const url = document.getElementById("modalSupabaseUrl").value.trim();
+        const key = document.getElementById("modalSupabaseKey").value.trim();
+        const msgDiv = document.getElementById("supabaseConfigMsg");
+
+        TaskFlowDB.saveConfig(url, key);
+        msgDiv.style.color = "#38bdf8";
+        msgDiv.textContent = "Testing connection...";
+
+        const test = await TaskFlowDB.testConnection();
+        if (test.success) {
+          msgDiv.style.color = "#34d399";
+          msgDiv.textContent = `✅ Connected to Supabase Database successfully!`;
+          updateCloudStatusBadges();
+          showSyncToast("⚡ Connected to Supabase Cloud!");
+          setTimeout(() => {
+            closeSupabaseModal();
+            if (currentUser) {
+              loadUserProgress().then(() => renderDashboard());
+            }
+          }, 1200);
+        } else {
+          msgDiv.style.color = "#fbbf24";
+          msgDiv.textContent = `⚠️ Saved. (Note: ${test.message} — check your SQL schema & keys).`;
+          updateCloudStatusBadges();
         }
-        // attach enter key handlers
+      }
+
+      async function testSupabaseConnectionUI() {
+        const url = document.getElementById("modalSupabaseUrl").value.trim();
+        const key = document.getElementById("modalSupabaseKey").value.trim();
+        const msgDiv = document.getElementById("supabaseConfigMsg");
+
+        if (!url || !key) {
+          msgDiv.style.color = "#f87171";
+          msgDiv.textContent = "❌ Please enter both URL and Anon Key first.";
+          return;
+        }
+
+        TaskFlowDB.saveConfig(url, key);
+        msgDiv.style.color = "#38bdf8";
+        msgDiv.textContent = "Testing connection...";
+
+        const test = await TaskFlowDB.testConnection();
+        if (test.success) {
+          msgDiv.style.color = "#34d399";
+          msgDiv.textContent = `✅ Success! Supabase Database tables are accessible.`;
+        } else {
+          msgDiv.style.color = "#f87171";
+          msgDiv.textContent = `❌ ${test.message}`;
+        }
+        updateCloudStatusBadges();
+      }
+
+      function updateCloudStatusBadges() {
+        const isCloud = TaskFlowDB.isCloudActive();
+        const loginPill = document.getElementById("loginCloudStatus");
+        const loginText = document.getElementById("loginCloudStatusText");
+        const headerPill = document.getElementById("headerCloudStatus");
+        const headerText = document.getElementById("headerCloudStatusText");
+        const footerEngine = document.getElementById("footerDbEngine");
+
+        const statusText = isCloud ? "Supabase Synced" : "Local Database (Click to setup)";
+
+        if (loginPill) {
+          loginPill.className = isCloud ? "cloud-status-pill" : "cloud-status-pill offline";
+        }
+        if (loginText) loginText.textContent = statusText;
+
+        if (headerPill) {
+          headerPill.className = isCloud ? "cloud-status-pill" : "cloud-status-pill offline";
+        }
+        if (headerText) headerText.textContent = isCloud ? "Cloud Synced" : "Local Mode";
+
+        if (footerEngine) {
+          footerEngine.textContent = isCloud ? "⚡ Supabase Cloud" : "💾 Local Storage";
+        }
+      }
+
+      // ==================== INITIALIZATION ====================
+      window.addEventListener("DOMContentLoaded", () => {
+        updateCloudStatusBadges();
+        autoRestoreSession().then((restored) => {
+          if (!restored) {
+            document.getElementById("loginPage").style.display = "flex";
+            document.getElementById("dashboard").style.display = "none";
+          }
+        });
+
         const pwdField = document.getElementById("password");
         const userField = document.getElementById("username");
-        if (pwdField)
+        if (pwdField) {
           pwdField.addEventListener("keypress", (e) => {
             if (e.key === "Enter") handleLogin();
           });
-        if (userField)
+        }
+        if (userField) {
           userField.addEventListener("keypress", (e) => {
             if (e.key === "Enter") handleLogin();
           });
+        }
       });
 
-      // expose globally for onclick
+      // Expose globally
       window.handleLogin = handleLogin;
       window.logout = logout;
       window.resetAllProgress = resetAllProgress;
@@ -2560,6 +2944,10 @@
       window.openProfileModal = openProfileModal;
       window.closeProfileModal = closeProfileModal;
       window.handleChangePassword = handleChangePassword;
+      window.openSupabaseModal = openSupabaseModal;
+      window.closeSupabaseModal = closeSupabaseModal;
+      window.handleSaveSupabaseConfig = handleSaveSupabaseConfig;
+      window.testSupabaseConnectionUI = testSupabaseConnectionUI;
     </script>
   </body>
 </html>

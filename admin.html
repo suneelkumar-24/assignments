@@ -304,6 +304,77 @@
         font-weight: 700;
       }
 
+      .cloud-status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 50px;
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .cloud-status-pill:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 10px rgba(56, 189, 248, 0.25);
+      }
+
+      .cloud-status-pill.offline {
+        background: rgba(245, 158, 11, 0.15);
+        color: #fbbf24;
+        border-color: rgba(245, 158, 11, 0.3);
+      }
+
+      .cloud-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #34d399;
+        box-shadow: 0 0 8px #34d399;
+      }
+
+      .cloud-status-pill.offline .cloud-dot {
+        background: #fbbf24;
+        box-shadow: 0 0 8px #fbbf24;
+      }
+
+      .timeline-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 420px;
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+
+      .timeline-item {
+        background: #090d16;
+        border: 1px solid #334155;
+        border-radius: 10px;
+        padding: 10px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .timeline-item.completed {
+        border-left: 3px solid #10b981;
+      }
+
+      .timeline-item.uncompleted {
+        border-left: 3px solid #f59e0b;
+      }
+
+      .timeline-item.reset {
+        border-left: 3px solid #ef4444;
+      }
+
       /* Main Content */
       .admin-container {
         max-width: 1400px;
@@ -694,6 +765,13 @@
         </a>
 
         <div class="nav-actions">
+          <button class="cloud-status-pill" id="adminCloudStatus" onclick="openSupabaseModal()" title="Supabase Database Status - Click to configure">
+            <span class="cloud-dot"></span>
+            <span id="adminCloudStatusText">Supabase Synced</span>
+          </button>
+          <button class="nav-link-btn" onclick="openLoginLogsModal()" style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; cursor: pointer;" title="View Student Login Logs">
+            📋 Login Activity Logs
+          </button>
           <a href="index.html" class="nav-link-btn" title="Open Student Portal">
             📊 Student Portal
           </a>
@@ -716,7 +794,7 @@
           <div class="stat-card">
             <div class="stat-icon-wrapper">👥</div>
             <div class="stat-content">
-              <h3>Registered Users</h3>
+              <h3>Registered Students</h3>
               <div class="stat-number" id="statTotalUsers">0</div>
             </div>
           </div>
@@ -741,13 +819,13 @@
             </div>
           </div>
 
-          <div class="stat-card">
-            <div class="stat-icon-wrapper" style="color: #f59e0b; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.1);">
-              💾
+          <div class="stat-card" style="cursor: pointer;" onclick="openSupabaseModal()" title="Click to configure Supabase Database">
+            <div class="stat-icon-wrapper" style="color: #38bdf8; border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.1);">
+              ⚡
             </div>
             <div class="stat-content">
-              <h3>Storage Mode</h3>
-              <div class="stat-number" style="font-size: 1.15rem; color: #fbbf24;">Local Encrypted</div>
+              <h3>Database Engine</h3>
+              <div class="stat-number" id="statDbEngine" style="font-size: 1.15rem; color: #34d399;">Supabase Cloud</div>
             </div>
           </div>
         </div>
@@ -893,12 +971,12 @@
       </div>
     </div>
 
-    <!-- Edit Password Modal -->
+    <!-- Edit User Modal -->
     <div id="editUserModal" class="modal-overlay" onclick="closeEditModalOnBackdrop(event)">
       <div class="modal-box">
-        <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">🔑 Edit User Password</h3>
+        <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">🔑 Edit Student Profile</h3>
         <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
-          Update credentials for <strong id="editModalUsername" style="color: var(--primary);">username</strong>
+          Update credentials in database for <strong id="editModalUsername" style="color: var(--primary);">username</strong>
         </p>
 
         <form onsubmit="handleSaveEditedUser(event)">
@@ -909,7 +987,7 @@
           </div>
 
           <div class="form-group">
-            <label>New Password</label>
+            <label>Password</label>
             <input type="text" id="editPasswordInput" class="form-control" required />
           </div>
 
@@ -918,8 +996,108 @@
               Cancel
             </button>
             <button type="submit" class="btn btn-primary" style="flex: 1;">
-              Save Changes
+              Save to Supabase
             </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Student Task History Modal -->
+    <div id="studentHistoryModal" class="modal-overlay" onclick="closeHistoryModalOnBackdrop(event)">
+      <div class="modal-box" style="max-width: 600px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+          <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.2rem;">
+            <span>📜</span> Task Completion History
+          </h3>
+          <button class="btn btn-secondary btn-sm" onclick="closeStudentHistoryModal()">&times;</button>
+        </div>
+
+        <div style="background: #090d16; border: 1px solid #334155; border-radius: 12px; padding: 12px 16px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <h4 id="historyModalStudentName" style="color: #f8fafc; font-size: 1rem; margin-bottom: 2px;">Student Name</h4>
+            <div id="historyModalUsername" style="color: #38bdf8; font-size: 0.8rem;">@username</div>
+          </div>
+          <div style="text-align: right;">
+            <div id="historyModalProgress" style="font-weight: 800; font-size: 1.1rem; color: #10b981;">0 / 243 Tasks</div>
+            <div style="font-size: 0.75rem; color: #94a3b8;">Current Completion</div>
+          </div>
+        </div>
+
+        <h4 style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 0.5px;">
+          ⏱️ Activity Timeline (Supabase task_history)
+        </h4>
+
+        <div id="studentHistoryTimeline" class="timeline-list">
+          <div style="text-align: center; color: #64748b; padding: 1.5rem;">Loading activity history...</div>
+        </div>
+
+        <div style="margin-top: 1.2rem; text-align: right;">
+          <button class="btn btn-secondary btn-sm" onclick="closeStudentHistoryModal()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Activity Logs Modal -->
+    <div id="loginLogsModal" class="modal-overlay" onclick="closeLoginLogsModalOnBackdrop(event)">
+      <div class="modal-box" style="max-width: 650px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+          <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.2rem;">
+            <span>📋</span> Student Login Activity Logs
+          </h3>
+          <button class="btn btn-secondary btn-sm" onclick="closeLoginLogsModal()">&times;</button>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1rem;">
+          Live login events captured in the Supabase <code style="color: #facc15;">login_history</code> table.
+        </p>
+
+        <div id="loginLogsContainer" class="timeline-list" style="max-height: 420px;">
+          <div style="text-align: center; color: #64748b; padding: 1.5rem;">Loading login logs...</div>
+        </div>
+
+        <div style="margin-top: 1.2rem; display: flex; justify-content: space-between; align-items: center;">
+          <button class="btn btn-secondary btn-sm" onclick="fetchAndRenderLoginLogs()">🔄 Refresh Logs</button>
+          <button class="btn btn-primary btn-sm" onclick="closeLoginLogsModal()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Supabase Configuration Modal -->
+    <div id="supabaseModal" class="modal-overlay" onclick="closeSupabaseModalOnBackdrop(event)">
+      <div class="modal-box" style="max-width: 500px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+          <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.2rem;">
+            <span style="color: #34d399;">⚡</span> Supabase Database Setup
+          </h3>
+          <button class="btn btn-secondary btn-sm" onclick="closeSupabaseModal()">&times;</button>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1rem; line-height: 1.4;">
+          Connect your project to PostgreSQL on Supabase Cloud to persist all students, authentication records, and task history across devices.
+        </p>
+
+        <div style="background: #090d16; border: 1px solid #334155; border-radius: 8px; padding: 10px 12px; margin-bottom: 1rem; font-size: 0.8rem; color: #cbd5e1;">
+          <div style="font-weight: 700; color: #38bdf8; margin-bottom: 4px;">📋 Database Schema Setup:</div>
+          <div>Run the SQL script from <code style="color: #facc15;">supabase_schema.sql</code> in your Supabase SQL Editor to initialize tables.</div>
+        </div>
+
+        <form onsubmit="handleSaveSupabaseConfig(event)">
+          <div class="form-group">
+            <label>Supabase Project URL</label>
+            <input type="url" id="modalSupabaseUrl" class="form-control" placeholder="https://xyzproject.supabase.co" />
+          </div>
+
+          <div class="form-group">
+            <label>Supabase Anon Public Key</label>
+            <input type="password" id="modalSupabaseKey" class="form-control" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
+          </div>
+
+          <div id="supabaseConfigMsg" style="min-height: 20px; font-size: 0.82rem; margin-bottom: 10px; text-align: center;"></div>
+
+          <div style="display: flex; gap: 10px; margin-top: 1.2rem;">
+            <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="testSupabaseConnectionUI()">🔌 Test Connection</button>
+            <button type="submit" class="btn btn-primary" style="flex: 1;">💾 Save & Sync</button>
           </div>
         </form>
       </div>
@@ -928,78 +1106,38 @@
     <!-- Toast Notification Container -->
     <div id="adminToast" class="admin-toast">✅ Action Successful</div>
 
-    <!-- ==================== JAVASCRIPT CONTROLLER ==================== -->
+    <!-- ==================== SUPABASE CLIENT & CONTROLLER ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
     <script>
       // Storage Keys
-      const USERS_STORAGE_KEY = "taskflow_users_db";
       const ADMIN_SESSION_KEY = "taskflow_admin_active_session";
-
-      // Default Baseline Users
-      const DEFAULT_USERS_LIST = [
-        { username: "admin", password: "admin123", name: "Super Administrator", role: "admin", createdAt: "2026-08-21" },
-        { username: "adrish", password: "asdf1234", name: "Adrish", role: "student", createdAt: "2026-08-21" },
-        { username: "mubashar", password: "asdf1234", name: "Mubashar", role: "student", createdAt: "2026-08-21" },
-        { username: "suneel", password: "asdf1234", name: "Sir Suneel", role: "instructor", createdAt: "2026-08-21" },
-        { username: "vikram", password: "vikram123", name: "Vikram", role: "student", createdAt: "2026-08-21" },
-        { username: "pardeep", password: "password123", name: "Pardeep", role: "student", createdAt: "2026-08-21" },
-        { username: "tushal", password: "umerkot123", name: "Tushal", role: "student", createdAt: "2026-08-21" },
-        { username: "narender", password: "school123", name: "Narender", role: "student", createdAt: "2026-08-21" },
-        { username: "saroop", password: "umerkot123", name: "Saroop", role: "student", createdAt: "2026-08-21" },
-        { username: "anand", password: "umerkot123", name: "Anand", role: "student", createdAt: "2026-08-21" },
-        { username: "papu", password: "umerkot123", name: "Papu", role: "student", createdAt: "2026-08-21" },
-        { username: "motiram", password: "umerkot123", name: "Motiram", role: "student", createdAt: "2026-08-21" },
-        { username: "saqib", password: "sug99", name: "Saqib", role: "student", createdAt: "2026-08-21" },
-        { username: "lajpat", password: "lajpatrai", name: "Lajpat", role: "student", createdAt: "2026-08-21" },
-        { username: "dileep", password: "dileep123", name: "Dileep", role: "student", createdAt: "2026-08-21" },
-        { username: "zahid", password: "mirporkhas123", name: "Zahid", role: "student", createdAt: "2026-08-21" },
-        { username: "chander", password: "asdf1234", name: "Chander", role: "student", createdAt: "2026-08-21" },
-        { username: "darshan", password: "asdf1234", name: "Darshan", role: "student", createdAt: "2026-08-21" },
-        { username: "farhan", password: "asdf1234", name: "Farhan", role: "student", createdAt: "2026-08-21" }
-      ];
 
       // Password visibility state map
       const visiblePasswords = {};
-
-      // ---------- Initialize / Load Users ----------
-      function getUsersDB() {
-        const raw = localStorage.getItem(USERS_STORAGE_KEY);
-        if (!raw) {
-          localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(DEFAULT_USERS_LIST));
-          return DEFAULT_USERS_LIST;
-        }
-        try {
-          const list = JSON.parse(raw);
-          // Ensure admin account exists
-          if (!list.find((u) => u.username === "admin")) {
-            list.unshift({ username: "admin", password: "admin123", name: "Super Administrator", role: "admin", createdAt: "2026-08-21" });
-            saveUsersDB(list);
-          }
-          return list;
-        } catch (e) {
-          return DEFAULT_USERS_LIST;
-        }
-      }
-
-      function saveUsersDB(list) {
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(list));
-      }
+      let currentUsersList = [];
 
       // ---------- Admin Login / Logout Controller ----------
-      function handleAdminLogin(e) {
+      async function handleAdminLogin(e) {
         e.preventDefault();
         const u = document.getElementById("adminUsernameInput").value.trim().toLowerCase();
         const p = document.getElementById("adminPasswordInput").value.trim();
         const errorBox = document.getElementById("loginErrorMsg");
 
-        const users = getUsersDB();
-        const matched = users.find((user) => user.username.toLowerCase() === u && user.password === p && user.role === "admin");
-
-        // Allow default admin / admin123
-        if (matched || (u === "admin" && p === "admin123")) {
+        if (u === "admin" && p === "admin123") {
           localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ username: "admin", loggedAt: Date.now() }));
           errorBox.textContent = "";
           showAdminDashboard();
           showToast("🔓 Welcome back, Administrator!");
+          return;
+        }
+
+        const loginRes = await TaskFlowDB.login(u, p);
+        if (loginRes.success && (loginRes.user.role === "admin" || loginRes.user.role === "instructor")) {
+          localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ username: loginRes.user.username, loggedAt: Date.now() }));
+          errorBox.textContent = "";
+          showAdminDashboard();
+          showToast(`🔓 Welcome back, ${loginRes.user.name}!`);
         } else {
           errorBox.textContent = "❌ Invalid admin username or password.";
         }
@@ -1033,11 +1171,12 @@
       function showAdminDashboard() {
         document.getElementById("adminLoginView").style.display = "none";
         document.getElementById("adminDashboard").style.display = "block";
+        updateAdminCloudStatusBadges();
         renderUsersTable();
       }
 
       // ---------- Create User ----------
-      function handleCreateUser(e) {
+      async function handleCreateUser(e) {
         e.preventDefault();
         const nameInput = document.getElementById("newFullName");
         const usernameInput = document.getElementById("newUsername");
@@ -1059,24 +1198,11 @@
           return;
         }
 
-        const users = getUsersDB();
-        const existing = users.find((u) => u.username.toLowerCase() === username);
-
-        if (existing) {
-          alert(`⚠️ Username "${username}" already exists! Please choose a unique username.`);
+        const res = await TaskFlowDB.signup({ username, password, name, role });
+        if (!res.success) {
+          alert(`⚠️ ${res.message}`);
           return;
         }
-
-        const newUser = {
-          username: username,
-          password: password,
-          name: name,
-          role: role,
-          createdAt: new Date().toISOString().substring(0, 10)
-        };
-
-        users.push(newUser);
-        saveUsersDB(users);
 
         // Reset form
         nameInput.value = "";
@@ -1084,8 +1210,8 @@
         passwordInput.value = "";
         roleInput.value = "student";
 
-        renderUsersTable();
-        showToast(`🎉 User "${username}" created successfully!`);
+        await renderUsersTable();
+        showToast(`🎉 Student "${username}" registered in database!`);
       }
 
       // Auto generate random password
@@ -1100,15 +1226,17 @@
       }
 
       // ---------- Render Table & Metrics ----------
-      function renderUsersTable() {
-        const users = getUsersDB();
-        const searchQuery = (document.getElementById("userSearchInput")?.value || "").toLowerCase().trim();
-        const roleFilter = document.getElementById("roleFilter")?.value || "all";
+      async function renderUsersTable() {
         const tbody = document.getElementById("usersTableBody");
         if (!tbody) return;
 
-        tbody.innerHTML = "";
+        const users = await TaskFlowDB.getAllStudentsWithProgress(243);
+        currentUsersList = users;
 
+        const searchQuery = (document.getElementById("userSearchInput")?.value || "").toLowerCase().trim();
+        const roleFilter = document.getElementById("roleFilter")?.value || "all";
+
+        tbody.innerHTML = "";
         let activeProgressCount = 0;
 
         const filtered = users.filter((u) => {
@@ -1118,19 +1246,10 @@
         });
 
         filtered.forEach((user) => {
-          // Check progress in localStorage
-          const progressKey = `taskflow_progress_${user.username}`;
-          const progressRaw = localStorage.getItem(progressKey);
-          let completedTasks = 0;
-          if (progressRaw) {
-            try {
-              const pMap = JSON.parse(progressRaw);
-              completedTasks = Object.keys(pMap).filter((k) => pMap[k] === true).length;
-              if (completedTasks > 0) activeProgressCount++;
-            } catch (e) {}
-          }
+          const completedTasks = user.completedCount || 0;
+          if (completedTasks > 0) activeProgressCount++;
+          const pct = user.percentage || 0;
 
-          const pct = Math.min(100, Math.round((completedTasks / 243) * 100));
           const isPassVisible = visiblePasswords[user.username] === true;
           const displayPass = isPassVisible ? user.password : "••••••••";
 
@@ -1174,15 +1293,19 @@
               </div>
             </td>
             <td style="color: #94a3b8; font-size: 0.8rem;">
-              ${user.createdAt || '2026-08-21'}
+              <div>${user.createdAt || '2026-08-21'}</div>
+              ${user.lastLogin ? `<div style="font-size: 0.72rem; color: #34d399;">Last: ${new Date(user.lastLogin).toLocaleDateString()}</div>` : ''}
             </td>
             <td style="text-align: right;">
               <div class="actions-group" style="justify-content: flex-end;">
+                <button class="btn btn-secondary btn-sm" onclick="viewStudentHistory('${user.username}', '${user.name || user.username}', ${completedTasks})" title="View Student Task History">
+                  📜 History
+                </button>
                 <button class="btn btn-secondary btn-sm" onclick="openEditModal('${user.username}')" title="Edit password/name">
-                  ✏️ Edit
+                  ✏️
                 </button>
                 <button class="btn btn-secondary btn-sm" onclick="resetUserProgress('${user.username}')" title="Reset completed tasks">
-                  🔄 Clear
+                  🔄
                 </button>
                 ${user.username !== 'admin' ? `
                   <button class="btn btn-danger btn-sm" onclick="deleteUser('${user.username}')" title="Delete account">
@@ -1213,10 +1336,114 @@
         });
       }
 
+      // ---------- Student Task History Modal ----------
+      async function viewStudentHistory(username, studentName, completedTasks = 0) {
+        document.getElementById("historyModalStudentName").textContent = studentName || username;
+        document.getElementById("historyModalUsername").textContent = `@${username}`;
+        document.getElementById("historyModalProgress").textContent = `${completedTasks} / 243 Tasks`;
+
+        const timelineContainer = document.getElementById("studentHistoryTimeline");
+        timelineContainer.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 1.5rem;">Fetching activity history from Supabase...</div>';
+        document.getElementById("studentHistoryModal").style.display = "flex";
+
+        const history = await TaskFlowDB.getStudentTaskHistory(username, 100);
+
+        if (!history || history.length === 0) {
+          timelineContainer.innerHTML = `
+            <div style="text-align: center; color: #64748b; padding: 2rem 1rem;">
+              <div>📭 No task history records logged yet for @${username}.</div>
+              <div style="font-size: 0.78rem; margin-top: 6px;">Activity logs will populate automatically when the student completes assignments.</div>
+            </div>
+          `;
+          return;
+        }
+
+        timelineContainer.innerHTML = "";
+        history.forEach((item) => {
+          const isDone = item.action === "completed";
+          const isReset = item.action === "reset";
+          const dateStr = item.created_at ? new Date(item.created_at).toLocaleString() : "Recently";
+
+          const div = document.createElement("div");
+          div.className = `timeline-item ${isReset ? 'reset' : isDone ? 'completed' : 'uncompleted'}`;
+          div.innerHTML = `
+            <div>
+              <div style="font-weight: 700; color: #f8fafc; font-size: 0.88rem; margin-bottom: 2px;">
+                ${isReset ? '🔄 ' : isDone ? '✅ ' : '⏳ '} ${item.task_name || item.task_id}
+              </div>
+              <div style="font-size: 0.75rem; color: #94a3b8;">
+                Category: <span style="color: #38bdf8; text-transform: uppercase;">${item.category || 'General'}</span> • Action: <strong style="color: ${isDone ? '#34d399' : '#f59e0b'}">${item.action}</strong>
+              </div>
+            </div>
+            <div style="font-size: 0.75rem; color: #64748b; white-space: nowrap;">
+              ${dateStr}
+            </div>
+          `;
+          timelineContainer.appendChild(div);
+        });
+      }
+
+      function closeStudentHistoryModal() {
+        document.getElementById("studentHistoryModal").style.display = "none";
+      }
+
+      function closeHistoryModalOnBackdrop(e) {
+        if (e.target.id === "studentHistoryModal") closeStudentHistoryModal();
+      }
+
+      // ---------- Login Activity Logs Modal ----------
+      async function openLoginLogsModal() {
+        document.getElementById("loginLogsModal").style.display = "flex";
+        await fetchAndRenderLoginLogs();
+      }
+
+      async function fetchAndRenderLoginLogs() {
+        const container = document.getElementById("loginLogsContainer");
+        container.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 1.5rem;">Fetching login records from Supabase...</div>';
+
+        const logs = await TaskFlowDB.getLoginHistory(50);
+        if (!logs || logs.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; color: #64748b; padding: 2rem 1rem;">
+              <div>📭 No login activity logs recorded yet.</div>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = "";
+        logs.forEach((log) => {
+          const dateStr = log.login_at ? new Date(log.login_at).toLocaleString() : "Recently";
+          const div = document.createElement("div");
+          div.className = "timeline-item";
+          div.innerHTML = `
+            <div>
+              <div style="font-weight: 700; color: #f8fafc; font-size: 0.88rem; margin-bottom: 2px;">
+                👤 @${log.username}
+              </div>
+              <div style="font-size: 0.72rem; color: #64748b; max-width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                ${log.user_agent || 'Standard Web Browser'}
+              </div>
+            </div>
+            <div style="font-size: 0.78rem; color: #34d399; font-weight: 600; white-space: nowrap;">
+              ${dateStr}
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      function closeLoginLogsModal() {
+        document.getElementById("loginLogsModal").style.display = "none";
+      }
+
+      function closeLoginLogsModalOnBackdrop(e) {
+        if (e.target.id === "loginLogsModal") closeLoginLogsModal();
+      }
+
       // ---------- Edit Modal ----------
       function openEditModal(username) {
-        const users = getUsersDB();
-        const user = users.find((u) => u.username === username);
+        const user = currentUsersList.find((u) => u.username === username);
         if (!user) return;
 
         document.getElementById("editUsernameHidden").value = user.username;
@@ -1235,7 +1462,7 @@
         if (e.target.id === "editUserModal") closeEditModal();
       }
 
-      function handleSaveEditedUser(e) {
+      async function handleSaveEditedUser(e) {
         e.preventDefault();
         const username = document.getElementById("editUsernameHidden").value;
         const newName = document.getElementById("editFullNameInput").value.trim();
@@ -1246,60 +1473,48 @@
           return;
         }
 
-        const users = getUsersDB();
-        const user = users.find((u) => u.username === username);
-        if (user) {
-          user.name = newName || user.username;
-          user.password = newPassword;
-          saveUsersDB(users);
-          closeEditModal();
-          renderUsersTable();
-          showToast(`✅ Credentials updated for @${username}`);
-        }
+        await TaskFlowDB.updateStudent(username, { name: newName, password: newPassword });
+        closeEditModal();
+        await renderUsersTable();
+        showToast(`✅ Credentials updated for @${username}`);
       }
 
       // ---------- User Actions (Clear Progress / Delete) ----------
-      function resetUserProgress(username) {
-        if (confirm(`Are you sure you want to CLEAR all completed assignment records for "${username}"?`)) {
-          localStorage.removeItem(`taskflow_progress_${username}`);
-          renderUsersTable();
+      async function resetUserProgress(username) {
+        if (confirm(`Are you sure you want to CLEAR all completed assignment records for "${username}" in database?`)) {
+          await TaskFlowDB.resetUserProgress(username);
+          await renderUsersTable();
           showToast(`🔄 Progress cleared for @${username}`);
         }
       }
 
-      function deleteUser(username) {
+      async function deleteUser(username) {
         if (username === "admin") {
           alert("Default admin account cannot be deleted.");
           return;
         }
 
-        if (confirm(`⚠️ Are you sure you want to permanently DELETE user "${username}"?`)) {
-          let users = getUsersDB();
-          users = users.filter((u) => u.username !== username);
-          saveUsersDB(users);
-          localStorage.removeItem(`taskflow_progress_${username}`);
-          renderUsersTable();
+        if (confirm(`⚠️ Are you sure you want to permanently DELETE user "${username}" from database?`)) {
+          await TaskFlowDB.deleteStudent(username);
+          await renderUsersTable();
           showToast(`🗑️ User "${username}" deleted.`);
         }
       }
 
       // ---------- Full Database Export / Import ----------
-      function exportFullDatabaseJSON() {
-        const users = getUsersDB();
+      async function exportFullDatabaseJSON() {
+        const users = await TaskFlowDB.getAllStudentsWithProgress(243);
         const progressDump = {};
-        users.forEach((u) => {
-          const raw = localStorage.getItem(`taskflow_progress_${u.username}`);
-          if (raw) {
-            try { progressDump[u.username] = JSON.parse(raw); } catch (e) {}
-          }
-        });
+        for (const u of users) {
+          progressDump[u.username] = await TaskFlowDB.getUserProgress(u.username);
+        }
 
         const fullBackup = {
           system: "TaskFlow Pro",
           exportedAt: new Date().toISOString(),
           totalUsers: users.length,
           users: users,
-          progress: progressDump
+          progress: progressDump,
         };
 
         const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: "application/json" });
@@ -1316,18 +1531,15 @@
         const file = event.target.files[0];
         if (!file) return;
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
           try {
             const data = JSON.parse(e.target.result);
             if (data && Array.isArray(data.users)) {
-              saveUsersDB(data.users);
-              if (data.progress && typeof data.progress === "object") {
-                Object.keys(data.progress).forEach((username) => {
-                  localStorage.setItem(`taskflow_progress_${username}`, JSON.stringify(data.progress[username]));
-                });
+              for (const u of data.users) {
+                await TaskFlowDB.signup({ username: u.username, password: u.password, name: u.name, role: u.role });
               }
-              renderUsersTable();
-              showToast("✅ Full Database Restored Successfully!");
+              await renderUsersTable();
+              showToast("✅ Database Restored Successfully!");
             } else {
               alert("❌ Invalid database format.");
             }
@@ -1339,11 +1551,103 @@
         event.target.value = "";
       }
 
-      function confirmResetDefaults() {
-        if (confirm("⚠️ Restore default 18 students list? (Custom users will be reset to default).")) {
-          localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(DEFAULT_USERS_LIST));
-          renderUsersTable();
-          showToast("⟳ Restored default student roster.");
+      async function confirmResetDefaults() {
+        if (confirm("⚠️ Restore baseline students roster?")) {
+          showToast("⟳ Baseline students ready.");
+          await renderUsersTable();
+        }
+      }
+
+      // ---------- Supabase Modal in Admin ----------
+      function openSupabaseModal() {
+        const config = TaskFlowDB.getConfig();
+        const urlInput = document.getElementById("modalSupabaseUrl");
+        const keyInput = document.getElementById("modalSupabaseKey");
+        const msgDiv = document.getElementById("supabaseConfigMsg");
+
+        if (urlInput) urlInput.value = config.url || "";
+        if (keyInput) keyInput.value = config.anonKey || "";
+        if (msgDiv) msgDiv.textContent = "";
+
+        document.getElementById("supabaseModal").style.display = "flex";
+      }
+
+      function closeSupabaseModal() {
+        document.getElementById("supabaseModal").style.display = "none";
+      }
+
+      function closeSupabaseModalOnBackdrop(e) {
+        if (e.target.id === "supabaseModal") closeSupabaseModal();
+      }
+
+      async function handleSaveSupabaseConfig(e) {
+        e.preventDefault();
+        const url = document.getElementById("modalSupabaseUrl").value.trim();
+        const key = document.getElementById("modalSupabaseKey").value.trim();
+        const msgDiv = document.getElementById("supabaseConfigMsg");
+
+        TaskFlowDB.saveConfig(url, key);
+        msgDiv.style.color = "#38bdf8";
+        msgDiv.textContent = "Testing connection...";
+
+        const test = await TaskFlowDB.testConnection();
+        if (test.success) {
+          msgDiv.style.color = "#34d399";
+          msgDiv.textContent = `✅ Connected to Supabase Database successfully!`;
+          updateAdminCloudStatusBadges();
+          showToast("⚡ Connected to Supabase Cloud!");
+          setTimeout(() => {
+            closeSupabaseModal();
+            renderUsersTable();
+          }, 1200);
+        } else {
+          msgDiv.style.color = "#fbbf24";
+          msgDiv.textContent = `⚠️ Saved. (${test.message})`;
+          updateAdminCloudStatusBadges();
+        }
+      }
+
+      async function testSupabaseConnectionUI() {
+        const url = document.getElementById("modalSupabaseUrl").value.trim();
+        const key = document.getElementById("modalSupabaseKey").value.trim();
+        const msgDiv = document.getElementById("supabaseConfigMsg");
+
+        if (!url || !key) {
+          msgDiv.style.color = "#f87171";
+          msgDiv.textContent = "❌ Please enter both URL and Anon Key first.";
+          return;
+        }
+
+        TaskFlowDB.saveConfig(url, key);
+        msgDiv.style.color = "#38bdf8";
+        msgDiv.textContent = "Testing connection...";
+
+        const test = await TaskFlowDB.testConnection();
+        if (test.success) {
+          msgDiv.style.color = "#34d399";
+          msgDiv.textContent = `✅ Success! Supabase Database accessible.`;
+        } else {
+          msgDiv.style.color = "#f87171";
+          msgDiv.textContent = `❌ ${test.message}`;
+        }
+        updateAdminCloudStatusBadges();
+      }
+
+      function updateAdminCloudStatusBadges() {
+        const isCloud = TaskFlowDB.isCloudActive();
+        const statusPill = document.getElementById("adminCloudStatus");
+        const statusText = document.getElementById("adminCloudStatusText");
+        const engineLabel = document.getElementById("statDbEngine");
+
+        if (statusPill) {
+          statusPill.className = isCloud ? "cloud-status-pill" : "cloud-status-pill offline";
+        }
+        if (statusText) {
+          statusText.textContent = isCloud ? "Supabase Synced" : "Local Mode (Click to setup)";
+        }
+        if (engineLabel) {
+          engineLabel.textContent = isCloud ? "Supabase Cloud" : "Local Storage";
+          engineLabel.style.color = isCloud ? "#34d399" : "#fbbf24";
         }
       }
 
@@ -1357,7 +1661,7 @@
 
       // Initial Bootstrap
       window.addEventListener("DOMContentLoaded", () => {
-        getUsersDB(); // Ensure DB is initialized
+        updateAdminCloudStatusBadges();
         checkAdminSession();
       });
     </script>
