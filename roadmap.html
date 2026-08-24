@@ -20,6 +20,7 @@
       --html-color: #e34c26;
       --css-color: #38bdf8;
       --js-color: #f7df1e;
+      --php-color: #818cf8;
       --project-color: #10b981;
       --order-color: #f59e0b;
     }
@@ -73,7 +74,7 @@
     h1 {
       font-size: 3rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #a855f7, #ec4899);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 12px;
@@ -83,7 +84,7 @@
     .subtitle {
       color: var(--text-muted);
       font-size: 1.15rem;
-      max-width: 700px;
+      max-width: 750px;
       margin: 0 auto 30px;
       line-height: 1.6;
     }
@@ -442,8 +443,8 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Back to Dashboard
       </a>
-      <h1>Full Stack Frontend Roadmap</h1>
-      <p class="subtitle">A clean and professional web development curriculum. Master the building blocks of the web, step-by-step.</p>
+      <h1>Full Stack Web Development Roadmap</h1>
+      <p class="subtitle">A clean and professional web development curriculum. Master Frontend (HTML, CSS, JS) and Server-Side Backend (PHP & MySQL), step-by-step.</p>
     </header>
 
     <!-- Tab Switcher Navigation -->
@@ -456,6 +457,9 @@
       </button>
       <button class="tab-btn" onclick="switchTab('js', this)" style="--active-color: var(--js-color); --active-bg: rgba(247, 223, 30, 0.1); --active-shadow: rgba(247, 223, 30, 0.2)">
         JavaScript & DOM
+      </button>
+      <button class="tab-btn" onclick="switchTab('php', this)" style="--active-color: var(--php-color); --active-bg: rgba(129, 140, 248, 0.1); --active-shadow: rgba(129, 140, 248, 0.2)">
+        PHP Server-Side
       </button>
       <button class="tab-btn" onclick="switchTab('projects', this)" style="--active-color: var(--project-color); --active-bg: rgba(16, 185, 129, 0.1); --active-shadow: rgba(16, 185, 129, 0.2)">
         Projects
@@ -1206,6 +1210,288 @@
       </div>
     </div>
 
+    <!-- PHP SERVER-SIDE SECTION -->
+    <div id="php-section" class="roadmap-section">
+      <div class="syllabus-grid" style="--section-color: var(--php-color); --section-shadow: rgba(129, 140, 248, 0.15); --section-bg: rgba(129, 140, 248, 0.1);">
+        
+        <div class="card">
+          <div class="card-num">67</div>
+          <h2 class="card-title"><span>PHP</span> 67. PHP Introduction & Tags</h2>
+          <ul class="bullet-list">
+            <li>What is PHP & Server-Side Execution</li>
+            <li>PHP Tags (&lt;?php ... ?&gt;)</li>
+            <li>PHP in HTML</li>
+            <li>PHP CLI vs Web Server (Apache/Nginx)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">68</div>
+          <h2 class="card-title"><span>PHP</span> 68. Output Methods</h2>
+          <ul class="bullet-list">
+            <li>echo statement</li>
+            <li>print statement</li>
+            <li>print_r() for arrays</li>
+            <li>var_dump() type debugging</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">69</div>
+          <h2 class="card-title"><span>PHP</span> 69. Variables & Constants</h2>
+          <ul class="bullet-list">
+            <li>Variable Syntax ($var)</li>
+            <li>Variable Scope (local, global, static)</li>
+            <li>define() Constants</li>
+            <li>const keyword</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">70</div>
+          <h2 class="card-title"><span>PHP</span> 70. Data Types & Casting</h2>
+          <ul class="bullet-list">
+            <li>String & Concatenation (.)</li>
+            <li>Integer & Float</li>
+            <li>Boolean & NULL</li>
+            <li>Type Casting & Strict Types</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">71</div>
+          <h2 class="card-title"><span>PHP</span> 71. Operators & Expressions</h2>
+          <ul class="bullet-list">
+            <li>Arithmetic Operators (+, -, *, /, %)</li>
+            <li>Assignment Operators (=, +=, -=, .=)</li>
+            <li>Comparison Operators (==, ===, !=, &lt;, &gt;)</li>
+            <li>Spaceship Operator (&lt;=&gt;) & Null Coalescing (??)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">72</div>
+          <h2 class="card-title"><span>PHP</span> 72. Conditional Logic</h2>
+          <ul class="bullet-list">
+            <li>if statement</li>
+            <li>if-else statement</li>
+            <li>if-elseif-else</li>
+            <li>Nested Conditions</li>
+            <li>Ternary Operator ( ? : )</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">73</div>
+          <h2 class="card-title"><span>PHP</span> 73. Switch & Match</h2>
+          <ul class="bullet-list">
+            <li>switch statement</li>
+            <li>case, break & default</li>
+            <li>PHP 8 match expressions</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">74</div>
+          <h2 class="card-title"><span>PHP</span> 74. Loops & Iterations</h2>
+          <ul class="bullet-list">
+            <li>for loop</li>
+            <li>while loop</li>
+            <li>do-while loop</li>
+            <li>foreach loop</li>
+            <li>break & continue</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">75</div>
+          <h2 class="card-title"><span>PHP</span> 75. Functions & Type Hinting</h2>
+          <ul class="bullet-list">
+            <li>Function Declaration</li>
+            <li>Parameters & Arguments</li>
+            <li>Default Argument Values</li>
+            <li>Return Types & Type Hinting</li>
+            <li>Anonymous Functions & Arrow Functions</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">76</div>
+          <h2 class="card-title"><span>PHP</span> 76. Arrays (All Types)</h2>
+          <ul class="bullet-list">
+            <li>Indexed Arrays</li>
+            <li>Associative Arrays (Key-Value)</li>
+            <li>Multidimensional Arrays</li>
+            <li>Iterating Arrays with foreach</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">77</div>
+          <h2 class="card-title"><span>PHP</span> 77. Array Functions</h2>
+          <ul class="bullet-list">
+            <li>count(), in_array()</li>
+            <li>array_push(), array_pop()</li>
+            <li>array_merge(), array_keys()</li>
+            <li>sort(), rsort(), asort(), ksort()</li>
+            <li>array_map(), array_filter()</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">78</div>
+          <h2 class="card-title"><span>PHP</span> 78. String Functions</h2>
+          <ul class="bullet-list">
+            <li>strlen(), str_word_count()</li>
+            <li>str_replace(), strpos()</li>
+            <li>substr(), strtolower(), strtoupper()</li>
+            <li>trim(), htmlspecialchars()</li>
+            <li>explode() & implode()</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">79</div>
+          <h2 class="card-title"><span>PHP</span> 79. Math & Date/Time</h2>
+          <ul class="bullet-list">
+            <li>rand(), min(), max(), abs()</li>
+            <li>round(), ceil(), floor()</li>
+            <li>date(), time(), strtotime()</li>
+            <li>DateTime Object & Timezones</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">80</div>
+          <h2 class="card-title"><span>PHP</span> 80. Superglobals</h2>
+          <ul class="bullet-list">
+            <li>$GLOBALS</li>
+            <li>$_SERVER</li>
+            <li>$_GET & $_POST</li>
+            <li>$_REQUEST & $_ENV</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">81</div>
+          <h2 class="card-title"><span>PHP</span> 81. Form Handling & Validation</h2>
+          <ul class="bullet-list">
+            <li>$_POST Form Submission</li>
+            <li>$_GET Query Strings</li>
+            <li>empty() & isset() Checks</li>
+            <li>filter_var() (Email, URL, Int)</li>
+            <li>Sticky Forms (Retaining Values)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">82</div>
+          <h2 class="card-title"><span>PHP</span> 82. Sessions & Authentication</h2>
+          <ul class="bullet-list">
+            <li>session_start()</li>
+            <li>$_SESSION Storage</li>
+            <li>session_regenerate_id()</li>
+            <li>session_unset() & session_destroy()</li>
+            <li>User Login & Protected Pages</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">83</div>
+          <h2 class="card-title"><span>PHP</span> 83. Cookies Management</h2>
+          <ul class="bullet-list">
+            <li>setcookie()</li>
+            <li>$_COOKIE Access</li>
+            <li>Cookie Expiration & Path</li>
+            <li>Secure & HttpOnly Flags</li>
+            <li>Deleting Cookies</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">84</div>
+          <h2 class="card-title"><span>PHP</span> 84. File Uploading</h2>
+          <ul class="bullet-list">
+            <li>enctype="multipart/form-data"</li>
+            <li>$_FILES Array Properties</li>
+            <li>move_uploaded_file()</li>
+            <li>Validating File Size & MIME Types</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">85</div>
+          <h2 class="card-title"><span>PHP</span> 85. File System (I/O)</h2>
+          <ul class="bullet-list">
+            <li>file_get_contents(), file_put_contents()</li>
+            <li>fopen(), fread(), fwrite(), fclose()</li>
+            <li>file_exists(), is_file(), is_dir()</li>
+            <li>unlink() (delete file), mkdir()</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">86</div>
+          <h2 class="card-title"><span>PHP</span> 86. Error Handling & Exceptions</h2>
+          <ul class="bullet-list">
+            <li>error_reporting(), ini_set()</li>
+            <li>try, catch, finally Blocks</li>
+            <li>throw new Exception()</li>
+            <li>Custom Exception Classes</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">87</div>
+          <h2 class="card-title"><span>PHP</span> 87. OOP Basics (Classes & Objects)</h2>
+          <ul class="bullet-list">
+            <li>class & new instance</li>
+            <li>Properties & Methods</li>
+            <li>$this keyword</li>
+            <li>__construct() & __destruct()</li>
+            <li>public, private, protected</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">88</div>
+          <h2 class="card-title"><span>PHP</span> 88. OOP Advanced</h2>
+          <ul class="bullet-list">
+            <li>Inheritance (extends)</li>
+            <li>Method Overriding & parent::</li>
+            <li>Interfaces & abstract classes</li>
+            <li>Traits & Namespaces (use)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">89</div>
+          <h2 class="card-title"><span>PHP</span> 89. MySQL Database & PDO</h2>
+          <ul class="bullet-list">
+            <li>PDO Connection & DSN</li>
+            <li>Prepared Statements (prepare, execute)</li>
+            <li>bindParam() & bindValue()</li>
+            <li>fetchAll(PDO::FETCH_ASSOC)</li>
+            <li>SQL Injection Prevention</li>
+            <li>CRUD Operations</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-num">90</div>
+          <h2 class="card-title"><span>PHP</span> 90. JSON & RESTful APIs</h2>
+          <ul class="bullet-list">
+            <li>header('Content-Type: application/json')</li>
+            <li>json_encode() & json_decode()</li>
+            <li>http_response_code() (200, 400, 404, 500)</li>
+            <li>file_get_contents('php://input')</li>
+            <li>Building REST Endpoints</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
     <!-- PROJECTS SECTION -->
     <div id="projects-section" class="roadmap-section">
       <!-- HTML & CSS Projects -->
@@ -1323,6 +1609,47 @@
           <div class="project-icon">🛒</div>
           <h3 class="project-name">E-Commerce Cart</h3>
           <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Create a product selector that inserts items into an active checkout order list.</p>
+        </div>
+      </div>
+
+      <!-- PHP & Backend Projects -->
+      <h2 class="section-headline" style="--project-color: var(--php-color);">PHP Server-Side & Database Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" style="border-color: rgba(129,140,248,0.2)">
+          <span class="project-badge" style="background: rgba(129,140,248,0.15); color: var(--php-color);">PHP 1</span>
+          <div class="project-icon">✉️</div>
+          <h3 class="project-name">Secure Contact Form Mailer</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">POST processing, email sanitization, filter validation, and dynamic feedback messaging.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(129,140,248,0.2)">
+          <span class="project-badge" style="background: rgba(129,140,248,0.15); color: var(--php-color);">PHP 2</span>
+          <div class="project-icon">🔐</div>
+          <h3 class="project-name">Auth & Session System</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Password hashing (Bcrypt), session management, user roles, and protected route access.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(129,140,248,0.2)">
+          <span class="project-badge" style="background: rgba(129,140,248,0.15); color: var(--php-color);">PHP 3</span>
+          <div class="project-icon">📁</div>
+          <h3 class="project-name">Student Portal & File Vault</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Multi-file uploads, mime verification, file system reading/writing, and avatar management.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(129,140,248,0.2)">
+          <span class="project-badge" style="background: rgba(129,140,248,0.15); color: var(--php-color);">PHP 4</span>
+          <div class="project-icon">📝</div>
+          <h3 class="project-name">Blog & Article CMS</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Publishing workflow, dynamic URL slug routing, category filters, and comments system.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(129,140,248,0.2)">
+          <span class="project-badge" style="background: rgba(129,140,248,0.15); color: var(--php-color);">PHP 5</span>
+          <div class="project-icon">⚡</div>
+          <h3 class="project-name">RESTful JSON API Backend</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">REST API endpoints, HTTP status codes, JSON responses, and frontend fetch integration.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(129,140,248,0.2)">
+          <span class="project-badge" style="background: rgba(129,140,248,0.15); color: var(--php-color);">PHP 6</span>
+          <div class="project-icon">🗄️</div>
+          <h3 class="project-name">MySQL PDO Store Management</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Full relational database CRUD, PDO prepared statements, transactions, and search queries.</p>
         </div>
       </div>
     </div>
@@ -1542,11 +1869,23 @@
           </div>
           <div class="flow-step-card">
             <span class="flow-step-num">16</span>
-            <span class="flow-step-name">Projects</span>
+            <span class="flow-step-name">Frontend Projects</span>
+          </div>
+          <div class="flow-step-card" style="border-color: var(--php-color);">
+            <span class="flow-step-num" style="background: rgba(129,140,248,0.15); color: var(--php-color);">17</span>
+            <span class="flow-step-name">PHP Basics & Superglobals</span>
+          </div>
+          <div class="flow-step-card" style="border-color: var(--php-color);">
+            <span class="flow-step-num" style="background: rgba(129,140,248,0.15); color: var(--php-color);">18</span>
+            <span class="flow-step-name">PHP OOP & Authentication</span>
+          </div>
+          <div class="flow-step-card" style="border-color: var(--php-color);">
+            <span class="flow-step-num" style="background: rgba(129,140,248,0.15); color: var(--php-color);">19</span>
+            <span class="flow-step-name">MySQL Database & PDO CRUD</span>
           </div>
           <div class="flow-step-card" style="border-color: var(--secondary);">
-            <span class="flow-step-num" style="background: rgba(168,85,247,0.15); color: var(--secondary);">17</span>
-            <span class="flow-step-name">Frontend Development (React / Next.js)</span>
+            <span class="flow-step-num" style="background: rgba(168,85,247,0.15); color: var(--secondary);">20</span>
+            <span class="flow-step-name">Full-Stack Web (React / Next.js / Laravel)</span>
           </div>
         </div>
 
@@ -1583,14 +1922,20 @@
           </div>
           <div class="timeline-node">
             <div class="timeline-content">
-              <span class="step-title">Phase 6: Real-World Experience</span>
+              <span class="step-title">Phase 6: Frontend Experience</span>
               <span class="step-count">Practice Projects (Step 16)</span>
+            </div>
+          </div>
+          <div class="timeline-node" style="--order-color: var(--php-color);">
+            <div class="timeline-content" style="border-color: rgba(129,140,248,0.25)">
+              <span class="step-title" style="color: var(--text);">Phase 7: Server-Side Backend & Database</span>
+              <span class="step-count" style="color: var(--php-color);">PHP, Sessions, OOP, MySQL PDO (Steps 17-19)</span>
             </div>
           </div>
           <div class="timeline-node" style="--order-color: var(--secondary);">
             <div class="timeline-content" style="border-color: rgba(168,85,247,0.2)">
-              <span class="step-title" style="color: var(--text);">Phase 7: Industry Frameworks</span>
-              <span class="step-count" style="color: var(--secondary);">React & Next.js (Step 17)</span>
+              <span class="step-title" style="color: var(--text);">Phase 8: Full-Stack Industry Frameworks</span>
+              <span class="step-count" style="color: var(--secondary);">React, Next.js & Laravel (Step 20)</span>
             </div>
           </div>
         </div>

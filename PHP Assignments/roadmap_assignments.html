@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHP Server-Side Roadmap Assignments List</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
+
+    :root {
+      --bg-color: #020617;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --primary: #818cf8;
+      --secondary: #a855f7;
+      --accent-php: #777bb4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1e1b4b 0%, #0f172a 50%, #020617 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1250px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text);
+      padding: 10px 22px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--primary);
+      transform: translateX(-4px);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #818cf8, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 850px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+    }
+
+    /* Core PHP concepts banner */
+    .concepts-banner {
+      background: rgba(30, 41, 59, 0.45);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .concepts-banner h3 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      margin-bottom: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .concept-item {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .concept-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .concept-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      background: rgba(129, 140, 248, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(129, 140, 248, 0.25);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .tag.variable { background: rgba(168, 85, 247, 0.12); color: var(--secondary); border-color: rgba(168, 85, 247, 0.25); }
+    .tag.operator { background: rgba(245, 158, 11, 0.12); color: var(--warning); border-color: rgba(245, 158, 11, 0.25); }
+    .tag.condition { background: rgba(16, 185, 129, 0.12); color: var(--success); border-color: rgba(16, 185, 129, 0.25); }
+    .tag.oop { background: rgba(236, 72, 153, 0.12); color: #ec4899; border-color: rgba(236, 72, 153, 0.25); }
+
+    /* Cards Grid */
+    .assignments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 28px;
+    }
+
+    @media (max-width: 768px) {
+      .assignments-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 26px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #818cf8, #a855f7);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(129, 140, 248, 0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(129, 140, 248, 0.15);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .card-badge {
+      background: linear-gradient(135deg, #818cf8, #a855f7);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .objective-text {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+    }
+
+    .req-list {
+      margin-left: 20px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .req-list li {
+      margin-bottom: 5px;
+    }
+
+    .req-list code {
+      background: rgba(255, 255, 255, 0.08);
+      color: #38bdf8;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+    }
+
+    .output-box {
+      background: #020617;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: var(--success);
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    .code-preview {
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: #93c5fd;
+      white-space: pre-wrap;
+      line-height: 1.45;
+    }
+
+    /* Floating Download Button */
+    #assignment-download-btn-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999999;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    #assignment-download-btn-container button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #818cf8, #a855f7);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(129, 140, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    #assignment-download-btn-container button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(129, 140, 248, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <a href="../index.html" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Dashboard
+      </a>
+      <h1>🐘 PHP Server-Side Roadmap Assignments</h1>
+      <p class="subtitle">Master PHP from server-side basics, forms, sessions, and superglobals to Object-Oriented Architecture and MySQL Database CRUD operations!</p>
+
+      <!-- Concept mapping banner -->
+      <div class="concepts-banner">
+        <h3>📍 PHP Syllabus Covered in These Tasks</h3>
+        <div class="concept-grid">
+          <div class="concept-item">
+            <span class="concept-title">📤 Output & Syntax</span>
+            <div class="concept-tags">
+              <span class="tag">&lt;?php ... ?&gt;</span>
+              <span class="tag">echo</span>
+              <span class="tag">print</span>
+              <span class="tag">var_dump()</span>
+            </div>
+          </div>
+          <div class="concept-item">
+            <span class="concept-title">📦 Variables & Data Types</span>
+            <div class="concept-tags">
+              <span class="tag variable">$variable</span>
+              <span class="tag variable">String (.)</span>
+              <span class="tag variable">Integer</span>
+              <span class="tag variable">Boolean</span>
+            </div>
+          </div>
+          <div class="concept-item">
+            <span class="concept-title">➗ Operators & Math</span>
+            <div class="concept-tags">
+              <span class="tag operator">Arithmetic (+ - * / %)</span>
+              <span class="tag operator">Assignment (.= +=)</span>
+              <span class="tag operator">Comparison (=== !=)</span>
+            </div>
+          </div>
+          <div class="concept-item">
+            <span class="concept-title">🚦 Control Flow & Loops</span>
+            <div class="concept-tags">
+              <span class="tag condition">if / elseif / else</span>
+              <span class="tag condition">switch-case</span>
+              <span class="tag condition">for / while</span>
+              <span class="tag condition">foreach</span>
+            </div>
+          </div>
+          <div class="concept-item">
+            <span class="concept-title">📂 Arrays & Functions</span>
+            <div class="concept-tags">
+              <span class="tag">Indexed Array</span>
+              <span class="tag">Associative Array</span>
+              <span class="tag">function()</span>
+              <span class="tag">return</span>
+            </div>
+          </div>
+          <div class="concept-item">
+            <span class="concept-title">🌐 Superglobals & Forms</span>
+            <div class="concept-tags">
+              <span class="tag">$_GET</span>
+              <span class="tag">$_POST</span>
+              <span class="tag">$_SESSION</span>
+              <span class="tag">$_COOKIE</span>
+              <span class="tag">$_FILES</span>
+            </div>
+          </div>
+          <div class="concept-item">
+            <span class="concept-title">🏛️ OOP & MySQL PDO</span>
+            <div class="concept-tags">
+              <span class="tag oop">class & object</span>
+              <span class="tag oop">__construct()</span>
+              <span class="tag oop">PDO Connection</span>
+              <span class="tag oop">CRUD & JSON API</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="assignments-grid">
+
+      <!-- TASK 1 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Server Welcome & Info</span>
+          <span class="card-badge">Task 1</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Set up your first PHP script to output formatted dynamic greeting, PHP version, and current server time.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Wrap script inside <code>&lt;?php ... ?&gt;</code> tags.</li>
+          <li>Output an <code>&lt;h1&gt;</code> heading using <code>echo</code>.</li>
+          <li>Display the PHP version using <code>phpversion()</code> function.</li>
+          <li>Display current date & time using <code>date('Y-m-d H:i:s')</code>.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Welcome to PHP Server-Side Programming!
+PHP Version: 8.2.10
+Current Server Time: 2026-08-21 17:45:00</div>
+      </div>
+
+      <!-- TASK 2 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Student Profile & String Concat</span>
+          <span class="card-badge">Task 2</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Declare student variables with different data types, concatenate them with string operators, and display an HTML summary card.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Declare <code>$name</code> (string), <code>$age</code> (int), <code>$gpa</code> (float), and <code>$isEnrolled</code> (bool).</li>
+          <li>Use the dot operator <code>.</code> for string concatenation.</li>
+          <li>Use <code>var_dump()</code> to inspect variable types.</li>
+          <li>Render the formatted profile inside an HTML card.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Student Name: Zaid Khan
+Age: 20 years | GPA: 3.85
+Status: Active Enrolled Student</div>
+      </div>
+
+      <!-- TASK 3 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Invoice & Tax Calculator</span>
+          <span class="card-badge">Task 3</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Calculate subtotal, discount, sales tax (GST), and grand total for items in a store order using arithmetic operators.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Define <code>$itemPrice = 1200;</code>, <code>$quantity = 3;</code>, <code>$discountRate = 0.10;</code> (10%).</li>
+          <li>Calculate subtotal = price * quantity.</li>
+          <li>Apply discount and add 15% GST tax.</li>
+          <li>Format all monetary numbers using <code>number_format($total, 2)</code>.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Subtotal: $3,600.00
+Discount (10%): -$360.00
+GST (15%): +$486.00
+-----------------------
+Grand Total: $3,726.00</div>
+      </div>
+
+      <!-- TASK 4 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Grade & Merit Evaluator</span>
+          <span class="card-badge">Task 4</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Determine a student's grade and award badge using conditional statements (<code>if</code>, <code>elseif</code>, <code>else</code>) and logical operators.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Define <code>$marks = 87;</code> (0-100).</li>
+          <li>Grading system: >= 90: Grade A+ (Distinction), >= 80: Grade A, >= 70: Grade B, >= 60: Grade C, < 60: Fail.</li>
+          <li>Verify valid score range using <code>$marks >= 0 && $marks <= 100</code>.</li>
+          <li>Output colored badge indicator based on grade.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Score: 87/100
+Result: Grade A (Pass with High Distinction)
+Status: Approved ✅</div>
+      </div>
+
+      <!-- TASK 5 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Role Permission Switcher</span>
+          <span class="card-badge">Task 5</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Implement a role-based access permission dispatcher using PHP <code>switch</code> or <code>match</code> statements.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Accept a <code>$userRole</code> variable ('admin', 'editor', 'student', 'guest').</li>
+          <li>Use <code>switch($userRole)</code> with cases for each role.</li>
+          <li>Assign specific privileges (e.g. Full CRUD, Content Edit, Read Only).</li>
+          <li>Provide a fallback default for unknown roles.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Logged in as: 'editor'
+Dashboard Access: Granted
+Permissions: Create Posts, Edit Articles, View Comments</div>
+      </div>
+
+      <!-- TASK 6 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Dynamic Multiplication Grid</span>
+          <span class="card-badge">Task 6</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Generate a dynamic mathematical multiplication table grid up to 10x10 using nested <code>for</code> loops.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Construct an HTML <code>&lt;table&gt;</code> structure dynamically.</li>
+          <li>Use outer loop for table rows <code>$r = 1</code> to <code>10</code>.</li>
+          <li>Use inner loop for columns <code>$c = 1</code> to <code>10</code>.</li>
+          <li>Highlight header rows/cols with custom background colors.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">[Table Grid 10x10 Generated]
+Row 5 x Col 5 = 25
+Row 9 x Col 9 = 81
+Row 10 x Col 10 = 100</div>
+      </div>
+
+      <!-- TASK 7 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Reusable Utility Functions</span>
+          <span class="card-badge">Task 7</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Build custom helper functions with type hinting, default arguments, and return types.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Create <code>formatCurrency(float $amount, string $symbol = '$'): string</code>.</li>
+          <li>Create <code>generateSlug(string $title): string</code> (convert title to SEO url-slug).</li>
+          <li>Create <code>calculateAge(string $birthDate): int</code> using DateTime.</li>
+          <li>Call all functions with sample inputs and echo outputs.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">formatCurrency(450.5) => "$450.50"
+generateSlug("Learn PHP 8 & MySQL") => "learn-php-8-and-mysql"
+calculateAge("2004-05-15") => 22 years old</div>
+      </div>
+
+      <!-- TASK 8 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Associative Array & Foreach</span>
+          <span class="card-badge">Task 8</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Store student course records in an associative array and iterate through key-value pairs using <code>foreach</code>.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Create array with subjects as keys and scores as values: <code>["HTML" => 95, "CSS" => 88, "JS" => 92, "PHP" => 90]</code>.</li>
+          <li>Iterate using <code>foreach ($marks as $subject => $score)</code>.</li>
+          <li>Calculate total marks, count, and overall percentage.</li>
+          <li>Display in a styled HTML list.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">• HTML: 95/100
+• CSS: 88/100
+• JS: 92/100
+• PHP: 90/100
+Average Score: 91.25% (Distinction)</div>
+      </div>
+
+      <!-- TASK 9 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Multi-Student Gradebook</span>
+          <span class="card-badge">Task 9</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Manage complex data with multidimensional arrays and output a dynamic tabular roster of all students.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Create an array containing multiple student records with <code>id</code>, <code>name</code>, <code>email</code>, and <code>marks</code>.</li>
+          <li>Use nested loops to traverse student records.</li>
+          <li>Compute rank and assign Pass/Fail badge for each record.</li>
+          <li>Render in a responsive HTML table.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">ID | Student Name | Email            | Score | Status
+01 | Ali Raza     | ali@test.com     | 92%   | Passed ✅
+02 | Sara Noor    | sara@test.com    | 88%   | Passed ✅
+03 | John Doe     | john@test.com    | 45%   | Retake ⚠️</div>
+      </div>
+
+      <!-- TASK 10 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Array Master Functions</span>
+          <span class="card-badge">Task 10</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Practice PHP built-in array manipulation functions for filtering, sorting, merging, and searching data.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Use <code>in_array()</code> and <code>array_key_exists()</code> to search items.</li>
+          <li>Use <code>sort()</code>, <code>rsort()</code>, <code>asort()</code>, and <code>ksort()</code>.</li>
+          <li>Filter scores with <code>array_filter()</code> for students passing >= 60.</li>
+          <li>Merge two lists using <code>array_merge()</code>.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Original Array: [45, 92, 78, 60, 33, 85]
+Filtered (>=60): [92, 78, 60, 85]
+Sorted High to Low: [92, 85, 78, 60]
+Top Score: 92</div>
+      </div>
+
+      <!-- TASK 11 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">GET Search & Filter Handler</span>
+          <span class="card-badge">Task 11</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Process URL query parameters via the <code>$_GET</code> superglobal to filter a catalog of products or courses.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Build an HTML search form with <code>method="GET"</code>.</li>
+          <li>Check if parameter exists using <code>isset($_GET['query'])</code>.</li>
+          <li>Sanitize inputs using <code>htmlspecialchars()</code> and <code>trim()</code>.</li>
+          <li>Filter catalog array by matching search keywords and display matching results.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Search Query: 'PHP'
+Matching Results Found (2):
+1. PHP Fundamentals & Syntax
+2. Full Stack PHP & MySQL Web App</div>
+      </div>
+
+      <!-- TASK 12 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Secure POST Form & Validation</span>
+          <span class="card-badge">Task 12</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Collect user contact form data via <code>$_POST</code>, validate emails, phone numbers, and show clear error notices.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Check if form was submitted using <code>$_SERVER['REQUEST_METHOD'] === 'POST'</code>.</li>
+          <li>Validate email with <code>filter_var($email, FILTER_VALIDATE_EMAIL)</code>.</li>
+          <li>Ensure required fields are not empty; collect errors in an <code>$errors</code> array.</li>
+          <li>Retain input values in form on validation failure (sticky form).</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Status: Validation Success!
+Name: Bilal Ahmed
+Email: bilal@example.com (Valid)
+Message: Received successfully. Confirmation sent!</div>
+      </div>
+
+      <!-- TASK 13 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">User Authentication & Sessions</span>
+          <span class="card-badge">Task 13</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Implement persistent user login, session authorization, and logout flows using <code>$_SESSION</code>.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Call <code>session_start()</code> at the top of protected pages.</li>
+          <li>Verify credentials using <code>password_verify()</code> against hashed passwords.</li>
+          <li>Store user info in <code>$_SESSION['user_id']</code> and <code>$_SESSION['username']</code>.</li>
+          <li>Create a logout script with <code>session_unset()</code> and <code>session_destroy()</code>.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Session Started: ID [sess_8f9a2b...]
+Logged in as: suneel_dev
+Role: Instructor
+Dashboard: Access Granted ✅</div>
+      </div>
+
+      <!-- TASK 14 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Cookies & Theme Persistence</span>
+          <span class="card-badge">Task 14</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Save user preferences (e.g. Dark Mode / Light Mode, Language) using HTTP Cookies with expiry dates.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Set cookie using <code>setcookie('theme', 'dark', time() + (86400 * 30), '/')</code> (30 days).</li>
+          <li>Read current preference from <code>$_COOKIE['theme']</code>.</li>
+          <li>Apply corresponding CSS class to the <code>&lt;body&gt;</code> element dynamically.</li>
+          <li>Provide button to switch or delete cookie.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Active Theme: Dark Mode (via $_COOKIE)
+Expires: 30 days from now
+Interface adjusted to midnight palette 🌙</div>
+      </div>
+
+      <!-- TASK 15 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Secure File & Avatar Uploader</span>
+          <span class="card-badge">Task 15</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Process file uploads securely using <code>$_FILES</code>, checking MIME types, file sizes, and generating unique filenames.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Set form with <code>enctype="multipart/form-data"</code>.</li>
+          <li>Validate file extensions (allowed: <code>['jpg', 'jpeg', 'png', 'webp']</code>).</li>
+          <li>Enforce max file size limit (e.g. 2MB).</li>
+          <li>Save file securely using <code>move_uploaded_file()</code> with <code>uniqid()</code>.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Upload Status: Success!
+File: avatar_65e12f4b.png
+Size: 840 KB | Type: image/png
+Saved in: /uploads/avatars/</div>
+      </div>
+
+      <!-- TASK 16 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">File System & Activity Logger</span>
+          <span class="card-badge">Task 16</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Read, write, and append user activity logs into a text file using PHP file system functions.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Append log entry using <code>file_put_contents('logs.txt', $entry, FILE_APPEND)</code>.</li>
+          <li>Include timestamp, client IP (<code>$_SERVER['REMOTE_ADDR']</code>), and action.</li>
+          <li>Read and render log lines using <code>file()</code> or <code>file_get_contents()</code>.</li>
+          <li>Check file existence with <code>file_exists()</code>.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">[2026-08-21 17:50:12] IP: 192.168.1.1 - User login success
+[2026-08-21 17:52:04] IP: 192.168.1.1 - Updated profile settings
+[2026-08-21 17:55:30] IP: 192.168.1.1 - Uploaded assignment.pdf</div>
+      </div>
+
+      <!-- TASK 17 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">OOP Class, Object & Constructor</span>
+          <span class="card-badge">Task 17</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Design an Object-Oriented <code>Student</code> or <code>BankAccount</code> class with encapsulated properties and methods.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Define class <code>BankAccount</code> with private properties <code>$accountNo</code>, <code>$balance</code>.</li>
+          <li>Initialize properties using constructor <code>__construct()</code>.</li>
+          <li>Implement public methods <code>deposit($amount)</code>, <code>withdraw($amount)</code>, and <code>getBalance()</code>.</li>
+          <li>Instantiate multiple bank account objects and execute operations.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Account #PK-1029 Created. Opening Balance: $500.00
+Deposited: $250.00 -> New Balance: $750.00
+Withdrawn: $100.00 -> Current Balance: $650.00</div>
+      </div>
+
+      <!-- TASK 18 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">OOP Inheritance & Polymorphism</span>
+          <span class="card-badge">Task 18</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Extend base classes using inheritance (<code>extends</code>), protected access modifiers, and method overriding.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Create base class <code>User</code> with properties <code>$name</code>, <code>$email</code>.</li>
+          <li>Create child classes <code>Student</code> and <code>Instructor</code> extending <code>User</code>.</li>
+          <li>Override <code>getRoleDescription()</code> in child classes to show customized responsibilities.</li>
+          <li>Demonstrate polymorphism by iterating an array of mixed user objects.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Instructor: Prof. Suneel | Role: Course Creator & Grading
+Student: Farhan Ali       | Role: Enrolled in 4 Courses
+Admin: Root System       | Role: Complete Portal Manager</div>
+      </div>
+
+      <!-- TASK 19 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">MySQL Database Connection & PDO CRUD</span>
+          <span class="card-badge">Task 19</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Connect PHP to MySQL using PDO, handle exceptions with <code>try-catch</code>, and perform secure CRUD operations using prepared statements.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Create PDO instance with DSN: <code>mysql:host=localhost;dbname=school_db;charset=utf8mb4</code>.</li>
+          <li>Set PDO error mode to <code>ERRMODE_EXCEPTION</code>.</li>
+          <li>Execute <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> with <code>prepare()</code> & <code>execute()</code>.</li>
+          <li>Fetch records with <code>fetchAll(PDO::FETCH_ASSOC)</code> to prevent SQL Injection.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Database: Connected via PDO ✅
+Executed: INSERT INTO students (name, email) VALUES (?, ?)
+New Record Created: ID #42
+Fetched 42 records successfully into HTML table.</div>
+      </div>
+
+      <!-- TASK 20 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">REST API Endpoint & JSON Service</span>
+          <span class="card-badge">Task 20</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Build a server-side JSON REST API endpoint that responds to GET/POST requests with HTTP status codes.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Set headers: <code>header('Content-Type: application/json; charset=UTF-8')</code>.</li>
+          <li>Handle HTTP response codes with <code>http_response_code(200)</code> or <code>404</code>.</li>
+          <li>Convert PHP associative array to JSON using <code>json_encode($data)</code>.</li>
+          <li>Read JSON payload from frontend fetch using <code>file_get_contents('php://input')</code>.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "status": "success",
+  "message": "Student records fetched",
+  "total": 3,
+  "data": [...]
+}</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Floating Download Button -->
+  <div id="assignment-download-btn-container">
+    <button onclick="downloadCurrentAssignmentFile()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Download File
+    </button>
+  </div>
+
+  <script>
+    function downloadCurrentAssignmentFile() {
+      const url = window.location.href;
+      const filename = url.substring(url.lastIndexOf('/') + 1) || 'php_roadmap_assignments.html';
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.blob();
+        })
+        .then(blob => {
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch(err => {
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+    }
+  </script>
+</body>
+</html>

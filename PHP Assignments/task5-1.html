@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PHP Switch Case Dispatcher</title>
+</head>
+<body>
+
+    <h2>PHP Switch Case Statement (Task 5-1)</h2>
+
+    <label for="daySelect">Choose Day (1-7): </label>
+    <select id="daySelect">
+        <option value="1">1 (Monday)</option>
+        <option value="2">2 (Tuesday)</option>
+        <option value="3">3 (Wednesday)</option>
+        <option value="4">4 (Thursday)</option>
+        <option value="5">5 (Friday)</option>
+        <option value="6">6 (Saturday)</option>
+        <option value="7">7 (Sunday)</option>
+    </select>
+    <br><br>
+
+    <button onclick="checkDay()">Check Day Type</button>
+
+    <h3 id="result">Result: </h3>
+
+    <hr>
+    <h3>PHP Code:</h3>
+    <pre style="background: #f1f5f9; padding: 10px; border-radius: 6px; font-size: 14px;">
+&lt;?php
+$day = 5;
+
+switch ($day) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+        echo "It is a Weekday (Work / Study Day) 💼";
+        break;
+    case 6:
+    case 7:
+        echo "It is a Weekend! (Relax & Code) 🎉";
+        break;
+    default:
+        echo "Invalid Day Number";
+}
+?&gt;
+    </pre>
+
+<script>
+function checkDay() {
+    let day = Number(document.getElementById("daySelect").value);
+    switch (day) {
+        case 1: case 2: case 3: case 4: case 5:
+            document.getElementById("result").innerHTML = "Result: It is a Weekday (Work / Study Day) 💼";
+            break;
+        case 6: case 7:
+            document.getElementById("result").innerHTML = "Result: It is a Weekend! (Relax & Code) 🎉";
+            break;
+        default:
+            document.getElementById("result").innerHTML = "Result: Invalid Day Number";
+    }
+}
+</script>
+
+
+<!-- Floating Download Button -->
+<div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
+  <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+    Download File
+  </button>
+</div>
+<script>
+  function downloadCurrentAssignmentFile() {
+    const url = window.location.href;
+    const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
+    fetch(url)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.blob();
+      })
+      .then(blob => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(err => {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PHP File Upload & Validation</title>
+</head>
+<body>
+
+    <h2>PHP File Upload & Mime Validation (Task 19)</h2>
+
+    <input type="file" id="fileInput">
+    <br><br>
+    <button onclick="uploadFile()">Upload File</button>
+
+    <h3 id="result">Result: </h3>
+
+    <hr>
+    <h3>PHP Code:</h3>
+    <pre style="background: #f1f5f9; padding: 10px; border-radius: 6px; font-size: 14px;">
+&lt;?php
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["avatar"])) {
+    $file = $_FILES["avatar"];
+    $allowed = ["image/jpeg", "image/png", "image/webp"];
+
+    if (in_array($file["type"], $allowed) && $file["size"] &lt; 2000000) {
+        $dest = "uploads/" . uniqid() . "_" . $file["name"];
+        move_uploaded_file($file["tmp_name"], $dest);
+        echo "Uploaded successfully to: " . $dest;
+    } else {
+        echo "Error: Invalid file type or size exceeds 2MB.";
+    }
+}
+?&gt;
+    </pre>
+
+<script>
+function uploadFile() {
+    let f = document.getElementById("fileInput").files[0];
+    if (f) {
+        document.getElementById("result").innerHTML = "Result: File '<b>" + f.name + "</b>' (" + Math.round(f.size/1024) + " KB) validated and uploaded! ✅";
+    } else {
+        document.getElementById("result").innerHTML = "Result: Please select a file first.";
+    }
+}
+</script>
+
+
+<!-- Floating Download Button -->
+<div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
+  <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+    Download File
+  </button>
+</div>
+<script>
+  function downloadCurrentAssignmentFile() {
+    const url = window.location.href;
+    const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
+    fetch(url)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.blob();
+      })
+      .then(blob => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(err => {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+  }
+</script>
+
+</body>
+</html>

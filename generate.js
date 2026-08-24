@@ -6,9 +6,27 @@ let baseDir = __dirname;
 let result = {
   html: [],
   js: [],
+  php: [],
   programming: [],
   mysql: [], 
   practical: [], // Added Practical category
+  progressive: [], // Progressive Full-Stack Projects Pathway
+};
+
+const progressiveMap = {
+  "p1_html_resume.html": "Level 1.1: Personal Resume & Profile Page [HTML]",
+  "p1_html_form.html": "Level 1.2: Student Admission & Course Form [HTML]",
+  "p1_html_table.html": "Level 1.3: Course Timetable & Fee Structure [HTML]",
+  "p2_css_landing.html": "Level 2.1: Product Showcase Landing Page [HTML + CSS]",
+  "p2_css_portfolio.html": "Level 2.2: Multi-Page Corporate Portfolio [HTML + CSS]",
+  "p2_css_responsive.html": "Level 2.3: Responsive Web Layout & Media Queries [HTML + CSS]",
+  "p3_js_quiz.html": "Level 3.1: Interactive Quiz & Grade Calculator [HTML + CSS + JS]",
+  "p3_js_todo.html": "Level 3.2: Smart Task & Habit Planner (LocalStorage) [HTML + CSS + JS]",
+  "p3_js_weather_api.html": "Level 3.3: Weather & Currency REST API App [HTML + CSS + JS]",
+  "p4_php_portal.html": "Level 4.1: Dynamic Student Portal & File Uploader [HTML + CSS + JS + PHP]",
+  "p4_php_auth.html": "Level 4.2: Secure Auth & Session Management System [HTML + CSS + JS + PHP]",
+  "p5_fullstack_sms.html": "Level 5.1: Full-Stack Student Management System (SMS) [HTML + CSS + JS + PHP + MySQL]",
+  "p5_fullstack_ecommerce.html": "Level 5.2: Complete E-Commerce Store & Admin Panel [HTML + CSS + JS + PHP + MySQL]"
 };
 
 // Function to extract number from filename for natural sorting
@@ -72,7 +90,13 @@ function scanFolder(folderPath) {
         item.endsWith(".html")
       ) {
         result.js.push(relativePath);
-      } else if (relativePath.includes("Progarmming Assignment")) {
+      } else if (
+        relativePath.includes("PHP Assignments") &&
+        item.endsWith(".html")
+      ) {
+        result.php.push(relativePath);
+      }
+      else if (relativePath.includes("Progarmming Assignment")) {
         result.programming.push({
           name: item,
           path: relativePath,
@@ -97,22 +121,30 @@ function scanFolder(folderPath) {
           path: relativePath,
         });
       }
-      // Added condition for Practical assignments
+      // Added condition for Practical & Progressive assignments
       else if (relativePath.includes("Practical Assignments") && item.endsWith(".html")) {
-        let displayName = item;
-        try {
-          const fileContent = fs.readFileSync(fullPath, "utf8");
-          const titleMatch = fileContent.match(/<title>([^<]+)<\/title>/i);
-          if (titleMatch && titleMatch[1]) {
-            displayName = titleMatch[1].trim();
+        if (item.startsWith("p1_") || item.startsWith("p2_") || item.startsWith("p3_") || item.startsWith("p4_") || item.startsWith("p5_")) {
+          const displayName = progressiveMap[item] || item.replace(".html", "");
+          result.progressive.push({
+            name: displayName,
+            path: relativePath,
+          });
+        } else {
+          let displayName = item;
+          try {
+            const fileContent = fs.readFileSync(fullPath, "utf8");
+            const titleMatch = fileContent.match(/<title>([^<]+)<\/title>/i);
+            if (titleMatch && titleMatch[1]) {
+              displayName = titleMatch[1].trim();
+            }
+          } catch (e) {
+            console.error("Error reading file title:", e);
           }
-        } catch (e) {
-          console.error("Error reading file title:", e);
+          result.practical.push({
+            name: displayName,
+            path: relativePath,
+          });
         }
-        result.practical.push({
-          name: displayName,
-          path: relativePath,
-        });
       }
     }
   });
@@ -121,6 +153,18 @@ function scanFolder(folderPath) {
 // Scan all folders
 scanFolder(baseDir);
 
+// Sort Progressive assignments (Level 1.1 to Level 5.2 in exact order)
+console.log("📝 Sorting Progressive Pathway assignments...");
+result.progressive.sort((a, b) => {
+  const nameA = a.name || "";
+  const nameB = b.name || "";
+  return nameA.localeCompare(nameB, undefined, {
+    numeric: true,
+    sensitivity: "base",
+    ignorePunctuation: true,
+  });
+});
+
 // Sort HTML assignments in alphabetical order (A-Z)
 console.log("📝 Sorting HTML assignments...");
 result.html.sort(naturalSort);
@@ -128,6 +172,10 @@ result.html.sort(naturalSort);
 // Sort JavaScript assignments in alphabetical order (A-Z)
 console.log("📝 Sorting JavaScript assignments...");
 result.js.sort(naturalSort);
+
+// Sort PHP assignments in alphabetical order (A-Z)
+console.log("📝 Sorting PHP assignments...");
+result.php.sort(naturalSort);
 
 // Sort Programming assignments alphabetically (A-Z)
 console.log("📝 Sorting Programming files...");
@@ -213,8 +261,10 @@ function injectDownloadButtons() {
     }
   }
 
+  result.progressive.forEach(processPath);
   result.html.forEach(processPath);
   result.js.forEach(processPath);
+  result.php.forEach(processPath);
   result.mysql.forEach(processPath);
   result.practical.forEach(processPath);
 
@@ -232,8 +282,10 @@ fs.writeFileSync("data.js", `window.assignmentsData = ${JSON.stringify(result, n
 
 console.log("\n✅ data.json and data.js generated successfully!");
 console.log("\n📊 STATISTICS:");
+console.log(`   🚀 Progressive Pathway: ${result.progressive.length} files`);
 console.log(`   📄 HTML Assignments: ${result.html.length} files`);
 console.log(`   ⚡ JavaScript Tasks: ${result.js.length} files`);
+console.log(`   🐘 PHP Tasks: ${result.php.length} files`);
 console.log(`   💻 Programming Files: ${result.programming.length} files`);
 console.log(`   🗄️  MySQL Files: ${result.mysql.length} files`); 
 console.log(`   🧪 Practical Files: ${result.practical.length} files`); // Added Practical stats
