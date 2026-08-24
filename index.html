@@ -2743,6 +2743,18 @@
           return;
         }
 
+        // If user is Admin, redirect directly to Admin Control Panel
+        if (result.user.role === "admin" || result.user.username === "admin") {
+          localStorage.setItem("taskflow_admin_session", JSON.stringify({
+            username: result.user.username,
+            name: result.user.name || "Administrator",
+            role: "admin",
+            loginAt: new Date().toISOString()
+          }));
+          window.location.href = "admin.html";
+          return;
+        }
+
         currentUser = {
           username: result.user.username,
           name: result.user.name,

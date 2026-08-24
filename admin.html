@@ -441,16 +441,132 @@
         color: #f8fafc;
       }
 
-      /* Split View Layout: Form + Table */
-      .admin-layout-grid {
-        display: grid;
-        grid-template-columns: 380px 1fr;
+      /* ==================== COLLAPSIBLE SIDEBAR WORKSPACE ==================== */
+      .admin-workspace {
+        display: flex;
         gap: 1.5rem;
+        width: 100%;
+        position: relative;
+        align-items: flex-start;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      /* Collapsible Registration Sidebar */
+      .admin-sidebar {
+        width: 360px;
+        min-width: 360px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow: hidden;
+        position: sticky;
+        top: 80px;
+        max-height: calc(100vh - 100px);
+        display: flex;
+        flex-direction: column;
+        z-index: 50;
+      }
+
+      /* Collapsed State */
+      .admin-workspace.sidebar-collapsed .admin-sidebar {
+        width: 0;
+        min-width: 0;
+        margin-right: -1.5rem;
+        padding: 0;
+        opacity: 0;
+        pointer-events: none;
+        border: none;
+        transform: translateX(-40px);
+      }
+
+      .admin-main-area {
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 1.25rem 1rem;
+        border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+      }
+
+      .sidebar-close-btn {
+        background: rgba(51, 65, 85, 0.4);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        color: #94a3b8;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.85rem;
+      }
+
+      .sidebar-close-btn:hover {
+        background: #ef4444;
+        color: white;
+        border-color: #ef4444;
+      }
+
+      .sidebar-body {
+        padding: 1.25rem;
+        overflow-y: auto;
+      }
+
+      /* Mobile Off-canvas Drawer */
+      .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 999;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
       }
 
       @media (max-width: 1024px) {
-        .admin-layout-grid {
-          grid-template-columns: 1fr;
+        .admin-sidebar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          z-index: 1000;
+          width: 340px;
+          min-width: 340px;
+          max-height: 100vh;
+          border-radius: 0 16px 16px 0;
+          transform: translateX(-100%);
+          opacity: 1 !important;
+          pointer-events: auto !important;
+          margin-right: 0 !important;
+          box-shadow: 10px 0 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .admin-workspace.sidebar-open .admin-sidebar {
+          transform: translateX(0);
+        }
+
+        .admin-workspace.sidebar-open .sidebar-backdrop {
+          display: block;
+          opacity: 1;
+        }
+
+        .admin-workspace.sidebar-collapsed .admin-sidebar {
+          transform: translateX(-100%);
+          width: 340px;
+          min-width: 340px;
+          border: 1px solid var(--border);
         }
       }
 
@@ -519,9 +635,6 @@
       }
 
       /* Users Table */
-      .table-responsive {
-        overflow-x: auto;
-      }
 
       table.users-table {
         width: 100%;
@@ -678,20 +791,22 @@
       /* Responsive Media Queries */
       @media (max-width: 1024px) {
         .admin-navbar {
-          padding: 0.8rem 1rem;
+          padding: 0.75rem 1rem;
           flex-direction: column;
           align-items: stretch;
-          gap: 12px;
+          gap: 10px;
         }
 
         .admin-brand {
           justify-content: space-between;
+          width: 100%;
         }
 
         .nav-actions {
           justify-content: flex-start;
           flex-wrap: wrap;
-          gap: 8px;
+          gap: 6px;
+          width: 100%;
         }
 
         .admin-container {
@@ -710,12 +825,45 @@
       }
 
       @media (max-width: 640px) {
+        .admin-container {
+          padding: 0.6rem;
+        }
+
         .stats-grid {
-          grid-template-columns: 1fr;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.5rem;
+        }
+
+        .stat-card {
+          padding: 0.85rem;
+          gap: 0.6rem;
+          border-radius: 12px;
+        }
+
+        .stat-icon-wrapper {
+          width: 38px;
+          height: 38px;
+          font-size: 1.15rem;
+          border-radius: 8px;
+        }
+
+        .stat-content h3 {
+          font-size: 0.68rem;
+        }
+
+        .stat-content .stat-number {
+          font-size: 1.25rem;
         }
 
         .panel-card {
-          padding: 1.1rem;
+          padding: 1rem;
+          border-radius: 12px;
+        }
+
+        .panel-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
         }
 
         .table-toolbar {
@@ -723,9 +871,18 @@
           align-items: stretch;
         }
 
+        .search-box {
+          width: 100%;
+        }
+
+        #roleFilter {
+          width: 100% !important;
+        }
+
         .modal-box {
-          padding: 1.25rem;
-          max-width: 94vw;
+          padding: 1.2rem;
+          max-width: 95vw;
+          max-height: 90vh;
         }
 
         .admin-toast {
@@ -735,10 +892,23 @@
           text-align: center;
           justify-content: center;
         }
+
+        .nav-link-btn, .cloud-status-pill, .admin-user-pill {
+          padding: 4px 8px;
+          font-size: 0.74rem;
+        }
       }
 
       table.users-table {
-        min-width: 680px;
+        min-width: 660px;
+      }
+
+      .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 10px;
+        border: 1px solid rgba(51, 65, 85, 0.4);
       }
 
       /* Toast Notification */
@@ -896,144 +1066,160 @@
           </div>
         </div>
 
-        <!-- 2-Column Split: Create Form + Users Table -->
-        <div class="admin-layout-grid">
-          <!-- Left Column: Create User Panel -->
-          <div class="panel-card">
-            <div class="panel-header">
-              <h3><span>➕</span> Register New Student</h3>
+        <!-- Full Width Management Panel -->
+        <div class="panel-card" style="width: 100%;">
+          <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h3 style="margin: 0;">
+                <span>👥</span> Registered Students (<span id="userCountBadge">0</span>)
+              </h3>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 3px;">Manage student credentials, track assignment progress, view activity history</p>
             </div>
 
-            <form id="createUserForm" onsubmit="handleCreateUser(event)">
-              <div class="form-group">
-                <label>Student Full Name</label>
-                <input
-                  type="text"
-                  id="newFullName"
-                  class="form-control"
-                  placeholder="e.g. Rahul Sharma"
-                />
-              </div>
-
-              <div class="form-group">
-                <label>Username <span style="color: #f87171;">*</span></label>
-                <input
-                  type="text"
-                  id="newUsername"
-                  class="form-control"
-                  placeholder="e.g. rahul123"
-                  autocomplete="off"
-                  required
-                />
-                <small style="color: #64748b; font-size: 0.72rem; margin-top: 4px; display: block;">
-                  Only lowercase letters, numbers, and underscores.
-                </small>
-              </div>
-
-              <div class="form-group">
-                <label style="display: flex; justify-content: space-between;">
-                  <span>Password <span style="color: #f87171;">*</span></span>
-                  <a href="#" onclick="generateRandomPassword(); return false;" style="color: #38bdf8; text-decoration: none; font-size: 0.75rem;">
-                    🎲 Auto Generate
-                  </a>
-                </label>
-                <input
-                  type="text"
-                  id="newPassword"
-                  class="form-control"
-                  placeholder="Enter or generate password"
-                  required
-                />
-              </div>
-
-              <div class="form-group">
-                <label>Account Role</label>
-                <select id="newRole" class="form-control">
-                  <option value="student" selected>👨‍💻 Student Developer</option>
-                  <option value="instructor">🎓 Instructor / Mentor</option>
-                  <option value="admin">🛡️ Administrator</option>
-                </select>
-              </div>
-
-              <button type="submit" class="btn btn-primary" style="width: 100%;">
-                ➕ Create & Register User
+            <!-- Header Action Controls -->
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-sm" onclick="openAddStudentModal()" style="border-radius: 8px; font-weight: 700; box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);">
+                ➕ Add New Student
               </button>
-            </form>
 
-            <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;" />
+              <button class="btn btn-secondary btn-sm" onclick="exportFullDatabaseJSON()" title="Export database backup">
+                📥 Export JSON
+              </button>
 
-            <!-- Global Database Backup Controls -->
-            <div>
-              <h4 style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.8rem; letter-spacing: 0.5px;">
-                ⚙️ Database Sync Tools
-              </h4>
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                <button class="btn btn-secondary btn-sm" onclick="exportFullDatabaseJSON()">
-                  📥 Export All Users (JSON)
-                </button>
+              <label class="btn btn-secondary btn-sm" style="cursor: pointer; margin: 0;" title="Restore database backup">
+                📤 Restore JSON
+                <input type="file" id="dbRestoreInput" accept=".json" style="display: none;" onchange="importFullDatabaseJSON(event)" />
+              </label>
 
-                <label class="btn btn-secondary btn-sm" style="cursor: pointer; text-align: center;">
-                  📤 Restore Database (JSON)
-                  <input type="file" id="dbRestoreInput" accept=".json" style="display: none;" onchange="importFullDatabaseJSON(event)" />
-                </label>
-
-                <button class="btn btn-danger btn-sm" onclick="confirmResetDefaults()">
-                  ⟳ Restore Default 18 Students
-                </button>
-              </div>
+              <button class="btn btn-secondary btn-sm" onclick="confirmResetDefaults()" title="Restore baseline students">
+                ⟳ Reset
+              </button>
             </div>
           </div>
 
-          <!-- Right Column: Registered Users Table -->
-          <div class="panel-card">
-            <div class="panel-header">
-              <h3>
-                <span>👥</span> All Registered Users (<span id="userCountBadge">0</span>)
-              </h3>
+          <!-- Search & Filters Toolbar -->
+          <div class="table-toolbar">
+            <div class="search-box">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <circle cx="11" cy="11" r="8" stroke-width="2"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"></line>
+              </svg>
+              <input
+                type="text"
+                id="userSearchInput"
+                placeholder="Search by student name or username..."
+                oninput="renderUsersTable()"
+              />
             </div>
 
-            <!-- Search & Filters -->
-            <div class="table-toolbar">
-              <div class="search-box">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <circle cx="11" cy="11" r="8" stroke-width="2"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"></line>
-                </svg>
-                <input
-                  type="text"
-                  id="userSearchInput"
-                  placeholder="Search by username or name..."
-                  oninput="renderUsersTable()"
-                />
-              </div>
+            <select id="roleFilter" class="form-control" style="width: auto; padding: 0.65rem 1rem;" onchange="renderUsersTable()">
+              <option value="all">All Roles</option>
+              <option value="student">Students</option>
+              <option value="admin">Admins</option>
+            </select>
+          </div>
 
-              <select id="roleFilter" class="form-control" style="width: auto; padding: 0.65rem 1rem;" onchange="renderUsersTable()">
-                <option value="all">All Roles</option>
-                <option value="student">Students</option>
-                <option value="admin">Admins</option>
-              </select>
-            </div>
-
-            <!-- Users Table -->
-            <div class="table-responsive">
-              <table class="users-table">
-                <thead>
-                  <tr>
-                    <th>User / Name</th>
-                    <th>Role</th>
-                    <th>Password</th>
-                    <th>Task Progress</th>
-                    <th>Registered</th>
-                    <th style="text-align: right;">Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="usersTableBody">
-                  <!-- Rendered dynamically by JS -->
-                </tbody>
-              </table>
-            </div>
+          <!-- Users Table -->
+          <div class="table-responsive">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>User / Student Name</th>
+                  <th>Role</th>
+                  <th>Password</th>
+                  <th>Task Progress</th>
+                  <th>Registered</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <!-- Rendered dynamically by JS -->
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ==================== POPUP MODAL 1: ADD STUDENT MODAL ==================== -->
+    <div id="addStudentModal" class="modal-overlay" onclick="closeAddStudentModalOnBackdrop(event)">
+      <div class="modal-box" style="max-width: 480px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(51, 65, 85, 0.6);">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 34px; height: 34px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #38bdf8;">
+              ➕
+            </div>
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: #f8fafc; margin: 0;">Register New Student</h3>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0;">Create a new student account in database</p>
+            </div>
+          </div>
+          <button class="sidebar-close-btn" onclick="closeAddStudentModal()" title="Close (Esc)">
+            ✕
+          </button>
+        </div>
+
+        <form id="createUserForm" onsubmit="handleCreateUser(event)">
+          <div class="form-group">
+            <label>Student Full Name</label>
+            <input
+              type="text"
+              id="newFullName"
+              class="form-control"
+              placeholder="e.g. Rahul Sharma"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Username <span style="color: #f87171;">*</span></label>
+            <input
+              type="text"
+              id="newUsername"
+              class="form-control"
+              placeholder="e.g. rahul123"
+              autocomplete="off"
+              required
+            />
+            <small style="color: #64748b; font-size: 0.72rem; margin-top: 4px; display: block;">
+              Only lowercase letters, numbers, and underscores.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label style="display: flex; justify-content: space-between; align-items: center;">
+              <span>Password <span style="color: #f87171;">*</span></span>
+              <a href="#" onclick="generateRandomPassword(); return false;" style="color: #38bdf8; text-decoration: none; font-size: 0.78rem; font-weight: 600;">
+                🎲 Auto Generate
+              </a>
+            </label>
+            <input
+              type="text"
+              id="newPassword"
+              class="form-control"
+              placeholder="Enter or generate password"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Account Role</label>
+            <select id="newRole" class="form-control">
+              <option value="student" selected>👨‍💻 Student Developer</option>
+              <option value="instructor">🎓 Instructor / Mentor</option>
+              <option value="admin">🛡️ Administrator</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 1.75rem;">
+            <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeAddStudentModal()">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary" style="flex: 2;">
+              ➕ Register Student
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -1241,6 +1427,34 @@
         renderUsersTable();
       }
 
+      // ---------- Add Student Popup Modal Controller ----------
+      function openAddStudentModal() {
+        const nameInput = document.getElementById("newFullName");
+        const usernameInput = document.getElementById("newUsername");
+        const passwordInput = document.getElementById("newPassword");
+        const roleInput = document.getElementById("newRole");
+
+        if (nameInput) nameInput.value = "";
+        if (usernameInput) usernameInput.value = "";
+        if (passwordInput) passwordInput.value = "";
+        if (roleInput) roleInput.value = "student";
+
+        const modal = document.getElementById("addStudentModal");
+        if (modal) modal.style.display = "flex";
+        setTimeout(() => {
+          if (nameInput) nameInput.focus();
+        }, 50);
+      }
+
+      function closeAddStudentModal() {
+        const modal = document.getElementById("addStudentModal");
+        if (modal) modal.style.display = "none";
+      }
+
+      function closeAddStudentModalOnBackdrop(e) {
+        if (e.target.id === "addStudentModal") closeAddStudentModal();
+      }
+
       // ---------- Create User ----------
       async function handleCreateUser(e) {
         e.preventDefault();
@@ -1270,14 +1484,15 @@
           return;
         }
 
-        // Reset form
+        // Reset form and close popup modal
         nameInput.value = "";
         usernameInput.value = "";
         passwordInput.value = "";
         roleInput.value = "student";
+        closeAddStudentModal();
 
         await renderUsersTable();
-        showToast(`🎉 Student "${username}" registered in database!`);
+        showToast(`🎉 Student "@${username}" registered in database!`);
       }
 
       // Auto generate random password
@@ -1312,8 +1527,9 @@
         });
 
         filtered.forEach((user) => {
+          const isAdmin = user.role === "admin" || user.username.toLowerCase() === "admin";
           const completedTasks = user.completedCount || 0;
-          if (completedTasks > 0) activeProgressCount++;
+          if (!isAdmin && completedTasks > 0) activeProgressCount++;
           const pct = user.percentage || 0;
 
           const isPassVisible = visiblePasswords[user.username] === true;
@@ -1323,7 +1539,7 @@
           tr.innerHTML = `
             <td>
               <div class="user-cell">
-                <div class="user-avatar-sm ${user.role === 'admin' ? 'admin-avatar' : ''}">
+                <div class="user-avatar-sm ${isAdmin ? 'admin-avatar' : ''}">
                   ${user.username.charAt(0).toUpperCase()}
                 </div>
                 <div>
@@ -1333,8 +1549,8 @@
               </div>
             </td>
             <td>
-              <span class="user-role-badge ${user.role === 'admin' ? 'role-admin' : 'role-student'}">
-                ${user.role === 'admin' ? '👑 Admin' : user.role === 'instructor' ? '🎓 Mentor' : '👨‍💻 Student'}
+              <span class="user-role-badge ${isAdmin ? 'role-admin' : 'role-student'}">
+                ${isAdmin ? '👑 Super Admin' : user.role === 'instructor' ? '🎓 Mentor' : '👨‍💻 Student'}
               </span>
             </td>
             <td>
@@ -1349,14 +1565,20 @@
               </div>
             </td>
             <td>
-              <div>
-                <div class="progress-mini-bar">
-                  <div class="progress-mini-fill" style="width: ${pct}%;"></div>
-                </div>
-                <span style="font-weight: 700; color: ${pct > 0 ? '#38bdf8' : '#64748b'}; font-size: 0.8rem;">
-                  ${completedTasks}/243 (${pct}%)
+              ${isAdmin ? `
+                <span style="color: #fbbf24; font-weight: 700; font-size: 0.78rem; background: rgba(245, 158, 11, 0.12); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.25);">
+                  🛡️ System Admin (N/A)
                 </span>
-              </div>
+              ` : `
+                <div>
+                  <div class="progress-mini-bar">
+                    <div class="progress-mini-fill" style="width: ${pct}%;"></div>
+                  </div>
+                  <span style="font-weight: 700; color: ${pct > 0 ? '#38bdf8' : '#64748b'}; font-size: 0.8rem;">
+                    ${completedTasks}/243 (${pct}%)
+                  </span>
+                </div>
+              `}
             </td>
             <td style="color: #94a3b8; font-size: 0.8rem;">
               <div>${user.createdAt || '2026-08-21'}</div>
@@ -1364,29 +1586,34 @@
             </td>
             <td style="text-align: right;">
               <div class="actions-group" style="justify-content: flex-end;">
-                <button class="btn btn-secondary btn-sm" onclick="viewStudentHistory('${user.username}', '${user.name || user.username}', ${completedTasks})" title="View Student Task History">
-                  📜 History
-                </button>
-                <button class="btn btn-secondary btn-sm" onclick="openEditModal('${user.username}')" title="Edit password/name">
-                  ✏️
-                </button>
-                <button class="btn btn-secondary btn-sm" onclick="resetUserProgress('${user.username}')" title="Reset completed tasks">
-                  🔄
-                </button>
-                ${user.username !== 'admin' ? `
+                ${!isAdmin ? `
+                  <button class="btn btn-secondary btn-sm" onclick="viewStudentHistory('${user.username}', '${user.name || user.username}', ${completedTasks})" title="View Student Task History">
+                    📜 History
+                  </button>
+                  <button class="btn btn-secondary btn-sm" onclick="openEditModal('${user.username}')" title="Edit password/name">
+                    ✏️
+                  </button>
+                  <button class="btn btn-secondary btn-sm" onclick="resetUserProgress('${user.username}')" title="Reset completed tasks">
+                    🔄
+                  </button>
                   <button class="btn btn-danger btn-sm" onclick="deleteUser('${user.username}')" title="Delete account">
                     🗑️
                   </button>
-                ` : ''}
+                ` : `
+                  <button class="btn btn-secondary btn-sm" onclick="openEditModal('${user.username}')" title="Change Admin Password">
+                    ✏️ Edit Password
+                  </button>
+                `}
               </div>
             </td>
           `;
           tbody.appendChild(tr);
         });
 
-        // Update stats
-        document.getElementById("statTotalUsers").textContent = users.length;
-        document.getElementById("userCountBadge").textContent = users.length;
+        // Update stats (Count students only, excluding admin)
+        const totalStudents = users.filter((u) => u.role !== "admin" && u.username.toLowerCase() !== "admin").length;
+        document.getElementById("statTotalUsers").textContent = totalStudents;
+        document.getElementById("userCountBadge").textContent = `${totalStudents} Students`;
         document.getElementById("statActiveRecords").textContent = activeProgressCount;
       }
 
@@ -1724,6 +1951,17 @@
         }
       }
 
+      // Close modals on ESC key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeAddStudentModal();
+          closeEditModal();
+          closeStudentHistoryModal();
+          closeLoginLogsModal();
+          closeSupabaseModal();
+        }
+      });
+
       // Toast utility
       function showToast(msg) {
         const toast = document.getElementById("adminToast");
@@ -1739,6 +1977,9 @@
       });
 
       // Expose globally
+      window.openAddStudentModal = openAddStudentModal;
+      window.closeAddStudentModal = closeAddStudentModal;
+      window.closeAddStudentModalOnBackdrop = closeAddStudentModalOnBackdrop;
       window.deleteUser = deleteUser;
       window.resetUserProgress = resetUserProgress;
       window.viewStudentHistory = viewStudentHistory;
