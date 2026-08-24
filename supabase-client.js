@@ -69,7 +69,7 @@
       const raw = localStorage.getItem(LOCAL_USERS_STORAGE_KEY);
       if (raw) {
         const list = JSON.parse(raw);
-        if (Array.isArray(list) && list.length > 0) return list;
+        if (Array.isArray(list)) return list;
       }
     } catch (e) {}
     localStorage.setItem(LOCAL_USERS_STORAGE_KEY, JSON.stringify(FALLBACK_BASELINE_USERS));
@@ -77,7 +77,7 @@
   }
 
   function saveLocalUsers(list) {
-    localStorage.setItem(LOCAL_USERS_STORAGE_KEY, JSON.stringify(list));
+    localStorage.setItem(LOCAL_USERS_STORAGE_KEY, JSON.stringify(list || []));
   }
 
   // ==================== TASKFLOW DB API ====================
@@ -632,19 +632,21 @@
 
     // ---------- ADMIN: DELETE STUDENT ----------
     async deleteStudent(username) {
-      const cleanUser = (username || "").toLowerCase();
+      const cleanUser = (username || "").toLowerCase().trim();
+      if (!cleanUser) return false;
 
       if (client) {
         try {
-          await client.from("users").delete().eq("username", cleanUser);
-          await client.from("task_progress").delete().eq("username", cleanUser);
-          await client.from("task_history").delete().eq("username", cleanUser);
+          await client.from("users").delete().ilike("username", cleanUser);
+          await client.from("task_progress").delete().ilike("username", cleanUser);
+          await client.from("task_history").delete().ilike("username", cleanUser);
+          await client.from("login_history").delete().ilike("username", cleanUser);
         } catch (e) {
           console.warn("Supabase student delete failed:", e);
         }
       }
 
-      const localUsers = getLocalUsers().filter((u) => u.username !== cleanUser);
+      const localUsers = getLocalUsers().filter((u) => u.username.toLowerCase().trim() !== cleanUser);
       saveLocalUsers(localUsers);
       localStorage.removeItem(`taskflow_progress_${cleanUser}`);
       localStorage.removeItem(`taskflow_history_${cleanUser}`);

@@ -675,6 +675,72 @@
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
       }
 
+      /* Responsive Media Queries */
+      @media (max-width: 1024px) {
+        .admin-navbar {
+          padding: 0.8rem 1rem;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 12px;
+        }
+
+        .admin-brand {
+          justify-content: space-between;
+        }
+
+        .nav-actions {
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .admin-container {
+          padding: 1rem;
+        }
+
+        .admin-layout-grid {
+          grid-template-columns: 1fr;
+          gap: 1.25rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .panel-card {
+          padding: 1.1rem;
+        }
+
+        .table-toolbar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .modal-box {
+          padding: 1.25rem;
+          max-width: 94vw;
+        }
+
+        .admin-toast {
+          left: 1rem;
+          right: 1rem;
+          bottom: 1rem;
+          text-align: center;
+          justify-content: center;
+        }
+      }
+
+      table.users-table {
+        min-width: 680px;
+      }
+
       /* Toast Notification */
       .admin-toast {
         position: fixed;
@@ -1489,15 +1555,22 @@
       }
 
       async function deleteUser(username) {
-        if (username === "admin") {
+        if (!username) return;
+        const cleanUser = username.trim();
+        if (cleanUser.toLowerCase() === "admin") {
           alert("Default admin account cannot be deleted.");
           return;
         }
 
-        if (confirm(`⚠️ Are you sure you want to permanently DELETE user "${username}" from database?`)) {
-          await TaskFlowDB.deleteStudent(username);
-          await renderUsersTable();
-          showToast(`🗑️ User "${username}" deleted.`);
+        if (confirm(`⚠️ Are you sure you want to permanently DELETE student account "@${cleanUser}"?`)) {
+          try {
+            await TaskFlowDB.deleteStudent(cleanUser);
+            await renderUsersTable();
+            showToast(`🗑️ User "@${cleanUser}" deleted.`);
+          } catch (err) {
+            console.error("Delete error:", err);
+            alert("Delete failed: " + (err.message || err));
+          }
         }
       }
 
@@ -1664,6 +1737,36 @@
         updateAdminCloudStatusBadges();
         checkAdminSession();
       });
+
+      // Expose globally
+      window.deleteUser = deleteUser;
+      window.resetUserProgress = resetUserProgress;
+      window.viewStudentHistory = viewStudentHistory;
+      window.closeStudentHistoryModal = closeStudentHistoryModal;
+      window.closeHistoryModalOnBackdrop = closeHistoryModalOnBackdrop;
+      window.openLoginLogsModal = openLoginLogsModal;
+      window.closeLoginLogsModal = closeLoginLogsModal;
+      window.closeLoginLogsModalOnBackdrop = closeLoginLogsModalOnBackdrop;
+      window.fetchAndRenderLoginLogs = fetchAndRenderLoginLogs;
+      window.openEditModal = openEditModal;
+      window.closeEditModal = closeEditModal;
+      window.closeEditModalOnBackdrop = closeEditModalOnBackdrop;
+      window.handleSaveEditedUser = handleSaveEditedUser;
+      window.openSupabaseModal = openSupabaseModal;
+      window.closeSupabaseModal = closeSupabaseModal;
+      window.closeSupabaseModalOnBackdrop = closeSupabaseModalOnBackdrop;
+      window.handleSaveSupabaseConfig = handleSaveSupabaseConfig;
+      window.testSupabaseConnectionUI = testSupabaseConnectionUI;
+      window.handleCreateUser = handleCreateUser;
+      window.handleAdminLogin = handleAdminLogin;
+      window.adminLogout = adminLogout;
+      window.renderUsersTable = renderUsersTable;
+      window.togglePasswordVisibility = togglePasswordVisibility;
+      window.copyToClipboard = copyToClipboard;
+      window.generateRandomPassword = generateRandomPassword;
+      window.exportFullDatabaseJSON = exportFullDatabaseJSON;
+      window.importFullDatabaseJSON = importFullDatabaseJSON;
+      window.confirmResetDefaults = confirmResetDefaults;
     </script>
   </body>
 </html>
