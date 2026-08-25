@@ -12,16 +12,19 @@
   const LOCAL_USERS_STORAGE_KEY = "taskflow_users_db";
 
   // Pre-configured / User Configurable Supabase credentials
-  // Replace these defaults or set via UI Modal
+  // Auto-connects on all browsers and devices without manual LocalStorage setup
   const DEFAULT_CONFIG = {
-    url: "", // e.g. "https://xyzcompany.supabase.co"
-    anonKey: "", // e.g. "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    url: "https://wicbnqlrfgwpsdhrzgiu.supabase.co",
+    anonKey: "sb_publishable_f_8wYpVylLf6b5XYJXyb7Q_ktrn8hdM",
   };
 
   let client = null;
   let isConnected = false;
 
   function loadConfig() {
+    if (DEFAULT_CONFIG.url && DEFAULT_CONFIG.anonKey) {
+      return DEFAULT_CONFIG;
+    }
     try {
       const stored = localStorage.getItem(SUPABASE_CONFIG_STORAGE_KEY);
       if (stored) {
