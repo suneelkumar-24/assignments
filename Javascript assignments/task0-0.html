@@ -1,47 +1,664 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task 0-0: 100 JavaScript Beginner Fundamentals with Hints</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
+
+    :root {
+      --bg-color: #020617;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --primary: #38bdf8;
+      --secondary: #a855f7;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1e1b4b 0%, #0f172a 50%, #020617 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 30px 20px 80px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--primary);
+      transform: translateX(-3px);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: rgba(245, 158, 11, 0.25);
+      transform: translateY(-1px);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 800px;
+      margin: 0 auto 25px;
+      line-height: 1.5;
+    }
+
+    .patterns-box {
+      background: rgba(30, 41, 59, 0.45);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px 24px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .patterns-box h3 {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .patterns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+
+    .pattern-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+    }
+
+    .pattern-title {
+      font-weight: 700;
+      color: #fbbf24;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .pattern-code {
+      font-family: 'Fira Code', monospace;
+      color: #38bdf8;
+      font-size: 0.76rem;
+      background: #020617;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .controls-bar {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      background: #020617;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill:hover,
+    .filter-pill.active {
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--primary);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .stats-counter {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-left: auto;
+      align-self: center;
+    }
+
+    .questions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .questions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .q-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .q-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .q-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .q-number {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .q-category {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(168, 85, 247, 0.15);
+      color: var(--secondary);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+
+    .q-text {
+      font-size: 0.94rem;
+      color: #f1f5f9;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .q-output-box {
+      background: #020617;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: var(--success);
+    }
+
+    .q-hint-details {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .q-hint-details[open] {
+      border-color: rgba(245, 158, 11, 0.75);
+    }
+
+    .q-hint-summary {
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.08);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      list-style: none;
+    }
+
+    .q-hint-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .q-hint-summary:hover {
+      background: rgba(245, 158, 11, 0.16);
+    }
+
+    .q-hint-body {
+      padding: 12px;
+      border-top: 1px solid rgba(245, 158, 11, 0.2);
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .q-hint-code {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.76rem;
+      color: #38bdf8;
+      margin-top: 6px;
+      white-space: pre-wrap;
+    }
+
+    .original-gist-section {
+      margin-top: 40px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .gist-summary {
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
-    <script src="https://gist.github.com/suneelkumar-24/d552cbfbb15ac234894421e83b618bec.js"></script>
 
-<!-- Floating Download Button -->
-<div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
-  <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-    Download File
-  </button>
-</div>
-<script>
-  function downloadCurrentAssignmentFile() {
-    const url = window.location.href;
-    const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
-    fetch(url)
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.blob();
-      })
-      .then(blob => {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      })
-      .catch(err => {
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+  <div class="container">
+    <div class="top-nav">
+      <a href="../index.html" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Dashboard
+      </a>
+      <div class="header-actions">
+        <button class="action-btn" onclick="toggleAllQuestionHints(true)">💡 Expand All Hints</button>
+        <button class="action-btn" onclick="toggleAllQuestionHints(false)" style="background: rgba(255,255,255,0.06); color: #cbd5e1; border-color: rgba(255,255,255,0.15);">🔒 Collapse All</button>
+      </div>
+    </div>
+
+    <header>
+      <h1>Task 0-0: 100 JavaScript Beginner Fundamentals</h1>
+      <p class="subtitle">Complete 100-exercise workbook covering document.write, HTML outputs, variables, string concatenation, and math operations with individual logic hints!</p>
+
+      <div class="patterns-box">
+        <h3>🧠 Core Building Blocks for Task 0-0</h3>
+        <div class="patterns-grid">
+          <div class="pattern-card">
+            <span class="pattern-title">1. Document Output</span>
+            Page par text aur HTML tags print karna.
+            <span class="pattern-code">document.write("Hello &lt;br&gt;");</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">2. Variable Print</span>
+            let/var mein data store karke print karna.
+            <span class="pattern-code">let name = "Ali"; document.write(name);</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">3. String Joining (+)</span>
+            Text aur variable ko jod kar message banana.
+            <span class="pattern-code">document.write("My name is " + name);</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">4. Arithmetic Inside Write</span>
+            Direct numbers par calculation karke result print karna.
+            <span class="pattern-code">document.write(10 + 5); // 15</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">5. DOM Element Styling</span>
+            Element ID se target karke CSS color/style badalna.
+            <span class="pattern-code">document.getElementById("a").style.color = "red";</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="controls-bar">
+      <div class="search-row">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by Question number (e.g. Q10) or keyword (e.g. write, variable, color, sum)..." oninput="filterQuestions()" />
+        <span id="statsCounter" class="stats-counter">Showing 100 of 100 questions</span>
+      </div>
+      <div class="filter-pills" id="categoryFilters">
+        <button class="filter-pill active" onclick="setCategoryFilter('all')">All (100)</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Document Write')">Document Write</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Variables')">Variables & Types</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Arithmetic')">Arithmetic Operations</button>
+        <button class="filter-pill" onclick="setCategoryFilter('String Concatenation')">String Concatenation</button>
+        <button class="filter-pill" onclick="setCategoryFilter('DOM & Styling')">DOM & Styling</button>
+      </div>
+    </div>
+
+    <div class="questions-grid" id="questionsContainer"></div>
+
+    <details class="original-gist-section">
+      <summary class="gist-summary">🔗 View Original GitHub Gist Raw Embed</summary>
+      <div style="margin-top: 15px;">
+        <script src="https://gist.github.com/suneelkumar-24/d552cbfbb15ac234894421e83b618bec.js"></script>
+      </div>
+    </details>
+  </div>
+
+  <!-- Floating Download Button -->
+  <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
+    <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Download File
+    </button>
+  </div>
+
+  <script>
+    const QUESTIONS_DATA = [
+      { id: 1, text: "<h1>Hello</h1> likho HTML mein", output: "Hello", cat: "Document Write", clue: "HTML heading tag likhiye:\n<h1>Hello</h1>" },
+      { id: 2, text: "document.write('Hello'); likho", output: "Hello", cat: "Document Write", clue: "document.write() method use karein:\ndocument.write('Hello');" },
+      { id: 3, text: "document.write(5); likho", output: "5", cat: "Document Write", clue: "Number ko bina quotes ke pass karein:\ndocument.write(5);" },
+      { id: 4, text: "document.write('Hello'); document.write('World'); likho", output: "HelloWorld", cat: "Document Write", clue: "Do bar write likhein bina space ke:\ndocument.write('Hello');\ndocument.write('World');" },
+      { id: 5, text: "document.write('Hello <br>'); document.write('World'); likho", output: "Hello\nWorld", cat: "Document Write", clue: "Line break ke liye <br> tag lagayein:\ndocument.write('Hello <br>');\ndocument.write('World');" },
+      { id: 6, text: "let x = 10; document.write(x);", output: "10", cat: "Variables", clue: "Variable declare karein aur print karein:\nlet x = 10;\ndocument.write(x);" },
+      { id: 7, text: "let name = 'Suneel'; document.write(name);", output: "Suneel", cat: "Variables", clue: "String variable declare karein:\nlet name = 'Suneel';\ndocument.write(name);" },
+      { id: 8, text: "let a = 5; let b = 3; document.write(a + b);", output: "8", cat: "Arithmetic", clue: "Dono variables ko plus karein:\nlet a = 5;\nlet b = 3;\ndocument.write(a + b);" },
+      { id: 9, text: "let name = 'Suneel'; document.write('My name is ' + name);", output: "My name is Suneel", cat: "String Concatenation", clue: "+ operator se string concatenate karein:\ndocument.write('My name is ' + name);" },
+      { id: 10, text: "<h1 id='a'>Hello</h1> JS se color red karo", output: "Hello (red color)", cat: "DOM & Styling", clue: "document.getElementById('a').style.color = 'red';" },
+      { id: 11, text: "document.write(10 + 5);", output: "15", cat: "Arithmetic", clue: "document.write(10 + 5);" },
+      { id: 12, text: "document.write(20 - 7);", output: "13", cat: "Arithmetic", clue: "document.write(20 - 7);" },
+      { id: 13, text: "document.write(4 * 3);", output: "12", cat: "Arithmetic", clue: "document.write(4 * 3);" },
+      { id: 14, text: "document.write(20 / 5);", output: "4", cat: "Arithmetic", clue: "document.write(20 / 5);" },
+      { id: 15, text: "document.write(10 % 3);", output: "1", cat: "Arithmetic", clue: "Modulus operator remainder return karta hai:\ndocument.write(10 % 3);" },
+      { id: 16, text: "let a = 10; let b = 2; document.write(a * b);", output: "20", cat: "Arithmetic", clue: "let a = 10, b = 2; document.write(a * b);" },
+      { id: 17, text: "let a = 15; let b = 3; document.write(a / b);", output: "5", cat: "Arithmetic", clue: "let a = 15, b = 3; document.write(a / b);" },
+      { id: 18, text: "let city = 'Karachi'; document.write('I live in ' + city);", output: "I live in Karachi", cat: "String Concatenation", clue: "document.write('I live in ' + city);" },
+      { id: 19, text: "let age = 20; document.write('My age is ' + age);", output: "My age is 20", cat: "String Concatenation", clue: "document.write('My age is ' + age);" },
+      { id: 20, text: "<p id='msg'>Welcome</p> JS se color blue karo", output: "Welcome (blue)", cat: "DOM & Styling", clue: "document.getElementById('msg').style.color = 'blue';" },
+      { id: 21, text: "document.write('5' + '5');", output: "55", cat: "String Concatenation", clue: "Quotes mein numbers string ban jate hain:\ndocument.write('5' + '5'); // 55" },
+      { id: 22, text: "document.write(5 + '5');", output: "55", cat: "String Concatenation", clue: "Number + string concatenation result deta hai." },
+      { id: 23, text: "document.write(5 + 5 + '5');", output: "105", cat: "String Concatenation", clue: "Pehle 5+5=10 banega, phir '5' jud kar 105 banega." },
+      { id: 24, text: "document.write('5' + 5 + 5);", output: "555", cat: "String Concatenation", clue: "Left se string milne par baqi sab string judte hain." },
+      { id: 25, text: "let x = 10; x = 20; document.write(x);", output: "20", cat: "Variables", clue: "Variable re-assignment check karein:\nx = 20;\ndocument.write(x);" },
+      { id: 26, text: "const pi = 3.14; document.write(pi);", output: "3.14", cat: "Variables", clue: "const keyword use karein:\nconst pi = 3.14;\ndocument.write(pi);" },
+      { id: 27, text: "document.write(10 > 5);", output: "true", cat: "Arithmetic", clue: "Boolean comparison:\ndocument.write(10 > 5);" },
+      { id: 28, text: "document.write(10 < 5);", output: "false", cat: "Arithmetic", clue: "Boolean comparison:\ndocument.write(10 < 5);" },
+      { id: 29, text: "document.write(10 == 10);", output: "true", cat: "Arithmetic", clue: "Equality check:\ndocument.write(10 == 10);" },
+      { id: 30, text: "document.write(10 === '10');", output: "false", cat: "Arithmetic", clue: "Strict equality type bhi check karti hai." },
+      { id: 31, text: "let a = 10; a++; document.write(a);", output: "11", cat: "Arithmetic", clue: "Post-increment operator a++ value 1 badha deta hai." },
+      { id: 32, text: "let a = 10; a--; document.write(a);", output: "9", cat: "Arithmetic", clue: "Decrement operator a-- value 1 ghata deta hai." },
+      { id: 33, text: "let a = 10; a += 5; document.write(a);", output: "15", cat: "Arithmetic", clue: "Addition assignment: a = a + 5;" },
+      { id: 34, text: "let a = 10; a -= 3; document.write(a);", output: "7", cat: "Arithmetic", clue: "Subtraction assignment: a = a - 3;" },
+      { id: 35, text: "let a = 10; a *= 2; document.write(a);", output: "20", cat: "Arithmetic", clue: "Multiplication assignment: a = a * 2;" },
+      { id: 36, text: "let a = 20; a /= 4; document.write(a);", output: "5", cat: "Arithmetic", clue: "Division assignment: a = a / 4;" },
+      { id: 37, text: "document.write('JavaScript is ' + 'Awesome!');", output: "JavaScript is Awesome!", cat: "String Concatenation", clue: "String addition." },
+      { id: 38, text: "let fName = 'Ali', lName = 'Khan'; document.write(fName + ' ' + lName);", output: "Ali Khan", cat: "String Concatenation", clue: "Space ke sath concatenate karein." },
+      { id: 39, text: "<div id='box'>Box</div> JS se background yellow karo", output: "Box (yellow bg)", cat: "DOM & Styling", clue: "document.getElementById('box').style.backgroundColor = 'yellow';" },
+      { id: 40, text: "<div id='box'>Box</div> JS se font size 24px karo", output: "Box (large font)", cat: "DOM & Styling", clue: "document.getElementById('box').style.fontSize = '24px';" },
+      { id: 41, text: "document.write(typeof 'Hello');", output: "string", cat: "Variables", clue: "typeof operator data type batata hai." },
+      { id: 42, text: "document.write(typeof 100);", output: "number", cat: "Variables", clue: "typeof 100;" },
+      { id: 43, text: "document.write(typeof true);", output: "boolean", cat: "Variables", clue: "typeof true;" },
+      { id: 44, text: "document.write(typeof undefined);", output: "undefined", cat: "Variables", clue: "typeof undefined;" },
+      { id: 45, text: "let x; document.write(x);", output: "undefined", cat: "Variables", clue: "Unassigned variable undefined hota hai." },
+      { id: 46, text: "let x = null; document.write(x);", output: "null", cat: "Variables", clue: "Null assign karke print karein." },
+      { id: 47, text: "alert('Hello Students!');", output: "Alert Popup", cat: "Document Write", clue: "alert('Hello Students!');" },
+      { id: 48, text: "console.log('Testing Console Output');", output: "Console Tab", cat: "Document Write", clue: "console.log('Testing Console Output');" },
+      { id: 49, text: "let user = prompt('Enter your name:'); document.write(user);", output: "Entered Name", cat: "Variables", clue: "prompt() input ko variable mein rakh kar print karein." },
+      { id: 50, text: "let n = Number('25'); document.write(n + 5);", output: "30", cat: "Arithmetic", clue: "Number() conversion arithmetic enable karta hai." },
+      { id: 51, text: "document.write(10 != 5);", output: "true", cat: "Arithmetic", clue: "Not-equal operator != use karein." },
+      { id: 52, text: "document.write(10 !== '10');", output: "true", cat: "Arithmetic", clue: "Strict not-equal !== type match check karta hai." },
+      { id: 53, text: "document.write(5 >= 5);", output: "true", cat: "Arithmetic", clue: "Greater than or equal to." },
+      { id: 54, text: "document.write(4 <= 2);", output: "false", cat: "Arithmetic", clue: "Less than or equal to." },
+      { id: 55, text: "let price = 500; let tax = 50; document.write('Total: ' + (price + tax));", output: "Total: 550", cat: "String Concatenation", clue: "Brackets (price + tax) zaroori hain." },
+      { id: 56, text: "let subtotal = 1000; let disc = 200; document.write('Pay: ' + (subtotal - disc));", output: "Pay: 800", cat: "String Concatenation", clue: "document.write('Pay: ' + (subtotal - disc));" },
+      { id: 57, text: "let qty = 4; let rate = 25; document.write('Bill: ' + (qty * rate));", output: "Bill: 100", cat: "String Concatenation", clue: "document.write('Bill: ' + (qty * rate));" },
+      { id: 58, text: "let totalMarks = 500; let obt = 400; document.write('Percentage: ' + (obt / totalMarks * 100) + '%');", output: "Percentage: 80%", cat: "Arithmetic", clue: "(obt / totalMarks * 100)" },
+      { id: 59, text: "<p id='t'>Text</p> JS se text update karo", output: "Text updated", cat: "DOM & Styling", clue: "document.getElementById('t').innerText = 'New Text';" },
+      { id: 60, text: "<div id='b'>Box</div> JS se border add karo", output: "Box (border)", cat: "DOM & Styling", clue: "document.getElementById('b').style.border = '2px solid white';" },
+      { id: 61, text: "document.write(true && true);", output: "true", cat: "Arithmetic", clue: "Logical AND tabhi true hota hai jab dono true hon." },
+      { id: 62, text: "document.write(true && false);", output: "false", cat: "Arithmetic", clue: "Logical AND check." },
+      { id: 63, text: "document.write(true || false);", output: "true", cat: "Arithmetic", clue: "Logical OR agar koi ek bhi true ho toh true deta hai." },
+      { id: 64, text: "document.write(false || false);", output: "false", cat: "Arithmetic", clue: "Logical OR check." },
+      { id: 65, text: "document.write(!true);", output: "false", cat: "Arithmetic", clue: "Logical NOT value ko invert karta hai." },
+      { id: 66, text: "document.write(!false);", output: "true", cat: "Arithmetic", clue: "!false => true." },
+      { id: 67, text: "document.write(Boolean(1));", output: "true", cat: "Variables", clue: "1 truthy hota hai." },
+      { id: 68, text: "document.write(Boolean(0));", output: "false", cat: "Variables", clue: "0 falsy hota hai." },
+      { id: 69, text: "document.write(Boolean(''));", output: "false", cat: "Variables", clue: "Empty string falsy hoti hai." },
+      { id: 70, text: "document.write(Boolean('Hello'));", output: "true", cat: "Variables", clue: "Non-empty string truthy hoti hai." },
+      { id: 71, text: "let isPass = true; document.write('Result: ' + isPass);", output: "Result: true", cat: "Variables", clue: "Boolean variable print." },
+      { id: 72, text: "let a = 10, b = 20; let temp = a; a = b; b = temp; document.write(a + ', ' + b);", output: "20, 10", cat: "Variables", clue: "Swap variables using temporary third variable." },
+      { id: 73, text: "let a = 5, b = 10; a = a + b; b = a - b; a = a - b; document.write(a + ', ' + b);", output: "10, 5", cat: "Arithmetic", clue: "Swap variables without third variable." },
+      { id: 74, text: "document.write(Math.PI);", output: "3.141592653589793", cat: "Arithmetic", clue: "Math.PI constant." },
+      { id: 75, text: "document.write(Math.sqrt(16));", output: "4", cat: "Arithmetic", clue: "Square root: Math.sqrt(16);" },
+      { id: 76, text: "document.write(Math.pow(2, 3));", output: "8", cat: "Arithmetic", clue: "Power function: 2 ki power 3 = 8." },
+      { id: 77, text: "document.write(Math.round(4.7));", output: "5", cat: "Arithmetic", clue: "Math.round(4.7);" },
+      { id: 78, text: "document.write(Math.floor(4.9));", output: "4", cat: "Arithmetic", clue: "Math.floor() hamesha neeche round karta hai." },
+      { id: 79, text: "document.write(Math.ceil(4.1));", output: "5", cat: "Arithmetic", clue: "Math.ceil() hamesha upar round karta hai." },
+      { id: 80, text: "document.write(Math.abs(-15));", output: "15", cat: "Arithmetic", clue: "Math.abs() positive value return karta hai." },
+      { id: 81, text: "document.write(Math.min(5, 10, 2));", output: "2", cat: "Arithmetic", clue: "Math.min() sabse chhota number deta hai." },
+      { id: 82, text: "document.write(Math.max(5, 10, 2));", output: "10", cat: "Arithmetic", clue: "Math.max() sabse bada number deta hai." },
+      { id: 83, text: "let str = 'Hello'; document.write(str.length);", output: "5", cat: "String Concatenation", clue: "str.length property." },
+      { id: 84, text: "let str = 'hello'; document.write(str.toUpperCase());", output: "HELLO", cat: "String Concatenation", clue: "str.toUpperCase();" },
+      { id: 85, text: "let str = 'WORLD'; document.write(str.toLowerCase());", output: "world", cat: "String Concatenation", clue: "str.toLowerCase();" },
+      { id: 86, text: "let str = 'Hello World'; document.write(str.indexOf('World'));", output: "6", cat: "String Concatenation", clue: "str.indexOf('World');" },
+      { id: 87, text: "let str = 'JavaScript'; document.write(str.slice(0, 4));", output: "Java", cat: "String Concatenation", clue: "str.slice(start, end);" },
+      { id: 88, text: "let str = 'Hello World'; document.write(str.replace('World', 'JS'));", output: "Hello JS", cat: "String Concatenation", clue: "str.replace('World', 'JS');" },
+      { id: 89, text: "let str = '  Hi  '; document.write(str.trim());", output: "Hi", cat: "String Concatenation", clue: "str.trim() extra spaces hatata hai." },
+      { id: 90, text: "let str = 'Code'; document.write(str.charAt(0));", output: "C", cat: "String Concatenation", clue: "str.charAt(0);" },
+      { id: 91, text: "<div id='card'>Card</div> JS se padding 15px karo", output: "Card (padding)", cat: "DOM & Styling", clue: "document.getElementById('card').style.padding = '15px';" },
+      { id: 92, text: "<div id='card'>Card</div> JS se border-radius 10px karo", output: "Card (rounded)", cat: "DOM & Styling", clue: "document.getElementById('card').style.borderRadius = '10px';" },
+      { id: 93, text: "<div id='card'>Card</div> JS se display none karo", output: "Card hidden", cat: "DOM & Styling", clue: "document.getElementById('card').style.display = 'none';" },
+      { id: 94, text: "<div id='card'>Card</div> JS se opacity 0.5 karo", output: "Card translucent", cat: "DOM & Styling", clue: "document.getElementById('card').style.opacity = '0.5';" },
+      { id: 95, text: "document.write('5' * 2);", output: "10", cat: "Arithmetic", clue: "JS multiplication mein auto-convert karta hai." },
+      { id: 96, text: "document.write('20' / 2);", output: "10", cat: "Arithmetic", clue: "JS division mein auto-convert karta hai." },
+      { id: 97, text: "document.write('10' - 4);", output: "6", cat: "Arithmetic", clue: "JS minus mein auto-convert karta hai." },
+      { id: 98, text: "document.write(isNaN('Hello'));", output: "true", cat: "Variables", clue: "isNaN() checks if value is Not-a-Number." },
+      { id: 99, text: "document.write(isNaN(123));", output: "false", cat: "Variables", clue: "isNaN(123) is false." },
+      { id: 100, text: "document.write('JavaScript Fundamentals Completed 🎉');", output: "JavaScript Fundamentals Completed 🎉", cat: "Document Write", clue: "document.write('JavaScript Fundamentals Completed 🎉');" }
+    ];
+
+    let currentCategory = 'all';
+
+    function renderQuestions() {
+      const container = document.getElementById("questionsContainer");
+      const searchVal = document.getElementById("searchInput").value.toLowerCase().trim();
+      container.innerHTML = "";
+
+      const filtered = QUESTIONS_DATA.filter(q => {
+        const matchesCat = (currentCategory === 'all' || q.cat === currentCategory);
+        const matchesSearch = !searchVal || 
+                              (`q${q.id}`.includes(searchVal)) || 
+                              (`${q.id}` === searchVal) || 
+                              (q.text.toLowerCase().includes(searchVal)) || 
+                              (q.cat.toLowerCase().includes(searchVal)) || 
+                              (q.clue.toLowerCase().includes(searchVal));
+        return matchesCat && matchesSearch;
       });
-  }
-</script>
+
+      document.getElementById("statsCounter").textContent = `Showing ${filtered.length} of 100 questions`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #94a3b8; background: rgba(15,23,42,0.6); border-radius: 16px;">
+            <p style="font-size: 1.1rem; margin-bottom: 8px;">🔍 No questions found matching your search.</p>
+            <p style="font-size: 0.85rem;">Try searching for numbers like "Q10" or keywords like "write", "variable", "color".</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(q => {
+        const card = document.createElement("div");
+        card.className = "q-card";
+        card.innerHTML = `
+          <div class="q-header">
+            <span class="q-number">Q${q.id}</span>
+            <span class="q-category">${q.cat}</span>
+          </div>
+          <p class="q-text">${q.text}</p>
+          <div class="q-output-box"><strong>Expected:</strong> ${q.output}</div>
+          <details class="q-hint-details">
+            <summary class="q-hint-summary">
+              <span>💡 Need Hint? Reveal Logic Clue</span>
+              <span>▼</span>
+            </summary>
+            <div class="q-hint-body">
+              <strong>Logic Clue:</strong>
+              <div class="q-hint-code">${q.clue}</div>
+            </div>
+          </details>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function setCategoryFilter(cat) {
+      currentCategory = cat;
+      document.querySelectorAll(".filter-pill").forEach(p => {
+        p.classList.toggle("active", p.textContent.includes(cat) || (cat === 'all' && p.textContent.includes('All')));
+      });
+      renderQuestions();
+    }
+
+    function filterQuestions() {
+      renderQuestions();
+    }
+
+    function toggleAllQuestionHints(expand) {
+      document.querySelectorAll(".q-hint-details").forEach(d => {
+        d.open = expand;
+      });
+    }
+
+    function downloadCurrentAssignmentFile() {
+      const url = window.location.href;
+      const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.blob();
+        })
+        .then(blob => {
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch(err => {
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+    }
+
+    window.addEventListener("DOMContentLoaded", renderQuestions);
+  </script>
 
 </body>
 </html>

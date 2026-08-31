@@ -1,47 +1,671 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task 0-2: 100 JavaScript Intermediate Exercises with Hints</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
+
+    :root {
+      --bg-color: #020617;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --primary: #38bdf8;
+      --secondary: #a855f7;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1e1b4b 0%, #0f172a 50%, #020617 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 30px 20px 80px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--primary);
+      transform: translateX(-3px);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: rgba(245, 158, 11, 0.25);
+      transform: translateY(-1px);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 800px;
+      margin: 0 auto 25px;
+      line-height: 1.5;
+    }
+
+    .patterns-box {
+      background: rgba(30, 41, 59, 0.45);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px 24px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .patterns-box h3 {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .patterns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+
+    .pattern-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+    }
+
+    .pattern-title {
+      font-weight: 700;
+      color: #fbbf24;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .pattern-code {
+      font-family: 'Fira Code', monospace;
+      color: #38bdf8;
+      font-size: 0.76rem;
+      background: #020617;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .controls-bar {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      background: #020617;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill:hover,
+    .filter-pill.active {
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--primary);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .stats-counter {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-left: auto;
+      align-self: center;
+    }
+
+    .questions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .questions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .q-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .q-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .q-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .q-number {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .q-category {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(168, 85, 247, 0.15);
+      color: var(--secondary);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+
+    .q-text {
+      font-size: 0.94rem;
+      color: #f1f5f9;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .q-output-box {
+      background: #020617;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: var(--success);
+    }
+
+    .q-hint-details {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .q-hint-details[open] {
+      border-color: rgba(245, 158, 11, 0.75);
+    }
+
+    .q-hint-summary {
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.08);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      list-style: none;
+    }
+
+    .q-hint-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .q-hint-summary:hover {
+      background: rgba(245, 158, 11, 0.16);
+    }
+
+    .q-hint-body {
+      padding: 12px;
+      border-top: 1px solid rgba(245, 158, 11, 0.2);
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .q-hint-code {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.76rem;
+      color: #38bdf8;
+      margin-top: 6px;
+      white-space: pre-wrap;
+    }
+
+    .original-gist-section {
+      margin-top: 40px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .gist-summary {
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
-    <script src="https://gist.github.com/suneelkumar-24/1526e888464a949074cf280838535a7a.js"></script>
 
-<!-- Floating Download Button -->
-<div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
-  <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-    Download File
-  </button>
-</div>
-<script>
-  function downloadCurrentAssignmentFile() {
-    const url = window.location.href;
-    const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
-    fetch(url)
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.blob();
-      })
-      .then(blob => {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      })
-      .catch(err => {
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+  <div class="container">
+    <div class="top-nav">
+      <a href="../index.html" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Dashboard
+      </a>
+      <div class="header-actions">
+        <button class="action-btn" onclick="toggleAllQuestionHints(true)">💡 Expand All Hints</button>
+        <button class="action-btn" onclick="toggleAllQuestionHints(false)" style="background: rgba(255,255,255,0.06); color: #cbd5e1; border-color: rgba(255,255,255,0.15);">🔒 Collapse All</button>
+      </div>
+    </div>
+
+    <header>
+      <h1>Task 0-2: 100 JavaScript Intermediate Exercises</h1>
+      <p class="subtitle">100 intermediate exercises covering compound conditions, loops, arrays, objects, functions, and interactive DOM widgets with individual logic clues!</p>
+
+      <div class="patterns-box">
+        <h3>🧠 Intermediate Core Patterns in Task 0-2</h3>
+        <div class="patterns-grid">
+          <div class="pattern-card">
+            <span class="pattern-title">1. Compound Conditions (&&, ||)</span>
+            Multiple checks ek saath verify karna.
+            <span class="pattern-code">if (num % 2 === 0 && num > 10) { ... }</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">2. Loops (for & while)</span>
+            Sequence, tables, aur patterns generate karna.
+            <span class="pattern-code">for (let i = 1; i <= 50; i++) { ... }</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">3. Array Methods</span>
+            Filter, sum, min/max, aur search karna.
+            <span class="pattern-code">arr.filter(n => n % 2 === 0)</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">4. Objects & Keys</span>
+            Key-value pairs store aur manipulate karna.
+            <span class="pattern-code">user.age = 25; delete user.city;</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">5. Reusable Functions</span>
+            Input lekar calculated value return karna.
+            <span class="pattern-code">function isPalindrome(str) { return ... }</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">6. DOM Interactive Widgets</span>
+            Counters, todo list, aur validation checks.
+            <span class="pattern-code">count++; counterDisplay.innerText = count;</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="controls-bar">
+      <div class="search-row">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by Question number (e.g. Q25) or keyword (e.g. array, loop, prime, object, todo)..." oninput="filterQuestions()" />
+        <span id="statsCounter" class="stats-counter">Showing 100 of 100 questions</span>
+      </div>
+      <div class="filter-pills" id="categoryFilters">
+        <button class="filter-pill active" onclick="setCategoryFilter('all')">All (100)</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Conditions & Math')">Conditions & Math</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Strings & Numbers')">Strings & Numbers</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Arrays')">Arrays & Search</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Loops & Patterns')">Loops & Patterns</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Objects')">Objects</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Functions')">Functions</button>
+        <button class="filter-pill" onclick="setCategoryFilter('DOM & Widgets')">DOM & Widgets</button>
+      </div>
+    </div>
+
+    <div class="questions-grid" id="questionsContainer"></div>
+
+    <details class="original-gist-section">
+      <summary class="gist-summary">🔗 View Original GitHub Gist Raw Embed</summary>
+      <div style="margin-top: 15px;">
+        <script src="https://gist.github.com/suneelkumar-24/1526e888464a949074cf280838535a7a.js"></script>
+      </div>
+    </details>
+  </div>
+
+  <!-- Floating Download Button -->
+  <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
+    <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Download File
+    </button>
+  </div>
+
+  <script>
+    const QUESTIONS_DATA = [
+      { id: 1, text: "Ek input me number lo aur check karo ke wo even hai aur 10 se bara bhi hai", output: "Input: 12 → Yes | Input: 8 → No", cat: "Conditions & Math", clue: "if (num % 2 === 0 && num > 10) { /* Yes */ } else { /* No */ }" },
+      { id: 2, text: "Ek input me number lo aur check karo ke wo odd hai ya 5 ka multiple hai", output: "Input: 9 → Yes | Input: 10 → Yes | Input: 8 → No", cat: "Conditions & Math", clue: "if (num % 2 !== 0 || num % 5 === 0) { /* Yes */ }" },
+      { id: 3, text: "Ek input me number lo aur check karo ke wo 1 se 100 ke darmiyan hai ya nahi", output: "Input: 50 → Yes | Input: 150 → No", cat: "Conditions & Math", clue: "if (num >= 1 && num <= 100) { /* Yes */ }" },
+      { id: 4, text: "Ek input me age lo: <18 (Minor), 18-60 (Adult), 60+ (Senior)", output: "Input: 25 → Adult", cat: "Conditions & Math", clue: "if (age < 18) { 'Minor' } else if (age <= 60) { 'Adult' } else { 'Senior' }" },
+      { id: 5, text: "Ek input me marks lo: 90+ (A), 80-89 (B), 70-79 (C), below (Fail)", output: "Input: 85 → B", cat: "Conditions & Math", clue: "if (marks >= 90) 'A' else if (marks >= 80) 'B' else if (marks >= 70) 'C' else 'Fail'" },
+      { id: 6, text: "Do inputs me numbers lo aur check karo dono equal hain ya nahi", output: "Input: 5, 5 → Equal | Input: 5, 6 → Not Equal", cat: "Conditions & Math", clue: "if (a === b) { 'Equal' } else { 'Not Equal' }" },
+      { id: 7, text: "Do numbers lo aur check karo ke dono even hain", output: "Input: 4, 6 → Yes | Input: 4, 5 → No", cat: "Conditions & Math", clue: "if (a % 2 === 0 && b % 2 === 0) { 'Yes' }" },
+      { id: 8, text: "Do numbers lo aur unka average nikaalo", output: "Input: 4, 6 → Output: 5", cat: "Conditions & Math", clue: "let avg = (Number(a) + Number(b)) / 2;" },
+      { id: 9, text: "Teen numbers lo aur sabse bada find karo", output: "Input: 3, 7, 5 → Output: 7", cat: "Conditions & Math", clue: "let max = Math.max(a, b, c);" },
+      { id: 10, text: "Teen numbers lo aur sabse chhota find karo", output: "Input: 3, 7, 5 → Output: 3", cat: "Conditions & Math", clue: "let min = Math.min(a, b, c);" },
+      { id: 11, text: "Ek number lo aur check karo ke wo 2 aur 3 dono ka multiple hai", output: "Input: 6 → Yes | Input: 4 → No", cat: "Conditions & Math", clue: "if (num % 2 === 0 && num % 3 === 0) { 'Yes' }" },
+      { id: 12, text: "Ek number lo aur check karo ke wo 2 ya 3 ka multiple hai", output: "Input: 4 → Yes | Input: 9 → Yes | Input: 7 → No", cat: "Conditions & Math", clue: "if (num % 2 === 0 || num % 3 === 0) { 'Yes' }" },
+      { id: 13, text: "Ek number lo aur uska square aur cube dono print karo", output: "Input: 2 → Square: 4, Cube: 8", cat: "Conditions & Math", clue: "let sq = num * num; let cb = num * num * num;" },
+      { id: 14, text: "Ek number lo aur check karo ke wo perfect square hai ya nahi", output: "Input: 9 → Yes | Input: 8 → No", cat: "Conditions & Math", clue: "let root = Math.sqrt(num); if (Number.isInteger(root)) { 'Yes' }" },
+      { id: 15, text: "Ek number lo aur check karo ke wo positive even hai ya negative odd", output: "Input: 4 → Pos Even | Input: -3 → Neg Odd", cat: "Conditions & Math", clue: "if (n > 0 && n % 2 === 0) 'Pos Even' else if (n < 0 && n % 2 !== 0) 'Neg Odd'" },
+      { id: 16, text: "Ek input me string lo aur uski length check karo", output: "Input: 'Ali' → 3", cat: "Strings & Numbers", clue: "let len = str.length;" },
+      { id: 17, text: "String lo aur check karo ke length 5 se zyada hai ya nahi", output: "Input: 'Hello World' → Yes", cat: "Strings & Numbers", clue: "if (str.length > 5) { 'Yes' }" },
+      { id: 18, text: "String lo aur pehla aur last character show karo", output: "Input: 'Hello' → H, o", cat: "Strings & Numbers", clue: "let first = str[0]; let last = str[str.length - 1];" },
+      { id: 19, text: "String lo aur middle character show karo", output: "Input: 'abcde' → c", cat: "Strings & Numbers", clue: "let mid = str[Math.floor(str.length / 2)];" },
+      { id: 20, text: "String lo aur count karo ke usme kitne vowels hain", output: "Input: 'hello' → 2", cat: "Strings & Numbers", clue: "let vowels = str.match(/[aeiou]/gi); let count = vowels ? vowels.length : 0;" },
+      { id: 21, text: "Ek number lo aur uska factorial nikaalo", output: "Input: 5 → 120", cat: "Strings & Numbers", clue: "let f = 1; for(let i=1; i<=n; i++) f *= i;" },
+      { id: 22, text: "Ek number lo aur 1 se us number tak sum nikaalo", output: "Input: 5 → 15", cat: "Strings & Numbers", clue: "let sum = (n * (n + 1)) / 2;" },
+      { id: 23, text: "Ek number lo aur uska reverse nikaalo", output: "Input: 123 → 321", cat: "Strings & Numbers", clue: "let rev = Number(String(n).split('').reverse().join(''));" },
+      { id: 24, text: "Ek number lo aur check karo ke palindrome hai ya nahi", output: "Input: 121 → Yes", cat: "Strings & Numbers", clue: "let s = String(n); if (s === s.split('').reverse().join('')) 'Yes'" },
+      { id: 25, text: "Ek string lo aur check karo ke palindrome hai ya nahi", output: "Input: 'radar' → Yes", cat: "Strings & Numbers", clue: "if (str === str.split('').reverse().join('')) 'Yes'" },
+      { id: 26, text: "Ek string lo aur vowels remove karke show karo", output: "Input: 'hello' → 'hll'", cat: "Strings & Numbers", clue: "let noVowels = str.replace(/[aeiou]/gi, '');" },
+      { id: 27, text: "Ek string lo aur uppercase vowels count karo", output: "Input: 'ApplE' → 2", cat: "Strings & Numbers", clue: "let count = (str.match(/[AEIOU]/g) || []).length;" },
+      { id: 28, text: "Ek string lo aur spaces count karo", output: "Input: 'Hi how are you' → 3", cat: "Strings & Numbers", clue: "let spaces = (str.match(/ /g) || []).length;" },
+      { id: 29, text: "Ek string lo aur words count karo", output: "Input: 'Hello World' → 2", cat: "Strings & Numbers", clue: "let words = str.trim().split(/\\s+/).length;" },
+      { id: 30, text: "Ek string lo aur har character ke beech dash add karo", output: "Input: 'abc' → 'a-b-c'", cat: "Strings & Numbers", clue: "let dashed = str.split('').join('-');" },
+      { id: 31, text: "Ek input me number lo aur uska binary conversion nikaalo", output: "Input: 5 → 101", cat: "Strings & Numbers", clue: "let bin = Number(num).toString(2);" },
+      { id: 32, text: "Ek number lo aur check karo ke prime hai ya nahi", output: "Input: 7 → Prime | Input: 4 → Not prime", cat: "Strings & Numbers", clue: "function isPrime(n) { if (n < 2) return false; for(let i=2; i<=Math.sqrt(n); i++) if (n%i===0) return false; return true; }" },
+      { id: 33, text: "Ek number lo aur uske factors print karo", output: "Input: 12 → 1, 2, 3, 4, 6, 12", cat: "Strings & Numbers", clue: "let factors = []; for(let i=1; i<=n; i++) if (n%i===0) factors.push(i);" },
+      { id: 34, text: "Do numbers lo aur unka HCF (GCD) nikaalo", output: "Input: 12, 18 → 6", cat: "Strings & Numbers", clue: "function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }" },
+      { id: 35, text: "Do numbers lo aur LCM nikaalo", output: "Input: 4, 6 → 12", cat: "Strings & Numbers", clue: "let lcm = (a * b) / gcd(a, b);" },
+      { id: 36, text: "Ek number lo aur Fibonacci series utni length tak print karo", output: "Input: 5 → 0, 1, 1, 2, 3", cat: "Strings & Numbers", clue: "let fib = [0, 1]; for(let i=2; i<n; i++) fib.push(fib[i-1] + fib[i-2]);" },
+      { id: 37, text: "Ek string lo aur usko sort karo (alphabetically)", output: "Input: 'cba' → 'abc'", cat: "Strings & Numbers", clue: "let sorted = str.split('').sort().join('');" },
+      { id: 38, text: "Ek string lo aur duplicate characters remove karo", output: "Input: 'banana' → 'ban'", cat: "Strings & Numbers", clue: "let unique = [...new Set(str)].join('');" },
+      { id: 39, text: "Ek string lo aur most frequent character find karo", output: "Input: 'banana' → 'a'", cat: "Strings & Numbers", clue: "Object map bana kar character count compare karein." },
+      { id: 40, text: "Ek string lo aur words reverse karo", output: "Input: 'Hi Ali' → 'Ali Hi'", cat: "Strings & Numbers", clue: "let revWords = str.split(' ').reverse().join(' ');" },
+      { id: 41, text: "Ek array me numbers lo aur sum nikaalo", output: "Input: [1, 2, 3, 4] → 10", cat: "Arrays", clue: "let sum = arr.reduce((acc, curr) => acc + curr, 0);" },
+      { id: 42, text: "Array me se even numbers alag karo", output: "Input: [1, 2, 3, 4] → [2, 4]", cat: "Arrays", clue: "let evens = arr.filter(n => n % 2 === 0);" },
+      { id: 43, text: "Array me se odd numbers alag karo", output: "Input: [1, 2, 3, 4] → [1, 3]", cat: "Arrays", clue: "let odds = arr.filter(n => n % 2 !== 0);" },
+      { id: 44, text: "Array ka max aur min find karo", output: "Input: [5, 2, 9] → Max: 9, Min: 2", cat: "Arrays", clue: "let max = Math.max(...arr); let min = Math.min(...arr);" },
+      { id: 45, text: "Array ko reverse karo", output: "Input: [1, 2, 3] → [3, 2, 1]", cat: "Arrays", clue: "let revArr = [...arr].reverse();" },
+      { id: 46, text: "Array ko sort karo (ascending)", output: "Input: [3, 1, 2] → [1, 2, 3]", cat: "Arrays", clue: "arr.sort((a, b) => a - b);" },
+      { id: 47, text: "Array me duplicate values find karo", output: "Input: [1, 2, 2, 3] → [2]", cat: "Arrays", clue: "let dup = arr.filter((item, index) => arr.indexOf(item) !== index);" },
+      { id: 48, text: "Array me unique values nikaalo", output: "Input: [1, 2, 2, 3] → [1, 2, 3]", cat: "Arrays", clue: "let unique = [...new Set(arr)];" },
+      { id: 49, text: "Array me ek value search karo (linear search)", output: "Search 5 in [1, 5, 9] → Found at index 1", cat: "Arrays", clue: "let idx = arr.indexOf(targetVal);" },
+      { id: 50, text: "Array me second largest number find karo", output: "Input: [10, 5, 20, 8] → 10", cat: "Arrays", clue: "let sortedUnique = [...new Set(arr)].sort((a,b) => b - a); let second = sortedUnique[1];" },
+      { id: 51, text: "Ek loop se 1 se 50 tak even numbers print karo", output: "2, 4, 6 ... 50", cat: "Loops & Patterns", clue: "for(let i=2; i<=50; i+=2) console.log(i);" },
+      { id: 52, text: "Ek loop se 1 se 50 tak odd numbers print karo", output: "1, 3, 5 ... 49", cat: "Loops & Patterns", clue: "for(let i=1; i<=50; i+=2) console.log(i);" },
+      { id: 53, text: "Ek loop se 1 se 10 tak squares print karo", output: "1, 4, 9 ... 100", cat: "Loops & Patterns", clue: "for(let i=1; i<=10; i++) console.log(i * i);" },
+      { id: 54, text: "Ek loop se 1 se 10 tak cubes print karo", output: "1, 8, 27 ... 1000", cat: "Loops & Patterns", clue: "for(let i=1; i<=10; i++) console.log(i * i * i);" },
+      { id: 55, text: "Ek loop se table print karo (input number ka)", output: "Input: 5 → 5x1=5 ... 5x10=50", cat: "Loops & Patterns", clue: "for(let i=1; i<=10; i++) console.log(`${n} x ${i} = ${n*i}`);" },
+      { id: 56, text: "Ek loop se reverse counting print karo (10 se 1)", output: "10, 9, 8 ... 1", cat: "Loops & Patterns", clue: "for(let i=10; i>=1; i--) console.log(i);" },
+      { id: 57, text: "Ek loop me numbers ka sum nikaalo jab tak 0 input na aaye", output: "Sum: 15", cat: "Loops & Patterns", clue: "while(true) { let n = prompt(); if (n == 0) break; sum += Number(n); }" },
+      { id: 58, text: "Ek loop me user se numbers lete raho jab tak negative na aaye", output: "Stops on negative", cat: "Loops & Patterns", clue: "let n; do { n = Number(prompt()); } while (n >= 0);" },
+      { id: 59, text: "Ek loop se pattern print karo: *\n**\n***\n****", output: "Star Pyramid", cat: "Loops & Patterns", clue: "for(let i=1; i<=4; i++) console.log('*'.repeat(i));" },
+      { id: 60, text: "Ek loop se reverse pattern print karo: ****\n***\n**\n*", output: "Reverse Stars", cat: "Loops & Patterns", clue: "for(let i=4; i>=1; i--) console.log('*'.repeat(i));" },
+      { id: 61, text: "Ek string lo aur har character uppercase karo loop se", output: "Input: 'ali' → 'ALI'", cat: "Strings & Numbers", clue: "let res = ''; for(let char of str) res += char.toUpperCase();" },
+      { id: 62, text: "Ek string lo aur har character lowercase karo loop se", output: "Input: 'ALI' → 'ali'", cat: "Strings & Numbers", clue: "let res = ''; for(let char of str) res += char.toLowerCase();" },
+      { id: 63, text: "Ek string lo aur alternate uppercase/lowercase karo", output: "Input: 'hello' → 'HeLlO'", cat: "Strings & Numbers", clue: "str.split('').map((c, i) => i % 2 === 0 ? c.toUpperCase() : c.toLowerCase()).join('')" },
+      { id: 64, text: "Ek string lo aur numbers count karo usme", output: "Input: 'a1b2c3' → 3 digits", cat: "Strings & Numbers", clue: "let digits = (str.match(/\\d/g) || []).length;" },
+      { id: 65, text: "Ek string lo aur special characters count karo", output: "Input: 'hi@#$' → 3 special", cat: "Strings & Numbers", clue: "let specials = (str.match(/[^a-zA-Z0-9\\s]/g) || []).length;" },
+      { id: 66, text: "Ek object banao (name, age) aur print karo", output: "{ name: 'Ali', age: 22 }", cat: "Objects", clue: "let user = { name: 'Ali', age: 22 }; console.log(user);" },
+      { id: 67, text: "Object me ek new property add karo", output: "user.city = 'Lahore'", cat: "Objects", clue: "user.city = 'Lahore';" },
+      { id: 68, text: "Object me property update karo", output: "user.age = 23", cat: "Objects", clue: "user.age = 23;" },
+      { id: 69, text: "Object me property delete karo", output: "delete user.city", cat: "Objects", clue: "delete user.city;" },
+      { id: 70, text: "Object ki sab keys print karo", output: "['name', 'age']", cat: "Objects", clue: "let keys = Object.keys(user);" },
+      { id: 71, text: "Ek function banao jo 2 numbers ka sum return kare", output: "sum(4, 5) → 9", cat: "Functions", clue: "function sum(a, b) { return Number(a) + Number(b); }" },
+      { id: 72, text: "Function banao jo number even/odd check kare", output: "isEven(4) → true", cat: "Functions", clue: "function isEven(num) { return num % 2 === 0; }" },
+      { id: 73, text: "Function banao jo max of 3 numbers return kare", output: "maxOfThree(2, 8, 5) → 8", cat: "Functions", clue: "function maxOfThree(a, b, c) { return Math.max(a, b, c); }" },
+      { id: 74, text: "Function banao jo string reverse kare", output: "reverseStr('abc') → 'cba'", cat: "Functions", clue: "function reverseStr(str) { return str.split('').reverse().join(''); }" },
+      { id: 75, text: "Function banao jo factorial return kare", output: "factorial(4) → 24", cat: "Functions", clue: "function factorial(n) { return n <= 1 ? 1 : n * factorial(n - 1); }" },
+      { id: 76, text: "Function banao jo palindrome check kare", output: "isPalindrome('racecar') → true", cat: "Functions", clue: "function isPalindrome(s) { return s === s.split('').reverse().join(''); }" },
+      { id: 77, text: "Function banao jo array sum return kare", output: "arrSum([1, 2, 3]) → 6", cat: "Functions", clue: "function arrSum(arr) { return arr.reduce((a, b) => a + b, 0); }" },
+      { id: 78, text: "Function banao jo array max return kare", output: "arrMax([3, 7, 2]) → 7", cat: "Functions", clue: "function arrMax(arr) { return Math.max(...arr); }" },
+      { id: 79, text: "Function banao jo string length return kare", output: "getLen('Code') → 4", cat: "Functions", clue: "function getLen(str) { return str.length; }" },
+      { id: 80, text: "Function banao jo vowels count kare", output: "countVowels('apple') → 2", cat: "Functions", clue: "function countVowels(s) { return (s.match(/[aeiou]/gi) || []).length; }" },
+      { id: 81, text: "Ek button click par array me item push karo", output: "Array item added", cat: "DOM & Widgets", clue: "myArray.push(newItem); updateUI();" },
+      { id: 82, text: "Ek button click par last item remove karo (pop)", output: "Last item popped", cat: "DOM & Widgets", clue: "myArray.pop(); updateUI();" },
+      { id: 83, text: "Ek input se value lo aur list <ul> me add karo (DOM)", output: "New <li> added", cat: "DOM & Widgets", clue: "let li = document.createElement('li'); li.innerText = val; ul.appendChild(li);" },
+      { id: 84, text: "Ek list me se item delete karo button se", output: "Item removed", cat: "DOM & Widgets", clue: "li.remove();" },
+      { id: 85, text: "Ek button click par text change karo", output: "Text updated", cat: "DOM & Widgets", clue: "document.getElementById('txt').innerText = 'New Text';" },
+      { id: 86, text: "Ek button click par random color lagao", output: "Random background", cat: "DOM & Widgets", clue: "document.body.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);" },
+      { id: 87, text: "Ek button click par element hide/show toggle karo", output: "Toggle display", cat: "DOM & Widgets", clue: "el.style.display = (el.style.display === 'none') ? 'block' : 'none';" },
+      { id: 88, text: "Ek button click par counter increase karo (+1)", output: "Count: 1, 2, 3...", cat: "DOM & Widgets", clue: "count++; counterEl.innerText = count;" },
+      { id: 89, text: "Ek button click par counter decrease karo (-1)", output: "Count: 3, 2, 1...", cat: "DOM & Widgets", clue: "count--; counterEl.innerText = count;" },
+      { id: 90, text: "Ek button click par counter reset karo (0)", output: "Count: 0", cat: "DOM & Widgets", clue: "count = 0; counterEl.innerText = count;" },
+      { id: 91, text: "Ek simple calculator banao (+, -, *, /)", output: "Arithmetic calculator", cat: "DOM & Widgets", clue: "Functions banao: add(), sub(), mul(), div()." },
+      { id: 92, text: "Ek form banao aur empty fields check karo", output: "Warning on empty", cat: "DOM & Widgets", clue: "if (!name || !email) alert('Fields cannot be empty');" },
+      { id: 93, text: "Password validation: length >= 6", output: "Valid / Invalid", cat: "DOM & Widgets", clue: "if (password.length >= 6) { 'Valid' } else { 'Password too short' }" },
+      { id: 94, text: "Email me '@' check karo", output: "Valid / Invalid", cat: "DOM & Widgets", clue: "if (email.includes('@')) { 'Valid' } else { 'Invalid email' }" },
+      { id: 95, text: "Ek input me sirf numbers allow karo", output: "Regex number check", cat: "DOM & Widgets", clue: "input.value = input.value.replace(/[^0-9]/g, '');" },
+      { id: 96, text: "Ek input me sirf text allow karo", output: "Regex alpha check", cat: "DOM & Widgets", clue: "input.value = input.value.replace(/[^a-zA-Z\\s]/g, '');" },
+      { id: 97, text: "Ek checkbox check ho to message show karo", output: "Toggled message", cat: "DOM & Widgets", clue: "msg.style.display = checkbox.checked ? 'block' : 'none';" },
+      { id: 98, text: "Ek radio select ho to value show karo", output: "Selected Radio Value", cat: "DOM & Widgets", clue: "let val = document.querySelector('input[name=\"opt\"]:checked').value;" },
+      { id: 99, text: "Ek dropdown select ho to option show karo", output: "Selected Option", cat: "DOM & Widgets", clue: "let val = selectElement.value;" },
+      { id: 100, text: "Ek simple Todo List banao (add/remove items)", output: "Interactive Todo List 🎉", cat: "DOM & Widgets", clue: "Combine input value + appendChild + remove button!" }
+    ];
+
+    let currentCategory = 'all';
+
+    function renderQuestions() {
+      const container = document.getElementById("questionsContainer");
+      const searchVal = document.getElementById("searchInput").value.toLowerCase().trim();
+      container.innerHTML = "";
+
+      const filtered = QUESTIONS_DATA.filter(q => {
+        const matchesCat = (currentCategory === 'all' || q.cat === currentCategory);
+        const matchesSearch = !searchVal || 
+                              (`q${q.id}`.includes(searchVal)) || 
+                              (`${q.id}` === searchVal) || 
+                              (q.text.toLowerCase().includes(searchVal)) || 
+                              (q.cat.toLowerCase().includes(searchVal)) || 
+                              (q.clue.toLowerCase().includes(searchVal));
+        return matchesCat && matchesSearch;
       });
-  }
-</script>
+
+      document.getElementById("statsCounter").textContent = `Showing ${filtered.length} of 100 questions`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #94a3b8; background: rgba(15,23,42,0.6); border-radius: 16px;">
+            <p style="font-size: 1.1rem; margin-bottom: 8px;">🔍 No questions found matching your search.</p>
+            <p style="font-size: 0.85rem;">Try searching for numbers like "Q25" or keywords like "array", "loop", "object", "prime".</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(q => {
+        const card = document.createElement("div");
+        card.className = "q-card";
+        card.innerHTML = `
+          <div class="q-header">
+            <span class="q-number">Q${q.id}</span>
+            <span class="q-category">${q.cat}</span>
+          </div>
+          <p class="q-text">${q.text}</p>
+          <div class="q-output-box"><strong>Expected:</strong> ${q.output}</div>
+          <details class="q-hint-details">
+            <summary class="q-hint-summary">
+              <span>💡 Need Hint? Reveal Logic Clue</span>
+              <span>▼</span>
+            </summary>
+            <div class="q-hint-body">
+              <strong>Logic Clue:</strong>
+              <div class="q-hint-code">${q.clue}</div>
+            </div>
+          </details>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function setCategoryFilter(cat) {
+      currentCategory = cat;
+      document.querySelectorAll(".filter-pill").forEach(p => {
+        p.classList.toggle("active", p.textContent.includes(cat) || (cat === 'all' && p.textContent.includes('All')));
+      });
+      renderQuestions();
+    }
+
+    function filterQuestions() {
+      renderQuestions();
+    }
+
+    function toggleAllQuestionHints(expand) {
+      document.querySelectorAll(".q-hint-details").forEach(d => {
+        d.open = expand;
+      });
+    }
+
+    function downloadCurrentAssignmentFile() {
+      const url = window.location.href;
+      const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.blob();
+        })
+        .then(blob => {
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch(err => {
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+    }
+
+    window.addEventListener("DOMContentLoaded", renderQuestions);
+  </script>
 
 </body>
 </html>

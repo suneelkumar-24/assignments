@@ -1495,6 +1495,20 @@
             </div>
           </summary>
           <div class="category-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding: 10px 14px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; flex-wrap: wrap; gap: 10px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 1.1rem;">💡</span>
+                <span style="font-size: 0.85rem; color: #cbd5e1;">Need help with any JS task? Click <strong>💡 Hint</strong> on any card or view the master guide!</span>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="smart-btn" onclick="openJsHintModal('task1')" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #fbbf24; font-size: 0.8rem; padding: 6px 14px; cursor: pointer;">
+                  💡 JS Hints & Logic Guide
+                </button>
+                <a href="Javascript assignments/roadmap_assignments.html" target="_blank" class="smart-btn" style="background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; font-size: 0.8rem; padding: 6px 14px; text-decoration: none;">
+                  🗺️ Open Full Roadmap
+                </a>
+              </div>
+            </div>
             <div id="jsGrid" class="grid"></div>
           </div>
         </details>
@@ -1732,6 +1746,61 @@
               <button type="submit" class="smart-btn smart-btn-primary" style="flex: 1; justify-content: center; padding: 7px;">💾 Save & Connect</button>
             </div>
           </form>
+        </div>
+      </div>
+
+      <!-- JavaScript Task Hint & Logic Modal -->
+      <div id="jsHintModal" class="modal-overlay" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-card" style="max-width: 680px; width: 95%; max-height: 88vh; display: flex; flex-direction: column; overflow: hidden; padding: 0;">
+          <div class="modal-header" style="padding: 1.2rem 1.5rem; border-bottom: 1px solid #334155; background: #0f172a; margin-bottom: 0;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 1.6rem;">💡</span>
+              <div>
+                <h3 style="font-size: 1.15rem; color: #f8fafc; margin-bottom: 2px;" id="jsHintModalTitle">JavaScript Task Hint</h3>
+                <p style="color: #fbbf24; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;" id="jsHintModalBadge">Task Clue & Step-by-Step Logic</p>
+              </div>
+            </div>
+            <button class="modal-close" onclick="closeJsHintModal()">&times;</button>
+          </div>
+
+          <div style="padding: 1.25rem 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 14px;">
+            <!-- Task Quick Selector Dropdown -->
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <label for="jsHintTaskSelect" style="font-size: 0.85rem; color: #94a3b8; font-weight: 600;">Select JS Task:</label>
+              <select id="jsHintTaskSelect" onchange="onJsHintSelectChange(this.value)" style="flex: 1; min-width: 220px; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 8px; padding: 8px 12px; font-size: 0.85rem; outline: none; cursor: pointer;">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+
+            <!-- Objective Section -->
+            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; border-radius: 12px; padding: 14px;">
+              <div style="font-size: 0.8rem; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">🎯 Task Objective</div>
+              <p id="jsHintObjective" style="color: #cbd5e1; font-size: 0.88rem; line-height: 1.5;"></p>
+            </div>
+
+            <!-- Step by Step Logic Section -->
+            <div style="background: rgba(245, 158, 11, 0.06); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 14px;">
+              <div style="font-size: 0.8rem; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">🧠 Step-by-Step Approach (Logic)</div>
+              <ol id="jsHintSteps" style="margin-left: 20px; color: #e2e8f0; font-size: 0.86rem; line-height: 1.6;"></ol>
+            </div>
+
+            <!-- Code Template / Syntax Hint Section -->
+            <div style="background: #020617; border: 1px solid #1e293b; border-radius: 12px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div style="font-size: 0.8rem; font-weight: 700; color: #a855f7; text-transform: uppercase; letter-spacing: 0.5px;">💻 Code Syntax Hint & Template</div>
+                <button type="button" onclick="copyJsHintCode()" class="smart-btn" style="font-size: 0.75rem; padding: 4px 10px; background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; cursor: pointer;" id="copyJsCodeBtn">📋 Copy Code</button>
+              </div>
+              <pre id="jsHintCodeBlock" style="font-family: 'Fira Code', monospace; font-size: 0.82rem; color: #38bdf8; background: #090d16; padding: 12px; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; word-break: break-word;"></pre>
+            </div>
+
+            <!-- Pro Tip Section -->
+            <div id="jsHintTipBox" style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38bdf8; border-radius: 6px; padding: 10px 14px; font-size: 0.82rem; color: #94a3b8; line-height: 1.5;"></div>
+          </div>
+
+          <div style="padding: 1rem 1.5rem; border-top: 1px solid #334155; background: #0f172a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <a id="jsHintOpenTaskBtn" href="#" target="_blank" class="smart-btn smart-btn-primary" style="font-size: 0.85rem; padding: 8px 16px; text-decoration: none;">🚀 Open Task File</a>
+            <button type="button" onclick="closeJsHintModal()" class="smart-btn" style="font-size: 0.85rem; padding: 8px 16px; cursor: pointer;">Close</button>
+          </div>
         </div>
       </div>
 
@@ -2151,6 +2220,9 @@
         }
         if (e.target.id === "supabaseModal") {
           closeSupabaseModal();
+        }
+        if (e.target.id === "jsHintModal") {
+          closeJsHintModal();
         }
       }
 
@@ -2648,7 +2720,32 @@
           const controlsDiv = document.createElement("div");
           controlsDiv.style.display = "flex";
           controlsDiv.style.alignItems = "center";
-          controlsDiv.style.gap = "12px";
+          controlsDiv.style.gap = "8px";
+
+          // If JS task, add dedicated Hint button
+          if (category === "js") {
+            const hintBtn = document.createElement("button");
+            hintBtn.type = "button";
+            hintBtn.className = "card-hint-btn";
+            hintBtn.title = "View Step-by-Step Hint & Code Logic";
+            hintBtn.innerHTML = `💡 Hint`;
+            hintBtn.style.cssText = "background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); color: #fbbf24; font-size: 0.72rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 4px;";
+            hintBtn.addEventListener("mouseover", () => {
+              hintBtn.style.background = "rgba(245, 158, 11, 0.28)";
+              hintBtn.style.borderColor = "#fbbf24";
+              hintBtn.style.transform = "translateY(-1px)";
+            });
+            hintBtn.addEventListener("mouseout", () => {
+              hintBtn.style.background = "rgba(245, 158, 11, 0.15)";
+              hintBtn.style.borderColor = "rgba(245, 158, 11, 0.35)";
+              hintBtn.style.transform = "translateY(0)";
+            });
+            hintBtn.onclick = (e) => {
+              e.stopPropagation();
+              openJsHintModal(task);
+            };
+            controlsDiv.appendChild(hintBtn);
+          }
 
           // Direct Download button
           const downloadBtn = document.createElement("a");
@@ -2698,6 +2795,639 @@
           card.appendChild(controlsDiv);
           container.appendChild(card);
         });
+      }
+
+      // ==================== JAVASCRIPT HINTS DATABASE & MODAL CONTROLLER ====================
+      const JS_HINTS_DATABASE = {
+        "roadmap_assignments": {
+          title: "JavaScript Core Roadmap Masterclass",
+          badge: "Full Syllabus (Task 1 to 21)",
+          objective: "Comprehensive roadmap tasks covering JS output methods, variables, arithmetic operators, if-else conditions, and logical comparisons.",
+          steps: [
+            "Open this master guide to view all 21 tasks organized sequentially.",
+            "Each task card features detailed requirements, expected outputs, and expandable hint boxes.",
+            "Complete each assignment file in VS Code or your browser to master JavaScript fundamentals."
+          ],
+          code: `// All 21 JavaScript Core Roadmap Tasks
+// Open roadmap_assignments.html for the complete interactive guide!`,
+          tip: "Use the hints whenever you want a thinking clue on how to write the logic for any task.",
+          path: "Javascript assignments/roadmap_assignments.html"
+        },
+        "task0-0": {
+          title: "Task 0-0: 100 JS Beginner Fundamentals Explorer",
+          badge: "100 Fundamentals & Output Methods",
+          objective: "Master 100 beginner challenges: HTML outputs, document.write, variable manipulation, arithmetic operations, string concatenation, and DOM styling.",
+          steps: [
+            "Pattern 1 (Output Methods): `document.write('Text')`, `alert('Hello')`.",
+            "Pattern 2 (Variables & Strings): `let name = 'Ali'; document.write('Hello ' + name);`.",
+            "Pattern 3 (Basic Math): `let sum = a + b; let diff = a - b;`.",
+            "Pattern 4 (DOM Modification): `document.getElementById('id').innerHTML = 'Updated';`.",
+            "Click '🚀 Open Assignment File' to explore all 100 questions with live search, filters, and individual logic clues!"
+          ],
+          code: `// Core Patterns across all 100 Beginner Questions:
+document.write("Hello <br>");
+let name = "Ali"; document.write("My name is " + name);
+document.write(10 + 5); // 15
+document.getElementById("txt").style.color = "red";`,
+          tip: "Open task0-0.html to search any question (Q1 to Q100) and reveal its individual logic clue!",
+          path: "Javascript assignments/task0-0.html"
+        },
+        "task0-1": {
+          title: "Task 0-1: 100 Practice Programs Explorer",
+          badge: "100 Programs & DOM Logic",
+          objective: "Master 100 essential JavaScript practice exercises covering button clicks, inputs, arithmetic, modulus, conditions, and DOM styles.",
+          steps: [
+            "Pattern 1 (Buttons & Alerts): `onclick=\"alert('Hello')\"` ya `innerHTML = 'Hello'`.",
+            "Pattern 2 (Inputs & Math): `let n = Number(input.value);` -> compute sum, double, half, square.",
+            "Pattern 3 (Even/Odd & Multiples): `if (num % 2 === 0)` (Even), `if (num % 5 === 0)` (Divisible by 5).",
+            "Pattern 4 (DOM Colors & Styles): `element.style.color = 'red'; element.style.display = 'none';`.",
+            "Pattern 5 (String Tools): `text.toUpperCase()`, `text.length`, `text.trim()`.",
+            "Click '🚀 Open Assignment File' below to view individual hints for all Q1 to Q100!"
+          ],
+          code: `// 6 Core Formulas for All 100 Practice Programs:
+// 1. Alert: alert("Hello");
+// 2. Input value: let val = document.getElementById("in").value;
+// 3. Math: let square = Number(val) * Number(val);
+// 4. Even/Odd: if (Number(val) % 2 === 0) { ... }
+// 5. DOM Style: document.getElementById("txt").style.color = "red";
+// 6. Uppercase: val.toUpperCase();`,
+          tip: "Open task0-1.html to search any specific question (Q1 to Q100) and reveal its individual logic clue!",
+          path: "Javascript assignments/task0-1.html"
+        },
+        "task0-2": {
+          title: "Task 0-2: 100 Intermediate Exercises Explorer",
+          badge: "100 Logic, Arrays & Loops",
+          objective: "Master 100 intermediate challenges: compound conditionals (&&, ||), loops, number theory (primes, factors, palindrome, fibonacci), array methods, objects, and functions.",
+          steps: [
+            "Pattern 1 (Logical && / ||): Range checks, multiples, and nested evaluations.",
+            "Pattern 2 (Loops & Series): For/while loops, sum of N, multiplication tables, factorials.",
+            "Pattern 3 (Array Transformations): `arr.filter()`, `arr.reduce()`, `arr.map()`, min/max.",
+            "Pattern 4 (Objects & Functions): Key-value lookups, utility functions, and DOM counters.",
+            "Click '🚀 Open Assignment File' to explore all 100 questions with live search, filters, and individual logic clues!"
+          ],
+          code: `// Key Patterns across 100 Intermediate Questions:
+if (num % 2 === 0 && num > 10) { ... }
+for(let i=1; i<=10; i++) { ... }
+let evens = arr.filter(n => n % 2 === 0);
+function isPalindrome(s) { return s === s.split('').reverse().join(''); }`,
+          tip: "Open task0-2.html to search any question (Q1 to Q100) and reveal its individual logic clue!",
+          path: "Javascript assignments/task0-2.html"
+        },
+        "task0-3": {
+          title: "Task 0-3: 100 Logic & Algorithms Challenges",
+          badge: "100 Algorithms & Puzzles",
+          objective: "Master 100 advanced logic challenges: conditionals, geometry, billing systems, mathematical algorithms, data validation, sorting, and game mechanics.",
+          steps: [
+            "Pattern 1 (Conditionals & Geometry): Leap years, triangle angle validity, quadrant checks.",
+            "Pattern 2 (Business & Billing): Slabs, discounts, cart totals, loan EMI formulas.",
+            "Pattern 3 (Algorithms & Series): Armstrong numbers, prime factors, anagrams, Caesar cipher.",
+            "Pattern 4 (Validation & Security): IPv4 checks, password strength, regex extraction, credit card masking.",
+            "Click '🚀 Open Assignment File' to explore all 100 questions with live search, filters, and individual logic clues!"
+          ],
+          code: `// Key Patterns across 100 Algorithmic Questions:
+if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) // Leap Year
+if (a + b + c === 180 && a > 0 && b > 0 && c > 0) // Triangle
+let payable = qty - Math.floor(qty / 3); // Buy 2 Get 1 Free`,
+          tip: "Open task0-3.html to search any question (Q1 to Q100) and reveal its individual logic clue!",
+          path: "Javascript assignments/task0-3.html"
+        },
+        "task1": {
+          title: "Task 1: Birth Year Finder",
+          badge: "Prompt & Subtraction",
+          objective: "Prompt the user for Name and Age, calculate their birth year (2026 - age), and display the result.",
+          steps: [
+            "User se name lijiye: `let name = prompt('Name:');`.",
+            "Age input lene ke liye `Number(prompt('Age:'))` use karein.",
+            "Birth year calculate karne ke liye `2026 - age` subtract kijiye.",
+            "Alert aur console dono mein result show karein."
+          ],
+          code: `let name = prompt("Enter your name:");
+let age = Number(prompt("Enter your age:"));
+
+// Clue: Subtract age from current year (2026)
+let birthYear = 2026 - /* your age variable */;
+
+// Combine with string using + operator
+let message = "Hello " + name + ", you were born in " + birthYear + ".";
+alert(message);`,
+          tip: "`prompt()` always returns text (string). Convert with `Number()` before subtraction!",
+          path: "Javascript assignments/task1.html"
+        },
+        "task2": {
+          title: "Task 2: Even or Odd Checker",
+          badge: "Modulus & DOM",
+          objective: "Determine whether an entered number is even or odd and output to screen.",
+          steps: [
+            "Input value ko number mein padhein: `Number(document.getElementById('num').value)`.",
+            "Modulo operator `% 2` use karein: agar remainder 0 hai toh Even, warna Odd.",
+            "Result text ko `.innerHTML` se display karein."
+          ],
+          code: `function check() {
+    let num = Number(document.getElementById("num").value);
+
+    // Clue: Check remainder when divided by 2
+    if (num % 2 === 0) {
+        // Display Even Number
+    } else {
+        // Display Odd Number
+    }
+}`,
+          tip: "Even numbers leave a remainder of 0 when divided by 2 (`num % 2 === 0`).",
+          path: "Javascript assignments/task2.html"
+        },
+        "task3": {
+          title: "Task 3: Color Changer & Voter Eligibility",
+          badge: "DOM Style & Logic",
+          objective: "Manipulate background colors dynamically or verify voting age eligibility (>= 18).",
+          steps: [
+            "Color badalne ke liye `document.getElementById('body').style.backgroundColor = 'yellow'` use karein.",
+            "Voting eligibility ke liye check karein `if (age >= 18)` eligible, `else` bache hue saal `(18 - age)` alert karein."
+          ],
+          code: `// Clue for voting logic:
+let age = Number(prompt("Enter age:"));
+
+if (age >= 18) {
+    // User is eligible
+} else {
+    let waitYears = 18 - age;
+    // Alert how many years left to wait
+}`,
+          tip: "You can change any CSS style property via JavaScript `.style.propertyName`.",
+          path: "Javascript assignments/task3.html"
+        },
+        "task4": {
+          title: "Task 4: Smart Calculator & Temperature",
+          badge: "Arithmetic & Guard Rules",
+          objective: "Perform addition, subtraction, multiplication, and safe division (guarded against division by zero).",
+          steps: [
+            "Input fields se dono numbers `Number(...)` karke nikalein.",
+            "Division mein zero check karein: `if (b === 0)` toh 'Cannot divide by zero'.",
+            "Result paragraph ka `.innerHTML` update karein."
+          ],
+          code: `function div() {
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+
+    // Guard against division by 0:
+    if (b === 0) {
+        document.getElementById("result").innerHTML = "Cannot divide by zero";
+    } else {
+        document.getElementById("result").innerHTML = "Result: " + (a / b);
+    }
+}`,
+          tip: "Always handle division by 0 to prevent bugs and infinite loop states.",
+          path: "Javascript assignments/task4.html"
+        },
+        "task5": {
+          title: "Task 5: Student Grade Evaluator",
+          badge: "If-Else-If Ladder",
+          objective: "Read student marks and display letter grades (A >= 80, B >= 60, C >= 40, Fail < 40).",
+          steps: [
+            "Marks input lijiye.",
+            "Conditions ko top se check karein: `if (marks >= 80)` -> A, `else if (marks >= 60)` -> B, etc.",
+            "Grade text aur color update karein."
+          ],
+          code: `let marks = Number(document.getElementById("marks").value);
+
+// Clue: Check from highest boundary downwards
+if (marks >= 80) {
+    // Grade A 🎉
+} else if (marks >= 60) {
+    // Grade B 👍
+} else if (marks >= 40) {
+    // Grade C 🙂
+} else {
+    // Fail ❌
+}`,
+          tip: "Checking conditions in descending order ensures the highest matching threshold is awarded.",
+          path: "Javascript assignments/task5.html"
+        },
+        "task5-1": {
+          title: "Task 5-1: Grade Evaluator Variant",
+          badge: "Conditionals",
+          objective: "Evaluate percentage performance with custom thresholds (90+, 80+, 70+).",
+          steps: [
+            "Take score via prompt.",
+            "Apply stepped conditions: >=90 (A+), >=80 (A), >=70 (B), else (C)."
+          ],
+          code: `let score = Number(prompt("Enter score:"));
+// Apply if (score >= 90) ... else if (score >= 80) ...`,
+          tip: "Keep grade boundaries consistent with your assignment requirements.",
+          path: "Javascript assignments/task5-1.html"
+        },
+        "task5-2": {
+          title: "Task 5-2: Attendance & Exam Qualification",
+          badge: "Compound Conditions",
+          objective: "Check both marks and attendance percentage to determine exam eligibility.",
+          steps: [
+            "Verify both conditions using logical AND: `if (marks >= 50 && attendance >= 75)`."
+          ],
+          code: `// Clue:
+if (marks >= 50 && attendance >= 75) {
+    // Pass qualification
+}`,
+          tip: "`&&` ensures a student must meet BOTH criteria.",
+          path: "Javascript assignments/task5-2.html"
+        },
+        "task6": {
+          title: "Task 6: Portal Gatekeeper & Credential Check",
+          badge: "Logical AND (&&)",
+          objective: "Grant access only when username matches 'admin' AND password matches 'pass123'.",
+          steps: [
+            "Prompt for username and password.",
+            "Evaluate both simultaneously: `if (username === 'admin' && password === 'pass123')`.",
+            "Alert 'Access Granted' or 'Access Denied'."
+          ],
+          code: `let username = prompt("Enter username:");
+let password = prompt("Enter password:");
+
+// Clue: Both must be true (use &&)
+if (username === "admin" && password === "pass123") {
+    // Access Granted
+} else {
+    // Access Denied
+}`,
+          tip: "Use strict equality `===` so types and values must match exactly.",
+          path: "Javascript assignments/task6.html"
+        },
+        "task7": {
+          title: "Task 7: Weekend Detector & Age Classifier",
+          badge: "Logical OR (||)",
+          objective: "Check if entered day is Saturday OR Sunday, or categorize age into child/teen/adult/senior.",
+          steps: [
+            "Logical OR operator `||` use karein: ya toh Saturday ho ya Sunday ho.",
+            "Console log mein relaxation message print karein."
+          ],
+          code: `let day = prompt("Enter day:");
+
+// Clue: Either Saturday OR Sunday (use ||)
+if (day === "Saturday" || day === "Sunday") {
+    // Weekend message
+} else {
+    // Weekday message
+}`,
+          tip: "Using `.toLowerCase()` prevents typos caused by uppercase letters.",
+          path: "Javascript assignments/task7.html"
+        },
+        "task8": {
+          title: "Task 8: Bill Discount Guard",
+          badge: "Logical NOT (!)",
+          objective: "Verify that total bill is NOT less than $100 using logical NOT (!), then deduct $15 using -=.",
+          steps: [
+            "Set `const limit = 100;`.",
+            "Check condition: `if (!(bill < limit))` (yani bill 100 ya usse zyada hai).",
+            "Deduct $15: `bill -= 15;` and alert final total."
+          ],
+          code: `const limit = 100;
+let bill = Number(prompt("Enter bill amount:"));
+
+// Clue: NOT less than 100
+if (!(bill < limit)) {
+    bill -= 15; // Apply discount
+} else {
+    // Regular bill
+}`,
+          tip: "`!(bill < 100)` means the bill is 100 or greater.",
+          path: "Javascript assignments/task8.html"
+        },
+        "task9": {
+          title: "Task 9: Ticket Pricing Advisor",
+          badge: "Nested Conditions",
+          objective: "Compute cinema ticket price based on age and student status using nested if/else statements.",
+          steps: [
+            "Under 12: $5; 65+: $8.",
+            "Adults (12-64): `else` block ke andar nested `if (isStudent === 'yes')` check karein (student -> $10, else -> $15)."
+          ],
+          code: `let price;
+if (age < 12) {
+    price = 5;
+} else if (age >= 65) {
+    price = 8;
+} else {
+    // Clue: Nested condition for students
+    if (isStudent.toLowerCase() === "yes") {
+        price = 10;
+    } else {
+        price = 15;
+    }
+}`,
+          tip: "Nested conditions help organize multi-tier decision logic.",
+          path: "Javascript assignments/task9.html"
+        },
+        "task10": {
+          title: "Task 10: Even or Odd Number Classifier",
+          badge: "Modulo & Console",
+          objective: "Prompt for a number and log whether it is even or odd to the console.",
+          steps: [
+            "User se number input lijiye.",
+            "Evaluate karein: `if (num % 2 === 0)`.",
+            "Console mein message print karein."
+          ],
+          code: `let num = Number(prompt("Enter number:"));
+
+// Clue: Even numbers have 0 remainder when divided by 2
+if (num % 2 === 0) {
+    console.log(num + " is Even");
+} else {
+    console.log(num + " is Odd");
+}`,
+          tip: "Any integer % 2 returns either 0 (even) or 1 (odd).",
+          path: "Javascript assignments/task10.html"
+        },
+        "task11": {
+          title: "Task 11: Number Guessing Game",
+          badge: "Comparisons",
+          objective: "Compare user guesses against a secret number (e.g. 7) with 'Too High' and 'Too Low' clues.",
+          steps: [
+            "Store secret number: `const secret = 7;`.",
+            "User guess compare karein: `guess === secret` (Won), `guess > secret` (Too high), `else` (Too low)."
+          ],
+          code: `const secret = 7;
+let guess = Number(prompt("Guess (1-10):"));
+
+// Clue: Compare guess with secret
+if (guess === secret) {
+    // Win alert
+} else if (guess > secret) {
+    // Too high alert
+} else {
+    // Too low alert
+}`,
+          tip: "Use `const` for secret numbers that should remain fixed throughout the game.",
+          path: "Javascript assignments/task11.html"
+        },
+        "task12": {
+          title: "Task 12: Electricity Bill Slabs",
+          badge: "Tiered Pricing",
+          objective: "Calculate electricity bill across multiple stepped tariff slabs.",
+          steps: [
+            "First 100 units: $5/unit.",
+            "Next 100 units (101-200): (100 * 5) + ((units - 100) * 8).",
+            "Above 200 units: (100 * 5) + (100 * 8) + ((units - 200) * 12)."
+          ],
+          code: `let units = Number(prompt("Enter units:"));
+let total = 0;
+
+// Clue for stepped slabs:
+if (units <= 100) {
+    total = units * 5;
+} else if (units <= 200) {
+    total = (100 * 5) + ((units - 100) * 8);
+} else {
+    total = (100 * 5) + (100 * 8) + ((units - 200) * 12);
+}`,
+          tip: "Each pricing tier only charges for units consumed within its specific boundary.",
+          path: "Javascript assignments/task12.html"
+        },
+        "task13": {
+          title: "Task 13: ATM & Purchase Gateway",
+          badge: "Capstone Simulator",
+          objective: "Handle PIN authorization, ATM cash withdrawals, and shopping checkout with senior/VIP discounts.",
+          steps: [
+            "Pehle PIN verify karein (5588).",
+            "ATM mode mein: check `(amt <= balance && amt <= 2000 && amt % 10 === 0)`.",
+            "SHOP mode mein: check `(age >= 60 || coupon === 'VIP')` for 15% discount."
+          ],
+          code: `// Clues:
+// 1. PIN verification: if (pin !== 5588) ...
+// 2. ATM check: (amt <= balance && amt <= 2000 && amt % 10 === 0)
+// 3. SHOP discount check: if (age >= 60 || coupon === "VIP") ...`,
+          tip: "Notice the % 10 === 0 check to ensure cash only dispenses in multiples of $10.",
+          path: "Javascript assignments/task13.html"
+        },
+        "task14": {
+          title: "Task 14: Cart & Shipping Calculator",
+          badge: "Discounts & Shipping",
+          objective: "Calculate cumulative discounts based on VIP/Gold membership, coupons, and distance delivery fees.",
+          steps: [
+            "Subtotal = `price * qty`.",
+            "Gold (20%), VIP (10%), subtotal >= 200 (+5%).",
+            "Coupon SAVEMORE -> deduct $15.",
+            "Free shipping if subtotal > 300 or Gold member, else `distance * 2`."
+          ],
+          code: `let subtotal = price * qty;
+// Clue: calculate discount rate based on membership
+// Clue: deduct $15 if coupon === "SAVEMORE"
+// Clue: shipping = (subtotal > 300 || member === "GOLD") ? 0 : (distance * 2);`,
+          tip: "Calculate discounts on the product subtotal before adding shipping charges.",
+          path: "Javascript assignments/task14.html"
+        },
+        "task15": {
+          title: "Task 15: Utility Bill Calculator",
+          badge: "Commercial Tariffs",
+          objective: "Calculate commercial vs residential tiered tariffs with surcharges and connection fees.",
+          steps: [
+            "Residential rates: $5, $8, $12. Commercial rates: $8, $12, $16.",
+            "If commercial and units > 500: apply 20% surcharge (`cost *= 1.20`).",
+            "Add fixed $50 connection fee."
+          ],
+          code: `// Clues:
+// 1. Assign rate variables based on customer type
+// 2. Calculate 3-tier stepped energy cost
+// 3. Apply surcharge if commercial && units > 500
+// 4. Add $50 connection fee`,
+          tip: "Use arithmetic assignment `*=` to apply percentage surcharges cleanly.",
+          path: "Javascript assignments/task15.html"
+        },
+        "task16": {
+          title: "Task 16: Leap Year & Century Detector",
+          badge: "Logical Rules",
+          objective: "Verify leap years, century boundaries, and compare input year relative to 2026.",
+          steps: [
+            "Century check: `year % 100 === 0`.",
+            "Leap rule: `(year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)`.",
+            "Era classification: `<2026` (Past), `===2026` (Present), `>2026` (Future)."
+          ],
+          code: `// Clues:
+let isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+let isCentury = (year % 100 === 0);
+// Compare year with 2026 for past, present, or future status`,
+          tip: "Years divisible by 100 are only leap years if also divisible by 400 (e.g., 2000 is, 1900 is not).",
+          path: "Javascript assignments/task16.html"
+        },
+        "task17": {
+          title: "Task 17: Rock Paper Scissors Game",
+          badge: "Math.random()",
+          objective: "Play Rock, Paper, Scissors against random computer choice and track score state.",
+          steps: [
+            "Choices array: `const options = ['rock', 'paper', 'scissors'];`.",
+            "Computer random choice: `options[Math.floor(Math.random() * 3)]`.",
+            "Win conditions check karein aur player/cpu score increment karein."
+          ],
+          code: `const options = ["rock", "paper", "scissors"];
+let cpu = options[Math.floor(Math.random() * 3)];
+
+// Clue:
+// 1. Tie: player === cpu
+// 2. Win: (rock beats scissors) || (paper beats rock) || (scissors beats paper)
+// 3. Loss: otherwise`,
+          tip: "`Math.floor(Math.random() * 3)` produces 0, 1, or 2 randomly.",
+          path: "Javascript assignments/task17.html"
+        },
+        "task18": {
+          title: "Task 18: Temperature & Weather Advisor",
+          badge: "Unit Conversions",
+          objective: "Convert between Celsius and Fahrenheit and issue extreme climate notifications.",
+          steps: [
+            "Celsius mein convert karein: `(F - 32) * 5 / 9`.",
+            "Categories check karein: >=38 (Hot), >=22 (Comfortable), >=5 (Cool), <5 (Freezing)."
+          ],
+          code: `// Clue:
+let c = (scale === "F") ? (temp - 32) * 5 / 9 : temp;
+
+// Apply if-else-if for >= 38, >= 22, >= 5, and else (Freezing)`,
+          tip: "`.toFixed(1)` keeps numbers cleanly rounded to one decimal place.",
+          path: "Javascript assignments/task18.html"
+        },
+        "task19": {
+          title: "Task 19: Grade & GPA Calculator",
+          badge: "Multi-Subject Logic",
+          objective: "Calculate average marks across Math, Science, and English with distinction checks.",
+          steps: [
+            "Average calculate karein: `(m + s + e) / 3`.",
+            "Pehle individual subject fail check karein: `if (m < 40 || s < 40 || e < 40)`.",
+            "Pass hone par average ke mutabiq Distinction (>=90), B (>=80), C (>=70) assign karein."
+          ],
+          code: `let avg = (m + s + e) / 3;
+
+// Clue:
+// 1. Check if any subject < 40 (Fail)
+// 2. Else check average >= 90 (Grade A), >= 80 (Grade B), >= 70 (Grade C)`,
+          tip: "Check minimum passing marks for each subject before calculating the overall average.",
+          path: "Javascript assignments/task19.html"
+        },
+        "task20": {
+          title: "Task 20: Salary Tax Calculator",
+          badge: "Tax Brackets",
+          objective: "Calculate net monthly pay with regional taxes, high income surcharges, and deductions.",
+          steps: [
+            "Region (US ya EU) aur gross salary ke slabs check karke tax rate nikalen.",
+            "Agar gross > 10,000 ho toh tax rate mein +0.03 (surcharge) add karein.",
+            "Formula: `Net = Gross - (Gross * TaxRate) - 120 (Insurance)`."
+          ],
+          code: `// Clues:
+// 1. Set taxRate based on region ('US' vs 'EU') and salary slabs
+// 2. If gross > 10000, add 0.03 surcharge to taxRate
+// 3. netSalary = gross - (gross * taxRate) - 120;`,
+          tip: "Apply tax percentage to the gross amount first, then subtract fixed deductions.",
+          path: "Javascript assignments/task20.html"
+        },
+        "task21": {
+          title: "Task 21: Smart Logical Gateway Challenge",
+          badge: "Full Capstone Challenge",
+          objective: "Interactive simulator challenge handling PIN authorization, ATM simulation, and checkout discounts.",
+          steps: [
+            "PIN 5588 verify karein, galat ho toh lockout status dikhayein.",
+            "ATM aur Shopping ke branches alag alag handle karein.",
+            "DOM screen element ka text aur color dynamically update karein."
+          ],
+          code: `// Clues:
+// 1. Verify PIN === 5588
+// 2. Branch for 'ATM' vs 'SHOP'
+// 3. Update document.getElementById("display").innerHTML with formatted receipt`,
+          tip: "This capstone brings together variables, operators, condition branches, and DOM updates!",
+          path: "Javascript assignments/task21.html"
+        }
+      };
+
+      function getJsHintKey(task) {
+        if (!task) return "task1";
+        if (typeof task === "string") {
+          let clean = task.toLowerCase().replace(".html", "").replace("javascript assignments/", "").replace(/_/g, "-");
+          if (clean.includes("task0-0")) return "task0-0";
+          if (clean.includes("task0-1")) return "task0-1";
+          if (clean.includes("task0-2")) return "task0-2";
+          if (clean.includes("task0-3")) return "task0-3";
+          if (clean.includes("task5-1")) return "task5-1";
+          if (clean.includes("task5-2")) return "task5-2";
+          if (clean.includes("roadmap")) return "roadmap_assignments";
+          const m = clean.match(/task(\d+)/);
+          if (m) return `task${m[1]}`;
+          return clean in JS_HINTS_DATABASE ? clean : "task1";
+        }
+        if (task.path) return getJsHintKey(task.path);
+        if (task.displayName) return getJsHintKey(task.displayName);
+        return "task1";
+      }
+
+      function populateJsHintDropdown(selectedKey) {
+        const select = document.getElementById("jsHintTaskSelect");
+        if (!select) return;
+        select.innerHTML = "";
+        Object.keys(JS_HINTS_DATABASE).forEach((k) => {
+          const item = JS_HINTS_DATABASE[k];
+          const opt = document.createElement("option");
+          opt.value = k;
+          opt.textContent = `${item.title} (${item.badge})`;
+          if (k === selectedKey) opt.selected = true;
+          select.appendChild(opt);
+        });
+      }
+
+      function openJsHintModal(taskOrKey = "task1") {
+        const key = getJsHintKey(taskOrKey);
+        const data = JS_HINTS_DATABASE[key] || JS_HINTS_DATABASE["task1"];
+        
+        populateJsHintDropdown(key);
+
+        const titleEl = document.getElementById("jsHintModalTitle");
+        if (titleEl) titleEl.textContent = data.title;
+
+        const badgeEl = document.getElementById("jsHintModalBadge");
+        if (badgeEl) badgeEl.textContent = `🏷️ ${data.badge} • Step-by-Step Logic Guide`;
+
+        const objEl = document.getElementById("jsHintObjective");
+        if (objEl) objEl.textContent = data.objective;
+
+        const stepsList = document.getElementById("jsHintSteps");
+        if (stepsList) {
+          stepsList.innerHTML = "";
+          data.steps.forEach((step) => {
+            const li = document.createElement("li");
+            li.innerHTML = step.replace(/`([^`]+)`/g, '<code style="color: #38bdf8; background: #0f172a; padding: 2px 5px; border-radius: 4px;">$1</code>');
+            stepsList.appendChild(li);
+          });
+        }
+
+        const codeEl = document.getElementById("jsHintCodeBlock");
+        if (codeEl) codeEl.textContent = data.code;
+
+        const tipEl = document.getElementById("jsHintTipBox");
+        if (tipEl) tipEl.innerHTML = `💡 <strong>Pro-Tip:</strong> ${data.tip}`;
+
+        const openBtn = document.getElementById("jsHintOpenTaskBtn");
+        if (openBtn) {
+          openBtn.href = data.path || "Javascript assignments/roadmap_assignments.html";
+        }
+
+        const copyBtn = document.getElementById("copyJsCodeBtn");
+        if (copyBtn) copyBtn.textContent = "📋 Copy Blueprint";
+
+        const modal = document.getElementById("jsHintModal");
+        if (modal) modal.style.display = "flex";
+      }
+
+      function closeJsHintModal() {
+        const modal = document.getElementById("jsHintModal");
+        if (modal) modal.style.display = "none";
+      }
+
+      function onJsHintSelectChange(key) {
+        openJsHintModal(key);
+      }
+
+      function copyJsHintCode() {
+        const code = document.getElementById("jsHintCodeBlock").textContent;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(code).then(() => {
+            const btn = document.getElementById("copyJsCodeBtn");
+            if (btn) {
+              btn.textContent = "✅ Copied!";
+              setTimeout(() => (btn.textContent = "📋 Copy Blueprint"), 1800);
+            }
+            showSyncToast("📋 Clue Copied to Clipboard!");
+          });
+        }
       }
 
       // ==================== TOAST NOTIFICATION ====================
@@ -2960,6 +3690,10 @@
       window.closeSupabaseModal = closeSupabaseModal;
       window.handleSaveSupabaseConfig = handleSaveSupabaseConfig;
       window.testSupabaseConnectionUI = testSupabaseConnectionUI;
+      window.openJsHintModal = openJsHintModal;
+      window.closeJsHintModal = closeJsHintModal;
+      window.onJsHintSelectChange = onJsHintSelectChange;
+      window.copyJsHintCode = copyJsHintCode;
     </script>
   </body>
 </html>

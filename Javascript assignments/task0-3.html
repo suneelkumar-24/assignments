@@ -1,36 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task 0-3: 100 JavaScript Logic & Algorithms Practice with Hints</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
 
+    :root {
+      --bg-color: #020617;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --primary: #38bdf8;
+      --secondary: #a855f7;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
 
-<!-- Floating Download Button -->
-<div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
-  <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-    Download File
-  </button>
-</div>
-<script>
-  function downloadCurrentAssignmentFile() {
-    const url = window.location.href;
-    const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
-    fetch(url)
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.blob();
-      })
-      .then(blob => {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      })
-      .catch(err => {
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1e1b4b 0%, #0f172a 50%, #020617 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 30px 20px 80px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--primary);
+      transform: translateX(-3px);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: rgba(245, 158, 11, 0.25);
+      transform: translateY(-1px);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 800px;
+      margin: 0 auto 25px;
+      line-height: 1.5;
+    }
+
+    .patterns-box {
+      background: rgba(30, 41, 59, 0.45);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px 24px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .patterns-box h3 {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .patterns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+
+    .pattern-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+    }
+
+    .pattern-title {
+      font-weight: 700;
+      color: #fbbf24;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .pattern-code {
+      font-family: 'Fira Code', monospace;
+      color: #38bdf8;
+      font-size: 0.76rem;
+      background: #020617;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .controls-bar {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      background: #020617;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill:hover,
+    .filter-pill.active {
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--primary);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .stats-counter {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-left: auto;
+      align-self: center;
+    }
+
+    .questions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .questions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .q-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .q-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .q-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .q-number {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .q-category {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(168, 85, 247, 0.15);
+      color: var(--secondary);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+
+    .q-text {
+      font-size: 0.94rem;
+      color: #f1f5f9;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .q-output-box {
+      background: #020617;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: var(--success);
+    }
+
+    .q-hint-details {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .q-hint-details[open] {
+      border-color: rgba(245, 158, 11, 0.75);
+    }
+
+    .q-hint-summary {
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.08);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      list-style: none;
+    }
+
+    .q-hint-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .q-hint-summary:hover {
+      background: rgba(245, 158, 11, 0.16);
+    }
+
+    .q-hint-body {
+      padding: 12px;
+      border-top: 1px solid rgba(245, 158, 11, 0.2);
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .q-hint-code {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.76rem;
+      color: #38bdf8;
+      margin-top: 6px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="top-nav">
+      <a href="../index.html" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Dashboard
+      </a>
+      <div class="header-actions">
+        <button class="action-btn" onclick="toggleAllQuestionHints(true)">💡 Expand All Hints</button>
+        <button class="action-btn" onclick="toggleAllQuestionHints(false)" style="background: rgba(255,255,255,0.06); color: #cbd5e1; border-color: rgba(255,255,255,0.15);">🔒 Collapse All</button>
+      </div>
+    </div>
+
+    <header>
+      <h1>Task 0-3: 100 Logic & Algorithm Challenges</h1>
+      <p class="subtitle">100 logic puzzles, conditionals, algorithmic problem-solving tasks, and nested structures with individual logic clues!</p>
+
+      <div class="patterns-box">
+        <h3>🧠 Master Logic Patterns in Task 0-3</h3>
+        <div class="patterns-grid">
+          <div class="pattern-card">
+            <span class="pattern-title">1. Boundary Checks</span>
+            Ranges aur threshold limits check karna.
+            <span class="pattern-code">if (val >= min && val <= max)</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">2. State Flags</span>
+            Boolean conditions se tracking karna.
+            <span class="pattern-code">let isValid = true;</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">3. Ternary Operators</span>
+            Inline conditional shorthand.
+            <span class="pattern-code">let status = age >= 18 ? 'Adult' : 'Minor';</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">4. Nested Evaluation</span>
+            Tiered decisions organize karna.
+            <span class="pattern-code">if (cond1) { if (cond2) { ... } }</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="controls-bar">
+      <div class="search-row">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by Question number (e.g. Q12) or keyword (e.g. leap, discount, triangle, prime)..." oninput="filterQuestions()" />
+        <span id="statsCounter" class="stats-counter">Showing 100 of 100 questions</span>
+      </div>
+      <div class="filter-pills" id="categoryFilters">
+        <button class="filter-pill active" onclick="setCategoryFilter('all')">All (100)</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Conditionals')">Conditionals & Ranges</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Math & Geometry')">Math & Geometry</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Business Logic')">Business & Billing</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Algorithms')">Algorithms & Series</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Validation')">Validation & Security</button>
+      </div>
+    </div>
+
+    <div class="questions-grid" id="questionsContainer"></div>
+  </div>
+
+  <!-- Floating Download Button -->
+  <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
+    <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Download File
+    </button>
+  </div>
+
+  <script>
+    const QUESTIONS_DATA = [
+      { id: 1, text: "Check karo entered number positive hai, negative hai, ya zero hai", output: "Input: 0 → Zero | Input: -5 → Negative", cat: "Conditionals", clue: "if (num > 0) 'Positive' else if (num < 0) 'Negative' else 'Zero'" },
+      { id: 2, text: "Check karo entered year leap year hai ya nahi", output: "Input: 2024 → Leap Year", cat: "Conditionals", clue: "if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) 'Leap Year'" },
+      { id: 3, text: "3 angles lo aur check karo ke triangle valid hai ya nahi (Sum === 180)", output: "Input: 60, 60, 60 → Valid Triangle", cat: "Math & Geometry", clue: "if (a + b + c === 180 && a > 0 && b > 0 && c > 0) 'Valid'" },
+      { id: 4, text: "3 sides lo aur check karo triangle Equilateral, Isosceles ya Scalene hai", output: "Input: 5, 5, 5 → Equilateral", cat: "Math & Geometry", clue: "if (a === b && b === c) 'Equilateral' else if (a === b || b === c || a === c) 'Isosceles' else 'Scalene'" },
+      { id: 5, text: "Check karo entered character vowel hai ya consonant", output: "Input: 'e' → Vowel", cat: "Conditionals", clue: "if ('aeiou'.includes(char.toLowerCase())) 'Vowel' else 'Consonant'" },
+      { id: 6, text: "Check karo character uppercase letter hai ya lowercase", output: "Input: 'A' → Uppercase", cat: "Conditionals", clue: "if (char >= 'A' && char <= 'Z') 'Uppercase' else 'Lowercase'" },
+      { id: 7, text: "Check karo character alphabet, digit ya special symbol hai", output: "Input: '7' → Digit | Input: '@' → Special", cat: "Validation", clue: "if (/[a-zA-Z]/.test(c)) 'Alphabet' else if (/\\d/.test(c)) 'Digit' else 'Special'" },
+      { id: 8, text: "Month number (1-12) lo aur us month ke total days batao", output: "Input: 2 → 28 or 29 days", cat: "Conditionals", clue: "if (m === 2) 28 else if ([4,6,9,11].includes(m)) 30 else 31" },
+      { id: 9, text: "Week number (1-7) lo aur day ka naam print karo", output: "Input: 1 → Monday", cat: "Conditionals", clue: "['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][n - 1]" },
+      { id: 10, text: "Amount lo aur minimum currency notes (5000, 1000, 500, 100) count karo", output: "Input: 6500 → 1x5000, 1x1000, 1x500", cat: "Business Logic", clue: "let n5000 = Math.floor(amt / 5000); amt %= 5000; ..." },
+      { id: 11, text: "Electricity bill calculate karo stepped slabs ke mutabiq", output: "Units: 150 → Bill: $900", cat: "Business Logic", clue: "0-100: @5, 101-200: @8, >200: @12" },
+      { id: 12, text: "Student ke 5 subjects ke marks lo aur percentage + division calculate karo", output: "85% → 1st Division", cat: "Business Logic", clue: "let per = (sum / 500) * 100; if (per >= 60) '1st' else if (per >= 50) '2nd' else '3rd'" },
+      { id: 13, text: "Gross salary input lo aur basic salary ke hisab se HRA (20%) aur DA (50%) add karo", output: "Total Salary", cat: "Business Logic", clue: "let total = basic + (basic * 0.20) + (basic * 0.50);" },
+      { id: 14, text: "Cost price aur Selling price lo aur Profit ya Loss calculate karo", output: "CP: 100, SP: 120 → Profit: $20", cat: "Business Logic", clue: "if (sp > cp) `Profit: ${sp - cp}` else `Loss: ${cp - sp}`" },
+      { id: 15, text: "Quadratic equation (ax^2 + bx + c = 0) ke roots calculate karo", output: "Roots calculated", cat: "Math & Geometry", clue: "let d = b*b - 4*a*c; if (d >= 0) { let r1 = (-b + Math.sqrt(d))/(2*a); }" },
+      { id: 16, text: "Circle ka radius lo aur Area (PI * r * r) aur Circumference nikaalo", output: "Radius: 7 → Area: 153.94", cat: "Math & Geometry", clue: "let area = Math.PI * r * r; let circ = 2 * Math.PI * r;" },
+      { id: 17, text: "Rectangle ki length aur width lo aur Area aur Perimeter nikaalo", output: "L: 5, W: 4 → Area: 20", cat: "Math & Geometry", clue: "let area = l * w; let peri = 2 * (l + w);" },
+      { id: 18, text: "Temperature in Celsius lo aur Fahrenheit mein convert karo", output: "30°C → 86°F", cat: "Math & Geometry", clue: "let f = (c * 9/5) + 32;" },
+      { id: 19, text: "Temperature in Fahrenheit lo aur Celsius mein convert karo", output: "86°F → 30°C", cat: "Math & Geometry", clue: "let c = (f - 32) * 5/9;" },
+      { id: 20, text: "Days count lo aur Years, Weeks aur Days mein convert karo", output: "375 days → 1 Year, 1 Week, 3 Days", cat: "Algorithms", clue: "let y = Math.floor(d / 365); let w = Math.floor((d % 365) / 7); let rem = (d % 365) % 7;" },
+      { id: 21, text: "2 numbers lo aur unka bitwise AND (&) aur OR (|) print karo", output: "5 & 3 → 1 | 5 | 3 → 7", cat: "Algorithms", clue: "console.log(a & b, a | b);" },
+      { id: 22, text: "Check karo number power of 2 hai ya nahi", output: "Input: 8 → Yes (2^3)", cat: "Algorithms", clue: "if (num > 0 && (num & (num - 1)) === 0) 'Power of 2'" },
+      { id: 23, text: "Armstrong number check karo (e.g. 153 = 1^3 + 5^3 + 3^3)", output: "Input: 153 → Armstrong Number", cat: "Algorithms", clue: "let sum = String(n).split('').reduce((acc, d) => acc + Math.pow(Number(d), 3), 0);" },
+      { id: 24, text: "Perfect number check karo (sum of proper divisors equals number, e.g. 6 = 1+2+3)", output: "Input: 6 → Perfect Number", cat: "Algorithms", clue: "let sum = 0; for(let i=1; i<n; i++) if (n%i===0) sum+=i; return sum === n;" },
+      { id: 25, text: "Strong number check karo (sum of factorials of digits equals number, e.g. 145)", output: "Input: 145 → Strong Number", cat: "Algorithms", clue: "Sum of factorial of each digit === n." },
+      { id: 26, text: "Automorphic number check karo (Square ends in same digit, e.g. 5^2=25, 6^2=36)", output: "Input: 25 → Automorphic", cat: "Algorithms", clue: "String(n * n).endsWith(String(n))" },
+      { id: 27, text: "Harshad number check karo (Number is divisible by sum of its digits, e.g. 18 / (1+8) = 2)", output: "Input: 18 → Harshad Number", cat: "Algorithms", clue: "let digitSum = String(n).split('').reduce((a, b) => a + Number(b), 0); return n % digitSum === 0;" },
+      { id: 28, text: "Abundant number check karo (Sum of proper divisors is greater than number)", output: "Input: 12 → Abundant (1+2+3+4+6=16 > 12)", cat: "Algorithms", clue: "Divisor sum > n" },
+      { id: 29, text: "Deficient number check karo (Sum of proper divisors is less than number)", output: "Input: 15 → Deficient", cat: "Algorithms", clue: "Divisor sum < n" },
+      { id: 30, text: "Prime factors nikaalo kisi number ke", output: "Input: 12 → 2, 2, 3", cat: "Algorithms", clue: "Divide by 2 while possible, then loop odd numbers." },
+      { id: 31, text: "Check karo number Neon number hai ya nahi (e.g. 9^2=81, 8+1=9)", output: "Input: 9 → Neon Number", cat: "Algorithms", clue: "Sum of digits of square === n." },
+      { id: 32, text: "Check karo number Spy number hai ya nahi (Sum of digits === Product of digits)", output: "Input: 123 → Spy (1+2+3 = 1*2*3 = 6)", cat: "Algorithms", clue: "let sum = digits.reduce((a,b)=>a+b); let prod = digits.reduce((a,b)=>a*b); sum === prod" },
+      { id: 33, text: "Check karo Duck number hai ya nahi (Contains zero, but not at start)", output: "Input: 102 → Duck Number", cat: "Algorithms", clue: "String(n).includes('0') && String(n)[0] !== '0'" },
+      { id: 34, text: "Check karo Buzz number hai ya nahi (Ends with 7 OR divisible by 7)", output: "Input: 14 → Buzz | Input: 27 → Buzz", cat: "Algorithms", clue: "num % 7 === 0 || num % 10 === 7" },
+      { id: 35, text: "Reverse a string word by word with preserved spaces", output: "Input: 'hello world' → 'olleh dlrow'", cat: "Algorithms", clue: "str.split(' ').map(w => w.split('').reverse().join('')).join(' ')" },
+      { id: 36, text: "Anagram check karo (2 words have same letters, e.g. 'silent' & 'listen')", output: "Input: 'silent', 'listen' → Anagram", cat: "Algorithms", clue: "s1.split('').sort().join('') === s2.split('').sort().join('')" },
+      { id: 37, text: "Pangram check karo (Sentence contains all 26 alphabets)", output: "Input: 'The quick brown fox...' → Pangram", cat: "Algorithms", clue: "new Set(sentence.toLowerCase().replace(/[^a-z]/g, '')).size === 26" },
+      { id: 38, text: "Convert Roman numeral to Integer (e.g. 'XIV' → 14)", output: "Input: 'XIV' → 14", cat: "Algorithms", clue: "Map symbols I=1, V=5, X=10, L=50, C=100, D=500, M=1000." },
+      { id: 39, text: "Convert Integer to Roman numeral (e.g. 14 → 'XIV')", output: "Input: 14 → 'XIV'", cat: "Algorithms", clue: "Loop through standard value-symbol arrays in descending order." },
+      { id: 40, text: "Caesar Cipher Encryption (Shift each letter by 3 positions)", output: "Input: 'abc' → 'def'", cat: "Validation", clue: "String.fromCharCode(((c.charCodeAt(0) - 97 + 3) % 26) + 97)" },
+      { id: 41, text: "Shopping cart discount: Buy 2 Get 1 Free logic", output: "Qty: 3 → Pay for 2", cat: "Business Logic", clue: "let payable = qty - Math.floor(qty / 3);" },
+      { id: 42, text: "Calculate simple interest: (P * R * T) / 100", output: "Interest Calculated", cat: "Business Logic", clue: "(p * r * t) / 100" },
+      { id: 43, text: "Calculate compound interest: P * (1 + R/100)^T - P", output: "Compound Interest", cat: "Business Logic", clue: "p * Math.pow((1 + r/100), t) - p" },
+      { id: 44, text: "EMI Calculator: [P * R * (1+R)^N] / [(1+R)^N - 1]", output: "Monthly EMI", cat: "Business Logic", clue: "Standard loan EMI formula implementation." },
+      { id: 45, text: "Fuel efficiency / Mileage calculator: Distance / Fuel Liters", output: "Km per Liter", cat: "Business Logic", clue: "distance / fuelLiters" },
+      { id: 46, text: "Tip Calculator: Bill amount + (Bill * Tip% / 100)", output: "Total with Tip", cat: "Business Logic", clue: "bill + (bill * tipPercent / 100)" },
+      { id: 47, text: "Split Bill amongst N friends with tip", output: "Per person share", cat: "Business Logic", clue: "totalWithTip / peopleCount" },
+      { id: 48, text: "BMI Calculator (Weight kg / (Height m)^2) with category", output: "BMI: 22.5 → Normal", cat: "Math & Geometry", clue: "weight / (height * height)" },
+      { id: 49, text: "Calories burned calculator based on workout minutes", output: "Total Burned", cat: "Math & Geometry", clue: "minutes * metFactor * 3.5 * weight / 200" },
+      { id: 50, text: "Age calculator from Date of Birth to today", output: "Age in Years, Months, Days", cat: "Math & Geometry", clue: "Compare Date objects differences." },
+      { id: 51, text: "IP Address format validation (IPv4 0.0.0.0 to 255.255.255.255)", output: "Valid / Invalid IP", cat: "Validation", clue: "4 octets separated by dots, each 0 to 255." },
+      { id: 52, text: "Strong Password Strength Checker (Length >= 8, Uppercase, Lowercase, Number, Symbol)", output: "Weak / Medium / Strong", cat: "Validation", clue: "Check criteria score (0-5) using regex tests." },
+      { id: 53, text: "Credit card number Luhn algorithm checksum validator", output: "Valid / Invalid Card", cat: "Validation", clue: "Double every second digit from right and sum." },
+      { id: 54, text: "Check valid URL structure (http/https format)", output: "Valid URL", cat: "Validation", clue: "Use URL constructor or regex test." },
+      { id: 55, text: "Phone number country code validator (e.g. +92 300 1234567)", output: "Valid Phone", cat: "Validation", clue: "Regex pattern matching." },
+      { id: 56, text: "Check if time is AM or PM from 24h hour format", output: "Hour: 15 → 3:00 PM", cat: "Conditionals", clue: "hour >= 12 ? (hour === 12 ? 12 : hour - 12) + ' PM' : hour + ' AM'" },
+      { id: 57, text: "Convert 12-hour AM/PM time string to 24-hour format", output: "08:30 PM → 20:30", cat: "Conditionals", clue: "Parse AM/PM and add 12 for PM." },
+      { id: 58, text: "Two time interval difference in hours and minutes", output: "Time Elapsed", cat: "Algorithms", clue: "Convert both to minutes, subtract, format." },
+      { id: 59, text: "Countdown timer remaining days until target event date", output: "Days Remaining", cat: "Algorithms", clue: "Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24))" },
+      { id: 60, text: "Check if current year is century year (ends in 00)", output: "Year % 100 === 0", cat: "Conditionals", clue: "year % 100 === 0" },
+      { id: 61, text: "Find intersection (common elements) of two arrays", output: "[1, 2, 3] & [2, 3, 4] → [2, 3]", cat: "Algorithms", clue: "arr1.filter(x => arr2.includes(x))" },
+      { id: 62, text: "Find union (all unique elements) of two arrays", output: "[1, 2] & [2, 3] → [1, 2, 3]", cat: "Algorithms", clue: "[...new Set([...arr1, ...arr2])]" },
+      { id: 63, text: "Find difference (elements in A but not B)", output: "[1, 2, 3] diff [2, 3] → [1]", cat: "Algorithms", clue: "arr1.filter(x => !arr2.includes(x))" },
+      { id: 64, text: "Flatten a nested array [[1, 2], [3, [4, 5]]]", output: "[1, 2, 3, 4, 5]", cat: "Algorithms", clue: "arr.flat(Infinity)" },
+      { id: 65, text: "Chunk an array into batches of size N", output: "chunk([1,2,3,4,5], 2) → [[1,2], [3,4], [5]]", cat: "Algorithms", clue: "Loop with slice(i, i + size)." },
+      { id: 66, text: "Rotate array to right by K steps", output: "rotate([1,2,3,4,5], 2) → [4,5,1,2,3]", cat: "Algorithms", clue: "arr.slice(-k).concat(arr.slice(0, -k))" },
+      { id: 67, text: "Find missing number in 1 to N sequence", output: "[1, 2, 4, 5] → Missing: 3", cat: "Algorithms", clue: "Expected sum (N*(N+1)/2) - Actual sum." },
+      { id: 68, text: "Two Sum problem: Find pairs in array that add to Target", output: "[2, 7, 11, 15], target 9 → [0, 1]", cat: "Algorithms", clue: "Use Hash Map to lookup target - current." },
+      { id: 69, text: "Binary Search on sorted array (O(log n))", output: "Search 7 in [1,3,5,7,9] → Index 3", cat: "Algorithms", clue: "let mid = Math.floor((low + high) / 2); adjust bounds." },
+      { id: 70, text: "Bubble Sort implementation", output: "Sorted array", cat: "Algorithms", clue: "Nested loops swapping adjacent elements." },
+      { id: 71, text: "Selection Sort implementation", output: "Sorted array", cat: "Algorithms", clue: "Find minimum element and place at start." },
+      { id: 72, text: "Insertion Sort implementation", output: "Sorted array", cat: "Algorithms", clue: "Insert current element in sorted left portion." },
+      { id: 73, text: "Quick Sort implementation (Divide & Conquer)", output: "Sorted array", cat: "Algorithms", clue: "Partition around pivot element recursively." },
+      { id: 74, text: "Merge Sort implementation (Recursive merge)", output: "Sorted array", cat: "Algorithms", clue: "Split in half, sort recursively, merge." },
+      { id: 75, text: "Pascal Triangle row generator for N levels", output: "Pascal Pyramid", cat: "Algorithms", clue: "Each cell = row[j-1] + row[j]." },
+      { id: 76, text: "Matrix 2D addition (3x3 grid sum)", output: "Sum Matrix", cat: "Algorithms", clue: "matrixA[i][j] + matrixB[i][j]" },
+      { id: 77, text: "Matrix transpose (Rows become columns)", output: "Transposed Matrix", cat: "Algorithms", clue: "transposed[j][i] = matrix[i][j]" },
+      { id: 78, text: "Matrix multiplication (A x B)", output: "Multiplied Matrix", cat: "Algorithms", clue: "Sum of row A elements * col B elements." },
+      { id: 79, text: "Tic-Tac-Toe Win Checker (Check 3 rows, 3 cols, 2 diagonals)", output: "X Wins / O Wins / Tie", cat: "Algorithms", clue: "Check all 8 winning line combinations." },
+      { id: 80, text: "Sudoku 3x3 box validity checker (No duplicates 1-9)", output: "Valid / Invalid Box", cat: "Algorithms", clue: "new Set(numbers).size === 9" },
+      { id: 81, text: "Rock Paper Scissors with score history and win rates", output: "Interactive Match", cat: "Algorithms", clue: "Track total wins / total games * 100." },
+      { id: 82, text: "Coin Toss probability simulator (1000 flips percentage)", output: "Heads: 50.2%, Tails: 49.8%", cat: "Algorithms", clue: "Math.random() < 0.5 ? 'Heads' : 'Tails'" },
+      { id: 83, text: "Dice rolling simulator (2 dice sum distribution 2-12)", output: "Sum: 7 (Most common)", cat: "Algorithms", clue: "d1 = Math.floor(Math.random()*6)+1; d2 = Math.floor(Math.random()*6)+1;" },
+      { id: 84, text: "Deck of 52 Cards Shuffler (Fisher-Yates algorithm)", output: "Random Deck", cat: "Algorithms", clue: "Swap current with random index from remaining." },
+      { id: 85, text: "Slot machine random 3-symbol jackpot evaluator", output: "Jackpot: 🍒🍒🍒", cat: "Algorithms", clue: "s1 === s2 && s2 === s3" },
+      { id: 86, text: "Debounce function implementation for search inputs", output: "Delay executions", cat: "Validation", clue: "clearTimeout(timer); timer = setTimeout(fn, delay);" },
+      { id: 87, text: "Throttle function implementation for scroll handlers", output: "Limit trigger rate", cat: "Validation", clue: "Track last execution timestamp." },
+      { id: 88, text: "Deep Clone an object without JSON.stringify limitations", output: "Deep Copied Object", cat: "Algorithms", clue: "structuredClone(obj) or recursive clone." },
+      { id: 89, text: "Deep Equal comparison between two nested objects", output: "true / false", cat: "Algorithms", clue: "Compare keys and recurse on nested objects." },
+      { id: 90, text: "Local Storage getter and setter wrapper with expiry time", output: "Persistent with TTL", cat: "Validation", clue: "Store object with { value, expiresAt: Date.now() + ttl }." },
+      { id: 91, text: "Format numbers into Indian/Pakistani Lakhs & Crores (e.g. 1,00,000)", output: "Formatted Currency", cat: "Business Logic", clue: "Intl.NumberFormat('en-IN').format(num)" },
+      { id: 92, text: "Format numbers into International Millions/Billions (e.g. 1.2M)", output: "Compact Currency", cat: "Business Logic", clue: "Intl.NumberFormat('en', { notation: 'compact' }).format(num)" },
+      { id: 93, text: "Slugify a string for blog URLs ('Hello World 2026' → 'hello-world-2026')", output: "Clean SEO Slug", cat: "Validation", clue: "str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')" },
+      { id: 94, text: "Extract all email addresses from a long paragraph", output: "List of found emails", cat: "Validation", clue: "text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g)" },
+      { id: 95, text: "Extract all URL links from text", output: "List of found links", cat: "Validation", clue: "text.match(/https?:\\/\\/[^\\s]+/g)" },
+      { id: 96, text: "Mask credit card (Keep only last 4 digits visible: ****-****-****-1234)", output: "Masked Card", cat: "Validation", clue: "'*'.repeat(len - 4) + card.slice(-4)" },
+      { id: 97, text: "Generate Random Secure Password of custom length with symbols", output: "Generated Password", cat: "Validation", clue: "Pick random chars from alphabet + digits + special chars." },
+      { id: 98, text: "UUID / GUID v4 generator (e.g. 1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed)", output: "Unique ID", cat: "Validation", clue: "crypto.randomUUID() ya hex randomizer." },
+      { id: 99, text: "Color contrast ratio calculator (Light text on Dark background)", output: "Contrast Ratio: 14.2:1 (Pass)", cat: "Math & Geometry", clue: "Calculate relative luminance of foreground vs background." },
+      { id: 100, text: "Master Algorithmic Hub Completed 🎉", output: "Full 100 Challenges Mastery Achieved!", cat: "Algorithms", clue: "Congratulations! You have mastered core algorithms in JavaScript!" }
+    ];
+
+    let currentCategory = 'all';
+
+    function renderQuestions() {
+      const container = document.getElementById("questionsContainer");
+      const searchVal = document.getElementById("searchInput").value.toLowerCase().trim();
+      container.innerHTML = "";
+
+      const filtered = QUESTIONS_DATA.filter(q => {
+        const matchesCat = (currentCategory === 'all' || q.cat === currentCategory);
+        const matchesSearch = !searchVal || 
+                              (`q${q.id}`.includes(searchVal)) || 
+                              (`${q.id}` === searchVal) || 
+                              (q.text.toLowerCase().includes(searchVal)) || 
+                              (q.cat.toLowerCase().includes(searchVal)) || 
+                              (q.clue.toLowerCase().includes(searchVal));
+        return matchesCat && matchesSearch;
       });
-  }
-</script>
+
+      document.getElementById("statsCounter").textContent = `Showing ${filtered.length} of 100 questions`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #94a3b8; background: rgba(15,23,42,0.6); border-radius: 16px;">
+            <p style="font-size: 1.1rem; margin-bottom: 8px;">🔍 No questions found matching your search.</p>
+            <p style="font-size: 0.85rem;">Try searching for numbers like "Q12" or keywords like "leap", "discount", "triangle", "prime".</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(q => {
+        const card = document.createElement("div");
+        card.className = "q-card";
+        card.innerHTML = `
+          <div class="q-header">
+            <span class="q-number">Q${q.id}</span>
+            <span class="q-category">${q.cat}</span>
+          </div>
+          <p class="q-text">${q.text}</p>
+          <div class="q-output-box"><strong>Expected:</strong> ${q.output}</div>
+          <details class="q-hint-details">
+            <summary class="q-hint-summary">
+              <span>💡 Need Hint? Reveal Logic Clue</span>
+              <span>▼</span>
+            </summary>
+            <div class="q-hint-body">
+              <strong>Logic Clue:</strong>
+              <div class="q-hint-code">${q.clue}</div>
+            </div>
+          </details>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function setCategoryFilter(cat) {
+      currentCategory = cat;
+      document.querySelectorAll(".filter-pill").forEach(p => {
+        p.classList.toggle("active", p.textContent.includes(cat) || (cat === 'all' && p.textContent.includes('All')));
+      });
+      renderQuestions();
+    }
+
+    function filterQuestions() {
+      renderQuestions();
+    }
+
+    function toggleAllQuestionHints(expand) {
+      document.querySelectorAll(".q-hint-details").forEach(d => {
+        d.open = expand;
+      });
+    }
+
+    function downloadCurrentAssignmentFile() {
+      const url = window.location.href;
+      const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.blob();
+        })
+        .then(blob => {
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch(err => {
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+    }
+
+    window.addEventListener("DOMContentLoaded", renderQuestions);
+  </script>
+
+</body>
+</html>

@@ -9,7 +9,7 @@
 
     :root {
       --bg-color: #020617;
-      --card-bg: rgba(15, 23, 42, 0.65);
+      --card-bg: rgba(15, 23, 42, 0.7);
       --border-color: rgba(255, 255, 255, 0.08);
       --primary: #38bdf8;
       --secondary: #a855f7;
@@ -34,13 +34,22 @@
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
     }
 
     header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 35px;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
     }
 
     .back-btn {
@@ -56,7 +65,6 @@
       font-weight: 600;
       font-size: 0.9rem;
       transition: all 0.3s ease;
-      margin-bottom: 20px;
     }
 
     .back-btn:hover {
@@ -65,37 +73,63 @@
       transform: translateX(-4px);
     }
 
+    .hints-global-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .global-hint-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .global-hint-btn:hover {
+      background: rgba(245, 158, 11, 0.22);
+      border-color: #fbbf24;
+      transform: translateY(-1px);
+    }
+
     h1 {
       font-size: 2.8rem;
       font-weight: 800;
       background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       letter-spacing: -0.5px;
     }
 
     .subtitle {
       color: var(--text-muted);
-      font-size: 1.15rem;
-      max-width: 800px;
+      font-size: 1.1rem;
+      max-width: 820px;
       margin: 0 auto 30px;
       line-height: 1.6;
     }
 
     /* Core JS concepts banner */
     .concepts-banner {
-      background: rgba(30, 41, 59, 0.4);
+      background: rgba(30, 41, 59, 0.45);
       backdrop-filter: blur(10px);
       border: 1px solid var(--border-color);
       border-radius: 20px;
-      padding: 25px;
-      margin-bottom: 40px;
+      padding: 22px 25px;
+      margin-bottom: 35px;
       text-align: left;
     }
 
     .concepts-banner h3 {
-      font-size: 1rem;
+      font-size: 0.95rem;
       text-transform: uppercase;
       letter-spacing: 2px;
       color: var(--primary);
@@ -149,8 +183,8 @@
     /* Cards Grid */
     .assignments-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 25px;
     }
 
     @media (max-width: 768px) {
@@ -164,11 +198,11 @@
       backdrop-filter: blur(16px);
       border: 1px solid var(--border-color);
       border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 14px;
       position: relative;
       overflow: hidden;
       transition: transform 0.3s, border-color 0.3s;
@@ -205,24 +239,25 @@
 
     .card-badge {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 5px;
+      padding: 3px 10px;
+      border-radius: 50px;
       color: white;
+      letter-spacing: 0.5px;
     }
 
     .section-title {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: var(--primary);
-      margin-top: 10px;
+      margin-top: 6px;
     }
 
     .objective-text {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: #cbd5e1;
       line-height: 1.5;
     }
@@ -242,11 +277,105 @@
       background: #020617;
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 12px;
+      padding: 10px 12px;
       font-family: 'Fira Code', monospace;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--success);
       white-space: pre-wrap;
+    }
+
+    /* Hint Box Styling */
+    .hint-accordion {
+      margin-top: 8px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .hint-accordion[open] {
+      border-color: rgba(245, 158, 11, 0.8);
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.12);
+    }
+
+    .hint-summary {
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fbbf24;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      background: rgba(245, 158, 11, 0.08);
+      list-style: none;
+      transition: background 0.2s;
+    }
+
+    .hint-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .hint-summary:hover {
+      background: rgba(245, 158, 11, 0.16);
+    }
+
+    .hint-summary-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hint-toggle-icon {
+      font-size: 0.75rem;
+      transition: transform 0.3s;
+      color: #fbbf24;
+    }
+
+    .hint-accordion[open] .hint-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .hint-body {
+      padding: 14px;
+      border-top: 1px solid rgba(245, 158, 11, 0.2);
+      font-size: 0.84rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+    }
+
+    .hint-step-list {
+      margin-left: 18px;
+      margin-bottom: 10px;
+    }
+
+    .hint-step-list li {
+      margin-bottom: 5px;
+    }
+
+    .hint-code {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: #38bdf8;
+      margin: 8px 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .hint-tip {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 3px solid #38bdf8;
+      padding: 7px 10px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      margin-top: 8px;
     }
   </style>
 </head>
@@ -254,12 +383,23 @@
 
   <div class="container">
     <header>
-      <a href="../index.html" class="back-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        Back to Dashboard
-      </a>
+      <div class="header-nav">
+        <a href="../index.html" class="back-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Back to Dashboard
+        </a>
+        <div class="hints-global-controls">
+          <button class="global-hint-btn" onclick="toggleAllHints(true)">
+            💡 Expand All Hints
+          </button>
+          <button class="global-hint-btn" onclick="toggleAllHints(false)" style="background: rgba(255,255,255,0.05); color: #cbd5e1; border-color: rgba(255,255,255,0.1);">
+            🔒 Collapse All
+          </button>
+        </div>
+      </div>
+
       <h1>JavaScript Core Roadmap Assignments</h1>
-      <p class="subtitle">Clone this repository to your laptop, open these files in your local text editor (e.g. VS Code), and practice implementing these 12 core tasks!</p>
+      <p class="subtitle">Complete syllabus assignments from beginner to advanced. If you get stuck on any task, open the <strong>💡 Need a Hint?</strong> box for thinking clues, formulas, and starter guidance!</p>
 
       <!-- Concept mapping banner -->
       <div class="concepts-banner">
@@ -324,6 +464,33 @@
 
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">Alert & Console: "Hello Ali, you were born in 2002."</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Pehle user se <code>prompt()</code> ke zariye Name lijiye.</li>
+              <li>Phir Age input lene ke liye <code>Number(prompt(...))</code> use karein taaki age number ban jaye.</li>
+              <li>Birth year nikalne ke liye <code>2026 - age</code> calculate kijiye.</li>
+              <li>Result ko <code>alert()</code> aur <code>console.log()</code> mein <code>+</code> se string combine karke show karein.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let name = prompt("Enter your name:");
+let age = Number(prompt("Enter your age:"));
+
+// Formula clue:
+let birthYear = 2026 - /* subtract age variable here */;
+
+// Display clue:
+alert("Hello " + name + ", you were born in " + birthYear + ".");</div>
+            <div class="hint-tip">⚠️ <strong>Note:</strong> <code>prompt()</code> hamesha string return karta hai. Math karne ke liye <code>Number()</code> function se wrap karna mat bhooliye!</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 2 -->
@@ -348,6 +515,30 @@
 Sum: 15
 Difference: 5
 Product: 50</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Dono numbers ko <code>Number(prompt(...))</code> se read karein.</li>
+              <li>Aap arithmetic operators <code>+</code>, <code>-</code>, aur <code>*</code> use karein.</li>
+              <li>Screen par nayi line laane ke liye <code>document.write()</code> ke andar <code>&lt;br&gt;</code> lagayein.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let num1 = Number(prompt("First number:"));
+let num2 = Number(prompt("Second number:"));
+
+// Clue: Put brackets around (num1 + num2) when combining with strings
+document.write("Sum: " + (num1 + num2) + "&lt;br&gt;");
+// Now write difference (-) and product (*) similarly...</div>
+            <div class="hint-tip">⚠️ <strong>Note:</strong> String ke saath <code>+</code> lagane par brackets <code>(num1 + num2)</code> lagana zaroori hai, warna text jud jayega.</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 3 -->
@@ -370,6 +561,31 @@ Product: 50</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If age is 15:
 "Alert: You must wait 3 more years to vote."</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>User ki age ko number mein store kijiye.</li>
+              <li><code>if (age >= 18)</code> condition se check karein agar eligible hai.</li>
+              <li><code>else</code> block mein bache hue saal nikalne ke liye <code>18 - age</code> karein.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let age = Number(prompt("Enter age:"));
+
+if (age >= 18) {
+    // Alert that user can vote
+} else {
+    let waitYears = 18 - age;
+    // Alert how many years are left to wait
+}</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 4 -->
@@ -391,6 +607,31 @@ Product: 50</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If Celsius is 30:
 Console: "30°C is equal to 86°F."</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Conversion Formula: <code>Fahrenheit = (Celsius * 9/5) + 32</code>.</li>
+              <li><code>const</code> variables banayein <code>9/5</code> aur <code>32</code> ke liye.</li>
+              <li>Formula apply karke <code>console.log()</code> mein result dikhayein.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">const factor = 9 / 5;
+const offset = 32;
+
+let celsius = Number(prompt("Enter Celsius:"));
+// Apply: (celsius * factor) + offset
+let fahrenheit = /* your formula calculation */;
+
+console.log(celsius + "°C is equal to " + fahrenheit + "°F.");</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 5 -->
@@ -412,6 +653,34 @@ Console: "30°C is equal to 86°F."</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If score is 85:
 "Alert: Grade B"</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Score ko input lekar <code>Number()</code> mein rakhein.</li>
+              <li>Top se start karein: pehle <code>if (score >= 90)</code> check karein.</li>
+              <li>Phir <code>else if (score >= 80)</code>, <code>else if (score >= 70)</code> aur aakhir mein <code>else</code>.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let score = Number(prompt("Enter score:"));
+
+if (score >= 90) {
+    alert("Grade A");
+} else if (score >= 80) {
+    alert("Grade B");
+} else if (score >= 70) {
+    // Grade C...
+} else {
+    // Grade F...
+}</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 6 -->
@@ -434,6 +703,30 @@ Console: "30°C is equal to 86°F."</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If correct: "Alert: Access Granted!"
 Otherwise: "Alert: Access Denied!"</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Username aur Password dono ke liye alag alag <code>prompt()</code> lagayein.</li>
+              <li>Logical AND operator <code>&&</code> use karein taaki dono ek saath verify hon.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let user = prompt("Username:");
+let pass = prompt("Password:");
+
+if (user === "admin" && pass === "pass123") {
+    // Alert Access Granted
+} else {
+    // Alert Access Denied
+}</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 7 -->
@@ -456,6 +749,29 @@ Otherwise: "Alert: Access Denied!"</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If day is "Sunday":
 Console: "It's the weekend! Time to relax!"</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Day name prompt se lijiye.</li>
+              <li>Logical OR operator <code>||</code> use karein: ya toh Saturday ho YA Sunday ho.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let day = prompt("Enter day name:");
+
+if (day === "Saturday" || day === "Sunday") {
+    console.log("It's the weekend! Time to relax!");
+} else {
+    console.log("It's a weekday.");
+}</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 8 -->
@@ -478,6 +794,32 @@ Console: "It's the weekend! Time to relax!"</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If bill is 120:
 "Alert: Discount applied. Final total is: $105"</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li><code>const limit = 100;</code> define karein.</li>
+              <li>Logical NOT <code>!(bill < limit)</code> check karta hai ki bill 100 se kam NAHI hai.</li>
+              <li>Discount subtract karne ke liye <code>bill -= 15;</code> use karein.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">const limit = 100;
+let bill = Number(prompt("Enter bill:"));
+
+if (!(bill < limit)) {
+    bill -= 15; // subtract discount
+    // alert final bill
+} else {
+    // alert regular bill
+}</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 9 -->
@@ -501,6 +843,35 @@ Console: "It's the weekend! Time to relax!"</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If age is 20 and student is "yes":
 "Alert: Your ticket price is $10."</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Pehle outer check: <code>age < 12</code> ($5) aur <code>age >= 65</code> ($8).</li>
+              <li>Bech ke adults (12-64) ke liye <code>else</code> block ke andar nested <code>if (isStudent === "yes")</code> lagayein.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let price;
+if (age < 12) {
+    price = 5;
+} else if (age >= 65) {
+    price = 8;
+} else {
+    // Nested if condition for students
+    if (isStudent === "yes") {
+        price = 10;
+    } else {
+        price = 15;
+    }
+}</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 10 -->
@@ -523,6 +894,29 @@ Console: "It's the weekend! Time to relax!"</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If number is 7:
 Console: "7 is an odd number."</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Modulus operator <code>% 2</code> remainder nikalta hai.</li>
+              <li>Agar remainder <code>0</code> hai toh number Even hai, warna Odd hai.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let num = Number(prompt("Enter number:"));
+
+if (num % 2 === 0) {
+    // Console log: Even number
+} else {
+    // Console log: Odd number
+}</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 11 -->
@@ -545,6 +939,32 @@ Console: "7 is an odd number."</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If secret is 7, and guess is 4:
 "Alert: Too low! Try again."</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li><code>const secret = 7;</code> fix number store karein.</li>
+              <li><code>guess === secret</code> (Correct), <code>guess > secret</code> (Too high), <code>guess < secret</code> (Too low) compare karein.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">const secret = 7;
+let guess = Number(prompt("Guess (1-10):"));
+
+if (guess === secret) {
+    // alert correct
+} else if (guess > secret) {
+    // alert too high
+} else {
+    // alert too low
+}</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 12 -->
@@ -573,6 +993,33 @@ Console: "7 is an odd number."</div>
 100 units * $5 = $500
 50 units * $8 = $400
 Total: "Alert: Your total bill is $900."</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Slab 1 (<=100): <code>units * 5</code>.</li>
+              <li>Slab 2 (101-200): Pehle 100 ka <code>(100 * 5)</code> + bache hue ka <code>(units - 100) * 8</code>.</li>
+              <li>Slab 3 (>200): Pehle 100 @ 5 + doosre 100 @ 8 + bache hue <code>(units - 200) * 12</code>.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let units = Number(prompt("Enter units:"));
+let total = 0;
+
+if (units <= 100) {
+    total = units * 5;
+} else if (units <= 200) {
+    total = (100 * 5) + ((units - 100) * 8);
+} else {
+    total = (100 * 5) + (100 * 8) + (/* remaining units */ * 12);
+}</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 13 -->
@@ -594,6 +1041,26 @@ Total: "Alert: Your total bill is $900."</div>
 
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">Input: ATM -> Amount: $500 -> Alert: "Dispensing Cash: $500"</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Pehle PIN verify karein (<code>pin === 5588</code>).</li>
+              <li>ATM withdrawal ke liye 3 cheezein <code>&&</code> se check karein: <code>(amt <= balance && amt <= 2000 && amt % 10 === 0)</code>.</li>
+              <li>Shopping discount ke liye check karein: <code>if (age >= 60 || coupon === "VIP")</code> (15% discount).</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">// 1. Check PIN === 5588
+// 2. If action is "ATM", verify within limit & divisible by 10 (% 10 === 0)
+// 3. If action is "SHOP", check senior citizen or VIP coupon using ||</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 14 -->
@@ -617,6 +1084,28 @@ Total: "Alert: Your total bill is $900."</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If Subtotal: $250, VIP:
 "Alert: Total bill is $210 (Discount applied + Shipping charged)"</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Subtotal calculate karein: <code>price * qty</code>.</li>
+              <li>Gold par 20% (0.20), VIP par 10% (0.10) discount set karein. Agar subtotal >= 200 ho toh +0.05 extra jod dein.</li>
+              <li>Agar coupon "SAVEMORE" ho toh subtotal se 15 ghata dein.</li>
+              <li>Shipping rule: agar <code>subtotal > 300 || member === "GOLD"</code> toh 0, warna <code>distance * 2</code>.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let subtotal = price * qty;
+// Set discount percentage according to membership
+// Check coupon code and deduct $15
+// Free shipping if subtotal > 300 or member is Gold</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 15 -->
@@ -640,6 +1129,23 @@ Total: "Alert: Your total bill is $900."</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">Units: 150, Residential:
 "Alert: Bill calculated: $950"</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Pehle rates define karein: Residential (5, 8, 12) aur Commercial (8, 12, 16).</li>
+              <li>3 stepped slabs (0-100, 101-300, >300) par energy cost nikalen.</li>
+              <li>Agar commercial customer ho aur units > 500 hon, toh 20% surcharge lagayein (<code>cost *= 1.20</code>).</li>
+              <li>Aakhir mein $50 connection fee add karein (<code>cost + 50</code>).</li>
+            </ol>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 16 -->
@@ -663,6 +1169,26 @@ Total: "Alert: Your total bill is $900."</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">Year: 2000:
 "Alert: 2000 is indeed a Leap Year!"</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Leap year condition: <code>(year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)</code>.</li>
+              <li>Century condition: <code>year % 100 === 0</code>.</li>
+              <li>Current year 2026 se compare karke Past / Present / Future classify karein.</li>
+            </ol>
+            <strong>🔑 Starter Blueprint:</strong>
+            <div class="hint-code">let isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+let isCentury = (year % 100 === 0);
+// Check era: year < 2026 vs year === 2026 vs year > 2026</div>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 17 -->
@@ -686,6 +1212,23 @@ Total: "Alert: Your total bill is $900."</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">Input: rock -> CPU: scissors:
 "Alert: You won! rock beats scissors."</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Array banayein: <code>const choices = ["rock", "paper", "scissors"];</code>.</li>
+              <li>Computer random choice: <code>choices[Math.floor(Math.random() * 3)]</code>.</li>
+              <li>Tie condition: <code>player === cpu</code>.</li>
+              <li>Win condition: <code>(rock beats scissors) || (paper beats rock) || (scissors beats paper)</code>.</li>
+            </ol>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 18 -->
@@ -708,6 +1251,26 @@ Total: "Alert: Your total bill is $900."</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">If 45°F:
 "Celsius: 7.2°C. Advice: Cool weather. Wear warm clothing."</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Pehle agar input Fahrenheit mein hai toh usko Celsius mein convert karein: <code>(F - 32) * 5 / 9</code>.</li>
+              <li>Celsius temperature par conditions check karein:
+                <br>- <code>celsius >= 38</code>: Extreme Heat alert
+                <br>- <code>celsius >= 22</code>: Comfortable
+                <br>- <code>celsius >= 5</code>: Cool
+                <br>- <code>else</code>: Freezing alert
+              </li>
+            </ol>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 19 -->
@@ -730,6 +1293,22 @@ Total: "Alert: Your total bill is $900."</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">Math: 95, Science: 88, English: 91:
 "Alert: Distinction! Awarded Grade A."</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Average calculate karein: <code>(math + science + english) / 3</code>.</li>
+              <li>Pehle individual subject fail condition check karein: <code>if (m < 40 || s < 40 || e < 40)</code>.</li>
+              <li>Agar pass hai toh average ke hisab se Grade A (>=90), Grade B (>=80), Grade C (>=70) assign karein.</li>
+            </ol>
+          </div>
+        </details>
       </div>
 
       <!-- ASSIGNMENT 20 -->
@@ -753,6 +1332,59 @@ Total: "Alert: Your total bill is $900."</div>
         <div class="section-title">💻 Example Output</div>
         <div class="output-box">Gross: $5000, US region:
 "Alert: Net Pay computed: $3880"</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Region check karein (US ya EU) aur income slabs ke mutabiq tax rate determine karein.</li>
+              <li>Agar gross > 10000 hai toh tax rate mein <code>+0.03</code> (3% surcharge) add karein.</li>
+              <li>Formula: <code>Net Salary = Gross - (Gross * TaxRate) - 120 (Insurance)</code>.</li>
+            </ol>
+          </div>
+        </details>
+      </div>
+
+      <!-- ASSIGNMENT 21 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Logical Gateway Challenge</span>
+          <span class="card-badge">Task 21</span>
+        </div>
+        <div class="section-title">🎯 Objective</div>
+        <p class="objective-text">Build a comprehensive multi-feature logical simulator handling PIN credentials, tiered balance rules, coupons, and interactive feedback displays.</p>
+        
+        <div class="section-title">📋 Requirements</div>
+        <ul class="req-list">
+          <li>Verify 4-digit PIN with lock-out on failure.</li>
+          <li>Interactive ATM withdrawal mode with multiple-of-10 and daily limit checks.</li>
+          <li>Interactive Shopping mode with age-based discounts and VIP coupon redemption.</li>
+          <li>Real-time dynamic DOM screen status updates with color coded states.</li>
+        </ul>
+
+        <div class="section-title">💻 Example Output</div>
+        <div class="output-box">Screen: "PURCHASE SUCCESS - Subtotal: $500, Discount: -$50, Net: $450"</div>
+
+        <!-- HINT BOX -->
+        <details class="hint-accordion">
+          <summary class="hint-summary">
+            <span class="hint-summary-content">💡 Need a Hint? Click to reveal logic</span>
+            <span class="hint-toggle-icon">▼</span>
+          </summary>
+          <div class="hint-body">
+            <strong>🧠 How to approach (Logic):</strong>
+            <ol class="hint-step-list">
+              <li>Sabhi concepts ko combine karein: variables, operators (<code>&&</code>, <code>||</code>, <code>%</code>), functions, aur <code>document.getElementById().innerHTML</code>.</li>
+              <li>Step 1: PIN check karein, galat ho toh screen red karke return karein.</li>
+              <li>Step 2: ATM aur SHOP ke alag alag branches handle karke final status screen par render karein.</li>
+            </ol>
+          </div>
+        </details>
       </div>
 
     </div>
@@ -765,7 +1397,14 @@ Total: "Alert: Your total bill is $900."</div>
       Download File
     </button>
   </div>
+
   <script>
+    function toggleAllHints(expand) {
+      document.querySelectorAll('.hint-accordion').forEach(details => {
+        details.open = expand;
+      });
+    }
+
     function downloadCurrentAssignmentFile() {
       const url = window.location.href;
       const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';

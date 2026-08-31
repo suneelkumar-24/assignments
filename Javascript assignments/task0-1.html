@@ -1,47 +1,688 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script src="https://gist.github.com/suneelkumar-24/e94d330941c3be643fbb2c14a4de1def.js"></script>
-  
-<!-- Floating Download Button -->
-<div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
-  <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-    Download File
-  </button>
-</div>
-<script>
-  function downloadCurrentAssignmentFile() {
-    const url = window.location.href;
-    const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
-    fetch(url)
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.blob();
-      })
-      .then(blob => {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      })
-      .catch(err => {
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task 0-1: 100 JavaScript Practice Programs with Hints</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
+
+    :root {
+      --bg-color: #020617;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --primary: #38bdf8;
+      --secondary: #a855f7;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1e1b4b 0%, #0f172a 50%, #020617 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 30px 20px 80px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Top Navigation */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--primary);
+      transform: translateX(-3px);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: rgba(245, 158, 11, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* Header text */
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 800px;
+      margin: 0 auto 25px;
+      line-height: 1.5;
+    }
+
+    /* Patterns Master Guide Box */
+    .patterns-box {
+      background: rgba(30, 41, 59, 0.45);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px 24px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .patterns-box h3 {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .patterns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+
+    .pattern-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+    }
+
+    .pattern-title {
+      font-weight: 700;
+      color: #fbbf24;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .pattern-code {
+      font-family: 'Fira Code', monospace;
+      color: #38bdf8;
+      font-size: 0.76rem;
+      background: #020617;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: block;
+      margin-top: 4px;
+    }
+
+    /* Controls Bar: Search & Category Filters */
+    .controls-bar {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      background: #020617;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill:hover,
+    .filter-pill.active {
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--primary);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .stats-counter {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-left: auto;
+      align-self: center;
+    }
+
+    /* Questions Grid */
+    .questions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .questions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .q-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.25s, border-color 0.25s;
+      position: relative;
+    }
+
+    .q-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .q-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .q-number {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .q-category {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(168, 85, 247, 0.15);
+      color: var(--secondary);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+
+    .q-text {
+      font-size: 0.94rem;
+      color: #f1f5f9;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .q-output-box {
+      background: #020617;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: var(--success);
+    }
+
+    /* Hint Accordion */
+    .q-hint-details {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .q-hint-details[open] {
+      border-color: rgba(245, 158, 11, 0.75);
+    }
+
+    .q-hint-summary {
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.08);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      list-style: none;
+    }
+
+    .q-hint-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .q-hint-summary:hover {
+      background: rgba(245, 158, 11, 0.16);
+    }
+
+    .q-hint-body {
+      padding: 12px;
+      border-top: 1px solid rgba(245, 158, 11, 0.2);
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .q-hint-code {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.76rem;
+      color: #38bdf8;
+      margin-top: 6px;
+      white-space: pre-wrap;
+    }
+
+    /* Original Gist Collapsible */
+    .original-gist-section {
+      margin-top: 40px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .gist-summary {
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="top-nav">
+      <a href="../index.html" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Dashboard
+      </a>
+      <div class="header-actions">
+        <button class="action-btn" onclick="toggleAllQuestionHints(true)">💡 Expand All Hints</button>
+        <button class="action-btn" onclick="toggleAllQuestionHints(false)" style="background: rgba(255,255,255,0.06); color: #cbd5e1; border-color: rgba(255,255,255,0.15);">🔒 Collapse All</button>
+      </div>
+    </div>
+
+    <header>
+      <h1>Task 0-1: 100 JavaScript Practice Programs</h1>
+      <p class="subtitle">Complete 100-question practice list with individual logic clues, formulas, and starter blueprints for every single question (Q1 to Q100)!</p>
+
+      <!-- Patterns Master Guide -->
+      <div class="patterns-box">
+        <h3>🧠 6 Core Patterns Used Across All 100 Questions</h3>
+        <div class="patterns-grid">
+          <div class="pattern-card">
+            <span class="pattern-title">1. Button Click & Alert / Output</span>
+            Click event trigger karke popup ya div update karna.
+            <span class="pattern-code">onclick="alert('Hello')"</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">2. Input Value Extraction</span>
+            Input box ka text ya number get karna.
+            <span class="pattern-code">let val = document.getElementById("in").value;</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">3. Number Math / Arithmetic</span>
+            Input ko Number() mein convert karke calculate karna.
+            <span class="pattern-code">let res = Number(val) * Number(val); // Square</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">4. Modulus & Divisibility</span>
+            Remainder check karna (Even/Odd, Multiple).
+            <span class="pattern-code">if (num % 2 === 0) { /* Even */ }</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">5. DOM Styling & Colors</span>
+            Background, color, ya font size dynamically badalna.
+            <span class="pattern-code">element.style.color = "red";</span>
+          </div>
+          <div class="pattern-card">
+            <span class="pattern-title">6. String Helpers</span>
+            Uppercase, length, ya text concatenation.
+            <span class="pattern-code">str.toUpperCase() | str.length</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <div class="search-row">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by Question number (e.g. Q15) or keyword (e.g. square, even, color, alert)..." oninput="filterQuestions()" />
+        <span id="statsCounter" class="stats-counter">Showing 100 of 100 questions</span>
+      </div>
+      <div class="filter-pills" id="categoryFilters">
+        <button class="filter-pill active" onclick="setCategoryFilter('all')">All (100)</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Button & Alert')">Button & Alert</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Input & Math')">Input & Math</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Modulus & Divisibility')">Modulus & Even/Odd</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Comparisons & If-Else')">Comparisons & If-Else</button>
+        <button class="filter-pill" onclick="setCategoryFilter('DOM & Styling')">DOM & Styling</button>
+        <button class="filter-pill" onclick="setCategoryFilter('String Methods')">String Methods</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Math Utilities')">Math Utilities</button>
+      </div>
+    </div>
+
+    <!-- Questions Grid Container -->
+    <div class="questions-grid" id="questionsContainer"></div>
+
+    <!-- Original Gist Fallback -->
+    <details class="original-gist-section">
+      <summary class="gist-summary">🔗 View Original GitHub Gist Raw Embed</summary>
+      <div style="margin-top: 15px;">
+        <script src="https://gist.github.com/suneelkumar-24/e94d330941c3be643fbb2c14a4de1def.js"></script>
+      </div>
+    </details>
+  </div>
+
+  <!-- Floating Download Button -->
+  <div id="assignment-download-btn-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, sans-serif;">
+    <button onclick="downloadCurrentAssignmentFile()" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #a855f7); color: white; border: none; padding: 12px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; font-size: 14px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Download File
+    </button>
+  </div>
+
+  <script>
+    // 100 Practice Questions Database with Categories and Clues
+    const QUESTIONS_DATA = [
+      { id: 1, text: "Ek button banao. Jab user us button par click kare to alert box me 'Hello' likha hua show ho", output: "Button click → Popup me Hello show hoga", cat: "Button & Alert", clue: "Button par onclick event lagayein:\n<button onclick=\"alert('Hello')\">Click Me</button>" },
+      { id: 2, text: "Ek button banao. Jab user click kare to page par 'Hello World' likh kar dikhao", output: "Button click → Hello World screen par show hoga", cat: "Button & Alert", clue: "Ek <p id='result'></p> rakhein aur function mein:\ndocument.getElementById('result').innerHTML = 'Hello World';" },
+      { id: 3, text: "Ek input box aur ek button banao. User jo input box me likhe usko button click par screen par print karo", output: "Input: Ali → Screen par Ali show hoga", cat: "Input & Math", clue: "Input se value read karein:\nlet val = document.getElementById('myInput').value;\ndocument.getElementById('result').innerHTML = val;" },
+      { id: 4, text: "Ek input box banao. User jo number likhe usme 5 add karo aur result show karo", output: "Input: 5 → Output: 10", cat: "Input & Math", clue: "Value ko Number() mein convert karke 5 add karein:\nlet num = Number(document.getElementById('myInput').value);\nlet res = num + 5;" },
+      { id: 5, text: "Do input boxes banao. Dono me numbers lo aur unka sum nikaal kar show karo", output: "Input: 3 aur 4 → Output: 7", cat: "Input & Math", clue: "Dono input values ko Number() karke sum karein:\nlet sum = Number(in1.value) + Number(in2.value);" },
+      { id: 6, text: "Ek input box me number lo aur check karo ke number even hai ya odd", output: "Input: 4 → Even | Input: 5 → Odd", cat: "Modulus & Divisibility", clue: "Modulo operator % 2 use karein:\nif (num % 2 === 0) { /* Even */ } else { /* Odd */ }" },
+      { id: 7, text: "Ek input me number lo aur check karo ke wo 10 se bara hai ya nahi", output: "Input: 12 → Greater than 10 | Input: 8 → Not greater", cat: "Comparisons & If-Else", clue: "Comparison operator > use karein:\nif (num > 10) { /* Greater */ } else { /* Not greater */ }" },
+      { id: 8, text: "Ek input me naam lo aur 'Hello [name]' likh kar show karo", output: "Input: Ali → Output: Hello Ali", cat: "String Methods", clue: "String concatenation (+) use karein:\nlet msg = 'Hello ' + nameInput.value;" },
+      { id: 9, text: "Ek button banao. Click karne par page ka background color change karo", output: "Button click → Background color change ho jata hai", cat: "DOM & Styling", clue: "Body background color update karein:\ndocument.body.style.backgroundColor = 'lightblue';" },
+      { id: 10, text: "Ek input me number lo aur uska square (number × number) nikaal kar show karo", output: "Input: 5 → Output: 25", cat: "Input & Math", clue: "Number ko usi se multiply karein:\nlet square = num * num;" },
+      { id: 11, text: "Ek input me number lo aur us number ko double karo", output: "Input: 6 → Output: 12", cat: "Input & Math", clue: "Number ko 2 se multiply karein:\nlet double = num * 2;" },
+      { id: 12, text: "Ek input me number lo aur uska half karo", output: "Input: 8 → Output: 4", cat: "Input & Math", clue: "Number ko 2 se divide karein:\nlet half = num / 2;" },
+      { id: 13, text: "Ek input me number lo aur check karo ke wo positive hai ya negative", output: "Input: -3 → Negative | Input: 5 → Positive", cat: "Comparisons & If-Else", clue: "Zero se compare karein:\nif (num >= 0) { /* Positive */ } else { /* Negative */ }" },
+      { id: 14, text: "Ek button banao. Click karne par heading ka color red kar do", output: "Button click → Heading red ho jaye", cat: "DOM & Styling", clue: "Heading element ka style color badlein:\ndocument.getElementById('myHeading').style.color = 'red';" },
+      { id: 15, text: "Ek input me number lo aur check karo ke wo 100 se bara hai ya nahi", output: "Input: 120 → Greater than 100 | Input: 80 → Not greater", cat: "Comparisons & If-Else", clue: "if (num > 100) check lagayein." },
+      { id: 16, text: "Do input boxes me numbers lo aur unka difference (minus) nikaalo", output: "Input: 10 aur 4 → Output: 6", cat: "Input & Math", clue: "let diff = Number(in1.value) - Number(in2.value);" },
+      { id: 17, text: "Ek input me number lo aur uska cube (number × number × number) nikaalo", output: "Input: 3 → Output: 27", cat: "Input & Math", clue: "let cube = num * num * num; (ya num ** 3)" },
+      { id: 18, text: "Ek input me number lo aur usme 1 add karo", output: "Input: 7 → Output: 8", cat: "Input & Math", clue: "let res = Number(num) + 1;" },
+      { id: 19, text: "Ek input me number lo aur usme se 1 minus karo", output: "Input: 7 → Output: 6", cat: "Input & Math", clue: "let res = Number(num) - 1;" },
+      { id: 20, text: "Ek button banao. Click par ek div ke andar 'Welcome' likho", output: "Button click → Welcome show hoga", cat: "Button & Alert", clue: "document.getElementById('myDiv').innerHTML = 'Welcome';" },
+      { id: 21, text: "Ek input me text lo aur usko uppercase me convert karke show karo", output: "Input: ali → Output: ALI", cat: "String Methods", clue: "let upper = textVal.toUpperCase();" },
+      { id: 22, text: "Ek input me text lo aur usko lowercase me convert karke show karo", output: "Input: ALI → Output: ali", cat: "String Methods", clue: "let lower = textVal.toLowerCase();" },
+      { id: 23, text: "Ek input me number lo aur check karo ke wo zero hai ya nahi", output: "Input: 0 → Number is zero | Input: 5 → Not zero", cat: "Comparisons & If-Else", clue: "if (num === 0) { /* Zero */ } else { /* Not zero */ }" },
+      { id: 24, text: "Ek input me number lo aur check karo ke wo 5 se divisible hai ya nahi", output: "Input: 10 → Divisible | Input: 7 → Not divisible", cat: "Modulus & Divisibility", clue: "if (num % 5 === 0) { /* Divisible */ }" },
+      { id: 25, text: "Ek input me number lo aur usko 10 se multiply karo", output: "Input: 3 → Output: 30", cat: "Input & Math", clue: "let res = Number(num) * 10;" },
+      { id: 26, text: "Ek input me number lo aur usme 100 add karo", output: "Input: 20 → Output: 120", cat: "Input & Math", clue: "let res = Number(num) + 100;" },
+      { id: 27, text: "Ek button banao. Click karne par paragraph hide ho jaye", output: "Button click → Paragraph hide", cat: "DOM & Styling", clue: "document.getElementById('para').style.display = 'none';" },
+      { id: 28, text: "Ek button banao. Click karne par hidden paragraph show ho jaye", output: "Button click → Paragraph show", cat: "DOM & Styling", clue: "document.getElementById('para').style.display = 'block';" },
+      { id: 29, text: "Ek input me text lo aur check karo ke wo empty hai ya nahi", output: "Input: '' → Empty | Input: Ali → Not empty", cat: "String Methods", clue: "if (text.trim() === '') { /* Empty */ }" },
+      { id: 30, text: "Ek input me number lo aur check karo ke wo 2 se divisible hai ya nahi", output: "Input: 6 → Divisible | Input: 7 → Not divisible", cat: "Modulus & Divisibility", clue: "if (num % 2 === 0) { /* Divisible */ }" },
+      { id: 31, text: "Do input me numbers lo aur unko multiply karo", output: "Input: 3 aur 4 → Output: 12", cat: "Input & Math", clue: "let prod = Number(in1.value) * Number(in2.value);" },
+      { id: 32, text: "Do input me numbers lo aur unko divide karo", output: "Input: 8 aur 2 → Output: 4", cat: "Input & Math", clue: "let quot = Number(in1.value) / Number(in2.value);" },
+      { id: 33, text: "Ek input me number lo aur uska remainder (modulus) nikaalo jab 3 se divide karo", output: "Input: 10 → Output: 1", cat: "Modulus & Divisibility", clue: "let rem = num % 3;" },
+      { id: 34, text: "Ek input me number lo aur uska square power (power 2) nikaalo", output: "Input: 4 → Output: 16", cat: "Input & Math", clue: "Math.pow(num, 2) ya num ** 2" },
+      { id: 35, text: "Ek input me number lo aur uska cube power (power 3) nikaalo", output: "Input: 2 → Output: 8", cat: "Input & Math", clue: "Math.pow(num, 3) ya num ** 3" },
+      { id: 36, text: "Ek button banao. Click karne par text change ho jaye", output: "Button click → Text change", cat: "DOM & Styling", clue: "document.getElementById('myText').innerText = 'New text updated!';" },
+      { id: 37, text: "Ek input me text lo aur usko h1 tag ke andar show karo", output: "Input: Ali → h1 me Ali show hoga", cat: "Input & Math", clue: "document.getElementById('heading').innerText = input.value;" },
+      { id: 38, text: "Ek input me number lo aur check karo ke wo 50 se bara hai ya nahi", output: "Input: 60 → Yes | Input: 40 → No", cat: "Comparisons & If-Else", clue: "if (num > 50) { /* Yes */ } else { /* No */ }" },
+      { id: 39, text: "Ek input me number lo aur check karo ke wo 20 se chhota hai ya nahi", output: "Input: 10 → Yes | Input: 25 → No", cat: "Comparisons & If-Else", clue: "if (num < 20) { /* Yes */ } else { /* No */ }" },
+      { id: 40, text: "Ek input me number lo aur check karo ke wo 10 ke equal hai ya nahi", output: "Input: 10 → Equal | Input: 9 → Not equal", cat: "Comparisons & If-Else", clue: "if (num === 10) { /* Equal */ } else { /* Not equal */ }" },
+      { id: 41, text: "3 input boxes me numbers lo aur unka sum nikaalo", output: "Input: 1, 2, 3 → Output: 6", cat: "Input & Math", clue: "let total = Number(in1.value) + Number(in2.value) + Number(in3.value);" },
+      { id: 42, text: "3 input boxes me numbers lo aur unka average nikaalo", output: "Input: 2, 4, 6 → Output: 4", cat: "Input & Math", clue: "let avg = (Number(in1.value) + Number(in2.value) + Number(in3.value)) / 3;" },
+      { id: 43, text: "Ek input me number lo aur usko 5 se multiply karo", output: "Input: 3 → Output: 15", cat: "Input & Math", clue: "let res = Number(num) * 5;" },
+      { id: 44, text: "Ek input me number lo aur usko 5 se divide karo", output: "Input: 20 → Output: 4", cat: "Input & Math", clue: "let res = Number(num) / 5;" },
+      { id: 45, text: "Ek input me text lo aur uski length (kitne letters hain) show karo", output: "Input: Ali → Output: 3", cat: "String Methods", clue: "let len = textInput.value.length;" },
+      { id: 46, text: "Ek input me text lo aur uska first letter show karo", output: "Input: Ali → Output: A", cat: "String Methods", clue: "let first = textInput.value.charAt(0); ya textInput.value[0];" },
+      { id: 47, text: "Ek input me text lo aur uska last letter show karo", output: "Input: Ali → Output: i", cat: "String Methods", clue: "let val = textInput.value;\nlet last = val[val.length - 1];" },
+      { id: 48, text: "Ek button banao. Click par color toggle karo (red se blue)", output: "Click → Color change hota rahe", cat: "DOM & Styling", clue: "let el = document.getElementById('box');\nel.style.color = (el.style.color === 'red') ? 'blue' : 'red';" },
+      { id: 49, text: "Ek input me number lo aur check karo ke wo odd hai ya nahi", output: "Input: 5 → Odd", cat: "Modulus & Divisibility", clue: "if (num % 2 !== 0) { /* Odd */ }" },
+      { id: 50, text: "Ek input me number lo aur check karo ke wo positive hai ya nahi", output: "Input: 3 → Positive", cat: "Comparisons & If-Else", clue: "if (num > 0) { /* Positive */ }" },
+      { id: 51, text: "Ek input me number lo aur check karo ke wo negative hai ya nahi", output: "Input: -2 → Negative | Input: 5 → Not negative", cat: "Comparisons & If-Else", clue: "if (num < 0) { /* Negative */ } else { /* Not negative */ }" },
+      { id: 52, text: "Ek input me number lo aur usme 10 add karo", output: "Input: 5 → Output: 15", cat: "Input & Math", clue: "let res = Number(num) + 10;" },
+      { id: 53, text: "Ek input me number lo aur usme se 10 minus karo", output: "Input: 15 → Output: 5", cat: "Input & Math", clue: "let res = Number(num) - 10;" },
+      { id: 54, text: "Ek input me number lo aur usko 3 se multiply karo", output: "Input: 4 → Output: 12", cat: "Input & Math", clue: "let res = Number(num) * 3;" },
+      { id: 55, text: "Ek input me number lo aur usko 2 se divide karo", output: "Input: 6 → Output: 3", cat: "Input & Math", clue: "let res = Number(num) / 2;" },
+      { id: 56, text: "Ek input me text lo aur usko 2 baar repeat karke show karo", output: "Input: Hi → Output: HiHi", cat: "String Methods", clue: "let rep = textVal.repeat(2); ya textVal + textVal;" },
+      { id: 57, text: "Ek button banao. Click karne par kisi element par border add karo", output: "Button click → Border show ho jaye", cat: "DOM & Styling", clue: "document.getElementById('myCard').style.border = '2px solid cyan';" },
+      { id: 58, text: "Ek input me number lo aur check karo ke wo 3 ka multiple hai ya nahi", output: "Input: 9 → Yes | Input: 10 → No", cat: "Modulus & Divisibility", clue: "if (num % 3 === 0) { /* Yes */ } else { /* No */ }" },
+      { id: 59, text: "Ek input me number lo aur check karo ke wo 7 ka multiple hai ya nahi", output: "Input: 14 → Yes | Input: 15 → No", cat: "Modulus & Divisibility", clue: "if (num % 7 === 0) { /* Yes */ } else { /* No */ }" },
+      { id: 60, text: "Do input boxes me numbers lo aur unme se bada number show karo", output: "Input: 5 aur 8 → Output: 8", cat: "Comparisons & If-Else", clue: "let max = Math.max(Number(in1.value), Number(in2.value));" },
+      { id: 61, text: "Do input boxes me numbers lo aur unme se chhota number show karo", output: "Input: 5 aur 8 → Output: 5", cat: "Comparisons & If-Else", clue: "let min = Math.min(Number(in1.value), Number(in2.value));" },
+      { id: 62, text: "Ek input me text lo aur uske end me '!!!' add karke show karo", output: "Input: Hi → Output: Hi!!!", cat: "String Methods", clue: "let res = textVal + '!!!';" },
+      { id: 63, text: "Ek input me text lo aur uske end me '?' add karke show karo", output: "Input: Hi → Output: Hi?", cat: "String Methods", clue: "let res = textVal + '?';" },
+      { id: 64, text: "Ek button banao. Click par kisi element ko hide/show toggle karo", output: "Click → Element kabhi hide kabhi show", cat: "DOM & Styling", clue: "let el = document.getElementById('box');\nel.style.display = (el.style.display === 'none') ? 'block' : 'none';" },
+      { id: 65, text: "Ek input me number lo aur uska absolute value nikaalo (negative ko positive bana do)", output: "Input: -5 → Output: 5", cat: "Math Utilities", clue: "Math.abs(Number(num))" },
+      { id: 66, text: "Ek input me decimal number lo aur usko round off karo", output: "Input: 4.6 → Output: 5", cat: "Math Utilities", clue: "Math.round(Number(num))" },
+      { id: 67, text: "Ek input me decimal number lo aur usko floor karo (neeche wala number lo)", output: "Input: 4.9 → Output: 4", cat: "Math Utilities", clue: "Math.floor(Number(num))" },
+      { id: 68, text: "Ek input me decimal number lo aur usko ceil karo (upar wala number lo)", output: "Input: 4.1 → Output: 5", cat: "Math Utilities", clue: "Math.ceil(Number(num))" },
+      { id: 69, text: "Ek input me text lo jisme extra spaces ho, unko remove karo", output: "Input: '  hi  ' → Output: hi", cat: "String Methods", clue: "let trimmed = textVal.trim();" },
+      { id: 70, text: "Ek input me text lo aur usme 'a' ko 'x' se replace karo", output: "Input: ali → Output: xli", cat: "String Methods", clue: "let replaced = textVal.replace(/a/g, 'x');" },
+      { id: 71, text: "Ek input me text lo aur check karo ke usme letter 'a' hai ya nahi", output: "Input: ali → Yes | Input: hi → No", cat: "String Methods", clue: "if (textVal.includes('a')) { /* Yes */ } else { /* No */ }" },
+      { id: 72, text: "Ek input me text lo aur usko reverse karke show karo", output: "Input: abc → Output: cba", cat: "String Methods", clue: "let reversed = textVal.split('').reverse().join('');" },
+      { id: 73, text: "Ek button banao. Click par text ka font size bada karo", output: "Click → Text bada ho jaye", cat: "DOM & Styling", clue: "document.getElementById('txt').style.fontSize = '28px';" },
+      { id: 74, text: "Ek button banao. Click par text ka font size chhota karo", output: "Click → Text chhota ho jaye", cat: "DOM & Styling", clue: "document.getElementById('txt').style.fontSize = '12px';" },
+      { id: 75, text: "Ek input me number lo aur usko 0 se multiply karo", output: "Input: 5 → Output: 0", cat: "Input & Math", clue: "let res = Number(num) * 0;" },
+      { id: 76, text: "Ek input me number lo aur usko 1 se divide karo", output: "Input: 5 → Output: 5", cat: "Input & Math", clue: "let res = Number(num) / 1;" },
+      { id: 77, text: "Ek input me number lo aur uska remainder nikaalo jab 2 se divide karo", output: "Input: 5 → Output: 1", cat: "Modulus & Divisibility", clue: "let rem = Number(num) % 2;" },
+      { id: 78, text: "Ek input me number lo aur check karo ke wo 5 se poora divide hota hai ya nahi (remainder 0 ho)", output: "Input: 10 → Yes | Input: 11 → No", cat: "Modulus & Divisibility", clue: "if (Number(num) % 5 === 0) { /* Yes */ } else { /* No */ }" },
+      { id: 79, text: "Ek input me naam lo aur uske aage 'Hello ' add karo", output: "Input: Ali → Output: Hello Ali", cat: "String Methods", clue: "let res = 'Hello ' + nameInput.value;" },
+      { id: 80, text: "Ek input me naam lo aur uske aage 'Bye ' add karo", output: "Input: Ali → Output: Bye Ali", cat: "String Methods", clue: "let res = 'Bye ' + nameInput.value;" },
+      { id: 81, text: "Ek input me number lo aur check karo ke wo 5 se bara aur 10 se chhota hai ya nahi", output: "Input: 7 → Yes | Input: 3 → No", cat: "Comparisons & If-Else", clue: "if (num > 5 && num < 10) { /* Yes */ } else { /* No */ }" },
+      { id: 82, text: "Ek input me number lo aur check karo ke wo 10 se bara ya 5 se chhota hai", output: "Input: 3 → Yes | Input: 7 → No", cat: "Comparisons & If-Else", clue: "if (num > 10 || num < 5) { /* Yes */ } else { /* No */ }" },
+      { id: 83, text: "Ek input me number lo aur check karo ke wo 5 ke equal hai ya nahi", output: "Input: 5 → Yes | Input: 4 → No", cat: "Comparisons & If-Else", clue: "if (num === 5) { /* Yes */ } else { /* No */ }" },
+      { id: 84, text: "Ek input me number lo aur check karo ke wo 5 ke equal nahi hai", output: "Input: 4 → Yes | Input: 5 → No", cat: "Comparisons & If-Else", clue: "if (num !== 5) { /* Yes */ } else { /* No */ }" },
+      { id: 85, text: "Ek button banao. Click par text aur color dono change karo", output: "Click → Text bhi change aur color bhi change", cat: "DOM & Styling", clue: "let el = document.getElementById('box');\nel.innerText = 'Updated!';\nel.style.color = 'lime';" },
+      { id: 86, text: "Ek input me text lo aur usko do baar space ke sath show karo", output: "Input: Hi → Output: Hi Hi", cat: "String Methods", clue: "let res = textVal + ' ' + textVal;" },
+      { id: 87, text: "Ek input me text lo aur usko 3 baar repeat karo", output: "Input: Hi → Output: HiHiHi", cat: "String Methods", clue: "let res = textVal.repeat(3);" },
+      { id: 88, text: "Ek input me number lo aur uska square nikaal kar usme 10 add karo", output: "Input: 3 → Output: 19", cat: "Input & Math", clue: "let res = (num * num) + 10;" },
+      { id: 89, text: "Ek input me number lo aur uska cube nikaal kar usme se 5 minus karo", output: "Input: 2 → Output: 3", cat: "Input & Math", clue: "let res = (num * num * num) - 5;" },
+      { id: 90, text: "Do input me numbers lo aur unka sum nikaal kar usme 10 add karo", output: "Input: 2 aur 3 → Output: 15", cat: "Input & Math", clue: "let res = Number(in1.value) + Number(in2.value) + 10;" },
+      { id: 91, text: "Do input me numbers lo aur unko multiply karke usme se 2 minus karo", output: "Input: 3 aur 4 → Output: 10", cat: "Input & Math", clue: "let res = (Number(in1.value) * Number(in2.value)) - 2;" },
+      { id: 92, text: "Ek input me number lo aur usko double karke usme 1 add karo", output: "Input: 4 → Output: 9", cat: "Input & Math", clue: "let res = (num * 2) + 1;" },
+      { id: 93, text: "Ek input me number lo aur usko half karke usme se 1 minus karo", output: "Input: 8 → Output: 3", cat: "Input & Math", clue: "let res = (num / 2) - 1;" },
+      { id: 94, text: "Ek input me text lo aur usko uppercase me convert karke uske end me '!!!' add karo", output: "Input: ali → Output: ALI!!!", cat: "String Methods", clue: "let res = textVal.toUpperCase() + '!!!';" },
+      { id: 95, text: "Ek input me text lo aur usko lowercase me convert karke uske end me '?' add karo", output: "Input: ALI → Output: ali?", cat: "String Methods", clue: "let res = textVal.toLowerCase() + '?';" },
+      { id: 96, text: "Ek button banao. Click par background aur text dono change karo", output: "Click → Background aur text dono change", cat: "DOM & Styling", clue: "document.body.style.backgroundColor = '#1e1b4b';\ndocument.getElementById('msg').innerText = 'Theme switched!';" },
+      { id: 97, text: "Ek input me text lo aur check karo ke wo empty hai ya nahi", output: "Input: '' → Empty | Input: Ali → Not empty", cat: "String Methods", clue: "if (textVal.trim().length === 0) { /* Empty */ }" },
+      { id: 98, text: "Ek input me number lo aur check karo ke wo positive aur even dono hai ya nahi", output: "Input: 4 → Yes | Input: 3 → No", cat: "Comparisons & If-Else", clue: "if (num > 0 && num % 2 === 0) { /* Yes */ } else { /* No */ }" },
+      { id: 99, text: "Ek input me number lo aur check karo ke wo negative ya odd hai", output: "Input: -3 → Yes | Input: 4 → No", cat: "Comparisons & If-Else", clue: "if (num < 0 || num % 2 !== 0) { /* Yes */ } else { /* No */ }" },
+      { id: 100, text: "Ek button banao. Click par page ka text reset kar do (default par le aao)", output: "Click → Text reset ho jata hai", cat: "Button & Alert", clue: "document.getElementById('myText').innerText = 'Default Original Text';" }
+    ];
+
+    let currentCategory = 'all';
+
+    function renderQuestions() {
+      const container = document.getElementById("questionsContainer");
+      const searchVal = document.getElementById("searchInput").value.toLowerCase().trim();
+      container.innerHTML = "";
+
+      const filtered = QUESTIONS_DATA.filter(q => {
+        const matchesCat = (currentCategory === 'all' || q.cat === currentCategory);
+        const matchesSearch = !searchVal || 
+                              (`q${q.id}`.includes(searchVal)) || 
+                              (`${q.id}` === searchVal) || 
+                              (q.text.toLowerCase().includes(searchVal)) || 
+                              (q.cat.toLowerCase().includes(searchVal)) || 
+                              (q.clue.toLowerCase().includes(searchVal));
+        return matchesCat && matchesSearch;
       });
-  }
-</script>
+
+      document.getElementById("statsCounter").textContent = `Showing ${filtered.length} of 100 questions`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #94a3b8; background: rgba(15,23,42,0.6); border-radius: 16px;">
+            <p style="font-size: 1.1rem; margin-bottom: 8px;">🔍 No questions found matching your search.</p>
+            <p style="font-size: 0.85rem;">Try searching for numbers like "Q12" or keywords like "square", "even", "alert".</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(q => {
+        const card = document.createElement("div");
+        card.className = "q-card";
+        card.innerHTML = `
+          <div class="q-header">
+            <span class="q-number">Q${q.id}</span>
+            <span class="q-category">${q.cat}</span>
+          </div>
+          <p class="q-text">${q.text}</p>
+          <div class="q-output-box"><strong>Expected:</strong> ${q.output}</div>
+          <details class="q-hint-details">
+            <summary class="q-hint-summary">
+              <span>💡 Need Hint? Reveal Logic Clue</span>
+              <span>▼</span>
+            </summary>
+            <div class="q-hint-body">
+              <strong>Logic Clue:</strong>
+              <div class="q-hint-code">${q.clue}</div>
+            </div>
+          </details>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function setCategoryFilter(cat) {
+      currentCategory = cat;
+      document.querySelectorAll(".filter-pill").forEach(p => {
+        p.classList.toggle("active", p.textContent.includes(cat) || (cat === 'all' && p.textContent.includes('All')));
+      });
+      renderQuestions();
+    }
+
+    function filterQuestions() {
+      renderQuestions();
+    }
+
+    function toggleAllQuestionHints(expand) {
+      document.querySelectorAll(".q-hint-details").forEach(d => {
+        d.open = expand;
+      });
+    }
+
+    function downloadCurrentAssignmentFile() {
+      const url = window.location.href;
+      const filename = url.substring(url.lastIndexOf('/') + 1) || 'assignment.html';
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.blob();
+        })
+        .then(blob => {
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch(err => {
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+    }
+
+    // Initial Render
+    window.addEventListener("DOMContentLoaded", renderQuestions);
+  </script>
 
 </body>
 </html>
