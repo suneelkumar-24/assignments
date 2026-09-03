@@ -1,0 +1,2956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript ES6+ & DOM Complete Master Notes & Projects | Super Sys-Tech Computers Centre Umerkot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --js-color: #f7df1e;
+      --js-gradient: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #f7df1e 100%);
+      --accent-cyan: #38bdf8;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #a855f7;
+      --code-bg: #0b1120;
+    }
+
+    body.light-theme {
+      --bg-main: #fffbeb;
+      --card-bg: #ffffff;
+      --card-border: #fde68a;
+      --text-main: #78350f;
+      --text-muted: #64748b;
+      --code-bg: #0f172a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.65;
+      overflow-x: clip;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Top Sticky Navigation Bar */
+    .sticky-bar {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+
+    body.light-theme .sticky-bar {
+      background: rgba(255, 255, 255, 0.94);
+    }
+
+    .bar-left, .bar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .bar-brand img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #ffffff;
+      padding: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .bar-brand-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+
+    .bar-brand-text small {
+      display: block;
+      font-size: 0.7rem;
+      color: #f59e0b;
+      font-weight: 600;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--card-border);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #f59e0b;
+      transform: translateY(-1px);
+    }
+
+    .btn-print {
+      background: var(--js-gradient);
+      color: #000000;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+    }
+
+    .btn-print:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(247, 223, 30, 0.5);
+    }
+
+    .btn.active-fullview {
+      background: rgba(245, 158, 11, 0.25) !important;
+      border-color: #f59e0b !important;
+      color: #fbbf24 !important;
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 220px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      border-radius: 50px;
+      padding: 7px 14px 7px 32px;
+      color: var(--text-main);
+      font-size: 0.84rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    body.light-theme .search-box input {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .search-box input:focus {
+      border-color: #f59e0b;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* Layout Structure: Left Sticky Sidebar + Right Main Content */
+    .doc-layout {
+      display: flex;
+      gap: 30px;
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+      align-items: flex-start;
+      box-sizing: border-box;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    /* Left Sidebar: Sticky Table of Contents */
+    .doc-sidebar {
+      width: 320px;
+      min-width: 300px;
+      max-width: 330px;
+      flex-shrink: 0;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 76px;
+      align-self: flex-start;
+      height: calc(100vh - 96px);
+      max-height: calc(100vh - 96px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+      overflow: hidden;
+      transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    }
+
+    body.light-theme .doc-sidebar {
+      background: #ffffff;
+      border-color: #fde68a;
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.08);
+    }
+
+    .sidebar-header {
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .sidebar-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-heading {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-collapse-btn {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-collapse-btn:hover {
+      background: #f59e0b;
+      color: #000000;
+    }
+
+    .sidebar-search-box {
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-search-box input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 6px 10px 6px 30px;
+      color: var(--text-main);
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    body.light-theme .sidebar-search-box input {
+      background: #f8fafc;
+    }
+
+    .sidebar-search-box svg {
+      position: absolute;
+      left: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 13px;
+      height: 13px;
+      color: var(--text-muted);
+    }
+
+    .sidebar-tabs {
+      display: flex;
+      gap: 5px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 3px;
+      border-radius: 8px;
+    }
+
+    .sb-tab {
+      flex: 1;
+      padding: 5px 4px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .sb-tab.active {
+      background: #f59e0b;
+      color: #000000;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 10px;
+      scroll-behavior: smooth;
+    }
+
+    .sidebar-unit-group {
+      margin-bottom: 14px;
+    }
+
+    .sidebar-unit-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #fbbf24;
+      padding: 6px 10px 4px;
+      border-bottom: 1px dashed rgba(245, 158, 11, 0.25);
+      margin-bottom: 6px;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-item:hover {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--text-main);
+      transform: translateX(3px);
+    }
+
+    .sidebar-item.active {
+      background: var(--js-gradient);
+      color: #000000 !important;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+    }
+
+    .sidebar-num {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.74rem;
+      opacity: 0.85;
+      padding: 2px 6px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 4px;
+      color: #fff;
+    }
+
+    .sidebar-item.active .sidebar-num {
+      background: rgba(0, 0, 0, 0.35);
+      color: #000000;
+    }
+
+    /* Right Main Content */
+    .doc-main {
+      flex: 1;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Desktop Full View & Collapsible Sidebar */
+    body.sidebar-collapsed .doc-sidebar {
+      display: none !important;
+    }
+
+    body.sidebar-collapsed .doc-layout {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 25px 25px;
+      gap: 0 !important;
+      justify-content: center;
+    }
+
+    body.sidebar-collapsed .doc-main {
+      max-width: 100% !important;
+      width: 100% !important;
+      margin: 0 auto;
+    }
+
+    body.sidebar-collapsed .topic-card {
+      padding: 30px 32px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Cover Page Card */
+    .cover-card {
+      background: linear-gradient(145deg, rgba(245, 158, 11, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 2px solid rgba(245, 158, 11, 0.35);
+      border-radius: 28px;
+      padding: 45px 35px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+      margin-bottom: 30px;
+    }
+
+    body.light-theme .cover-card {
+      background: linear-gradient(145deg, #fffbeb 0%, #ffffff 100%);
+      border-color: #fde68a;
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.1);
+    }
+
+    .cover-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .institute-logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 10px 20px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+    }
+
+    body.light-theme .institute-logo-badge {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: #cbd5e1;
+    }
+
+    .institute-logo-badge img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 4px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    .institute-info-text {
+      text-align: left;
+    }
+
+    .institute-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .institute-tagline {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--accent-amber);
+      letter-spacing: 0.5px;
+    }
+
+    .js-official-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(247, 223, 30, 0.15);
+      border: 1.5px solid rgba(247, 223, 30, 0.4);
+      padding: 8px 18px;
+      border-radius: 14px;
+    }
+
+    .doc-main-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #f7df1e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    body.light-theme .doc-main-title {
+      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .doc-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 25px;
+      line-height: 1.6;
+    }
+
+    .author-meta-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--card-border);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    body.light-theme .author-meta-box {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .author-name {
+      color: var(--accent-amber);
+      font-weight: 800;
+    }
+
+    .student-fields-strip {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(245, 158, 11, 0.3);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      text-align: left;
+    }
+
+    .student-field-item {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    body.light-theme .student-field-item {
+      background: #f1f5f9;
+      border-color: #e2e8f0;
+    }
+
+    .student-field-item label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .student-field-item span {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #f59e0b;
+      border-bottom: 1px dotted var(--text-muted);
+      display: inline-block;
+      width: 100%;
+      min-height: 20px;
+    }
+
+    /* Unit Banners */
+    .unit-banner {
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.2) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left: 6px solid #f59e0b;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 40px 0 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .unit-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #fbbf24;
+    }
+
+    .unit-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    /* Topic Cards */
+    .topic-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      position: relative;
+      scroll-margin-top: 90px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    body.light-theme .topic-card {
+      background: #ffffff;
+      border-color: #fde68a;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .topic-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .topic-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topic-badge {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .topic-name {
+      font-size: 1.28rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .topic-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    .section-label {
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin: 16px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: #f59e0b;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Code Blocks */
+    .code-wrapper {
+      position: relative;
+      background: var(--code-bg);
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      margin: 10px 0 16px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    body.light-theme .code-wrapper {
+      background: #0f172a;
+      border-color: #334155;
+    }
+
+    .code-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 8px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.75rem;
+      font-family: 'Fira Code', monospace;
+      color: #94a3b8;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f8fafc;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: #f59e0b;
+      color: #000000;
+      font-weight: bold;
+    }
+
+    pre {
+      padding: 14px;
+      overflow-x: auto;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.84rem;
+      color: #f8fafc;
+      line-height: 1.6;
+      white-space: pre;
+    }
+
+    .pro-tip {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(247, 223, 30, 0.08) 100%);
+      border-left: 4px solid var(--accent-amber);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: #fde68a;
+    }
+
+    body.light-theme .pro-tip {
+      background: #fffbeb;
+      color: #92400e;
+      border-color: #f59e0b;
+    }
+
+    .pro-tip-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* Floating Back to Top Button */
+    .floating-top-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--js-gradient);
+      color: #000;
+      border: none;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      z-index: 1200;
+      transition: all 0.2s;
+    }
+
+    .floating-top-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1400;
+    }
+
+    .sidebar-backdrop.active {
+      display: block;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1080px) {
+      .doc-sidebar {
+        position: fixed;
+        left: -350px;
+        top: 72px;
+        height: calc(100vh - 80px);
+        z-index: 1500;
+        transition: left 0.3s ease;
+      }
+      .doc-sidebar.open {
+        left: 15px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+      }
+      .doc-layout {
+        padding: 15px 12px;
+        gap: 0;
+      }
+      .sticky-bar {
+        padding: 10px 14px;
+        gap: 8px;
+      }
+      .bar-brand-text small {
+        display: none;
+      }
+      .search-box {
+        min-width: 140px;
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .sticky-bar {
+        padding: 8px 10px;
+      }
+      .search-box {
+        display: none;
+      }
+      .cover-card {
+        padding: 22px 14px;
+      }
+      .topic-card {
+        padding: 18px 14px;
+      }
+      .doc-main-title {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* Print Stylesheet for Official A4 Output */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print, .sticky-bar, .doc-sidebar, .floating-top-btn, .copy-btn {
+        display: none !important;
+      }
+      .doc-layout {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+      .cover-card {
+        background: #ffffff !important;
+        border: 2px solid #f59e0b !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        page-break-after: always;
+      }
+      .doc-main-title {
+        color: #d97706 !important;
+        -webkit-text-fill-color: #d97706 !important;
+      }
+      .topic-card {
+        background: #ffffff !important;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 25px;
+      }
+      .code-wrapper {
+        background: #f8fafc !important;
+        border: 1px solid #ccc !important;
+      }
+      pre {
+        color: #0f172a !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky-bar">
+    <div class="bar-left">
+      <a href="roadmap.html" class="btn btn-outline" title="Return to Full Learning Roadmap">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Roadmap
+      </a>
+      
+      <a href="#cover" class="bar-brand">
+        <img src="assets/stc_logo.jpg" alt="STC Logo" onerror="this.style.display='none'">
+        <div class="bar-brand-text">
+          Super Sys-Tech Computers
+          <small>JavaScript Master Notes • Umerkot</small>
+        </div>
+      </a>
+    </div>
+
+    <div class="bar-right">
+      <div class="search-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="topicSearch" placeholder="Search JS (e.g. DOM, Async, Fetch)..." onkeyup="filterNotes()">
+      </div>
+
+      <button onclick="toggleSidebar()" class="btn btn-outline sidebar-toggle-btn" id="sidebarToggleBtn" title="Toggle Table of Contents / Full View">
+        ◀ Full View
+      </button>
+
+      <button onclick="toggleTheme()" class="btn btn-outline" id="themeToggleBtn" title="Toggle Light / Dark Preview">
+        🌓 Theme
+      </button>
+
+      <button onclick="window.print()" class="btn btn-print" title="Print this handbook or save it as an official PDF">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Download / Print PDF
+      </button>
+    </div>
+  </header>
+
+  <div class="doc-layout">
+
+    <!-- LEFT SIDEBAR: STICKY TABLE OF CONTENTS -->
+    <aside class="doc-sidebar no-print" id="docSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title-row">
+          <div class="sidebar-heading">
+            <span>📑 Table of Contents</span>
+          </div>
+          <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" onclick="toggleSidebar()" title="Collapse TOC to view full page width">
+            ◀ Full View
+          </button>
+        </div>
+        <div class="sidebar-search-box">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="sidebarSearchInput" placeholder="Filter topics in TOC..." oninput="filterSidebarTopics(this.value)">
+        </div>
+        <div class="sidebar-tabs">
+          <button class="sb-tab active" onclick="switchSidebarCategory('all', this)">All (36)</button>
+          <button class="sb-tab" onclick="switchSidebarCategory('topics', this)">📘 Topics (31)</button>
+          <button class="sb-tab" onclick="switchSidebarCategory('projects', this)">🚀 Projects (5)</button>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav">
+        <!-- Unit 1: Foundations -->
+        <div class="sidebar-unit-group">
+          <div class="sidebar-unit-title">Unit 01 • JS Syntax & Fundamentals</div>
+          <a href="#topic36" class="sidebar-item active"><span class="sidebar-num">36</span> JS Intro & DevTools</a>
+          <a href="#topic37" class="sidebar-item"><span class="sidebar-num">37</span> Variables (let/const)</a>
+          <a href="#topic38" class="sidebar-item"><span class="sidebar-num">38</span> Data Types</a>
+          <a href="#topic39" class="sidebar-item"><span class="sidebar-num">39</span> Operators & Comparisons</a>
+          <a href="#topic40" class="sidebar-item"><span class="sidebar-num">40</span> Comments & Strict Mode</a>
+          <a href="#topic41" class="sidebar-item"><span class="sidebar-num">41</span> Conditional Logic (if/else)</a>
+          <a href="#topic42" class="sidebar-item"><span class="sidebar-num">42</span> Switch Statements</a>
+          <a href="#topic43" class="sidebar-item"><span class="sidebar-num">43</span> Loops (for, while)</a>
+          <a href="#topic44" class="sidebar-item"><span class="sidebar-num">44</span> For-In & For-Of</a>
+        </div>
+
+        <!-- Unit 2: Functions & Data Structures -->
+        <div class="sidebar-unit-group">
+          <div class="sidebar-unit-title">Unit 02 • Functions & Data Structures</div>
+          <a href="#topic45" class="sidebar-item"><span class="sidebar-num">45</span> Function Declarations</a>
+          <a href="#topic46" class="sidebar-item"><span class="sidebar-num">46</span> Arrow Functions & this</a>
+          <a href="#topic47" class="sidebar-item"><span class="sidebar-num">47</span> Scope & Closures</a>
+          <a href="#topic48" class="sidebar-item"><span class="sidebar-num">48</span> String Methods</a>
+          <a href="#topic49" class="sidebar-item"><span class="sidebar-num">49</span> Template Literals</a>
+          <a href="#topic50" class="sidebar-item"><span class="sidebar-num">50</span> Math & Numbers</a>
+          <a href="#topic51" class="sidebar-item"><span class="sidebar-num">51</span> Dates & Timestamps</a>
+          <a href="#topic52" class="sidebar-item"><span class="sidebar-num">52</span> Array Methods</a>
+          <a href="#topic53" class="sidebar-item"><span class="sidebar-num">53</span> Iteration (map, filter)</a>
+          <a href="#topic54" class="sidebar-item"><span class="sidebar-num">54</span> Objects & Methods</a>
+          <a href="#topic55" class="sidebar-item"><span class="sidebar-num">55</span> Destructuring & Spread</a>
+        </div>
+
+        <!-- Unit 3: DOM, Events & Web APIs -->
+        <div class="sidebar-unit-group">
+          <div class="sidebar-unit-title">Unit 03 • DOM, Events & Web APIs</div>
+          <a href="#topic56" class="sidebar-item"><span class="sidebar-num">56</span> DOM Architecture Tree</a>
+          <a href="#topic57" class="sidebar-item"><span class="sidebar-num">57</span> DOM Selectors</a>
+          <a href="#topic58" class="sidebar-item"><span class="sidebar-num">58</span> DOM Content & Attributes</a>
+          <a href="#topic59" class="sidebar-item"><span class="sidebar-num">59</span> Create & Remove Nodes</a>
+          <a href="#topic60" class="sidebar-item"><span class="sidebar-num">60</span> Dynamic ClassList</a>
+          <a href="#topic61" class="sidebar-item"><span class="sidebar-num">61</span> Event Listeners & Bubbling</a>
+          <a href="#topic62" class="sidebar-item"><span class="sidebar-num">62</span> Form Events & Validation</a>
+          <a href="#topic63" class="sidebar-item"><span class="sidebar-num">63</span> Browser Object Model</a>
+          <a href="#topic64" class="sidebar-item"><span class="sidebar-num">64</span> Timers (setTimeout)</a>
+          <a href="#topic65" class="sidebar-item"><span class="sidebar-num">65</span> LocalStorage API</a>
+          <a href="#topic66" class="sidebar-item"><span class="sidebar-num">66</span> Async/Await & Fetch API</a>
+        </div>
+
+        <!-- Unit 4: Real-World JS Projects -->
+        <div class="sidebar-unit-group unit-projects-group">
+          <div class="sidebar-unit-title">Unit 04 • Real-World Projects</div>
+          <a href="#proj-todo" class="sidebar-item"><span class="sidebar-num">P1</span> Task Manager (LocalStorage)</a>
+          <a href="#proj-filter" class="sidebar-item"><span class="sidebar-num">P2</span> Product Search Filter</a>
+          <a href="#proj-weather" class="sidebar-item"><span class="sidebar-num">P3</span> Async Weather Portal</a>
+          <a href="#proj-quiz" class="sidebar-item"><span class="sidebar-num">P4</span> Interactive Quiz Engine</a>
+          <a href="#proj-emi" class="sidebar-item"><span class="sidebar-num">P5</span> Loan EMI Calculator</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- RIGHT MAIN CONTENT (Scrolls smoothly!) -->
+    <main class="doc-main" id="mainContent">
+
+      <!-- Cover Page -->
+      <div class="cover-card" id="cover">
+        <div class="cover-logos">
+          <div class="institute-logo-badge">
+            <img src="assets/stc_logo.jpg" alt="Super Sys-Tech Logo" onerror="this.style.display='none'">
+            <div class="institute-info-text">
+              <div class="institute-title">Super Sys-Tech Computers Centre</div>
+              <div class="institute-tagline">Struggle For Better Education • Umerkot</div>
+            </div>
+          </div>
+
+          <div class="js-official-badge">
+            <!-- Official JS Vector Logo -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 630 630" width="40" height="40">
+              <rect width="630" height="630" fill="#f7df1e"/>
+              <path d="m423.2 492.19c12.69 20.72 29.2 35.95 58.4 35.95 24.53 0 40.2-12.26 40.2-29.2 0-20.3-16.1-27.49-43.1-39.3l-14.8-6.35c-42.72-18.2-71.1-41-71.1-89.2 0-44.4 33.83-78.2 86.7-78.2 37.64 0 64.7 13.1 84.2 47.4l-46.1 29.6c-10.15-18.2-21.1-25.4-38.1-25.4-17.34 0-28.33 11-28.33 25.4 0 17.7 11 24.9 36.4 35.9l14.8 6.35c50.3 21.5 78.7 43.5 78.7 93 0 53.3-41.87 82.5-98.1 82.5-54.98 0-90.5-26.2-106.6-60.89zm-209.98 5.5c8.9 15.6 16.9 28.7 36.4 28.7 18.6 0 30.4-7.6 30.4-37.2v-201.2h59.2v202.9c0 61.3-35.94 88.8-88.8 88.8-46.1 0-73.6-24.5-87.1-54.1z"/>
+            </svg>
+            <span style="font-weight: 800; font-size: 1rem; color: #000;">JavaScript ES6+</span>
+          </div>
+        </div>
+
+        <h1 class="doc-main-title">JavaScript ES6+ & DOM Complete Master Notes</h1>
+        <p class="doc-subtitle">
+          Complete official curriculum covering ES6 Syntax, Scope & Closures, Array Manipulation, DOM Traversal, Event Delegation, Timers, LocalStorage, Async/Await Fetch API, and 5 Interactive Real-World Projects.
+        </p>
+
+        <div class="author-meta-box">
+          <div>Course: <strong style="color: var(--text-main);">Full-Stack Web Development</strong></div>
+          <div>Unit: <strong style="color: #f59e0b;">JavaScript & DOM Mastery</strong></div>
+          <div>Authored By: <span class="author-name">Mukesh Kumar</span></div>
+          <div>Institute: <strong style="color: var(--text-main);">Sys-Tech Umerkot</strong></div>
+        </div>
+
+        <!-- Student Exam Fillable Strip -->
+        <div class="student-fields-strip no-print">
+          <div class="student-field-item">
+            <label>Student Full Name</label>
+            <span></span>
+          </div>
+          <div class="student-field-item">
+            <label>Enrollment / Roll No</label>
+            <span></span>
+          </div>
+          <div class="student-field-item">
+            <label>Batch Session</label>
+            <span>Web Dev 2026</span>
+          </div>
+          <div class="student-field-item">
+            <label>Examination Center</label>
+            <span>Sys-Tech Umerkot</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== UNIT 1: JS SYNTAX & FUNDAMENTALS ==================== -->
+      <div class="unit-banner" id="unit-js-foundations">
+        <div>
+          <div class="unit-tag">Unit 01 • Core Logic</div>
+          <div class="unit-title">JavaScript Fundamentals, Variables & Control Flow</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Topics 36 – 44</div>
+      </div>
+
+      <!-- TOPIC 36 -->
+      <article class="topic-card" id="topic36">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 36</span>
+            <h2 class="topic-name">JS Introduction, Internal/External & DevTools</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Foundational</span>
+        </div>
+        <p class="topic-desc">
+          JavaScript is a lightweight, interpreted, just-in-time compiled language with first-class functions. Code runs in the browser or Node.js. Use browser DevTools (F12) for <code>console.log()</code>, <code>console.table()</code>, and debugging.
+        </p>
+
+        <div class="section-label">Code Example: Console Methods & DevTools</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>app.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// 1. Standard Output
+console.log("Welcome to Super Sys-Tech Computers Centre Umerkot!");
+
+// 2. Structured Tabular Display in DevTools
+const students = [
+  { id: 101, name: "Mukesh Kumar", track: "Full Stack" },
+  { id: 102, name: "Suneel Kumar", track: "Backend PHP" }
+];
+console.table(students);
+
+// 3. Execution Benchmarking
+console.time("Loop Timer");
+for (let i = 0; i < 100000; i++) {}
+console.timeEnd("Loop Timer");</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always link your external script at the very bottom of the <code>&lt;body&gt;</code> tag or use <code>&lt;script src="app.js" defer&gt;&lt;/script&gt;</code> in the <code>&lt;head&gt;</code> so HTML elements parse completely before your JS runs!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 37 -->
+      <article class="topic-card" id="topic37">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 37</span>
+            <h2 class="topic-name">Variables: var, let & const (Scope Rules)</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Variables</span>
+        </div>
+        <p class="topic-desc">
+          <code>var</code> is function-scoped and hoisted with <code>undefined</code>. ES6 introduced <code>let</code> (re-assignable block-scoped) and <code>const</code> (immutable reference block-scoped) which remain in the Temporal Dead Zone (TDZ) until initialized.
+        </p>
+
+        <div class="section-label">Code Example: Block Scope vs Function Scope</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>variables.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const INSTITUTE_NAME = "Super Sys-Tech Computers"; // Cannot be reassigned
+let activeBatch = 2026; // Can be updated later
+activeBatch = 2027; // Valid
+
+if (true) {
+  let blockVariable = "I live only inside this block {}";
+  var leakedVariable = "I leak outside this block!";
+}
+// console.log(blockVariable); // ReferenceError: blockVariable is not defined
+console.log(leakedVariable);   // Outputs: "I leak outside this block!"</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Golden Rule: Use <code>const</code> by default for 90% of variables. Only use <code>let</code> if you know the value will be reassigned in loops or accumulators. Never use <code>var</code> in modern code!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 38 -->
+      <article class="topic-card" id="topic38">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 38</span>
+            <h2 class="topic-name">Data Types: Primitive vs Reference</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Types</span>
+        </div>
+        <p class="topic-desc">
+          JavaScript has 7 Primitive Types (String, Number, BigInt, Boolean, Undefined, Null, Symbol) stored by value on the Call Stack, and Reference Types (Objects, Arrays, Functions) stored by memory address pointer on the Memory Heap.
+        </p>
+
+        <div class="section-label">Code Example: Primitives vs Memory References</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>data_types.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// 1. Primitive: Copied by Value
+let a = 10;
+let b = a;
+b = 25;
+console.log(a); // Still 10!
+
+// 2. Reference Type: Copied by Memory Pointer
+const userA = { name: "Mukesh" };
+const userB = userA; // Both point to the exact same object in memory!
+userB.name = "Suneel";
+console.log(userA.name); // Changed to "Suneel"!</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Notice that <code>typeof null</code> returns <code>"object"</code>. This is a famous historical bug in the initial 1995 JavaScript engine implementation that was kept for backward compatibility!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 39 -->
+      <article class="topic-card" id="topic39">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 39</span>
+            <h2 class="topic-name">Operators: Strict Equality (===) & Nullish Coalescing (??)</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Operators</span>
+        </div>
+        <p class="topic-desc">
+          Always use Strict Equality <code>===</code> (compares both value and type) over Loose Equality <code>==</code> (performs implicit type coercion). Use the Nullish Coalescing operator <code>??</code> to supply default values only when an operand is <code>null</code> or <code>undefined</code>.
+        </p>
+
+        <div class="section-label">Code Example: Equality & Modern Fallback Operators</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>operators.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// Loose vs Strict
+console.log(5 == "5");   // true (type coercion)
+console.log(5 === "5");  // false (different types!)
+
+// Nullish Coalescing (??) vs Logical OR (||)
+let score = 0; // 0 is a valid score!
+let resA = score || 50; // Returns 50 because 0 is falsy! (Bug)
+let resB = score ?? 50; // Returns 0 because 0 is not null/undefined! (Correct)</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Use <code>??</code> instead of <code>||</code> when setting default values for numeric or boolean settings, because <code>0</code> and <code>false</code> will be mistakenly overwritten by <code>||</code>!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 40 -->
+      <article class="topic-card" id="topic40">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 40</span>
+            <h2 class="topic-name">Comments, Code Style & "use strict"</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">Strict Mode</span>
+        </div>
+        <p class="topic-desc">
+          Adding <code>"use strict";</code> at the top of scripts catches silent coding mistakes, prevents accidental global variables (e.g. <code>x = 10;</code> without declaring <code>let</code>), and disables deprecated insecure features.
+        </p>
+
+        <div class="section-label">Code Example: Strict Mode Enforcement</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>strict.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>"use strict";
+
+// Accidental undeclared variable throws an immediate error!
+// studentScore = 95; // Uncaught ReferenceError: studentScore is not defined
+
+let studentScore = 95; // Clean & valid
+console.log(studentScore);</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            All ES6 JavaScript modules (<code>&lt;script type="module"&gt;</code>) execute in Strict Mode automatically without needing the <code>"use strict";</code> string!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 41 -->
+      <article class="topic-card" id="topic41">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 41</span>
+            <h2 class="topic-name">Conditional Statements (if, else if, else)</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Control Flow</span>
+        </div>
+        <p class="topic-desc">
+          Conditionals execute code blocks based on truthy or falsy boolean evaluations. In JavaScript, exactly six values are falsy: <code>false</code>, <code>0</code>, <code>""</code> (empty string), <code>null</code>, <code>undefined</code>, and <code>NaN</code>. Everything else evaluates to truthy!
+        </p>
+
+        <div class="section-label">Code Example: Grade Classification Logic</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>grading.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>function calculateGrade(percentage) {
+  if (percentage >= 80) {
+    return "A-1 Grade (Distinction)";
+  } else if (percentage >= 70) {
+    return "A Grade";
+  } else if (percentage >= 60) {
+    return "B Grade";
+  } else if (percentage >= 50) {
+    return "C Grade";
+  } else {
+    return "Fail (Re-appear for exam)";
+  }
+}
+
+console.log(calculateGrade(84)); // A-1 Grade (Distinction)</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Remember that empty arrays <code>[]</code> and empty objects <code>{}</code> are truthy in JavaScript! To check if an array is empty, always check <code>arr.length === 0</code>!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 42 -->
+      <article class="topic-card" id="topic42">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 42</span>
+            <h2 class="topic-name">Switch-Case Statements & Fallthrough</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Switch</span>
+        </div>
+        <p class="topic-desc">
+          <code>switch</code> checks an expression against multiple matching <code>case</code> clauses using strict equality (<code>===</code>). Omitting the <code>break;</code> statement causes execution to fall through to the next case automatically.
+        </p>
+
+        <div class="section-label">Code Example: Course Fee Lookup with Fallthrough</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>switch_case.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>function getCourseDetails(code) {
+  switch (code.toUpperCase()) {
+    case "HTML":
+    case "CSS":
+      return "Frontend Core Track • 1.5 Months • Rs. 4,000";
+    case "JS":
+      return "JavaScript ES6 & DOM Masterclass • 2 Months • Rs. 5,000";
+    case "PHP":
+      return "PHP 8 & MySQL PDO Backend • 2.5 Months • Rs. 6,000";
+    default:
+      return "Course code not found. Contact Sys-Tech Umerkot Desk.";
+  }
+}
+
+console.log(getCourseDetails("js"));</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Grouping multiple cases together before a single return/break statement (as with <code>HTML</code> and <code>CSS</code> above) creates clean, readable multi-value routing logic!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 43 -->
+      <article class="topic-card" id="topic43">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 43</span>
+            <h2 class="topic-name">Loops: for, while & do-while</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Iteration</span>
+        </div>
+        <p class="topic-desc">
+          Loops repeat code execution. <code>for</code> loops are ideal when iteration counts are known. <code>while</code> loops run as long as a condition holds true. <code>do-while</code> is guaranteed to execute at least once before testing the condition.
+        </p>
+
+        <div class="section-label">Code Example: Loop Control with Break & Continue</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>loops.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// Print only even numbers up to 10, skip 6
+for (let i = 2; i <= 10; i += 2) {
+  if (i === 6) {
+    continue; // Skips current iteration
+  }
+  console.log("Even Number:", i);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always verify that your while loop condition has an incrementer (e.g. <code>count++</code>). Forgetting to update the variable creates an infinite loop that freezes the browser tab!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 44 -->
+      <article class="topic-card" id="topic44">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 44</span>
+            <h2 class="topic-name">Modern Iteration: for...in vs for...of</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Loops</span>
+        </div>
+        <p class="topic-desc">
+          <code>for...in</code> iterates over enumerable <strong>property keys</strong> of an object. <code>for...of</code> iterates over the <strong>values</strong> of iterable collections (Arrays, Strings, Sets, Maps, NodeLists).
+        </p>
+
+        <div class="section-label">Code Example: for...in vs for...of Comparison</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>for_of.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// 1. for...in on Object Keys
+const student = { name: "Mukesh Kumar", rollNo: "STC-2026", city: "Umerkot" };
+for (const key in student) {
+  console.log(`${key}: ${student[key]}`);
+}
+
+// 2. for...of on Array Values
+const languages = ["HTML5", "CSS3", "JavaScript", "PHP"];
+for (const lang of languages) {
+  console.log("Mastering:", lang);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Never use <code>for...in</code> on Arrays! <code>for...in</code> treats array indices as strings and also iterates over prototype properties, which can cause unexpected bugs!
+          </div>
+        </div>
+      </article>
+
+      <!-- ==================== UNIT 2: FUNCTIONS & DATA STRUCTURES ==================== -->
+      <div class="unit-banner" id="unit-js-functions">
+        <div>
+          <div class="unit-tag">Unit 02 • Data Structures</div>
+          <div class="unit-title">Functions, Arrays, Objects & ES6 Features</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Topics 45 – 55</div>
+      </div>
+
+      <!-- TOPIC 45 -->
+      <article class="topic-card" id="topic45">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 45</span>
+            <h2 class="topic-name">Functions & Default Parameters</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Functions</span>
+        </div>
+        <p class="topic-desc">
+          Functions encapsulate reusable logic. Function declarations are hoisted to the top of their scope, while function expressions are not. ES6 allows default parameters for clean fallbacks.
+        </p>
+
+        <div class="section-label">Code Example: Function with Default Parameters</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>functions.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>function generateReceipt(studentName, course = "Full Stack Web", fee = 5000) {
+  return `Receipt for ${studentName} | Course: ${course} | Total: Rs. ${fee.toLocaleString()}`;
+}
+
+console.log(generateReceipt("Mukesh Kumar")); 
+// Output: Receipt for Mukesh Kumar | Course: Full Stack Web | Total: Rs. 5,000</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Default parameters only trigger when an argument is <code>undefined</code>. Passing <code>null</code> will NOT trigger the default value!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 46 -->
+      <article class="topic-card" id="topic46">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 46</span>
+            <h2 class="topic-name">Arrow Functions & Lexical `this`</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">ES6 Arrow</span>
+        </div>
+        <p class="topic-desc">
+          Arrow functions (<code>=&gt;</code>) provide concise syntax and omit the <code>function</code> keyword. Crucially, arrow functions do NOT bind their own <code>this</code>; they inherit <code>this</code> lexically from their surrounding scope!
+        </p>
+
+        <div class="section-label">Code Example: Arrow Functions & Lexical Scope</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>arrow_functions.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// 1. One-line implicit return
+const calculateTax = amount => amount * 0.13;
+
+// 2. Lexical this preservation in timer callbacks
+const counterApp = {
+  count: 0,
+  start() {
+    setInterval(() => {
+      this.count++; // 'this' points directly to counterApp!
+      // In regular functions, 'this' would point to window!
+    }, 1000);
+  }
+};</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Never use an arrow function as an object method (e.g. <code>const obj = { getTitle: () =&gt; this.title }</code>) because <code>this</code> will point to the global <code>window</code> object rather than <code>obj</code>!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 47 -->
+      <article class="topic-card" id="topic47">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 47</span>
+            <h2 class="topic-name">Scope Chain & Practical Closures</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Closures</span>
+        </div>
+        <p class="topic-desc">
+          A closure is the combination of a function bundled together with references to its surrounding state (the lexical environment). A closure gives an inner function access to an outer function's scope even after the outer function has returned!
+        </p>
+
+        <div class="section-label">Code Example: Private State with Closures</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>closures.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>function createBankAccount(initialDeposit) {
+  let balance = initialDeposit; // Private variable hidden from outside world!
+
+  return {
+    deposit(amount) { balance += amount; return balance; },
+    withdraw(amount) { balance -= amount; return balance; },
+    getBalance() { return balance; }
+  };
+}
+
+const account = createBankAccount(10000);
+account.deposit(2500);
+console.log(account.getBalance()); // 12500
+// account.balance is undefined! Direct tampering is impossible!</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Closures are the foundation of data privacy in JavaScript! They allow you to create completely private state variables without needing TypeScript private class fields.
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 48 -->
+      <article class="topic-card" id="topic48">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 48</span>
+            <h2 class="topic-name">String Methods & Manipulation</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Strings</span>
+        </div>
+        <p class="topic-desc">
+          Strings in JavaScript are immutable. Useful methods include <code>slice()</code>, <code>trim()</code>, <code>includes()</code>, <code>split()</code>, <code>replace()</code>, and <code>replaceAll()</code>.
+        </p>
+
+        <div class="section-label">Code Example: Sanitization & Parsing</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>strings.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const rawInput = "   Super Sys-Tech Computers Umerkot   ";
+const clean = rawInput.trim(); // Removes whitespace
+
+console.log(clean.includes("Umerkot")); // true
+console.log(clean.split(" ")); // ["Super", "Sys-Tech", "Computers", "Umerkot"]
+console.log(clean.replaceAll(" ", "-").toLowerCase()); // super-sys-tech-computers-umerkot</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always use <code>.trim()</code> on user form inputs before validation to prevent users from accidentally submitting invisible spaces into your database!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 49 -->
+      <article class="topic-card" id="topic49">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 49</span>
+            <h2 class="topic-name">Template Literals (Backtick Interpolation)</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">ES6 Strings</span>
+        </div>
+        <p class="topic-desc">
+          Enclosed in backticks (<code>` `</code>), template literals enable multiline strings, embedded expressions via <code>${expression}</code>, and dynamic HTML card generation without messy string concatenations.
+        </p>
+
+        <div class="section-label">Code Example: Dynamic HTML Card Generation</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>templates.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const instructor = "Mukesh Kumar";
+const course = "Web Engineering";
+
+const htmlCard = `
+  &lt;div class="badge"&gt;
+    &lt;h3&gt;${course.toUpperCase()}&lt;/h3&gt;
+    &lt;p&gt;Lead Instructor: &lt;strong&gt;${instructor}&lt;/strong&gt;&lt;/p&gt;
+    &lt;span&gt;Session Status: ${1 + 1 === 2 ? "Active" : "Closed"}&lt;/span&gt;
+  &lt;/div&gt;
+`;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            You can evaluate any valid JavaScript expression, ternary operator, or function call directly inside <code>${}</code>, making it ideal for rendering dynamic DOM components!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 50 -->
+      <article class="topic-card" id="topic50">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 50</span>
+            <h2 class="topic-name">Math Object & Random Number Generators</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">Math</span>
+        </div>
+        <p class="topic-desc">
+          The built-in <code>Math</code> object provides mathematical constants and functions: <code>Math.floor()</code>, <code>Math.ceil()</code>, <code>Math.round()</code>, and <code>Math.random()</code> for random integer generation.
+        </p>
+
+        <div class="section-label">Code Example: Random Range Formula & Currency Formatting</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>math.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// Generate a random integer between min and max inclusive (e.g. 6-digit OTP)
+function getRandomOTP() {
+  return Math.floor(100000 + Math.random() * 900000);
+}
+
+console.log("Your Exam Verification Code:", getRandomOTP());
+
+// Format decimal currency to 2 places
+const price = 4999.756;
+console.log(price.toFixed(2)); // "4999.76"</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            <code>toFixed(2)</code> returns a <strong>string</strong>, not a number! If you need to perform subsequent arithmetic calculations, wrap it in <code>parseFloat(val.toFixed(2))</code>!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 51 -->
+      <article class="topic-card" id="topic51">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 51</span>
+            <h2 class="topic-name">Date & Time Object (Timestamps)</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Dates</span>
+        </div>
+        <p class="topic-desc">
+          <code>new Date()</code> instantiates date objects. Milliseconds since Jan 1, 1970 (UNIX epoch) are obtained via <code>Date.now()</code>. Use <code>toLocaleDateString()</code> for international formatting.
+        </p>
+
+        <div class="section-label">Code Example: Localized Date Formatting</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>dates.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const now = new Date();
+
+// Official Localized Date String
+const formatted = now.toLocaleDateString("en-PK", {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+});
+
+console.log("Current System Date:", formatted);</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Remember that JavaScript months are 0-indexed! January is <code>0</code> and December is <code>11</code>. Always add <code>+1</code> when extracting months numerically!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 52 -->
+      <article class="topic-card" id="topic52">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 52</span>
+            <h2 class="topic-name">Array Manipulation Methods</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Arrays</span>
+        </div>
+        <p class="topic-desc">
+          Arrays store ordered collections. Mutating methods include <code>push()</code>/<code>pop()</code> (end) and <code>unshift()</code>/<code>shift()</code> (start). <code>splice()</code> modifies in-place, while <code>slice()</code> extracts a pure shallow copy.
+        </p>
+
+        <div class="section-label">Code Example: Splice vs Slice</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>arrays.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const courses = ["HTML", "CSS", "Bootstrap", "JavaScript", "PHP"];
+
+// Non-destructive slice (extracts items 1 through 3 without mutating original)
+const frontend = courses.slice(0, 4); 
+
+// Destructive splice (removes 1 item at index 2 and inserts "Tailwind")
+courses.splice(2, 1, "Tailwind CSS");
+
+console.log(courses); // ["HTML", "CSS", "Tailwind CSS", "JavaScript", "PHP"]</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            In modern React and state management paradigms, always avoid mutating arrays directly with <code>splice</code>. Prefer non-destructive methods like <code>slice</code>, <code>filter</code>, or the spread operator (<code>[...arr]</code>)!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 53 -->
+      <article class="topic-card" id="topic53">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 53</span>
+            <h2 class="topic-name">Higher-Order Iterators (map, filter & reduce)</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Functional JS</span>
+        </div>
+        <p class="topic-desc">
+          Higher-order methods take callback functions. <code>map()</code> transforms every element into a new array. <code>filter()</code> selects items that pass a test condition. <code>reduce()</code> accumulates items into a single final value.
+        </p>
+
+        <div class="section-label">Code Example: Chained Functional Data Pipeline</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>iterators.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const studentRegistrations = [
+  { name: "Mukesh", paidFee: 5000, active: true },
+  { name: "Kavita", paidFee: 4500, active: false },
+  { name: "Suresh", paidFee: 6000, active: true }
+];
+
+// Chained Pipeline: Filter active students -> Calculate total fee collected
+const totalRevenue = studentRegistrations
+  .filter(s => s.active)
+  .reduce((sum, s) => sum + s.paidFee, 0);
+
+console.log("Total Center Fee Collected: Rs.", totalRevenue); // 11000</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always specify an initial value (like <code>0</code> above) as the second argument to <code>reduce()</code> to avoid runtime errors when iterating over empty arrays!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 54 -->
+      <article class="topic-card" id="topic54">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 54</span>
+            <h2 class="topic-name">Objects, Methods & Object Utilities</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Objects</span>
+        </div>
+        <p class="topic-desc">
+          Objects store key-value pairs and functions (methods). Access properties with dot notation (<code>obj.prop</code>) or bracket notation (<code>obj["prop"]</code>). Extract entries using <code>Object.keys()</code>, <code>Object.values()</code>, and <code>Object.entries()</code>.
+        </p>
+
+        <div class="section-label">Code Example: Object Methods & Entries Extraction</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>objects.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const centerConfig = {
+  centerName: "Super Sys-Tech Computers",
+  city: "Umerkot",
+  totalComputers: 45,
+  getStatus() {
+    return `${this.centerName} is operating with ${this.totalComputers} workstations.`;
+  }
+};
+
+console.log(centerConfig.getStatus());
+console.log(Object.entries(centerConfig)); // Array of [key, value] pairs</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Use bracket notation <code>obj[dynamicVar]</code> whenever your property name is stored inside a variable or contains spaces and hyphens!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 55 -->
+      <article class="topic-card" id="topic55">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 55</span>
+            <h2 class="topic-name">Destructuring & Spread / Rest Operators (...)</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">ES6 Syntax</span>
+        </div>
+        <p class="topic-desc">
+          Destructuring unpacks values from arrays or properties from objects into distinct variables. The spread operator (<code>...</code>) expands iterables, while the rest parameter condenses multiple arguments into an array.
+        </p>
+
+        <div class="section-label">Code Example: Destructuring & Immutable Object Merging</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>destructuring.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// 1. Object Destructuring with Aliasing & Defaults
+const student = { fullName: "Mukesh Kumar", roll: 104 };
+const { fullName: name, roll, city = "Umerkot" } = student;
+
+// 2. Spread Operator: Immutable Clone & Merge
+const baseProfile = { role: "Student", active: true };
+const completeRecord = { ...baseProfile, name, roll, city };
+
+// 3. Rest Operator in Functions
+function sumMarks(...marks) {
+  return marks.reduce((total, m) => total + m, 0);
+}
+console.log(sumMarks(85, 92, 78, 90)); // 345</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Using <code>const clone = { ...original }</code> creates a shallow copy. If your object contains nested objects, mutate cautiously or use <code>structuredClone(original)</code> for a deep copy!
+          </div>
+        </div>
+      </article>
+
+      <!-- ==================== UNIT 3: DOM, EVENTS & WEB APIS ==================== -->
+      <div class="unit-banner" id="unit-js-dom">
+        <div>
+          <div class="unit-tag">Unit 03 • Interactivity</div>
+          <div class="unit-title">DOM Manipulation, Event Handling & Web APIs</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Topics 56 – 66</div>
+      </div>
+
+      <!-- TOPIC 56 -->
+      <article class="topic-card" id="topic56">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 56</span>
+            <h2 class="topic-name">DOM Tree Architecture & Node Hierarchy</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">DOM Core</span>
+        </div>
+        <p class="topic-desc">
+          The Document Object Model represents an HTML document as a hierarchical tree of nodes. Every HTML tag is an Element Node, text is a Text Node, and attributes are Attribute Nodes. The global <code>document</code> object is your entry point.
+        </p>
+
+        <div class="section-label">Code Example: Navigating DOM Parents & Children</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>dom_tree.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const card = document.querySelector(".topic-card");
+
+console.log("Parent Element:", card.parentElement);
+console.log("Child Elements:", card.children); // HTMLCollection of direct element tags
+console.log("Next Sibling:", card.nextElementSibling);</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always use <code>children</code> and <code>nextElementSibling</code> rather than <code>childNodes</code> and <code>nextSibling</code>. Sibling nodes include invisible whitespace and line-break text nodes!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 57 -->
+      <article class="topic-card" id="topic57">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 57</span>
+            <h2 class="topic-name">DOM Selectors: querySelector & querySelectorAll</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Selectors</span>
+        </div>
+        <p class="topic-desc">
+          <code>document.querySelector()</code> returns the first matching element using any CSS selector. <code>document.querySelectorAll()</code> returns a static <code>NodeList</code> containing all matching elements, which supports <code>.forEach()</code>!
+        </p>
+
+        <div class="section-label">Code Example: Selecting and Batch-Styling Nodes</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>selectors.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// 1. Single Element Selection
+const submitBtn = document.querySelector("#submitBtn");
+
+// 2. Multi-Element Selection & Iteration
+const badges = document.querySelectorAll(".sidebar-item.active");
+badges.forEach(badge => {
+  badge.style.fontWeight = "bold";
+});</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            <code>querySelectorAll</code> returns a <code>NodeList</code>, not an Array. If you need methods like <code>.map()</code> or <code>.filter()</code>, convert it using <code>Array.from(document.querySelectorAll(...))</code>!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 58 -->
+      <article class="topic-card" id="topic58">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 58</span>
+            <h2 class="topic-name">Modifying Content & HTML Attributes</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">DOM Content</span>
+        </div>
+        <p class="topic-desc">
+          Use <code>textContent</code> for pure text (safe against XSS). Use <code>innerHTML</code> only when rendering trusted HTML markup. Manipulate attributes using <code>getAttribute()</code>, <code>setAttribute()</code>, and <code>removeAttribute()</code>.
+        </p>
+
+        <div class="section-label">Code Example: Safe Content Updates & Attribute Toggles</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>content.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const banner = document.querySelector("#bannerTitle");
+
+// Safe Text Update
+banner.textContent = "Super Sys-Tech Computers • Session 2026";
+
+// Attribute Update
+const downloadLink = document.querySelector("#pdfLink");
+downloadLink.setAttribute("download", "SysTech_Handbook.pdf");
+downloadLink.setAttribute("target", "_blank");</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Never insert raw unsanitized user inputs into <code>innerHTML</code>! Doing so allows attackers to inject malicious <code>&lt;script&gt;</code> tags (Cross-Site Scripting / XSS). Always use <code>textContent</code> for user text!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 59 -->
+      <article class="topic-card" id="topic59">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 59</span>
+            <h2 class="topic-name">Creating, Appending & Removing DOM Nodes</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Node Creation</span>
+        </div>
+        <p class="topic-desc">
+          Create new elements dynamically with <code>document.createElement('div')</code>. Attach nodes to the DOM tree using <code>append()</code> or <code>prepend()</code>. Delete nodes with <code>element.remove()</code>.
+        </p>
+
+        <div class="section-label">Code Example: Dynamic Task Item Creation</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>create_nodes.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>function addNotification(message) {
+  const notif = document.createElement("div");
+  notif.className = "alert-toast";
+  notif.textContent = message;
+
+  // Append to container
+  document.body.prepend(notif);
+
+  // Auto-remove after 3 seconds
+  setTimeout(() => notif.remove(), 3000);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            When appending 50+ elements in a loop, use a <code>document.createDocumentFragment()</code>. Appending to a fragment and attaching it once prevents 50 separate browser layout repaints!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 60 -->
+      <article class="topic-card" id="topic60">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 60</span>
+            <h2 class="topic-name">Dynamic Styling & classList API</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">ClassList</span>
+        </div>
+        <p class="topic-desc">
+          Rather than writing inline styles like <code>el.style.color = "red"</code>, manage styles cleanly using the <code>classList</code> API: <code>add()</code>, <code>remove()</code>, <code>toggle()</code>, and <code>contains()</code>.
+        </p>
+
+        <div class="section-label">Code Example: Class Toggling & Theme Switcher</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>classlist.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const body = document.body;
+
+function toggleDarkMode() {
+  // Returns true if added, false if removed!
+  const isLight = body.classList.toggle("light-theme");
+  console.log("Current Theme:", isLight ? "Light Mode" : "Dark Mode");
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            <code>classList.toggle("active", booleanCondition)</code> accepts an optional second boolean parameter that forces the class on if true, or off if false!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 61 -->
+      <article class="topic-card" id="topic61">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 61</span>
+            <h2 class="topic-name">Event Listeners, Bubbling & Event Delegation</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Events</span>
+        </div>
+        <p class="topic-desc">
+          Events bubble upwards through the DOM hierarchy from target to parent. Event Delegation leverages this bubbling behavior by attaching a single listener to a parent container to manage clicks on hundreds of dynamically generated children!
+        </p>
+
+        <div class="section-label">Code Example: High-Performance Event Delegation</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>delegation.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const studentList = document.querySelector("#studentList");
+
+// Single listener handles deletes for all present and future <li> buttons!
+studentList.addEventListener("click", (e) => {
+  if (e.target.matches(".delete-btn")) {
+    const row = e.target.closest("li");
+    row.remove();
+  }
+});</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Attaching individual event listeners to 1,000 list items consumes massive memory. Event delegation on the parent container reduces memory consumption to a single listener!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 62 -->
+      <article class="topic-card" id="topic62">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 62</span>
+            <h2 class="topic-name">Form Events & Client-Side Validation</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Forms</span>
+        </div>
+        <p class="topic-desc">
+          Intercept form submissions using <code>e.preventDefault()</code> to validate user input and prevent the browser from reloading the page. Monitor user keystrokes in real time with the <code>input</code> event.
+        </p>
+
+        <div class="section-label">Code Example: Intercepting Form Submission & Instant Regex</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>form_validation.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const form = document.querySelector("#regForm");
+const phoneInput = document.querySelector("#phone");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault(); // Stop page reload!
+
+  const phoneRegex = /^03[0-9]{9}$/;
+  if (!phoneRegex.test(phoneInput.value)) {
+    alert("Please enter a valid 11-digit mobile number (03XXXXXXXXX)");
+    return;
+  }
+
+  alert("Validation Successful! Submitting admission data...");
+});</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Use the <code>input</code> event for real-time live typing feedback (e.g. password strength meters), but reserve final submission errors for the <code>submit</code> event!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 63 -->
+      <article class="topic-card" id="topic63">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 63</span>
+            <h2 class="topic-name">Browser Object Model (BOM) & History API</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">BOM</span>
+        </div>
+        <p class="topic-desc">
+          The Browser Object Model (BOM) provides access to the browser environment outside the HTML document: <code>window.location</code> (redirects, query parameters), <code>window.history</code> (SPA back/forward navigation), and <code>window.navigator</code>.
+        </p>
+
+        <div class="section-label">Code Example: Reading URL Query Parameters</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>bom.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// Parse query strings: example.com/?student=Mukesh&batch=2026
+const urlParams = new URLSearchParams(window.location.search);
+const studentName = urlParams.get("student");
+const batchYear = urlParams.get("batch");
+
+console.log(`Student: ${studentName}, Batch: ${batchYear}`);</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            <code>URLSearchParams</code> makes extracting query parameters trivial without writing custom string split regular expressions!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 64 -->
+      <article class="topic-card" id="topic64">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 64</span>
+            <h2 class="topic-name">Timers: setTimeout & setInterval</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Timers</span>
+        </div>
+        <p class="topic-desc">
+          <code>setTimeout()</code> executes a callback once after a delay in milliseconds. <code>setInterval()</code> repeats execution indefinitely until cleared with <code>clearInterval()</code> using its unique timer ID.
+        </p>
+
+        <div class="section-label">Code Example: Accurate Countdown Exam Timer</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>timers.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>let timeLeft = 60; // 60 seconds
+
+const timerId = setInterval(() => {
+  timeLeft--;
+  console.log("Exam Time Remaining:", timeLeft, "seconds");
+
+  if (timeLeft <= 0) {
+    clearInterval(timerId); // Stop timer
+    alert("Exam time is up! Submitting answers automatically.");
+  }
+}, 1000);</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always store the return value of <code>setInterval()</code> in a variable so you can pass it to <code>clearInterval()</code>. Forgetting this will cause background timers to leak and waste user device battery!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 65 -->
+      <article class="topic-card" id="topic65">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 65</span>
+            <h2 class="topic-name">Web Storage API: localStorage & sessionStorage</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">Storage</span>
+        </div>
+        <p class="topic-desc">
+          <code>localStorage</code> persists up to 5MB of data in the browser with no expiration date. <code>sessionStorage</code> clears when the browser tab is closed. Storage only holds strings, so serialize objects using <code>JSON.stringify()</code> and <code>JSON.parse()</code>.
+        </p>
+
+        <div class="section-label">Code Example: Persisting Complex Objects in LocalStorage</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>storage.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>// 1. Save complex array of objects to LocalStorage
+const tasks = [
+  { id: 1, title: "Finish HTML Notes", done: true },
+  { id: 2, title: "Practice Flexbox Grid", done: false }
+];
+localStorage.setItem("stc_student_tasks", JSON.stringify(tasks));
+
+// 2. Retrieve and parse back into JavaScript Objects
+const savedTasks = JSON.parse(localStorage.getItem("stc_student_tasks")) || [];
+console.log("Retrieved Tasks:", savedTasks);</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always pair <code>JSON.parse()</code> with a fallback: <code>JSON.parse(localStorage.getItem(...) || "[]")</code>. If the key doesn't exist yet, it safely initializes an empty array instead of throwing a null parsing error!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 66 -->
+      <article class="topic-card" id="topic66">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 66</span>
+            <h2 class="topic-name">Asynchronous JS: Async / Await & Fetch API</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Async / Await</span>
+        </div>
+        <p class="topic-desc">
+          Modern async JavaScript uses Promises with clean <code>async/await</code> syntax. The native <code>fetch()</code> API requests data over HTTP. Always wrap asynchronous requests inside <code>try...catch</code> blocks to handle network disconnects gracefully.
+        </p>
+
+        <div class="section-label">Code Example: Robust Async Fetch API with Error Handling</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>async_fetch.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>async function fetchWeatherData(city) {
+  try {
+    const response = await fetch(`https://api.example.com/weather?q=${city}`);
+    
+    // Fetch does NOT reject on HTTP 404 or 500 errors! Check response.ok manually:
+    if (!response.ok) {
+      throw new Error(`HTTP Error Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Weather in", city, data);
+    return data;
+  } catch (error) {
+    console.error("Network or API Failure:", error.message);
+  }
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            A critical gotcha with <code>fetch()</code> is that it will only reject if there is a network breakdown. If the server returns a 404 (Not Found) or 500 (Internal Error), fetch resolves normally! You must always check <code>if (!response.ok)</code>!
+          </div>
+        </div>
+      </article>
+
+      <!-- ==================== UNIT 4: REAL-WORLD JS CAPSTONE PROJECTS ==================== -->
+      <div class="unit-banner" id="unit-projects" style="border-left-color: #f59e0b; background: linear-gradient(90deg, rgba(245, 158, 11, 0.2) 0%, rgba(15, 23, 42, 0.4) 100%);">
+        <div>
+          <div class="unit-tag" style="color: #fbbf24;">Unit 04 • Capstone Implementation</div>
+          <div class="unit-title">Real-World Interactive JavaScript Projects</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">5 Industry Projects</div>
+      </div>
+
+      <!-- PROJECT 1: TASK MANAGER LOCALSTORAGE -->
+      <article class="topic-card" id="proj-todo" style="border-left: 4px solid #f59e0b;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 01</span>
+            <h2 class="topic-name">✅ Interactive Task Manager with LocalStorage & Filter Tabs</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">State & Storage</span>
+        </div>
+        <p class="topic-desc">
+          A production-grade Todo application featuring state management, dynamic DOM rendering, completion toggling, filtering ([All], [Active], [Completed]), and browser LocalStorage synchronization.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>todo_app.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>class TodoApp {
+  constructor() {
+    this.tasks = JSON.parse(localStorage.getItem("stc_todos")) || [];
+    this.filter = "all";
+    this.listEl = document.querySelector("#todoList");
+    this.formEl = document.querySelector("#todoForm");
+    this.inputEl = document.querySelector("#todoInput");
+    this.init();
+  }
+
+  init() {
+    this.formEl.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const title = this.inputEl.value.trim();
+      if (!title) return;
+      this.tasks.push({ id: Date.now(), title, completed: false });
+      this.inputEl.value = "";
+      this.saveAndRender();
+    });
+
+    this.listEl.addEventListener("click", (e) => {
+      const id = Number(e.target.closest("li")?.dataset.id);
+      if (e.target.matches(".toggle-btn")) {
+        const task = this.tasks.find(t => t.id === id);
+        if (task) task.completed = !task.completed;
+        this.saveAndRender();
+      } else if (e.target.matches(".delete-btn")) {
+        this.tasks = this.tasks.filter(t => t.id !== id);
+        this.saveAndRender();
+      }
+    });
+
+    this.render();
+  }
+
+  saveAndRender() {
+    localStorage.setItem("stc_todos", JSON.stringify(this.tasks));
+    this.render();
+  }
+
+  render() {
+    const filtered = this.tasks.filter(t => {
+      if (this.filter === "active") return !t.completed;
+      if (this.filter === "completed") return t.completed;
+      return true;
+    });
+
+    this.listEl.innerHTML = filtered.map(t => `
+      &lt;li data-id="${t.id}" class="${t.completed ? 'completed' : ''}"&gt;
+        &lt;span class="toggle-btn"&gt;${t.completed ? '☑' : '☐'}&lt;/span&gt;
+        &lt;span class="title"&gt;${t.title}&lt;/span&gt;
+        &lt;button class="delete-btn"&gt;×&lt;/button&gt;
+      &lt;/li&gt;
+    `).join("");
+  }
+}
+
+new TodoApp();</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            Using <code>data-id="${t.id}"</code> with <code>Date.now()</code> guarantees unique IDs for every record. Event delegation via <code>e.target.closest("li")</code> cleanly identifies which item was clicked without needing closures inside loops!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 2: PRODUCT SEARCH & LIVE FILTER -->
+      <article class="topic-card" id="proj-filter" style="border-left: 4px solid #38bdf8;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 02</span>
+            <h2 class="topic-name">🔍 Dynamic Product Catalog & Real-Time Search Filter</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Search & Filter</span>
+        </div>
+        <p class="topic-desc">
+          An instant search and category filter system demonstrating array <code>filter()</code> pipelines, debounced search inputs, and dynamic multi-column catalog grid updates.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>catalog_filter.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const catalog = [
+  { id: 1, name: "Web Engineering Masterclass", category: "courses", price: 6000 },
+  { id: 2, name: "HP ProBook Core i5 (Lab Approved)", category: "hardware", price: 42000 },
+  { id: 3, name: "MySQL PDO Relational Database Guide", category: "books", price: 1200 },
+  { id: 4, name: "JavaScript ES6+ Deep Dive Course", category: "courses", price: 5000 }
+];
+
+let selectedCategory = "all";
+let searchQuery = "";
+
+const searchInput = document.querySelector("#searchInput");
+const categorySelect = document.querySelector("#categorySelect");
+const gridEl = document.querySelector("#productGrid");
+
+function filterAndRender() {
+  const q = searchQuery.toLowerCase();
+  const results = catalog.filter(item => {
+    const matchesCat = selectedCategory === "all" || item.category === selectedCategory;
+    const matchesQuery = item.name.toLowerCase().includes(q);
+    return matchesCat && matchesQuery;
+  });
+
+  gridEl.innerHTML = results.length ? results.map(item => `
+    &lt;div class="catalog-card"&gt;
+      &lt;h4&gt;${item.name}&lt;/h4&gt;
+      &lt;p&gt;Category: &lt;strong&gt;${item.category}&lt;/strong&gt;&lt;/p&gt;
+      &lt;div class="price"&gt;Rs. ${item.price.toLocaleString()}&lt;/div&gt;
+    &lt;/div&gt;
+  `).join("") : `&lt;p class="no-results"&gt;No products match your search.&lt;/p&gt;`;
+}
+
+searchInput.addEventListener("input", (e) => {
+  searchQuery = e.target.value;
+  filterAndRender();
+});
+
+categorySelect.addEventListener("change", (e) => {
+  selectedCategory = e.target.value;
+  filterAndRender();
+});</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            Keeping state variables (<code>selectedCategory</code> and <code>searchQuery</code>) separate from the DOM guarantees that when users type into the search bar, category filters are preserved simultaneously!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 3: ASYNC WEATHER PORTAL -->
+      <article class="topic-card" id="proj-weather" style="border-left: 4px solid #10b981;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 03</span>
+            <h2 class="topic-name">⛅ Real-Time Weather Forecast Portal (Async / Fetch API)</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">REST API</span>
+        </div>
+        <p class="topic-desc">
+          A live weather application consuming public REST endpoints with <code>async/await</code>, loading skeletons, error handling, temperature conversions, and weather icon rendering.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>weather_portal.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>async function getWeather(city = "Umerkot") {
+  const container = document.querySelector("#weatherCard");
+  container.innerHTML = `&lt;div class="loading"&gt;Fetching meteorological data for ${city}...&lt;/div&gt;`;
+
+  try {
+    // Open-Meteo Public Weather API (No API Key required)
+    // Coordinates for Umerkot, Sindh: 25.3616° N, 69.7363° E
+    const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=25.36&longitude=69.74&current_weather=true");
+    
+    if (!res.ok) throw new Error("Weather service unreachable.");
+    
+    const data = await res.json();
+    const current = data.current_weather;
+
+    container.innerHTML = `
+      &lt;div class="weather-box"&gt;
+        &lt;h3&gt;Current Weather • ${city}&lt;/h3&gt;
+        &lt;div class="temp"&gt;${current.temperature}°C&lt;/div&gt;
+        &lt;p&gt;Windspeed: ${current.windspeed} km/h | Direction: ${current.winddirection}°&lt;/p&gt;
+        &lt;small&gt;Last Synced: ${new Date().toLocaleTimeString()}&lt;/small&gt;
+      &lt;/div&gt;
+    `;
+  } catch (err) {
+    container.innerHTML = `&lt;div class="error"&gt;Failed to load weather: ${err.message}&lt;/div&gt;`;
+  }
+}
+
+getWeather();</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            Notice the loading message displayed immediately before <code>await fetch()</code>. Providing instant visual feedback prevents users from repeatedly clicking buttons during asynchronous network delays!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 4: INTERACTIVE QUIZ ENGINE -->
+      <article class="topic-card" id="proj-quiz" style="border-left: 4px solid #a855f7;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 04</span>
+            <h2 class="topic-name">🧠 Interactive Certification Quiz Engine with Score Tracker</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Exam Engine</span>
+        </div>
+        <p class="topic-desc">
+          An interactive student examination portal with timed questions, randomized choice shuffling, instant answer evaluation, score calculation, and progress bars.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>quiz_engine.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>const questions = [
+  {
+    q: "Which keyword creates a block-scoped re-assignable variable?",
+    options: ["var", "let", "const", "global"],
+    answer: 1
+  },
+  {
+    q: "What does Array.prototype.filter() return?",
+    options: ["Single Value", "A new filtered Array", "Boolean", "Modified original array"],
+    answer: 1
+  },
+  {
+    q: "Which method converts JSON text into a JavaScript object?",
+    options: ["JSON.stringify()", "JSON.parse()", "JSON.toObject()", "JSON.convert()"],
+    answer: 1
+  }
+];
+
+let currentIndex = 0;
+let score = 0;
+
+function loadQuestion() {
+  const qObj = questions[currentIndex];
+  const container = document.querySelector("#quizBox");
+
+  container.innerHTML = `
+    &lt;h3&gt;Question ${currentIndex + 1} of ${questions.length}&lt;/h3&gt;
+    &lt;p class="question-text"&gt;${qObj.q}&lt;/p&gt;
+    &lt;div class="options-group"&gt;
+      ${qObj.options.map((opt, i) => `
+        &lt;button class="opt-btn" onclick="selectAnswer(${i})"&gt;${opt}&lt;/button&gt;
+      `).join("")}
+    &lt;/div&gt;
+  `;
+}
+
+window.selectAnswer = function(chosenIndex) {
+  if (chosenIndex === questions[currentIndex].answer) {
+    score++;
+  }
+  currentIndex++;
+  if (currentIndex < questions.length) {
+    loadQuestion();
+  } else {
+    showResults();
+  }
+};
+
+function showResults() {
+  const container = document.querySelector("#quizBox");
+  const pct = Math.round((score / questions.length) * 100);
+  container.innerHTML = `
+    &lt;h2&gt;Examination Completed!&lt;/h2&gt;
+    &lt;p&gt;Your Score: &lt;strong&gt;${score} / ${questions.length}&lt;/strong&gt; (${pct}%)&lt;/p&gt;
+    &lt;p&gt;Status: &lt;span style="color:${pct >= 70 ? '#10b981':'#ef4444'}"&gt;${pct >= 70 ? 'PASSED (Certificate Eligible)':'FAILED (Retake Exam)'}&lt;/span&gt;&lt;/p&gt;
+  `;
+}
+
+loadQuestion();</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            Keeping question data in pure JSON format allows questions to be pulled from a backend MySQL database or external API endpoint without having to modify any of your UI rendering code!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 5: FINANCIAL LOAN EMI CALCULATOR -->
+      <article class="topic-card" id="proj-emi" style="border-left: 4px solid #ec4899;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 05</span>
+            <h2 class="topic-name">💰 Financial Loan EMI & Tuition Installment Calculator</h2>
+          </div>
+          <span class="topic-badge" style="color:#ec4899; border-color: rgba(236,72,153,0.3);">Math & Inputs</span>
+        </div>
+        <p class="topic-desc">
+          A real-time financial installment calculator utilizing compound interest formulas, interactive input sliders (<code>&lt;input type="range"&gt;</code>), and dynamic monthly breakdown graphs.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>emi_calculator.js</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>function calculateEMI() {
+  const principal = parseFloat(document.querySelector("#loanAmount").value);
+  const annualRate = parseFloat(document.querySelector("#interestRate").value);
+  const tenureMonths = parseFloat(document.querySelector("#tenureMonths").value);
+
+  // Monthly Interest Rate
+  const monthlyRate = annualRate / 12 / 100;
+
+  // Standard EMI Formula: [P * R * (1+R)^N] / [(1+R)^N - 1]
+  const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, tenureMonths)) / 
+              (Math.pow(1 + monthlyRate, tenureMonths) - 1);
+
+  const totalPayment = emi * tenureMonths;
+  const totalInterest = totalPayment - principal;
+
+  document.querySelector("#monthlyEmiDisplay").textContent = `Rs. ${Math.round(emi).toLocaleString()}`;
+  document.querySelector("#totalInterestDisplay").textContent = `Rs. ${Math.round(totalInterest).toLocaleString()}`;
+  document.querySelector("#totalPayableDisplay").textContent = `Rs. ${Math.round(totalPayment).toLocaleString()}`;
+}
+
+// Attach live input listeners to all range sliders
+document.querySelectorAll(".calc-slider").forEach(slider => {
+  slider.addEventListener("input", (e) => {
+    // Synchronize slider number label
+    document.querySelector(`#${e.target.id}Val`).textContent = e.target.value;
+    calculateEMI();
+  });
+});
+
+calculateEMI();</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            Using the <code>Math.pow(base, exponent)</code> mathematical function ensures precision when computing exponential compound rates across multi-year amortization schedules!
+          </div>
+        </div>
+      </article>
+
+      <!-- Footer -->
+      <footer>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 12px;">
+          <img src="assets/stc_logo.jpg" alt="STC Logo" style="width: 44px; height: 44px; border-radius: 6px; background: #fff; padding: 3px; object-fit: contain;" onerror="this.style.display='none'">
+          <strong style="color: var(--text-main); font-size: 1.05rem;">Super Sys-Tech Computers Centre Umerkot</strong>
+        </div>
+        <p style="font-style: italic; color: #fbbf24;">"Struggle For Better Education"</p>
+        <p>Official Curriculum & Study Notes • Compiled by <strong>Mukesh Kumar</strong></p>
+        <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">Designed for print, online study, and exam preparation. All rights reserved © 2026.</p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Floating Back to Top Button & Mobile Backdrop -->
+  <button id="floatingTopBtn" class="floating-top-btn no-print" onclick="scrollToTop()" title="Scroll Back to Top">▲</button>
+  <div id="sidebarBackdrop" class="sidebar-backdrop no-print" onclick="toggleSidebar()"></div>
+
+  <script>
+    // 1-Click Copy Code
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-wrapper').querySelector('pre code');
+      const text = codeBlock.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = "✓ Copied!";
+        btn.style.color = "#10b981";
+        btn.style.borderColor = "#10b981";
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.color = "";
+          btn.style.borderColor = "";
+        }, 2000);
+      });
+    }
+
+    // Filter topics in the Left Sidebar
+    function filterSidebarTopics(query) {
+      const q = query.toLowerCase().trim();
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        const text = item.innerText.toLowerCase();
+        item.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    // Switch Sidebar Category Tabs ([All], [Topics], [Projects])
+    function switchSidebarCategory(cat, btn) {
+      document.querySelectorAll('.sb-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const topicItems = document.querySelectorAll('.sidebar-unit-group:not(.unit-projects-group)');
+      const projItems = document.querySelectorAll('.unit-projects-group');
+
+      if (cat === 'all') {
+        topicItems.forEach(g => g.style.display = 'block');
+        projItems.forEach(g => g.style.display = 'block');
+      } else if (cat === 'topics') {
+        topicItems.forEach(g => g.style.display = 'block');
+        projItems.forEach(g => g.style.display = 'none');
+      } else if (cat === 'projects') {
+        topicItems.forEach(g => g.style.display = 'none');
+        projItems.forEach(g => g.style.display = 'block');
+      }
+    }
+
+    // Toggle Left Sidebar (Mobile Drawer & Desktop Full View Collapse)
+    function toggleSidebar() {
+      const isMobile = window.innerWidth <= 1080;
+      const sidebar = document.getElementById('docSidebar');
+      const topBtn = document.getElementById('sidebarToggleBtn');
+      const sidebarCollapseBtn = document.getElementById('sidebarCollapseBtn');
+
+      if (isMobile) {
+        const backdrop = document.getElementById('sidebarBackdrop');
+        const isOpen = sidebar.classList.toggle('open');
+        if (backdrop) backdrop.classList.toggle('active', isOpen);
+      } else {
+        const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
+        if (topBtn) {
+          topBtn.innerHTML = isCollapsed ? "📑 Show TOC" : "◀ Full View";
+          if (isCollapsed) {
+            topBtn.classList.add('active-fullview');
+          } else {
+            topBtn.classList.remove('active-fullview');
+          }
+        }
+        if (sidebarCollapseBtn) {
+          sidebarCollapseBtn.innerHTML = isCollapsed ? "▶ Show TOC" : "◀ Full View";
+        }
+        localStorage.setItem('stc_js_toc_collapsed', isCollapsed ? 'true' : 'false');
+      }
+    }
+
+    // Initialize saved sidebar state on desktop
+    (function initSidebarState() {
+      if (window.innerWidth > 1080) {
+        const savedCollapsed = localStorage.getItem('stc_js_toc_collapsed');
+        if (savedCollapsed === 'true') {
+          document.body.classList.add('sidebar-collapsed');
+          const topBtn = document.getElementById('sidebarToggleBtn');
+          if (topBtn) {
+            topBtn.innerHTML = "📑 Show TOC";
+            topBtn.classList.add('active-fullview');
+          }
+        }
+      }
+    })();
+
+    // Smooth scroll and handle mobile sidebar on item click
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const href = item.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+            item.classList.add('active');
+            history.pushState(null, null, href);
+          }
+        }
+        const sidebar = document.getElementById('docSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (window.innerWidth <= 1080) {
+          sidebar.classList.remove('open');
+          if (backdrop) backdrop.classList.remove('active');
+        }
+      });
+    });
+
+    // Theme Switcher (Dark vs Light Print Preview)
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-theme');
+      const btn = document.getElementById('themeToggleBtn');
+      if (btn) {
+        btn.innerHTML = isLight ? "☀️ Light Mode" : "🌙 Dark Mode";
+      }
+      localStorage.setItem('stc_js_notes_theme', isLight ? 'light' : 'dark');
+    }
+
+    // Initialize Theme on Page Load
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('stc_js_notes_theme');
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        const btn = document.getElementById('themeToggleBtn');
+        if (btn) btn.innerHTML = "☀️ Light Mode";
+      }
+    })();
+
+    // Top Header Search Filter
+    function filterNotes() {
+      const input = document.getElementById('topicSearch').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.topic-card');
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(input) ? 'block' : 'none';
+      });
+    }
+
+    // Floating Back to Top Button Handler
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('floatingTopBtn');
+      if (btn) {
+        btn.style.display = window.scrollY > 350 ? 'flex' : 'none';
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ScrollSpy: Automatically highlight active section in TOC and center it
+    const observerOptions = {
+      root: null,
+      rootMargin: '-80px 0px -70% 0px',
+      threshold: 0
+    };
+
+    const topicObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+          const currentLink = document.querySelector(`.sidebar-item[href="#${id}"]`);
+          if (currentLink) {
+            currentLink.classList.add('active');
+            const sidebarNav = document.getElementById('sidebarNav');
+            if (sidebarNav) {
+              const relTop = currentLink.offsetTop - sidebarNav.offsetTop - (sidebarNav.clientHeight / 2) + (currentLink.clientHeight / 2);
+              sidebarNav.scrollTo({ top: Math.max(0, relTop), behavior: 'smooth' });
+            }
+          }
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.topic-card').forEach(card => {
+      topicObserver.observe(card);
+    });
+
+    // Auto-trigger print if requested via URL
+    if (window.location.search.includes('action=print')) {
+      window.addEventListener('load', () => {
+        setTimeout(() => window.print(), 600);
+      });
+    }
+  </script>
+</body>
+</html>

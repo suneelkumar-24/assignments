@@ -1,0 +1,2891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS3 & Responsive Design Complete Master Notes & Projects | Super Sys-Tech Computers Centre Umerkot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #0b1329;
+      --card-bg: #132247;
+      --card-border: #1e3a6e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --css-color: #38bdf8;
+      --css-gradient: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+      --accent-cyan: #38bdf8;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #a855f7;
+      --code-bg: #070e1e;
+    }
+
+    body.light-theme {
+      --bg-main: #f0f9ff;
+      --card-bg: #ffffff;
+      --card-border: #bae6fd;
+      --text-main: #0c4a6e;
+      --text-muted: #64748b;
+      --code-bg: #0f172a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.65;
+      overflow-x: clip;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Top Sticky Navigation Bar */
+    .sticky-bar {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(11, 19, 41, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+
+    body.light-theme .sticky-bar {
+      background: rgba(255, 255, 255, 0.94);
+    }
+
+    .bar-left, .bar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .bar-brand img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #ffffff;
+      padding: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .bar-brand-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+
+    .bar-brand-text small {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--css-color);
+      font-weight: 600;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--card-border);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--css-color);
+      transform: translateY(-1px);
+    }
+
+    .btn-print {
+      background: var(--css-gradient);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35);
+    }
+
+    .btn-print:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+    }
+
+    .btn.active-fullview {
+      background: rgba(56, 189, 248, 0.25) !important;
+      border-color: var(--css-color) !important;
+      color: #7dd3fc !important;
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 220px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      border-radius: 50px;
+      padding: 7px 14px 7px 32px;
+      color: var(--text-main);
+      font-size: 0.84rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    body.light-theme .search-box input {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .search-box input:focus {
+      border-color: var(--css-color);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* Layout Structure: Left Sticky Sidebar + Right Main Content */
+    .doc-layout {
+      display: flex;
+      gap: 30px;
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+      align-items: flex-start;
+      box-sizing: border-box;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    /* Left Sidebar: Sticky Table of Contents */
+    .doc-sidebar {
+      width: 320px;
+      min-width: 300px;
+      max-width: 330px;
+      flex-shrink: 0;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 76px;
+      align-self: flex-start;
+      height: calc(100vh - 96px);
+      max-height: calc(100vh - 96px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+      overflow: hidden;
+      transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    }
+
+    body.light-theme .doc-sidebar {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.08);
+    }
+
+    .sidebar-header {
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .sidebar-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-heading {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-collapse-btn {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--css-color);
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-collapse-btn:hover {
+      background: var(--css-color);
+      color: #0b1329;
+    }
+
+    .sidebar-search-box {
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-search-box input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 6px 10px 6px 30px;
+      color: var(--text-main);
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    body.light-theme .sidebar-search-box input {
+      background: #f8fafc;
+    }
+
+    .sidebar-search-box svg {
+      position: absolute;
+      left: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 13px;
+      height: 13px;
+      color: var(--text-muted);
+    }
+
+    .sidebar-tabs {
+      display: flex;
+      gap: 5px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 3px;
+      border-radius: 8px;
+    }
+
+    .sb-tab {
+      flex: 1;
+      padding: 5px 4px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .sb-tab.active {
+      background: var(--css-color);
+      color: #0b1329;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 10px;
+      scroll-behavior: smooth;
+    }
+
+    .sidebar-unit-group {
+      margin-bottom: 14px;
+    }
+
+    .sidebar-unit-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--css-color);
+      padding: 6px 10px 4px;
+      border-bottom: 1px dashed rgba(56, 189, 248, 0.25);
+      margin-bottom: 6px;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-item:hover {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--text-main);
+      transform: translateX(3px);
+    }
+
+    .sidebar-item.active {
+      background: var(--css-gradient);
+      color: #ffffff !important;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);
+    }
+
+    .sidebar-num {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.74rem;
+      opacity: 0.85;
+      padding: 2px 6px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 4px;
+    }
+
+    .sidebar-item.active .sidebar-num {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    /* Right Main Content */
+    .doc-main {
+      flex: 1;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Desktop Full View & Collapsible Sidebar */
+    body.sidebar-collapsed .doc-sidebar {
+      display: none !important;
+    }
+
+    body.sidebar-collapsed .doc-layout {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 25px 25px;
+      gap: 0 !important;
+      justify-content: center;
+    }
+
+    body.sidebar-collapsed .doc-main {
+      max-width: 100% !important;
+      width: 100% !important;
+      margin: 0 auto;
+    }
+
+    body.sidebar-collapsed .topic-card {
+      padding: 30px 32px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Cover Page Card */
+    .cover-card {
+      background: linear-gradient(145deg, rgba(2, 132, 199, 0.15) 0%, rgba(11, 19, 41, 0.95) 100%);
+      border: 2px solid rgba(56, 189, 248, 0.35);
+      border-radius: 28px;
+      padding: 45px 35px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+      margin-bottom: 30px;
+    }
+
+    body.light-theme .cover-card {
+      background: linear-gradient(145deg, #f0f9ff 0%, #ffffff 100%);
+      border-color: #bae6fd;
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);
+    }
+
+    .cover-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .institute-logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 10px 20px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+    }
+
+    body.light-theme .institute-logo-badge {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: #cbd5e1;
+    }
+
+    .institute-logo-badge img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 4px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    .institute-info-text {
+      text-align: left;
+    }
+
+    .institute-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .institute-tagline {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--accent-cyan);
+      letter-spacing: 0.5px;
+    }
+
+    .css-official-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1.5px solid rgba(56, 189, 248, 0.35);
+      padding: 8px 18px;
+      border-radius: 14px;
+    }
+
+    .doc-main-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    body.light-theme .doc-main-title {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .doc-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 25px;
+      line-height: 1.6;
+    }
+
+    .author-meta-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--card-border);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    body.light-theme .author-meta-box {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .author-name {
+      color: var(--accent-amber);
+      font-weight: 800;
+    }
+
+    .student-fields-strip {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(56, 189, 248, 0.3);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      text-align: left;
+    }
+
+    .student-field-item {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    body.light-theme .student-field-item {
+      background: #f1f5f9;
+      border-color: #e2e8f0;
+    }
+
+    .student-field-item label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .student-field-item span {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--css-color);
+      border-bottom: 1px dotted var(--text-muted);
+      display: inline-block;
+      width: 100%;
+      min-height: 20px;
+    }
+
+    /* Unit Banners */
+    .unit-banner {
+      background: linear-gradient(90deg, rgba(2, 132, 199, 0.2) 0%, rgba(11, 19, 41, 0.4) 100%);
+      border-left: 6px solid var(--css-color);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 40px 0 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .unit-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--css-color);
+    }
+
+    .unit-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    /* Topic Cards */
+    .topic-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      position: relative;
+      scroll-margin-top: 90px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    body.light-theme .topic-card {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .topic-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .topic-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topic-badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--css-color);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .topic-name {
+      font-size: 1.28rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .topic-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    .section-label {
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin: 16px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--css-color);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Code Blocks */
+    .code-wrapper {
+      position: relative;
+      background: var(--code-bg);
+      border: 1px solid #1e3a6e;
+      border-radius: 12px;
+      margin: 10px 0 16px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    body.light-theme .code-wrapper {
+      background: #0f172a;
+      border-color: #334155;
+    }
+
+    .code-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 8px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.75rem;
+      font-family: 'Fira Code', monospace;
+      color: #94a3b8;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f8fafc;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--css-color);
+      color: #0b1329;
+      font-weight: bold;
+    }
+
+    pre {
+      padding: 14px;
+      overflow-x: auto;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.84rem;
+      color: #f8fafc;
+      line-height: 1.6;
+      white-space: pre;
+    }
+
+    .pro-tip {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(56, 189, 248, 0.08) 100%);
+      border-left: 4px solid var(--accent-amber);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: #fde68a;
+    }
+
+    body.light-theme .pro-tip {
+      background: #fffbeb;
+      color: #92400e;
+      border-color: #f59e0b;
+    }
+
+    .pro-tip-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* Floating Back to Top Button */
+    .floating-top-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--css-gradient);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      z-index: 1200;
+      transition: all 0.2s;
+    }
+
+    .floating-top-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1400;
+    }
+
+    .sidebar-backdrop.active {
+      display: block;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1080px) {
+      .doc-sidebar {
+        position: fixed;
+        left: -350px;
+        top: 72px;
+        height: calc(100vh - 80px);
+        z-index: 1500;
+        transition: left 0.3s ease;
+      }
+      .doc-sidebar.open {
+        left: 15px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+      }
+      .doc-layout {
+        padding: 15px 12px;
+        gap: 0;
+      }
+      .sticky-bar {
+        padding: 10px 14px;
+        gap: 8px;
+      }
+      .bar-brand-text small {
+        display: none;
+      }
+      .search-box {
+        min-width: 140px;
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .sticky-bar {
+        padding: 8px 10px;
+      }
+      .search-box {
+        display: none;
+      }
+      .cover-card {
+        padding: 22px 14px;
+      }
+      .topic-card {
+        padding: 18px 14px;
+      }
+      .doc-main-title {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* Print Stylesheet for Official A4 Output */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print, .sticky-bar, .doc-sidebar, .floating-top-btn, .copy-btn {
+        display: none !important;
+      }
+      .doc-layout {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+      .cover-card {
+        background: #ffffff !important;
+        border: 2px solid #0284c7 !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        page-break-after: always;
+      }
+      .doc-main-title {
+        color: #0284c7 !important;
+        -webkit-text-fill-color: #0284c7 !important;
+      }
+      .topic-card {
+        background: #ffffff !important;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 25px;
+      }
+      .code-wrapper {
+        background: #f8fafc !important;
+        border: 1px solid #ccc !important;
+      }
+      pre {
+        color: #0f172a !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky-bar">
+    <div class="bar-left">
+      <a href="roadmap.html" class="btn btn-outline" title="Return to Full Learning Roadmap">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Roadmap
+      </a>
+      
+      <a href="#cover" class="bar-brand">
+        <img src="assets/stc_logo.jpg" alt="STC Logo" onerror="this.style.display='none'">
+        <div class="bar-brand-text">
+          Super Sys-Tech Computers
+          <small>CSS3 Master Notes • Umerkot</small>
+        </div>
+      </a>
+    </div>
+
+    <div class="bar-right">
+      <div class="search-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="topicSearch" placeholder="Search CSS (e.g. Flexbox, Grid, Anim)..." onkeyup="filterNotes()">
+      </div>
+
+      <button onclick="toggleSidebar()" class="btn btn-outline sidebar-toggle-btn" id="sidebarToggleBtn" title="Toggle Table of Contents / Full View">
+        ◀ Full View
+      </button>
+
+      <button onclick="toggleTheme()" class="btn btn-outline" id="themeToggleBtn" title="Toggle Light / Dark Preview">
+        🌓 Theme
+      </button>
+
+      <button onclick="window.print()" class="btn btn-print" title="Print this handbook or save it as an official PDF">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Download / Print PDF
+      </button>
+    </div>
+  </header>
+
+  <div class="doc-layout">
+
+    <!-- LEFT SIDEBAR: STICKY TABLE OF CONTENTS -->
+    <aside class="doc-sidebar no-print" id="docSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title-row">
+          <div class="sidebar-heading">
+            <span>📑 Table of Contents</span>
+          </div>
+          <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" onclick="toggleSidebar()" title="Collapse TOC to view full page width">
+            ◀ Full View
+          </button>
+        </div>
+        <div class="sidebar-search-box">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="sidebarSearchInput" placeholder="Filter topics in TOC..." oninput="filterSidebarTopics(this.value)">
+        </div>
+        <div class="sidebar-tabs">
+          <button class="sb-tab active" onclick="switchSidebarCategory('all', this)">All (31)</button>
+          <button class="sb-tab" onclick="switchSidebarCategory('topics', this)">📘 Topics (26)</button>
+          <button class="sb-tab" onclick="switchSidebarCategory('projects', this)">🚀 Projects (5)</button>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav">
+        <!-- Unit 1: Foundations -->
+        <div class="sidebar-unit-group">
+          <div class="sidebar-unit-title">Unit 01 • CSS Foundations & Box Model</div>
+          <a href="#topic10" class="sidebar-item active"><span class="sidebar-num">10</span> CSS Intro & Selectors</a>
+          <a href="#topic11" class="sidebar-item"><span class="sidebar-num">11</span> Colors & Gradients</a>
+          <a href="#topic12" class="sidebar-item"><span class="sidebar-num">12</span> Borders & Radius</a>
+          <a href="#topic13" class="sidebar-item"><span class="sidebar-num">13</span> Margins & Padding</a>
+          <a href="#topic14" class="sidebar-item"><span class="sidebar-num">14</span> Dimensions (Min/Max)</a>
+          <a href="#topic15" class="sidebar-item"><span class="sidebar-num">15</span> Box Model & Sizing</a>
+        </div>
+
+        <!-- Unit 2: Display & Typography -->
+        <div class="sidebar-unit-group">
+          <div class="sidebar-unit-title">Unit 02 • Display & Typography</div>
+          <a href="#topic16" class="sidebar-item"><span class="sidebar-num">16</span> Display (Block/Inline)</a>
+          <a href="#topic17" class="sidebar-item"><span class="sidebar-num">17</span> Visibility & Opacity</a>
+          <a href="#topic18" class="sidebar-item"><span class="sidebar-num">18</span> Fonts & Typography</a>
+          <a href="#topic19" class="sidebar-item"><span class="sidebar-num">19</span> Icons & Web Fonts</a>
+          <a href="#topic20" class="sidebar-item"><span class="sidebar-num">20</span> Links & Pseudo-Classes</a>
+          <a href="#topic21" class="sidebar-item"><span class="sidebar-num">21</span> List Styling</a>
+          <a href="#topic22" class="sidebar-item"><span class="sidebar-num">22</span> Table Styling</a>
+        </div>
+
+        <!-- Unit 3: Specificity, Position & Variables -->
+        <div class="sidebar-unit-group">
+          <div class="sidebar-unit-title">Unit 03 • Positioning & Variables</div>
+          <a href="#topic23" class="sidebar-item"><span class="sidebar-num">23</span> Cascade & Specificity</a>
+          <a href="#topic24" class="sidebar-item"><span class="sidebar-num">24</span> Pseudo-Elements (::before)</a>
+          <a href="#topic25" class="sidebar-item"><span class="sidebar-num">25</span> Position (Sticky/Absolute)</a>
+          <a href="#topic26" class="sidebar-item"><span class="sidebar-num">26</span> Overflow (Hidden/Clip)</a>
+          <a href="#topic27" class="sidebar-item"><span class="sidebar-num">27</span> CSS Custom Properties</a>
+        </div>
+
+        <!-- Unit 4: Effects, Motion & Media Queries -->
+        <div class="sidebar-unit-group">
+          <div class="sidebar-unit-title">Unit 04 • Motion & Responsiveness</div>
+          <a href="#topic28" class="sidebar-item"><span class="sidebar-num">28</span> Floats & Clearfix</a>
+          <a href="#topic29" class="sidebar-item"><span class="sidebar-num">29</span> 2D & 3D Transforms</a>
+          <a href="#topic30" class="sidebar-item"><span class="sidebar-num">30</span> Smooth Transitions</a>
+          <a href="#topic31" class="sidebar-item"><span class="sidebar-num">31</span> Keyframe Animations</a>
+          <a href="#topic32" class="sidebar-item"><span class="sidebar-num">32</span> Media Queries & RWD</a>
+        </div>
+
+        <!-- Unit 5: Modern Layout Systems -->
+        <div class="sidebar-unit-group">
+          <div class="sidebar-unit-title">Unit 05 • Modern Layout Systems</div>
+          <a href="#topic33" class="sidebar-item"><span class="sidebar-num">33</span> Flexbox Complete Guide</a>
+          <a href="#topic34" class="sidebar-item"><span class="sidebar-num">34</span> CSS Grid Complete Guide</a>
+          <a href="#topic35" class="sidebar-item"><span class="sidebar-num">35</span> Modern Functions (clamp)</a>
+        </div>
+
+        <!-- Unit 6: Real-World CSS Projects -->
+        <div class="sidebar-unit-group unit-projects-group">
+          <div class="sidebar-unit-title">Unit 06 • Real-World Projects</div>
+          <a href="#proj-glass" class="sidebar-item"><span class="sidebar-num">P1</span> Glassmorphic Landing Page</a>
+          <a href="#proj-cards" class="sidebar-item"><span class="sidebar-num">P2</span> E-Commerce Product Grid</a>
+          <a href="#proj-dashboard" class="sidebar-item"><span class="sidebar-num">P3</span> Analytics Dashboard Grid</a>
+          <a href="#proj-pricing" class="sidebar-item"><span class="sidebar-num">P4</span> Animated Pricing Matrix</a>
+          <a href="#proj-3dcards" class="sidebar-item"><span class="sidebar-num">P5</span> 3D Flipping Showcase Cards</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- RIGHT MAIN CONTENT (Scrolls smoothly!) -->
+    <main class="doc-main" id="mainContent">
+
+      <!-- Cover Page -->
+      <div class="cover-card" id="cover">
+        <div class="cover-logos">
+          <div class="institute-logo-badge">
+            <img src="assets/stc_logo.jpg" alt="Super Sys-Tech Logo" onerror="this.style.display='none'">
+            <div class="institute-info-text">
+              <div class="institute-title">Super Sys-Tech Computers Centre</div>
+              <div class="institute-tagline">Struggle For Better Education • Umerkot</div>
+            </div>
+          </div>
+
+          <div class="css-official-badge">
+            <!-- Official CSS3 Vector Logo -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40" height="40">
+              <path fill="#264de4" d="M71,460 L30,0 481,0 440,460 255,512"/>
+              <path fill="#2965f1" d="M256,472 L407,430 440,61 256,61"/>
+              <path fill="#ebebeb" d="M256,268 L160,268 153,196 256,196 256,135 88,135 108,360 256,360 z M256,427 L255,427 188,409 184,360 137,360 144,441 256,472 z"/>
+              <path fill="#ffffff" d="M256,268 L352,268 343,369 256,393 256,454 368,423 383,268 385,248 393,135 256,135 z"/>
+            </svg>
+            <span style="font-weight: 800; font-size: 1rem; color: #38bdf8;">CSS3 Mastery</span>
+          </div>
+        </div>
+
+        <h1 class="doc-main-title">CSS3 & Responsive Design Master Notes</h1>
+        <p class="doc-subtitle">
+          Complete official curriculum covering the Cascade, Specificity, Box Model, Positioning, Transitions, Keyframe Animations, Flexbox, CSS Grid, Custom Variables, and 5 Real-World Responsive Projects.
+        </p>
+
+        <div class="author-meta-box">
+          <div>Course: <strong style="color: var(--text-main);">Full-Stack Web Development</strong></div>
+          <div>Unit: <strong style="color: var(--css-color);">CSS3 Architecture</strong></div>
+          <div>Authored By: <span class="author-name">Mukesh Kumar</span></div>
+          <div>Institute: <strong style="color: var(--text-main);">Sys-Tech Umerkot</strong></div>
+        </div>
+
+        <!-- Student Exam Fillable Strip -->
+        <div class="student-fields-strip no-print">
+          <div class="student-field-item">
+            <label>Student Full Name</label>
+            <span></span>
+          </div>
+          <div class="student-field-item">
+            <label>Enrollment / Roll No</label>
+            <span></span>
+          </div>
+          <div class="student-field-item">
+            <label>Batch Session</label>
+            <span>Web Dev 2026</span>
+          </div>
+          <div class="student-field-item">
+            <label>Examination Center</label>
+            <span>Sys-Tech Umerkot</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== UNIT 1: CSS FOUNDATIONS ==================== -->
+      <div class="unit-banner" id="unit-foundations">
+        <div>
+          <div class="unit-tag">Unit 01 • Core Styling</div>
+          <div class="unit-title">CSS Foundations, Selectors & Box Model</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Topics 10 – 15</div>
+      </div>
+
+      <!-- TOPIC 10 -->
+      <article class="topic-card" id="topic10">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 10</span>
+            <h2 class="topic-name">CSS Introduction & Selectors</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Foundational</span>
+        </div>
+        <p class="topic-desc">
+          CSS (Cascading Style Sheets) decorates and arranges HTML elements. Styles can be applied Inline (in the style attribute), Internal (in &lt;style&gt; tags), or External (linked .css file). Selectors target elements via Tag, Class (<code>.class</code>), ID (<code>#id</code>), Universal (<code>*</code>), or Attribute (<code>[type="email"]</code>).
+        </p>
+
+        <div class="section-label">Code Example: CSS Selector Types</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>selectors.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* 1. Universal Selector */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* 2. Element / Tag Selector */
+h1 { color: #f8fafc; font-size: 2rem; }
+
+/* 3. Class Selector (Reusable) */
+.btn-primary { background: #0284c7; color: #fff; padding: 10px 20px; border-radius: 8px; }
+
+/* 4. ID Selector (Unique) */
+#heroSection { background: #0f172a; padding: 60px 20px; }
+
+/* 5. Attribute Selector */
+input[type="email"] { border: 1px solid #38bdf8; padding: 8px; }</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always use External CSS stylesheets via <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> in production. External sheets are cached by the browser on first load, cutting page load time in half!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 11 -->
+      <article class="topic-card" id="topic11">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 11</span>
+            <h2 class="topic-name">Colors, Backgrounds & Gradients</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Color Theory</span>
+        </div>
+        <p class="topic-desc">
+          Colors can be specified with HEX (<code>#38bdf8</code>), RGB (<code>rgb(56, 189, 248)</code>), or HSL (<code>hsl(199, 95%, 60%)</code>). Backgrounds support images, cover/contain sizing, fixed parallax attachments, and smooth linear/radial gradients.
+        </p>
+
+        <div class="section-label">Code Example: Modern Gradients & Background Styling</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>backgrounds.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.card-gradient {
+  /* Linear Gradient Angle and Color Stops */
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #0369a1 100%);
+  color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+}
+
+.hero-banner {
+  /* High-Res Background Image with Dark Gradient Overlay */
+  background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url('banner.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 400px;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Layering a semi-transparent gradient on top of background images (<code>linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(...)</code>) guarantees that white text remains 100% readable regardless of how bright the photo is!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 12 -->
+      <article class="topic-card" id="topic12">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 12</span>
+            <h2 class="topic-name">Borders, Radius & Outlines</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Borders</span>
+        </div>
+        <p class="topic-desc">
+          Borders occupy physical space in the layout (shorthand: <code>width style color</code>). <code>border-radius</code> curves the corners. Unlike borders, <code>outline</code> is drawn outside the element and takes up zero layout space, making it perfect for accessible focus rings.
+        </p>
+
+        <div class="section-label">Code Example: Border Radius & Glow Outlines</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>borders.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.pill-badge {
+  border: 1.5px solid #38bdf8;
+  border-radius: 50px; /* Fully rounded pill */
+  padding: 6px 14px;
+}
+
+.input-field:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 3px; /* Air gap between input and outline */
+  border-color: #0284c7;
+}
+
+.glow-card {
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(56, 189, 248, 0.25);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Never remove <code>outline: none</code> on interactive inputs without providing an alternative <code>:focus-visible</code> style. Removing focus outlines completely ruins navigation for keyboard users!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 13 -->
+      <article class="topic-card" id="topic13">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 13</span>
+            <h2 class="topic-name">Spacing: Margins & Paddings</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">Spacing</span>
+        </div>
+        <p class="topic-desc">
+          <code>padding</code> creates breathing space inside the element's border. <code>margin</code> creates clearance outside the border between neighboring elements. Vertical margins on block elements collapse into a single margin equal to the largest value.
+        </p>
+
+        <div class="section-label">Code Example: 4-Value Clockwise Notation & Centering</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>spacing.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* Clockwise Shorthand: Top, Right, Bottom, Left */
+.box {
+  padding: 10px 20px 15px 25px;
+}
+
+/* 2-Value Shorthand: Vertical (Top/Bottom), Horizontal (Left/Right) */
+.container {
+  padding: 24px 16px;
+  margin: 0 auto; /* Horizontally centers block element */
+  max-width: 1200px;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            To center any block element (like <code>.container</code> or <code>.card</code>), you MUST give it an explicit <code>width</code> or <code>max-width</code> along with <code>margin: 0 auto;</code>.
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 14 -->
+      <article class="topic-card" id="topic14">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 14</span>
+            <h2 class="topic-name">Dimensions (Min / Max Width & Height)</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Layout</span>
+        </div>
+        <p class="topic-desc">
+          Fixed widths (e.g. <code>width: 800px;</code>) cause horizontal overflow on mobile phones. Responsive layouts use relative percentages combined with <code>max-width</code> to allow shrinking on small viewports while capping on large desktop screens.
+        </p>
+
+        <div class="section-label">Code Example: Fluid Width with Boundaries</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>dimensions.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.responsive-content {
+  width: 100%;
+  max-width: 960px; /* Never exceeds 960px on wide monitors */
+  min-height: 350px; /* Expands if text content grows longer */
+  margin: 0 auto;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Avoid setting rigid fixed <code>height</code> on text containers. Use <code>min-height</code> instead, so if font sizes increase or lines wrap on small phones, the container can expand naturally without clipping text!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 15 -->
+      <article class="topic-card" id="topic15">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 15</span>
+            <h2 class="topic-name">The CSS Box Model & Box Sizing</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Core Rule</span>
+        </div>
+        <p class="topic-desc">
+          Every HTML element consists of four layers: Content &rarr; Padding &rarr; Border &rarr; Margin. Under the default <code>box-sizing: content-box</code>, adding padding increases the element's overall rendered width. Setting <code>box-sizing: border-box</code> absorbs padding and borders inside the declared width.
+        </p>
+
+        <div class="section-label">Code Example: Global Border-Box Reset</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>box_model.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* Universal Box-Sizing Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.box {
+  width: 300px;
+  padding: 20px;
+  border: 5px solid #38bdf8;
+  /* With border-box, total rendered width stays exactly 300px! */
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always declare <code>*, *::before, *::after { box-sizing: border-box; }</code> on line 1 of every project stylesheet. This single rule eliminates 90% of layout misalignment bugs in web development!
+          </div>
+        </div>
+      </article>
+
+      <!-- ==================== UNIT 2: DISPLAY & TYPOGRAPHY ==================== -->
+      <div class="unit-banner" id="unit-display">
+        <div>
+          <div class="unit-tag">Unit 02 • Visual Flow</div>
+          <div class="unit-title">Display Modes, Typography & Tabular Layouts</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Topics 16 – 22</div>
+      </div>
+
+      <!-- TOPIC 16 -->
+      <article class="topic-card" id="topic16">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 16</span>
+            <h2 class="topic-name">Display: Block, Inline & Inline-Block</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Flow</span>
+        </div>
+        <p class="topic-desc">
+          <code>block</code> takes 100% full width and starts on a new line. <code>inline</code> only takes the width of its text and ignores top/bottom margins. <code>inline-block</code> sits side-by-side on the same line like an inline element, but respects widths, heights, and vertical margins!
+        </p>
+
+        <div class="section-label">Code Example: Display Comparison</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>display.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.nav-item {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-right: 10px;
+  background: #1e293b;
+  border-radius: 6px;
+}
+
+.hidden-element {
+  display: none; /* Completely removed from document layout */
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            <code>display: inline-block</code> elements will have an automatic 4px invisible whitespace gap between them caused by the carriage return in HTML. Remove the HTML space or switch to modern Flexbox to eliminate it!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 17 -->
+      <article class="topic-card" id="topic17">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 17</span>
+            <h2 class="topic-name">Visibility: Hidden vs Display: None</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Rendering</span>
+        </div>
+        <p class="topic-desc">
+          <code>display: none</code> removes the element entirely from the DOM layout flow as if it never existed. <code>visibility: hidden</code> makes the element invisible, but preserves its exact width and height space in the page flow! <code>opacity: 0</code> allows smooth transitions while remaining clickable.
+        </p>
+
+        <div class="section-label">Code Example: Visibility vs Display</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>visibility.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* 1. Gone completely (surrounding elements shift) */
+.drawer.closed { display: none; }
+
+/* 2. Invisible, but leaves an empty ghost space */
+.skeleton-placeholder { visibility: hidden; }
+
+/* 3. Invisible but animatable (pointer-events: none disables clicks) */
+.tooltip {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.parent:hover .tooltip {
+  opacity: 1;
+  pointer-events: auto;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            You cannot animate or transition <code>display: none</code> to <code>display: block</code> in CSS. To create smooth fades or slide menus, use <code>opacity</code> and <code>transform</code> with <code>pointer-events: none</code>!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 18 -->
+      <article class="topic-card" id="topic18">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 18</span>
+            <h2 class="topic-name">Fonts & Typography (Google Fonts)</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Typography</span>
+        </div>
+        <p class="topic-desc">
+          Professional web typography relies on Google Fonts or system font stacks. Use <code>font-family</code> with fallbacks, <code>font-size</code> in scalable <code>rem</code> units, <code>font-weight</code> (400 regular, 700 bold), and <code>line-height: 1.6</code> for effortless readability.
+        </p>
+
+        <div class="section-label">Code Example: Modern Typography Stack</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>typography.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 1rem; /* 16px default browser baseline */
+  line-height: 1.65;
+  color: #f8fafc;
+  letter-spacing: -0.2px;
+}
+
+code, pre {
+  font-family: 'Fira Code', monospace;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always specify <code>line-height</code> without units (e.g. <code>line-height: 1.6;</code> instead of <code>1.6rem</code>). Unitless line-height scales proportionately whenever child elements change their font size!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 19 -->
+      <article class="topic-card" id="topic19">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 19</span>
+            <h2 class="topic-name">Icons & Vector Masking</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">Assets</span>
+        </div>
+        <p class="topic-desc">
+          Modern UI utilizes vector SVGs or icon libraries (Bootstrap Icons, Lucide, Font Awesome). SVGs scale infinitely to retina displays without pixelation and inherit colors via <code>currentColor</code>.
+        </p>
+
+        <div class="section-label">Code Example: CurrentColor Vector Icon Styling</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>icons.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.icon {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover .icon {
+  transform: translateX(4px);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Setting <code>stroke: currentColor;</code> on SVGs automatically synchronizes the icon color with the parent element's text color. When hovering over buttons, the icon color changes automatically with zero extra CSS!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 20 -->
+      <article class="topic-card" id="topic20">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 20</span>
+            <h2 class="topic-name">Links & Interactive Pseudo-Classes</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Interactivity</span>
+        </div>
+        <p class="topic-desc">
+          Pseudo-classes style elements based on user interaction states. The required order of link pseudo-classes is <strong>LVHA</strong>: <code>:link</code> &rarr; <code>:visited</code> &rarr; <code>:hover</code> &rarr; <code>:active</code>.
+        </p>
+
+        <div class="section-label">Code Example: Animated Hover Underline</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>links.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.nav-link {
+  color: #94a3b8;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #38bdf8;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #38bdf8;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Remember the mnemonic: <strong>"Lord Vader Handles Anakin"</strong> for <code>:link</code>, <code>:visited</code>, <code>:hover</code>, <code>:active</code>. Violating this order causes CSS cascade rules to overwrite your hover styles!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 21 -->
+      <article class="topic-card" id="topic21">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 21</span>
+            <h2 class="topic-name">Lists Styling & Custom Markers</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Lists</span>
+        </div>
+        <p class="topic-desc">
+          Remove default bullets using <code>list-style: none;</code>. Use the modern <code>::marker</code> pseudo-element to color bullets independently, or build custom badges using CSS counters.
+        </p>
+
+        <div class="section-label">Code Example: Custom Gradient Numbered Steps</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>lists.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.step-list {
+  list-style: none;
+  counter-reset: step-counter;
+}
+
+.step-list li {
+  counter-increment: step-counter;
+  position: relative;
+  padding-left: 45px;
+  margin-bottom: 16px;
+}
+
+.step-list li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: #0284c7;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Using <code>counter-reset</code> and <code>counter-increment</code> allows you to create stylized circle badges that count sequentially even if you reorder or insert new list items dynamically!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 22 -->
+      <article class="topic-card" id="topic22">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 22</span>
+            <h2 class="topic-name">Table Styling & Sticky Headers</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Tables</span>
+        </div>
+        <p class="topic-desc">
+          Always use <code>border-collapse: collapse;</code> to merge double borders into crisp single lines. Add zebra striping with <code>:nth-child(even)</code>, hover highlights, and sticky column headers.
+        </p>
+
+        <div class="section-label">Code Example: Modern Zebra Table with Sticky Header</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>tables.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.data-table th {
+  background: #1e293b;
+  color: #38bdf8;
+  position: sticky;
+  top: 0;
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1e3a6e;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.data-table tbody tr:hover {
+  background: rgba(56, 189, 248, 0.08);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            To make tables responsive on smartphones without shrinking fonts to an unreadable size, wrap the <code>&lt;table&gt;</code> in a <code>&lt;div style="overflow-x: auto; -webkit-overflow-scrolling: touch;"&gt;</code> container!
+          </div>
+        </div>
+      </article>
+
+      <!-- ==================== UNIT 3: POSITIONING & VARIABLES ==================== -->
+      <div class="unit-banner" id="unit-positioning">
+        <div>
+          <div class="unit-tag">Unit 03 • Advanced Positioning</div>
+          <div class="unit-title">Cascade, Pseudo-Elements, Positioning & Variables</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Topics 23 – 27</div>
+      </div>
+
+      <!-- TOPIC 23 -->
+      <article class="topic-card" id="topic23">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 23</span>
+            <h2 class="topic-name">CSS Specificity & The Cascade</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">Cascade</span>
+        </div>
+        <p class="topic-desc">
+          When multiple rules target the same element, the browser calculates specificity scores: Inline styles (1000) &gt; IDs (100) &gt; Classes, attributes & pseudo-classes (10) &gt; Elements (1). <code>!important</code> overrides the cascade, but causes unmaintainable code if overused.
+        </p>
+
+        <div class="section-label">Code Example: Specificity Calculation</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>specificity.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* Score: 0, 0, 0, 1 (Lowest) */
+button { background: gray; }
+
+/* Score: 0, 0, 1, 0 (Wins over tag) */
+.btn { background: blue; }
+
+/* Score: 0, 0, 2, 0 */
+.navbar .btn { background: navy; }
+
+/* Score: 0, 1, 0, 0 (High specificity) */
+#mainSubmit { background: green; }</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Never use <code>!important</code> to fix specificity bugs in production. Instead, keep your selectors flat by writing single class names (BEM methodology: <code>.card__title</code>), keeping specificity predictable!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 24 -->
+      <article class="topic-card" id="topic24">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 24</span>
+            <h2 class="topic-name">Pseudo-Elements (::before & ::after)</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Pseudo-Elements</span>
+        </div>
+        <p class="topic-desc">
+          <code>::before</code> and <code>::after</code> insert decorative cosmetic content without adding extra HTML tags. They require a declared <code>content: "";</code> property and are commonly used for ribbons, overlays, and background effects.
+        </p>
+
+        <div class="section-label">Code Example: Glassmorphism Gradient Overlay</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>pseudo.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.featured-card {
+  position: relative;
+  overflow: hidden;
+  background: #1e293b;
+  padding: 30px;
+}
+
+/* Decorative corner glow without HTML tags */
+.featured-card::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #38bdf8 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Pseudo-elements will fail to render if you forget the <code>content: "";</code> property! Even if the content is completely empty, the property must be present.
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 25 -->
+      <article class="topic-card" id="topic25">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 25</span>
+            <h2 class="topic-name">Positioning: Relative, Absolute, Fixed & Sticky</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Positioning</span>
+        </div>
+        <p class="topic-desc">
+          <code>relative</code> keeps original document space and acts as an anchor for absolute children. <code>absolute</code> removes element from flow, positioning against the nearest non-static parent. <code>fixed</code> anchors to the viewport. <code>sticky</code> toggles between relative and fixed based on scroll position!
+        </p>
+
+        <div class="section-label">Code Example: Sticky Sidebar & Absolute Badges</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>position.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* Anchor Container */
+.product-card {
+  position: relative;
+  padding: 20px;
+}
+
+/* Absolute Corner Tag */
+.discount-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ef4444;
+  color: #fff;
+  padding: 4px 8px;
+}
+
+/* Sticky Header / Sidebar */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            <code>position: sticky</code> will silently break if any ancestor element in the DOM tree has <code>overflow: hidden</code> or <code>overflow-x: hidden</code>. Always use <code>overflow-x: clip</code> on the body to prevent sticky breakage!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 26 -->
+      <article class="topic-card" id="topic26">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 26</span>
+            <h2 class="topic-name">Overflow Handling & Text Truncation</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Overflow</span>
+        </div>
+        <p class="topic-desc">
+          <code>overflow: hidden</code> crops content outside boundaries. <code>overflow: auto</code> injects scrollbars only when content exceeds boundaries. Single-line text truncation requires <code>white-space: nowrap; overflow: hidden; text-overflow: ellipsis;</code>.
+        </p>
+
+        <div class="section-label">Code Example: Single & Multi-Line Truncation</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>overflow.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* 1-Line Truncation with Ellipsis (...) */
+.truncate-single {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}
+
+/* 2-Line Clamp with Native CSS */
+.truncate-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            The <code>-webkit-line-clamp: 2</code> property is officially standardized across all modern browsers, enabling clean paragraph card excerpts without writing custom truncation scripts!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 27 -->
+      <article class="topic-card" id="topic27">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 27</span>
+            <h2 class="topic-name">CSS Custom Properties (Variables) & Theming</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Variables</span>
+        </div>
+        <p class="topic-desc">
+          CSS variables are declared using <code>--variable-name</code> inside <code>:root</code> and accessed using <code>var(--variable-name)</code>. They cascade through child components and enable dark/light theme switching with a single class change!
+        </p>
+
+        <div class="section-label">Code Example: Dark / Light Mode Theming System</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>variables.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>:root {
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --text-color: #f8fafc;
+  --primary-accent: #38bdf8;
+}
+
+body.light-theme {
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-color: #0f172a;
+  --primary-accent: #0284c7;
+}
+
+.card {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--primary-accent);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            CSS variables are reactive at runtime! When you change a CSS variable via JavaScript (<code>document.documentElement.style.setProperty('--primary-accent', '#10b981')</code>), every component on the page updates instantly without a page refresh!
+          </div>
+        </div>
+      </article>
+
+      <!-- ==================== UNIT 4: MOTION & RESPONSIVENESS ==================== -->
+      <div class="unit-banner" id="unit-motion">
+        <div>
+          <div class="unit-tag">Unit 04 • Animation & Motion</div>
+          <div class="unit-title">Transforms, Transitions, Keyframes & Media Queries</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Topics 28 – 32</div>
+      </div>
+
+      <!-- TOPIC 28 -->
+      <article class="topic-card" id="topic28">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 28</span>
+            <h2 class="topic-name">Floats & The Modern Clearfix</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">Floats</span>
+        </div>
+        <p class="topic-desc">
+          <code>float</code> causes text to wrap around images. However, floating elements collapse parent container heights. The modern micro-clearfix restores parent container bounds.
+        </p>
+
+        <div class="section-label">Code Example: Clearfix Implementation</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>floats.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.article-image {
+  float: left;
+  margin: 0 18px 12px 0;
+}
+
+/* Micro Clearfix on Parent */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Never use floats to build website layouts in modern development! Floats are strictly reserved for wrapping text around images. All page layouts should be built with Flexbox or Grid.
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 29 -->
+      <article class="topic-card" id="topic29">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 29</span>
+            <h2 class="topic-name">2D & 3D CSS Transforms</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Transforms</span>
+        </div>
+        <p class="topic-desc">
+          Transforms modify coordinate geometry without triggering layout repaints: <code>translate()</code> moves elements, <code>rotate()</code> turns them, and <code>scale()</code> zooms them. Adding <code>perspective</code> creates authentic 3D spatial depth!
+        </p>
+
+        <div class="section-label">Code Example: GPU-Accelerated Hover Lift</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>transforms.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.card {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.card:hover {
+  /* GPU-Accelerated Lift & Zoom */
+  transform: translateY(-8px) scale(1.02);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always animate <code>transform</code> and <code>opacity</code> instead of animating <code>top</code>, <code>left</code>, <code>width</code>, or <code>height</code>. Transforms run directly on the graphics card GPU at a silky-smooth 60 frames per second!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 30 -->
+      <article class="topic-card" id="topic30">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 30</span>
+            <h2 class="topic-name">CSS Transitions & Timing Functions</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Transitions</span>
+        </div>
+        <p class="topic-desc">
+          Transitions smoothly interpolate property changes between states. Shorthand: <code>property duration timing-function delay</code>. Cubic-bezier curves provide realistic physics (ease-out, spring effects).
+        </p>
+
+        <div class="section-label">Code Example: Smooth Button State Transition</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>transitions.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.btn-magic {
+  background: #0284c7;
+  color: #fff;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-magic:hover {
+  background: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Avoid writing <code>transition: all 0.3s;</code>. Explicitly list the exact properties being transitioned (e.g. <code>background, transform</code>) to prevent performance lag on mobile CPUs.
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 31 -->
+      <article class="topic-card" id="topic31">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 31</span>
+            <h2 class="topic-name">Keyframe Animations (@keyframes)</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Animations</span>
+        </div>
+        <p class="topic-desc">
+          <code>@keyframes</code> defines multi-step animation sequences over time (from 0% to 100%). Properties include <code>animation-name</code>, <code>duration</code>, <code>iteration-count: infinite</code>, and <code>animation-direction: alternate</code>.
+        </p>
+
+        <div class="section-label">Code Example: Pulse Glow Keyframe Animation</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>animations.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>@keyframes pulseGlow {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 15px rgba(56, 189, 248, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+  }
+}
+
+.live-indicator {
+  width: 12px;
+  height: 12px;
+  background: #38bdf8;
+  border-radius: 50%;
+  animation: pulseGlow 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always respect user accessibility preferences with <code>@media (prefers-reduced-motion: reduce)</code>. Users with vestibular disorders can experience nausea from continuous animations, so disable animations when requested!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 32 -->
+      <article class="topic-card" id="topic32">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 32</span>
+            <h2 class="topic-name">Media Queries & Mobile-First Responsive Design</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">RWD</span>
+        </div>
+        <p class="topic-desc">
+          Media queries apply different CSS rules depending on viewport width. In Mobile-First design, default styles target smartphones, while <code>@media (min-width: ...)</code> progressively enhances the layout for tablets and desktops.
+        </p>
+
+        <div class="section-label">Code Example: Mobile-First Responsive Grid</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>responsive.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* 1. Base Mobile Default (1 Column) */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* 2. Tablet Viewport (2 Columns) */
+@media (min-width: 640px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 3. Desktop Viewport (3 Columns) */
+@media (min-width: 1024px) {
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Standard industry breakpoints: <code>640px</code> (Tablets), <code>768px</code> (iPad), <code>1024px</code> (Laptops), and <code>1280px</code> (Desktops). Designing mobile-first ensures faster load times for 80% of mobile web users!
+          </div>
+        </div>
+      </article>
+
+      <!-- ==================== UNIT 5: MODERN LAYOUT SYSTEMS ==================== -->
+      <div class="unit-banner" id="unit-modern">
+        <div>
+          <div class="unit-tag">Unit 05 • Layout Mastery</div>
+          <div class="unit-title">Flexbox, CSS Grid & Modern CSS Functions</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Topics 33 – 35</div>
+      </div>
+
+      <!-- TOPIC 33 -->
+      <article class="topic-card" id="topic33">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 33</span>
+            <h2 class="topic-name">Flexbox: The Complete Guide</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Flexbox</span>
+        </div>
+        <p class="topic-desc">
+          Flexbox is a 1-dimensional layout model for rows or columns. Main Axis alignment is handled by <code>justify-content</code>, Cross Axis by <code>align-items</code>. Flex items resize via <code>flex-grow</code>, <code>flex-shrink</code>, and <code>flex-basis</code>.
+        </p>
+
+        <div class="section-label">Code Example: Perfect Centering & Auto-Spacing</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>flexbox.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* 1. Holy Grail Perfect Center in 3 Lines */
+.center-box {
+  display: flex;
+  justify-content: center; /* Horizontally centered */
+  align-items: center;     /* Vertically centered */
+}
+
+/* 2. Responsive Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Spreads brand and links to opposite ends */
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap; /* Wraps neatly on small phones */
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Use <code>gap: 15px;</code> in Flexbox instead of adding margins to child items! The <code>gap</code> property only places space between siblings, completely eliminating messy <code>:last-child { margin-right: 0 }</code> hacks!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 34 -->
+      <article class="topic-card" id="topic34">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 34</span>
+            <h2 class="topic-name">CSS Grid: Complete 2D Grid Guide</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">CSS Grid</span>
+        </div>
+        <p class="topic-desc">
+          CSS Grid is a 2-dimensional system handling columns and rows simultaneously. Use <code>repeat(auto-fit, minmax(280px, 1fr))</code> to create auto-responsive grids without writing a single media query!
+        </p>
+
+        <div class="section-label">Code Example: Zero-Media-Query Responsive Auto-Grid</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>grid.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.auto-card-grid {
+  display: grid;
+  /* Automatically wraps from 1 to 4 columns based on available width! */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            <code>repeat(auto-fit, minmax(260px, 1fr))</code> calculates the exact maximum number of columns that can fit on screen. If viewport is 300px, it shows 1 column; if 1200px, it shows 4 columns automatically!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 35 -->
+      <article class="topic-card" id="topic35">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 35</span>
+            <h2 class="topic-name">Modern CSS Functions (clamp, aspect-ratio & filters)</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Modern CSS</span>
+        </div>
+        <p class="topic-desc">
+          Modern CSS eliminates JavaScript workarounds: <code>clamp(min, preferred, max)</code> enables fluid typography, <code>aspect-ratio: 16 / 9</code> guarantees video proportions, and <code>backdrop-filter: blur(12px)</code> renders native glassmorphism!
+        </p>
+
+        <div class="section-label">Code Example: Fluid Typography & Frosted Glass</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>modern_functions.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* 1. Fluid Font: Never smaller than 1.5rem, scales with 4vw, never exceeds 3rem */
+h1 {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* 2. Frosted Glassmorphism Container */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+}
+
+/* 3. Auto Aspect Ratio */
+.video-thumbnail {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            With <code>clamp()</code>, you no longer need 5 different media queries to tweak heading font sizes for mobile, tablet, and desktop. A single line scales smoothly across all viewports!
+          </div>
+        </div>
+      </article>
+
+      <!-- ==================== UNIT 6: REAL-WORLD CSS CAPSTONE PROJECTS ==================== -->
+      <div class="unit-banner" id="unit-projects" style="border-left-color: #10b981; background: linear-gradient(90deg, rgba(16, 185, 129, 0.2) 0%, rgba(11, 19, 41, 0.4) 100%);">
+        <div>
+          <div class="unit-tag" style="color: #10b981;">Unit 06 • Capstone Implementation</div>
+          <div class="unit-title">Real-World Responsive CSS3 Projects</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">5 Industry Projects</div>
+      </div>
+
+      <!-- PROJECT 1: GLASSMORPHIC LANDING PAGE -->
+      <article class="topic-card" id="proj-glass" style="border-left: 4px solid #38bdf8;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 01</span>
+            <h2 class="topic-name">💎 Responsive Glassmorphic SaaS Landing Page</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Glassmorphism</span>
+        </div>
+        <p class="topic-desc">
+          A high-end SaaS product hero layout with frosted glass containers, multi-color ambient blurred radial orbs, gradient call-to-action buttons, and fully fluid responsive grids.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>glass_landing.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* Frosted Glass Hero Container */
+.glass-hero {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 60px 40px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+/* Ambient Radial Glow Orb */
+.glass-hero::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-cta {
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.hero-cta:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 30px rgba(56, 189, 248, 0.6);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            Always provide both <code>backdrop-filter: blur(16px)</code> and <code>-webkit-backdrop-filter: blur(16px)</code>. The WebKit vendor prefix is required for Safari on Apple iPhones and iPads to render frosted glass!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 2: E-COMMERCE PRODUCT GRID -->
+      <article class="topic-card" id="proj-cards" style="border-left: 4px solid #10b981;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 02</span>
+            <h2 class="topic-name">🛒 E-Commerce Responsive Product Card Grid with Hover Zoom</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Storefront Grid</span>
+        </div>
+        <p class="topic-desc">
+          An interactive product grid with image hover zoom effects, sale discount badges, price strikethroughs, and an animated "Add to Cart" button drawer.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>product_grid.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.img-frame {
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+
+.img-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover .img-frame img {
+  transform: scale(1.08); /* Smooth Zoom */
+}
+
+.sale-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 6px;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            Setting <code>overflow: hidden;</code> on <code>.img-frame</code> ensures that when the inner <code>&lt;img&gt;</code> scales to 1.08 on hover, the edges stay cleanly contained inside the card without spilling outside!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 3: ANALYTICS DASHBOARD GRID -->
+      <article class="topic-card" id="proj-dashboard" style="border-left: 4px solid #f59e0b;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 03</span>
+            <h2 class="topic-name">📊 Analytics Dashboard (CSS Grid Areas & Flex Layout)</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Dashboard Architecture</span>
+        </div>
+        <p class="topic-desc">
+          An enterprise web dashboard layout utilizing <code>grid-template-areas</code> for sidebar navigation, header metrics, chart canvas, and tabular activity logs with fluid viewport collapsing.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>dashboard_layout.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.dash-container {
+  display: grid;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar main";
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: 70px 1fr;
+  min-height: 100vh;
+}
+
+.dash-sidebar { grid-area: sidebar; background: #0f172a; border-right: 1px solid #1e293b; }
+.dash-header  { grid-area: header; background: #1e293b; display: flex; align-items: center; justify-content: space-between; padding: 0 25px; }
+.dash-main    { grid-area: main; padding: 25px; overflow-y: auto; }
+
+/* Responsive Tablet / Mobile Collapse */
+@media (max-width: 900px) {
+  .dash-container {
+    grid-template-areas:
+      "header"
+      "main";
+    grid-template-columns: 1fr;
+    grid-template-rows: 70px 1fr;
+  }
+  .dash-sidebar { display: none; }
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            <code>grid-template-areas</code> gives you visual ASCII-like layout mapping in your CSS! When switching to mobile view, simply redefine the area template string to single-column without touching any HTML!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 4: ANIMATED PRICING MATRIX -->
+      <article class="topic-card" id="proj-pricing" style="border-left: 4px solid #a855f7;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 04</span>
+            <h2 class="topic-name">💎 Animated Pricing Tier Matrix with Featured Glow Badge</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">UI Components</span>
+        </div>
+        <p class="topic-desc">
+          A 3-tier subscription pricing matrix with an elevated "Popular Plan" card, animated gradient border glow, price toggle animations, and feature checklist items.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>pricing_matrix.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  align-items: center; /* Centers height */
+}
+
+.price-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 20px;
+  padding: 35px 25px;
+  text-align: center;
+}
+
+/* Featured Popular Plan */
+.price-card.featured {
+  background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+  border: 2px solid #38bdf8;
+  transform: scale(1.05); /* Elevated prominence */
+  box-shadow: 0 15px 40px rgba(56, 189, 248, 0.25);
+  position: relative;
+}
+
+.popular-ribbon {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  border-radius: 50px;
+  letter-spacing: 1px;
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            Using <code>left: 50%; transform: translateX(-50%);</code> on an absolutely positioned element guarantees that the ribbon remains mathematically centered regardless of how long the text is!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 5: 3D FLIPPING SHOWCASE CARDS -->
+      <article class="topic-card" id="proj-3dcards" style="border-left: 4px solid #ec4899;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 05</span>
+            <h2 class="topic-name">🔄 3D Interactive Flipping Portfolio Cards (Perspective)</h2>
+          </div>
+          <span class="topic-badge" style="color:#ec4899; border-color: rgba(236,72,153,0.3);">3D Transforms</span>
+        </div>
+        <p class="topic-desc">
+          A 3-dimensional card flip component utilizing CSS <code>perspective</code>, <code>transform-style: preserve-3d</code>, and <code>backface-visibility: hidden</code> for interactive front/back bio cards.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>flip_card_3d.css</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>/* 1. Perspective Viewport Container */
+.flip-card-container {
+  perspective: 1000px;
+  width: 300px;
+  height: 400px;
+}
+
+/* 2. 3D Card Body */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card-container:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* 3. Front and Back Faces */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 18px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flip-card-front {
+  background: #1e293b;
+  border: 1px solid #334155;
+}
+
+.flip-card-back {
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #fff;
+  transform: rotateY(180deg);
+}</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            <code>backface-visibility: hidden</code> tells the browser not to draw the back side of the card when flipped away from the camera. This is the secret to creating seamless two-sided flipping business cards in CSS!
+          </div>
+        </div>
+      </article>
+
+      <!-- Footer -->
+      <footer>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 12px;">
+          <img src="assets/stc_logo.jpg" alt="STC Logo" style="width: 44px; height: 44px; border-radius: 6px; background: #fff; padding: 3px; object-fit: contain;" onerror="this.style.display='none'">
+          <strong style="color: var(--text-main); font-size: 1.05rem;">Super Sys-Tech Computers Centre Umerkot</strong>
+        </div>
+        <p style="font-style: italic; color: var(--css-color);">"Struggle For Better Education"</p>
+        <p>Official Curriculum & Study Notes • Compiled by <strong>Mukesh Kumar</strong></p>
+        <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">Designed for print, online study, and exam preparation. All rights reserved © 2026.</p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Floating Back to Top Button & Mobile Backdrop -->
+  <button id="floatingTopBtn" class="floating-top-btn no-print" onclick="scrollToTop()" title="Scroll Back to Top">▲</button>
+  <div id="sidebarBackdrop" class="sidebar-backdrop no-print" onclick="toggleSidebar()"></div>
+
+  <script>
+    // 1-Click Copy Code
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-wrapper').querySelector('pre code');
+      const text = codeBlock.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = "✓ Copied!";
+        btn.style.color = "#10b981";
+        btn.style.borderColor = "#10b981";
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.color = "";
+          btn.style.borderColor = "";
+        }, 2000);
+      });
+    }
+
+    // Filter topics in the Left Sidebar
+    function filterSidebarTopics(query) {
+      const q = query.toLowerCase().trim();
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        const text = item.innerText.toLowerCase();
+        item.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    // Switch Sidebar Category Tabs ([All], [Topics], [Projects])
+    function switchSidebarCategory(cat, btn) {
+      document.querySelectorAll('.sb-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const topicItems = document.querySelectorAll('.sidebar-unit-group:not(.unit-projects-group)');
+      const projItems = document.querySelectorAll('.unit-projects-group');
+
+      if (cat === 'all') {
+        topicItems.forEach(g => g.style.display = 'block');
+        projItems.forEach(g => g.style.display = 'block');
+      } else if (cat === 'topics') {
+        topicItems.forEach(g => g.style.display = 'block');
+        projItems.forEach(g => g.style.display = 'none');
+      } else if (cat === 'projects') {
+        topicItems.forEach(g => g.style.display = 'none');
+        projItems.forEach(g => g.style.display = 'block');
+      }
+    }
+
+    // Toggle Left Sidebar (Mobile Drawer & Desktop Full View Collapse)
+    function toggleSidebar() {
+      const isMobile = window.innerWidth <= 1080;
+      const sidebar = document.getElementById('docSidebar');
+      const topBtn = document.getElementById('sidebarToggleBtn');
+      const sidebarCollapseBtn = document.getElementById('sidebarCollapseBtn');
+
+      if (isMobile) {
+        const backdrop = document.getElementById('sidebarBackdrop');
+        const isOpen = sidebar.classList.toggle('open');
+        if (backdrop) backdrop.classList.toggle('active', isOpen);
+      } else {
+        const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
+        if (topBtn) {
+          topBtn.innerHTML = isCollapsed ? "📑 Show TOC" : "◀ Full View";
+          if (isCollapsed) {
+            topBtn.classList.add('active-fullview');
+          } else {
+            topBtn.classList.remove('active-fullview');
+          }
+        }
+        if (sidebarCollapseBtn) {
+          sidebarCollapseBtn.innerHTML = isCollapsed ? "▶ Show TOC" : "◀ Full View";
+        }
+        localStorage.setItem('stc_css_toc_collapsed', isCollapsed ? 'true' : 'false');
+      }
+    }
+
+    // Initialize saved sidebar state on desktop
+    (function initSidebarState() {
+      if (window.innerWidth > 1080) {
+        const savedCollapsed = localStorage.getItem('stc_css_toc_collapsed');
+        if (savedCollapsed === 'true') {
+          document.body.classList.add('sidebar-collapsed');
+          const topBtn = document.getElementById('sidebarToggleBtn');
+          if (topBtn) {
+            topBtn.innerHTML = "📑 Show TOC";
+            topBtn.classList.add('active-fullview');
+          }
+        }
+      }
+    })();
+
+    // Smooth scroll and handle mobile sidebar on item click
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const href = item.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+            item.classList.add('active');
+            history.pushState(null, null, href);
+          }
+        }
+        const sidebar = document.getElementById('docSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (window.innerWidth <= 1080) {
+          sidebar.classList.remove('open');
+          if (backdrop) backdrop.classList.remove('active');
+        }
+      });
+    });
+
+    // Theme Switcher (Dark vs Light Print Preview)
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-theme');
+      const btn = document.getElementById('themeToggleBtn');
+      if (btn) {
+        btn.innerHTML = isLight ? "☀️ Light Mode" : "🌙 Dark Mode";
+      }
+      localStorage.setItem('stc_css_notes_theme', isLight ? 'light' : 'dark');
+    }
+
+    // Initialize Theme on Page Load
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('stc_css_notes_theme');
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        const btn = document.getElementById('themeToggleBtn');
+        if (btn) btn.innerHTML = "☀️ Light Mode";
+      }
+    })();
+
+    // Top Header Search Filter
+    function filterNotes() {
+      const input = document.getElementById('topicSearch').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.topic-card');
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(input) ? 'block' : 'none';
+      });
+    }
+
+    // Floating Back to Top Button Handler
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('floatingTopBtn');
+      if (btn) {
+        btn.style.display = window.scrollY > 350 ? 'flex' : 'none';
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ScrollSpy: Automatically highlight active section in TOC and center it
+    const observerOptions = {
+      root: null,
+      rootMargin: '-80px 0px -70% 0px',
+      threshold: 0
+    };
+
+    const topicObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+          const currentLink = document.querySelector(`.sidebar-item[href="#${id}"]`);
+          if (currentLink) {
+            currentLink.classList.add('active');
+            const sidebarNav = document.getElementById('sidebarNav');
+            if (sidebarNav) {
+              const relTop = currentLink.offsetTop - sidebarNav.offsetTop - (sidebarNav.clientHeight / 2) + (currentLink.clientHeight / 2);
+              sidebarNav.scrollTo({ top: Math.max(0, relTop), behavior: 'smooth' });
+            }
+          }
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.topic-card').forEach(card => {
+      topicObserver.observe(card);
+    });
+
+    // Auto-trigger print if requested via URL
+    if (window.location.search.includes('action=print')) {
+      window.addEventListener('load', () => {
+        setTimeout(() => window.print(), 600);
+      });
+    }
+  </script>
+</body>
+</html>

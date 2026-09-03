@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML5 Complete Master Notes & Projects | Super Sys-Tech Computers Centre Umerkot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --html-color: #e34c26;
+      --html-gradient: linear-gradient(135deg, #e34c26 0%, #f06529 100%);
+      --accent-cyan: #38bdf8;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #a855f7;
+      --code-bg: #0b1120;
+    }
+
+    body.light-theme {
+      --bg-main: #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --code-bg: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.65;
+      overflow-x: clip;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Top Sticky Navigation Bar */
+    .sticky-bar {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+
+    body.light-theme .sticky-bar {
+      background: rgba(255, 255, 255, 0.94);
+    }
+
+    .bar-left, .bar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .bar-brand img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #ffffff;
+      padding: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .bar-brand-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+
+    .bar-brand-text small {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--html-color);
+      font-weight: 600;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--card-border);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--html-color);
+      transform: translateY(-1px);
+    }
+
+    .btn-print {
+      background: var(--html-gradient);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(227, 76, 38, 0.35);
+    }
+
+    .btn-print:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(227, 76, 38, 0.5);
+    }
+
+    .btn.active-fullview {
+      background: rgba(227, 76, 38, 0.25) !important;
+      border-color: var(--html-color) !important;
+      color: #ff8a65 !important;
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 220px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      border-radius: 50px;
+      padding: 7px 14px 7px 32px;
+      color: var(--text-main);
+      font-size: 0.84rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    body.light-theme .search-box input {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .search-box input:focus {
+      border-color: var(--html-color);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* Layout Structure: Left Sticky Sidebar + Right Main Content */
+    .doc-layout {
+      display: flex;
+      gap: 30px;
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+      align-items: flex-start;
+      box-sizing: border-box;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    /* Left Sidebar: Sticky Table of Contents */
+    .doc-sidebar {
+      width: 320px;
+      min-width: 300px;
+      max-width: 330px;
+      flex-shrink: 0;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 76px;
+      align-self: flex-start;
+      height: calc(100vh - 96px);
+      max-height: calc(100vh - 96px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+      overflow: hidden;
+      transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    }
+
+    body.light-theme .doc-sidebar {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 10px 30px rgba(227, 76, 38, 0.08);
+    }
+
+    .sidebar-header {
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .sidebar-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-heading {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-collapse-btn {
+      background: rgba(227, 76, 38, 0.12);
+      border: 1px solid rgba(227, 76, 38, 0.3);
+      color: var(--html-color);
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-collapse-btn:hover {
+      background: var(--html-color);
+      color: #ffffff;
+    }
+
+    .sidebar-search-box {
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-search-box input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 6px 10px 6px 30px;
+      color: var(--text-main);
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    body.light-theme .sidebar-search-box input {
+      background: #f8fafc;
+    }
+
+    .sidebar-search-box svg {
+      position: absolute;
+      left: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 13px;
+      height: 13px;
+      color: var(--text-muted);
+    }
+
+    .sidebar-tabs {
+      display: flex;
+      gap: 5px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 3px;
+      border-radius: 8px;
+    }
+
+    .sb-tab {
+      flex: 1;
+      padding: 5px 4px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .sb-tab.active {
+      background: var(--html-color);
+      color: #ffffff;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 10px;
+      scroll-behavior: smooth;
+    }
+
+    .sidebar-unit-group {
+      margin-bottom: 14px;
+    }
+
+    .sidebar-unit-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--html-color);
+      padding: 6px 10px 4px;
+      border-bottom: 1px dashed rgba(227, 76, 38, 0.25);
+      margin-bottom: 6px;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-item:hover {
+      background: rgba(227, 76, 38, 0.12);
+      color: var(--text-main);
+      transform: translateX(3px);
+    }
+
+    .sidebar-item.active {
+      background: var(--html-gradient);
+      color: #ffffff !important;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(227, 76, 38, 0.35);
+    }
+
+    .sidebar-num {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.74rem;
+      opacity: 0.85;
+      padding: 2px 6px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 4px;
+    }
+
+    .sidebar-item.active .sidebar-num {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    /* Right Main Content */
+    .doc-main {
+      flex: 1;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Desktop Full View & Collapsible Sidebar */
+    body.sidebar-collapsed .doc-sidebar {
+      display: none !important;
+    }
+
+    body.sidebar-collapsed .doc-layout {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 25px 25px;
+      gap: 0 !important;
+      justify-content: center;
+    }
+
+    body.sidebar-collapsed .doc-main {
+      max-width: 100% !important;
+      width: 100% !important;
+      margin: 0 auto;
+    }
+
+    body.sidebar-collapsed .topic-card {
+      padding: 30px 32px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Cover Page Card */
+    .cover-card {
+      background: linear-gradient(145deg, rgba(45, 17, 10, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 2px solid rgba(227, 76, 38, 0.35);
+      border-radius: 28px;
+      padding: 45px 35px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+      margin-bottom: 30px;
+    }
+
+    body.light-theme .cover-card {
+      background: linear-gradient(145deg, #fff5f2 0%, #ffffff 100%);
+      border-color: #ffccbc;
+      box-shadow: 0 10px 30px rgba(227, 76, 38, 0.1);
+    }
+
+    .cover-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .institute-logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 10px 20px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+    }
+
+    body.light-theme .institute-logo-badge {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: #cbd5e1;
+    }
+
+    .institute-logo-badge img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 4px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    .institute-info-text {
+      text-align: left;
+    }
+
+    .institute-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .institute-tagline {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--accent-amber);
+      letter-spacing: 0.5px;
+    }
+
+    .html-official-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(227, 76, 38, 0.12);
+      border: 1.5px solid rgba(227, 76, 38, 0.35);
+      padding: 8px 18px;
+      border-radius: 14px;
+    }
+
+    .doc-main-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #ff8a65 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    body.light-theme .doc-main-title {
+      background: linear-gradient(135deg, #e34c26 0%, #bf360c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .doc-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 25px;
+      line-height: 1.6;
+    }
+
+    .author-meta-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--card-border);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    body.light-theme .author-meta-box {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .author-name {
+      color: var(--accent-amber);
+      font-weight: 800;
+    }
+
+    .student-fields-strip {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(227, 76, 38, 0.3);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      text-align: left;
+    }
+
+    .student-field-item {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    body.light-theme .student-field-item {
+      background: #f1f5f9;
+      border-color: #e2e8f0;
+    }
+
+    .student-field-item label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .student-field-item span {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--html-color);
+      border-bottom: 1px dotted var(--text-muted);
+      display: inline-block;
+      width: 100%;
+      min-height: 20px;
+    }
+
+    /* Unit Banners */
+    .unit-banner {
+      background: linear-gradient(90deg, rgba(227, 76, 38, 0.2) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left: 6px solid var(--html-color);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 40px 0 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .unit-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--html-color);
+    }
+
+    .unit-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    /* Topic Cards */
+    .topic-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      position: relative;
+      scroll-margin-top: 90px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    body.light-theme .topic-card {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .topic-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .topic-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topic-badge {
+      background: rgba(227, 76, 38, 0.15);
+      color: var(--html-color);
+      border: 1px solid rgba(227, 76, 38, 0.3);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .topic-name {
+      font-size: 1.28rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .topic-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    /* Section Labels */
+    .section-label {
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin: 16px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--html-color);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Code Blocks */
+    .code-wrapper {
+      position: relative;
+      background: var(--code-bg);
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      margin: 10px 0 16px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    body.light-theme .code-wrapper {
+      background: #0f172a;
+      border-color: #334155;
+    }
+
+    .code-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 8px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.75rem;
+      font-family: 'Fira Code', monospace;
+      color: #94a3b8;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f8fafc;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--html-color);
+      color: #fff;
+    }
+
+    pre {
+      padding: 14px;
+      overflow-x: auto;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.84rem;
+      color: #f8fafc;
+      line-height: 1.6;
+      white-space: pre;
+    }
+
+    /* Explanation & Pro Tip Boxes */
+    .pro-tip {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(227, 76, 38, 0.08) 100%);
+      border-left: 4px solid var(--accent-amber);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: #fde68a;
+    }
+
+    body.light-theme .pro-tip {
+      background: #fffbeb;
+      color: #92400e;
+      border-color: #f59e0b;
+    }
+
+    .pro-tip-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* Interactive Project Code Tabs */
+    .proj-tabs-header {
+      display: flex;
+      gap: 6px;
+      margin: 16px 0 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .proj-tab-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .proj-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+
+    .proj-tab-btn.active {
+      background: var(--html-gradient);
+      color: #ffffff;
+      border-color: var(--html-color);
+    }
+
+    .proj-tab-pane {
+      display: none;
+    }
+
+    .proj-tab-pane.active {
+      display: block;
+    }
+
+    /* Floating Back to Top Button */
+    .floating-top-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--html-gradient);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 15px rgba(227, 76, 38, 0.4);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      z-index: 1200;
+      transition: all 0.2s;
+    }
+
+    .floating-top-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1400;
+    }
+
+    .sidebar-backdrop.active {
+      display: block;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1080px) {
+      .doc-sidebar {
+        position: fixed;
+        left: -350px;
+        top: 72px;
+        height: calc(100vh - 80px);
+        z-index: 1500;
+        transition: left 0.3s ease;
+      }
+      .doc-sidebar.open {
+        left: 15px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+      }
+      .doc-layout {
+        padding: 15px 12px;
+        gap: 0;
+      }
+      .sticky-bar {
+        padding: 10px 14px;
+        gap: 8px;
+      }
+      .bar-brand-text small {
+        display: none;
+      }
+      .search-box {
+        min-width: 140px;
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .sticky-bar {
+        padding: 8px 10px;
+      }
+      .search-box {
+        display: none;
+      }
+      .cover-card {
+        padding: 22px 14px;
+      }
+      .topic-card {
+        padding: 18px 14px;
+      }
+      .doc-main-title {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* Print Stylesheet for Official A4 Output */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print, .sticky-bar, .doc-sidebar, .floating-top-btn, .copy-btn {
+        display: none !important;
+      }
+      .doc-layout {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+      .cover-card {
+        background: #ffffff !important;
+        border: 2px solid #e34c26 !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        page-break-after: always;
+      }
+      .doc-main-title {
+        color: #e34c26 !important;
+        -webkit-text-fill-color: #e34c26 !important;
+      }
+      .topic-card {
+        background: #ffffff !important;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 25px;
+      }
+      .code-wrapper {
+        background: #f8fafc !important;
+        border: 1px solid #ccc !important;
+      }
+      pre {
+        color: #0f172a !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky-bar">
+    <div class="bar-left">
+      <a href="roadmap.html" class="btn btn-outline" title="Return to Full Learning Roadmap">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Roadmap
+      </a>
+      
+      <a href="#cover" class="bar-brand">
+        <img src="assets/stc_logo.jpg" alt="STC Logo" onerror="this.style.display='none'">
+        <div class="bar-brand-text">
+          Super Sys-Tech Computers
+          <small>HTML5 Master Notes • Umerkot</small>
+        </div>
+      </a>
+    </div>
+
+    <div class="bar-right">
+      <div class="search-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="topicSearch" placeholder="Search topic (e.g. Forms, Tables, Tags)..." onkeyup="filterNotes()">
+      </div>
+
+      <button onclick="toggleSidebar()" class="btn btn-outline sidebar-toggle-btn" id="sidebarToggleBtn" title="Toggle Table of Contents / Full View">
+        ◀ Full View
+      </button>
+
+      <button onclick="toggleTheme()" class="btn btn-outline" id="themeToggleBtn" title="Toggle Light / Dark Preview">
+        🌓 Theme
+      </button>
+
+      <button onclick="window.print()" class="btn btn-print" title="Print this handbook or save it as an official PDF">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Download / Print PDF
+      </button>
+    </div>
+  </header>
+
+  <div class="doc-layout">
+
+    <!-- LEFT SIDEBAR: STICKY TABLE OF CONTENTS -->
+    <aside class="doc-sidebar no-print" id="docSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title-row">
+          <div class="sidebar-heading">
+            <span>📑 Table of Contents</span>
+          </div>
+          <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" onclick="toggleSidebar()" title="Collapse TOC to view full page width">
+            ◀ Full View
+          </button>
+        </div>
+        <div class="sidebar-search-box">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="sidebarSearchInput" placeholder="Filter topics in TOC..." oninput="filterSidebarTopics(this.value)">
+        </div>
+        <div class="sidebar-tabs">
+          <button class="sb-tab active" onclick="switchSidebarCategory('all', this)">All (14)</button>
+          <button class="sb-tab" onclick="switchSidebarCategory('topics', this)">📘 Topics (9)</button>
+          <button class="sb-tab" onclick="switchSidebarCategory('projects', this)">🚀 Projects (5)</button>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav">
+        <!-- Unit 1: HTML Core Topics -->
+        <div class="sidebar-unit-group">
+          <div class="sidebar-unit-title">Unit 01 • HTML5 Fundamentals</div>
+          <a href="#topic01" class="sidebar-item active"><span class="sidebar-num">01</span> HTML Structure</a>
+          <a href="#topic02" class="sidebar-item"><span class="sidebar-num">02</span> Content & Headings</a>
+          <a href="#topic03" class="sidebar-item"><span class="sidebar-num">03</span> Text Formatting</a>
+          <a href="#topic04" class="sidebar-item"><span class="sidebar-num">04</span> Semantic Layout</a>
+          <a href="#topic05" class="sidebar-item"><span class="sidebar-num">05</span> Links & Bookmarks</a>
+          <a href="#topic06" class="sidebar-item"><span class="sidebar-num">06</span> Images & Media</a>
+          <a href="#topic07" class="sidebar-item"><span class="sidebar-num">07</span> Lists & Tables</a>
+          <a href="#topic08" class="sidebar-item"><span class="sidebar-num">08</span> Forms & Controls</a>
+          <a href="#topic09" class="sidebar-item"><span class="sidebar-num">09</span> Modern Input Types</a>
+        </div>
+
+        <!-- Unit 2: Real-World HTML Projects -->
+        <div class="sidebar-unit-group unit-projects-group">
+          <div class="sidebar-unit-title">Unit 02 • Real-World Projects</div>
+          <a href="#proj-agency" class="sidebar-item"><span class="sidebar-num">P1</span> Corporate Agency Portal</a>
+          <a href="#proj-admission" class="sidebar-item"><span class="sidebar-num">P2</span> Student Admission Form</a>
+          <a href="#proj-schedule" class="sidebar-item"><span class="sidebar-num">P3</span> Academic Conference Table</a>
+          <a href="#proj-mediahub" class="sidebar-item"><span class="sidebar-num">P4</span> Multimedia Video Hub</a>
+          <a href="#proj-docs" class="sidebar-item"><span class="sidebar-num">P5</span> Technical Knowledgebase</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- RIGHT MAIN CONTENT (Scrolls smoothly!) -->
+    <main class="doc-main" id="mainContent">
+
+      <!-- Cover Page -->
+      <div class="cover-card" id="cover">
+        <div class="cover-logos">
+          <div class="institute-logo-badge">
+            <img src="assets/stc_logo.jpg" alt="Super Sys-Tech Logo" onerror="this.style.display='none'">
+            <div class="institute-info-text">
+              <div class="institute-title">Super Sys-Tech Computers Centre</div>
+              <div class="institute-tagline">Struggle For Better Education • Umerkot</div>
+            </div>
+          </div>
+
+          <div class="html-official-badge">
+            <!-- Official HTML5 Vector Logo -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40" height="40">
+              <path fill="#E34F26" d="M71,460 L30,0 481,0 440,460 255,512"/>
+              <path fill="#EF652A" d="M256,472 L407,430 440,61 256,61"/>
+              <path fill="#ECECEC" d="M256,176 L159,176 152,104 256,104 256,43 83,43 105,237 256,237 z M256,346 L201,331 198,289 137,289 143,361 256,393 z"/>
+              <path fill="#FFFFFF" d="M255,176 L255,237 348,237 340,331 255,354 255,415 369,383 379,271 380,259 389,158 392,115 255,115 255,176 z"/>
+            </svg>
+            <span style="font-weight: 800; font-size: 1rem; color: #ff8a65;">HTML5 Mastery</span>
+          </div>
+        </div>
+
+        <h1 class="doc-main-title">HTML5 Complete Master Study Notes</h1>
+        <p class="doc-subtitle">
+          Official curriculum handbook covering Document Architecture, Semantic Markup, Tabular Data, Form Controls, Accessible Media, and Real-World Semantic Projects. Designed for student exams and professional frontend development.
+        </p>
+
+        <div class="author-meta-box">
+          <div>Course: <strong style="color: var(--text-main);">Full-Stack Web Development</strong></div>
+          <div>Unit: <strong style="color: var(--html-color);">HTML5 Architecture</strong></div>
+          <div>Authored By: <span class="author-name">Mukesh Kumar</span></div>
+          <div>Institute: <strong style="color: var(--text-main);">Sys-Tech Umerkot</strong></div>
+        </div>
+
+        <!-- Student Exam Fillable Strip -->
+        <div class="student-fields-strip no-print">
+          <div class="student-field-item">
+            <label>Student Full Name</label>
+            <span></span>
+          </div>
+          <div class="student-field-item">
+            <label>Enrollment / Roll No</label>
+            <span></span>
+          </div>
+          <div class="student-field-item">
+            <label>Batch Session</label>
+            <span>Web Dev 2026</span>
+          </div>
+          <div class="student-field-item">
+            <label>Examination Center</label>
+            <span>Sys-Tech Umerkot</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== UNIT 1: HTML5 FUNDAMENTALS ==================== -->
+      <div class="unit-banner" id="unit-html">
+        <div>
+          <div class="unit-tag">Unit 01 • Core Structure</div>
+          <div class="unit-title">HTML5 Document Architecture & Fundamentals</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Topics 01 – 09</div>
+      </div>
+
+      <!-- TOPIC 01 -->
+      <article class="topic-card" id="topic01">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 01</span>
+            <h2 class="topic-name">HTML5 Document Structure & Boilerplate</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Foundational</span>
+        </div>
+        <p class="topic-desc">
+          Every valid webpage begins with an HTML5 boilerplate. The <code>&lt;!DOCTYPE html&gt;</code> declaration instructs the browser to render the page in standard mode. The root <code>&lt;html&gt;</code> contains the <code>&lt;head&gt;</code> (metadata, character encoding, title) and <code>&lt;body&gt;</code> (visible content).
+        </p>
+
+        <div class="section-label">Code Example: Complete HTML5 Skeleton</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>index.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;meta name="description" content="Super Sys-Tech Computers Official Training Portal"&gt;
+  &lt;title&gt;Super Sys-Tech Computers Centre | Umerkot&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Welcome to Super Sys-Tech Computers Centre&lt;/h1&gt;
+  &lt;p&gt;Struggle For Better Education • Umerkot, Sindh&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always include <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code> inside the <code>&lt;head&gt;</code>. Without this meta tag, smartphones and tablets will render your website like a miniaturized desktop screen!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 02 -->
+      <article class="topic-card" id="topic02">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 02</span>
+            <h2 class="topic-name">Content Tags (Headings & Paragraphs)</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Typography</span>
+        </div>
+        <p class="topic-desc">
+          Headings range from <code>&lt;h1&gt;</code> (most important) to <code>&lt;h6&gt;</code> (least important). Paragraphs <code>&lt;p&gt;</code> enclose blocks of text. Use <code>&lt;br&gt;</code> for line breaks and <code>&lt;hr&gt;</code> for thematic thematic breaks.
+        </p>
+
+        <div class="section-label">Code Example: Heading Hierarchy & Dividers</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>content_tags.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;!-- Correct Single H1 per Page --&gt;
+&lt;h1&gt;Full Stack Web Engineering Program&lt;/h1&gt;
+&lt;h2&gt;Module 01: Frontend Architecture&lt;/h2&gt;
+&lt;h3&gt;Section A: HTML5 Semantics&lt;/h3&gt;
+
+&lt;p&gt;
+  HTML provides the raw bones and structural framework of every website.&lt;br&gt;
+  Mastering clean markup ensures fast loading and high SEO rankings.
+&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;blockquote&gt;
+  "Struggle For Better Education" — Super Sys-Tech Computers Umerkot
+&lt;/blockquote&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Never use multiple <code>&lt;h1&gt;</code> tags on a single page! Search engines like Google use the single <code>&lt;h1&gt;</code> tag to identify the primary subject of your document.
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 03 -->
+      <article class="topic-card" id="topic03">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 03</span>
+            <h2 class="topic-name">Text Formatting & Semantic Inline Tags</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Formatting</span>
+        </div>
+        <p class="topic-desc">
+          Modern HTML distinguishes between visual presentation (handled by CSS) and semantic importance. Use <code>&lt;strong&gt;</code> for urgent importance, <code>&lt;em&gt;</code> for emphasis, <code>&lt;mark&gt;</code> for highlighted text, and <code>&lt;del&gt;</code> / <code>&lt;ins&gt;</code> for editorial revisions.
+        </p>
+
+        <div class="section-label">Code Example: Semantic Inline Formatting</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>formatting.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;p&gt;&lt;strong&gt;Warning:&lt;/strong&gt; Registration closes at midnight!&lt;/p&gt;
+&lt;p&gt;Special fee offer: &lt;del&gt;Rs. 15,000&lt;/del&gt; &lt;ins&gt;Rs. 9,999&lt;/ins&gt;&lt;/p&gt;
+&lt;p&gt;Chemical formula of Water: H&lt;sub&gt;2&lt;/sub&gt;O&lt;/p&gt;
+&lt;p&gt;Einstein's Equation: E = mc&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Search Result Keyword: &lt;mark&gt;Mukesh Kumar&lt;/mark&gt; verified instructor.&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Screen readers read <code>&lt;strong&gt;</code> and <code>&lt;em&gt;</code> with vocal emphasis and higher pitch, whereas old tags like <code>&lt;b&gt;</code> and <code>&lt;i&gt;</code> provide no accessible emphasis. Always choose semantic tags!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 04 -->
+      <article class="topic-card" id="topic04">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 04</span>
+            <h2 class="topic-name">Semantic HTML5 Layout Tags</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">Architecture</span>
+        </div>
+        <p class="topic-desc">
+          HTML5 introduced structural tags that replace generic <code>&lt;div&gt;</code> soups. Using <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, and <code>&lt;footer&gt;</code> creates meaningful document landmarks for screen readers and search crawlers.
+        </p>
+
+        <div class="section-label">Code Example: Complete Semantic Page Structure</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>semantic_layout.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;header&gt;
+  &lt;div class="logo"&gt;Super Sys-Tech Computers&lt;/div&gt;
+  &lt;nav aria-label="Main Navigation"&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#home"&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#courses"&gt;Courses&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+  &lt;section id="hero"&gt;
+    &lt;h1&gt;Struggle For Better Education&lt;/h1&gt;
+  &lt;/section&gt;
+  
+  &lt;article&gt;
+    &lt;h2&gt;Modern Web Standards&lt;/h2&gt;
+    &lt;p&gt;Semantic markup improves accessibility for disabled users.&lt;/p&gt;
+  &lt;/article&gt;
+
+  &lt;aside&gt;
+    &lt;h3&gt;Notice Board&lt;/h3&gt;
+    &lt;p&gt;New batch registrations open at Umerkot branch.&lt;/p&gt;
+  &lt;/aside&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+  &lt;p&gt;&copy; 2026 Super Sys-Tech Computers Centre. All Rights Reserved.&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            An <code>&lt;article&gt;</code> must represent an independent, self-contained piece of content that could be distributed in an RSS feed (e.g. blog post, product card, news update), while <code>&lt;section&gt;</code> groups related content together under a heading.
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 05 -->
+      <article class="topic-card" id="topic05">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 05</span>
+            <h2 class="topic-name">Links, Navigation & Anchor Protocols</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Navigation</span>
+        </div>
+        <p class="topic-desc">
+          The <code>&lt;a&gt;</code> (anchor) tag connects the web. Beyond standard URLs, anchors support internal ID bookmark links, <code>mailto:</code> for emailing, <code>tel:</code> for direct phone dialing, and <code>download</code> attributes for PDF vouchers.
+        </p>
+
+        <div class="section-label">Code Example: Links, Targets & Action Protocols</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>links.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;!-- External Safe Link (New Tab) --&gt;
+&lt;a href="https://example.com" target="_blank" rel="noopener noreferrer"&gt;Visit Partner Portal&lt;/a&gt;
+
+&lt;!-- Internal Smooth Jump Bookmark --&gt;
+&lt;a href="#admission-form"&gt;Jump to Admission Section&lt;/a&gt;
+
+&lt;!-- Direct Calling on Mobile Phones --&gt;
+&lt;a href="tel:+923001234567"&gt;📞 Call Umerkot Admission Desk&lt;/a&gt;
+
+&lt;!-- Direct Email Client Launch --&gt;
+&lt;a href="mailto:info@systech.edu.pk?subject=Course%20Inquiry"&gt;✉️ Send Email&lt;/a&gt;
+
+&lt;!-- Force File Download --&gt;
+&lt;a href="syllabus.pdf" download="SysTech_WebDev_Syllabus.pdf"&gt;📥 Download Syllabus&lt;/a&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Whenever you use <code>target="_blank"</code> to open external websites, always pair it with <code>rel="noopener noreferrer"</code>. This prevents the new tab from accessing your original page's <code>window.opener</code> object for reverse tabnabbing security attacks!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 06 -->
+      <article class="topic-card" id="topic06">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 06</span>
+            <h2 class="topic-name">Images, Vector SVGs & Rich Media</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Multimedia</span>
+        </div>
+        <p class="topic-desc">
+          Responsive images require the <code>&lt;img&gt;</code> tag with mandatory <code>alt</code> text, native <code>loading="lazy"</code> for performance, and <code>&lt;picture&gt;</code> for art direction. Native audio and video tags replace heavy third-party plugins.
+        </p>
+
+        <div class="section-label">Code Example: Responsive Media & Embedded Video</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>media.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;!-- High Performance Lazy Loaded Image with Figure Caption --&gt;
+&lt;figure&gt;
+  &lt;img src="assets/stc_logo.jpg" alt="Super Sys-Tech Computers Centre Umerkot Logo" width="200" height="200" loading="lazy"&gt;
+  &lt;figcaption&gt;Fig 1.1: Official Center Emblem with Umerkot Fort Fortress&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;!-- HTML5 Native Video Player --&gt;
+&lt;video width="640" height="360" controls poster="poster.jpg" preload="metadata"&gt;
+  &lt;source src="lecture_intro.mp4" type="video/mp4"&gt;
+  &lt;source src="lecture_intro.webm" type="video/webm"&gt;
+  &lt;p&gt;Your browser does not support HTML5 video.&lt;/p&gt;
+&lt;/video&gt;
+
+&lt;!-- Embedded Google Maps / YouTube with Security Sandbox --&gt;
+&lt;iframe src="https://maps.google.com" width="100%" height="250" style="border:0;" loading="lazy"&gt;&lt;/iframe&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Always specify <code>width</code> and <code>height</code> attributes on your <code>&lt;img&gt;</code> tags. This lets the browser calculate the exact aspect ratio box before the image downloads, completely eliminating Cumulative Layout Shift (CLS)!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 07 -->
+      <article class="topic-card" id="topic07">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 07</span>
+            <h2 class="topic-name">Lists & Tabular Data Structures</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Data Structures</span>
+        </div>
+        <p class="topic-desc">
+          HTML supports Unordered Lists <code>&lt;ul&gt;</code>, Ordered Lists <code>&lt;ol&gt;</code>, and Description Lists <code>&lt;dl&gt;</code>. Tables display relational tabular data using <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tfoot&gt;</code>, with <code>colspan</code> and <code>rowspan</code> for merged cells.
+        </p>
+
+        <div class="section-label">Code Example: Accessible Data Table with Row/Colspan</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>tables.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;table border="1" cellpadding="8"&gt;
+  &lt;caption&gt;Super Sys-Tech Computers - Course Fee & Exam Schedule&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Module #&lt;/th&gt;
+      &lt;th scope="col"&gt;Subject Name&lt;/th&gt;
+      &lt;th scope="col"&gt;Duration&lt;/th&gt;
+      &lt;th scope="col"&gt;Course Fee&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MOD-01&lt;/td&gt;
+      &lt;td&gt;HTML5 & Semantic Markup&lt;/td&gt;
+      &lt;td rowspan="2"&gt;2 Months&lt;/td&gt;
+      &lt;td&gt;Rs. 4,000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MOD-02&lt;/td&gt;
+      &lt;td&gt;CSS3 & Responsive Design&lt;/td&gt;
+      &lt;td&gt;Rs. 4,500&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;th colspan="3" scope="row"&gt;Combined Package Total&lt;/th&gt;
+      &lt;th&gt;Rs. 7,500 (Save 12%)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Never use HTML tables for website layouts! Tables are strictly for two-dimensional data. Always include <code>scope="col"</code> and <code>scope="row"</code> on <code>&lt;th&gt;</code> tags so screen readers can announce the column name for visually impaired students.
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 08 -->
+      <article class="topic-card" id="topic08">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 08</span>
+            <h2 class="topic-name">Forms & Interactive Controls</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">User Input</span>
+        </div>
+        <p class="topic-desc">
+          Forms collect user input to submit to backend servers. Every <code>&lt;input&gt;</code> must have an associated <code>&lt;label for="..."&gt;</code> matching the input's <code>id</code>. Use <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> to group related form controls.
+        </p>
+
+        <div class="section-label">Code Example: Accessible Student Contact Form</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>forms.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;form action="submit_admission.php" method="POST"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Personal Identification&lt;/legend&gt;
+    
+    &lt;p&gt;
+      &lt;label for="fullName"&gt;Student Full Name:&lt;/label&gt;&lt;br&gt;
+      &lt;input type="text" id="fullName" name="student_name" placeholder="e.g. Mukesh Kumar" required&gt;
+    &lt;/p&gt;
+
+    &lt;p&gt;
+      &lt;label for="courseSelect"&gt;Select Desired Course:&lt;/label&gt;&lt;br&gt;
+      &lt;select id="courseSelect" name="course_id" required&gt;
+        &lt;optgroup label="Frontend Engineering"&gt;
+          &lt;option value="html-css"&gt;HTML5 & CSS3 Responsive Masterclass&lt;/option&gt;
+          &lt;option value="js"&gt;JavaScript ES6+ & DOM Manipulation&lt;/option&gt;
+        &lt;/optgroup&gt;
+        &lt;optgroup label="Backend Engineering"&gt;
+          &lt;option value="php-mysql"&gt;PHP 8.x & MySQL PDO Full-Stack&lt;/option&gt;
+        &lt;/optgroup&gt;
+      &lt;/select&gt;
+    &lt;/p&gt;
+
+    &lt;p&gt;
+      &lt;label for="comments"&gt;Educational Background / Queries:&lt;/label&gt;&lt;br&gt;
+      &lt;textarea id="comments" name="user_query" rows="4" cols="50"&gt;&lt;/textarea&gt;
+    &lt;/p&gt;
+
+    &lt;button type="submit"&gt;Submit Admission Application&lt;/button&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            Clicking a <code>&lt;label&gt;</code> automatically focuses its corresponding <code>&lt;input&gt;</code> or toggles checkboxes/radios. This dramatically enlarges the tap target on touchscreens, vastly improving user experience!
+          </div>
+        </div>
+      </article>
+
+      <!-- TOPIC 09 -->
+      <article class="topic-card" id="topic09">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Topic 09</span>
+            <h2 class="topic-name">Modern HTML5 Input Types & Validation</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Validation</span>
+        </div>
+        <p class="topic-desc">
+          HTML5 introduces specialized input types that provide native browser validation and trigger optimized mobile keyboards (e.g. numeric keypad for <code>tel</code>, email symbols for <code>email</code>). Attributes like <code>pattern</code>, <code>min</code>, <code>max</code>, and <code>required</code> enforce input formats without writing custom JavaScript!
+        </p>
+
+        <div class="section-label">Code Example: Specialized Input Types & Regex Patterns</div>
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>input_types.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;form action="validate.php" method="POST" enctype="multipart/form-data"&gt;
+  &lt;!-- Mobile Number with Regex Pattern for Pakistan --&gt;
+  &lt;label for="phone"&gt;WhatsApp Phone (03XXXXXXXXX):&lt;/label&gt;
+  &lt;input type="tel" id="phone" name="phone" pattern="03[0-9]{9}" placeholder="03001234567" required&gt;
+
+  &lt;!-- Native Date Picker with Boundary Constraints --&gt;
+  &lt;label for="dob"&gt;Date of Birth:&lt;/label&gt;
+  &lt;input type="date" id="dob" name="birth_date" min="1980-01-01" max="2012-12-31"&gt;
+
+  &lt;!-- Color Picker --&gt;
+  &lt;label for="favColor"&gt;Brand Accent Color:&lt;/label&gt;
+  &lt;input type="color" id="favColor" name="theme_color" value="#e34c26"&gt;
+
+  &lt;!-- Slider Range Control --&gt;
+  &lt;label for="exp"&gt;Self-Rated Computer Proficiency (1 to 10):&lt;/label&gt;
+  &lt;input type="range" id="exp" name="rating" min="1" max="10" value="7"&gt;
+
+  &lt;!-- Restricted PDF File Upload --&gt;
+  &lt;label for="doc"&gt;Attach CNIC / B-Form (PDF Only):&lt;/label&gt;
+  &lt;input type="file" id="doc" name="cnic_file" accept=".pdf" required&gt;
+
+  &lt;button type="submit"&gt;Verify & Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Pro Tip:</strong>
+            When accepting file uploads via <code>&lt;input type="file"&gt;</code>, the enclosing <code>&lt;form&gt;</code> tag MUST include <code>enctype="multipart/form-data"</code> and <code>method="POST"</code>. Otherwise, only the filename will be sent, not the actual binary file bytes!
+          </div>
+        </div>
+      </article>
+
+      <!-- ==================== UNIT 2: REAL-WORLD HTML CAPSTONE PROJECTS ==================== -->
+      <div class="unit-banner" id="unit-projects" style="border-left-color: #10b981; background: linear-gradient(90deg, rgba(16, 185, 129, 0.2) 0%, rgba(15, 23, 42, 0.4) 100%);">
+        <div>
+          <div class="unit-tag" style="color: #10b981;">Unit 02 • Capstone Implementation</div>
+          <div class="unit-title">Real-World Semantic HTML5 Projects</div>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">5 Industry Projects</div>
+      </div>
+
+      <!-- PROJECT 1: CORPORATE AGENCY MULTI-PAGE PORTAL -->
+      <article class="topic-card" id="proj-agency" style="border-left: 4px solid #e34c26;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 01</span>
+            <h2 class="topic-name">🏢 Corporate Agency Multi-Page Semantic Portal</h2>
+          </div>
+          <span class="topic-badge" style="color:#e34c26; border-color: rgba(227,76,38,0.3);">Semantic Architecture</span>
+        </div>
+        <p class="topic-desc">
+          A production-ready corporate agency website structure with accessible ARIA landmarks, SEO meta tags, OpenGraph sharing protocol, customer testimonials, and an interactive lead capture section.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>agency_portal.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;meta name="author" content="Mukesh Kumar"&gt;
+  &lt;meta name="description" content="Sys-Tech Digital Agency - Premium Web Engineering Solutions in Umerkot"&gt;
+  &lt;!-- OpenGraph Meta for Social Media Previews --&gt;
+  &lt;meta property="og:title" content="Sys-Tech Digital Engineering"&gt;
+  &lt;meta property="og:description" content="Full Stack Enterprise Development & Training"&gt;
+  &lt;meta property="og:image" content="assets/stc_logo.jpg"&gt;
+  &lt;title&gt;Sys-Tech Digital Agency | Enterprise Engineering&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;header&gt;
+    &lt;nav aria-label="Main Agency Navigation"&gt;
+      &lt;a href="#home"&gt;&lt;img src="assets/stc_logo.jpg" alt="Agency Logo" width="45" height="45"&gt;&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#services"&gt;Services&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#portfolio"&gt;Case Studies&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#about"&gt;Leadership&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#contact"&gt;Request Consultation&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section id="hero"&gt;
+      &lt;h1&gt;Architecting Scalable Web Infrastructure&lt;/h1&gt;
+      &lt;p&gt;Delivering bulletproof enterprise solutions with modern semantic standards.&lt;/p&gt;
+      &lt;a href="#contact"&gt;Schedule Discovery Call&lt;/a&gt;
+    &lt;/section&gt;
+
+    &lt;section id="services"&gt;
+      &lt;h2&gt;Engineering Competencies&lt;/h2&gt;
+      &lt;div&gt;
+        &lt;article&gt;
+          &lt;h3&gt;High-Speed Frontend Systems&lt;/h3&gt;
+          &lt;p&gt;Zero-CLS, responsive semantic architectures with WCAG 2.1 compliance.&lt;/p&gt;
+        &lt;/article&gt;
+        &lt;article&gt;
+          &lt;h3&gt;Transactional Backend APIs&lt;/h3&gt;
+          &lt;p&gt;Secure PHP 8.x PDO services and relational database normalization.&lt;/p&gt;
+        &lt;/article&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;&copy; 2026 Sys-Tech Digital Agency. Super Sys-Tech Computers Centre Umerkot.&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            Using OpenGraph tags (<code>og:title</code>, <code>og:image</code>, <code>og:description</code>) ensures that when your client shares the website link on WhatsApp, LinkedIn, or Facebook, a rich card with the STC logo and description generates automatically!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 2: MULTI-STEP STUDENT ADMISSION FORM -->
+      <article class="topic-card" id="proj-admission" style="border-left: 4px solid #10b981;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 02</span>
+            <h2 class="topic-name">📝 Multi-Section Student Admission & Survey Registry</h2>
+          </div>
+          <span class="topic-badge" style="color:#10b981; border-color: rgba(16,185,129,0.3);">Advanced Forms</span>
+        </div>
+        <p class="topic-desc">
+          A comprehensive student enrollment application structure complete with personal identity fields, educational history radio grids, timing preferences, and certified file uploads.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>admission_registry.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Student Admission Registry | Super Sys-Tech Computers Umerkot&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Official Student Admission Form - Session 2026&lt;/h1&gt;
+    &lt;p&gt;Super Sys-Tech Computers Centre • "Struggle For Better Education"&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;form action="process_admission.php" method="POST" enctype="multipart/form-data"&gt;
+    &lt;!-- Section 1: Personal Data --&gt;
+    &lt;fieldset&gt;
+      &lt;legend&gt;1. Personal Credentials&lt;/legend&gt;
+      &lt;label for="stName"&gt;Full Name (as per Matric Certificate): *&lt;/label&gt;&lt;br&gt;
+      &lt;input type="text" id="stName" name="name" required minlength="3"&gt;&lt;br&gt;&lt;br&gt;
+
+      &lt;label for="stCnic"&gt;CNIC or B-Form Number (44101-XXXXXXX-X): *&lt;/label&gt;&lt;br&gt;
+      &lt;input type="text" id="stCnic" name="cnic" pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}" placeholder="44101-1234567-1" required&gt;&lt;br&gt;&lt;br&gt;
+
+      &lt;label for="stEmail"&gt;Email Address for LMS Credentials: *&lt;/label&gt;&lt;br&gt;
+      &lt;input type="email" id="stEmail" name="email" required&gt;
+    &lt;/fieldset&gt;
+
+    &lt;!-- Section 2: Course & Shift Selection --&gt;
+    &lt;fieldset&gt;
+      &lt;legend&gt;2. Course Track & Lab Timing Preference&lt;/legend&gt;
+      &lt;p&gt;Select Course Track:&lt;/p&gt;
+      &lt;input type="radio" id="cWeb" name="track" value="fullstack" checked&gt;
+      &lt;label for="cWeb"&gt;Full-Stack Web Development (HTML, CSS, JS, PHP, MySQL)&lt;/label&gt;&lt;br&gt;
+      &lt;input type="radio" id="cCit" name="track" value="cit"&gt;
+      &lt;label for="cCit"&gt;Certificate in Information Technology (CIT 1-Year)&lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+      &lt;label for="shiftTime"&gt;Preferred Shift Time:&lt;/label&gt;&lt;br&gt;
+      &lt;select id="shiftTime" name="shift" required&gt;
+        &lt;option value="" disabled selected&gt;Choose Batch Slot...&lt;/option&gt;
+        &lt;option value="morning_9am"&gt;Morning: 09:00 AM - 11:00 AM&lt;/option&gt;
+        &lt;option value="afternoon_3pm"&gt;Afternoon: 03:00 PM - 05:00 PM&lt;/option&gt;
+        &lt;option value="evening_6pm"&gt;Evening: 06:00 PM - 08:00 PM&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/fieldset&gt;
+
+    &lt;!-- Section 3: Verification & Submission --&gt;
+    &lt;fieldset&gt;
+      &lt;legend&gt;3. Verification & Documents&lt;/legend&gt;
+      &lt;label for="photo"&gt;Passport Size Photo (JPEG/PNG): *&lt;/label&gt;&lt;br&gt;
+      &lt;input type="file" id="photo" name="photo" accept="image/*" required&gt;&lt;br&gt;&lt;br&gt;
+
+      &lt;input type="checkbox" id="terms" name="agree_terms" required&gt;
+      &lt;label for="terms"&gt;I certify that all details submitted above are accurate according to official records.&lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+      &lt;button type="submit"&gt;Submit Admission Form&lt;/button&gt;
+      &lt;button type="reset"&gt;Clear All Fields&lt;/button&gt;
+    &lt;/fieldset&gt;
+  &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            Using the regex pattern <code>[0-9]{5}-[0-9]{7}-[0-9]{1}</code> provides instant client-side format validation for Pakistani CNIC numbers without waiting for server response!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 3: ACADEMIC CONFERENCE SCHEDULE TABLE -->
+      <article class="topic-card" id="proj-schedule" style="border-left: 4px solid #38bdf8;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 03</span>
+            <h2 class="topic-name">📅 Academic Conference Schedule & Timetable Ledger</h2>
+          </div>
+          <span class="topic-badge" style="color:#38bdf8; border-color: rgba(56,189,248,0.3);">Complex Tables</span>
+        </div>
+        <p class="topic-desc">
+          An advanced multi-hall university conference timetable showcasing multi-row spans, column spans, accessible table headers, and venue designations.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>conference_timetable.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Annual Tech Symposium 2026 Timetable&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Sys-Tech Annual Technology Symposium 2026&lt;/h1&gt;
+  &lt;p&gt;Location: Main Auditorium, Super Sys-Tech Computers Centre Umerkot&lt;/p&gt;
+
+  &lt;table border="1" cellpadding="10" cellspacing="0"&gt;
+    &lt;caption&gt;&lt;strong&gt;Keynote & Technical Paper Track Schedule&lt;/strong&gt;&lt;/caption&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th scope="col"&gt;Time Slot&lt;/th&gt;
+        &lt;th scope="col"&gt;Track A (Hall 1: Web Tech)&lt;/th&gt;
+        &lt;th scope="col"&gt;Track B (Hall 2: Database Systems)&lt;/th&gt;
+        &lt;th scope="col"&gt;Lead Speaker&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;09:00 AM - 10:30 AM&lt;/td&gt;
+        &lt;td colspan="2" style="text-align:center;"&gt;&lt;strong&gt;Inaugural Address: Struggle For Better Education&lt;/strong&gt;&lt;/td&gt;
+        &lt;td&gt;Director Mukesh Kumar&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;10:30 AM - 12:00 PM&lt;/td&gt;
+        &lt;td&gt;Semantic HTML5 & Accessibility Standards&lt;/td&gt;
+        &lt;td&gt;MySQL InnoDB Transactions & ACID Locks&lt;/td&gt;
+        &lt;td&gt;Senior Lecturer Suneel Kumar&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;12:00 PM - 01:00 PM&lt;/td&gt;
+        &lt;td colspan="3" style="text-align:center; background:#eee;"&gt;&lt;em&gt;Networking & Lunch Break&lt;/em&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td rowspan="2"&gt;01:00 PM - 03:00 PM&lt;/td&gt;
+        &lt;td&gt;Modern CSS Grid & Responsive Viewports&lt;/td&gt;
+        &lt;td rowspan="2"&gt;PHP 8.x PDO Security Architecture&lt;/td&gt;
+        &lt;td&gt;Pooja Devi (UI Lead)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;Full-Stack Project Capstone Demo&lt;/td&gt;
+        &lt;td&gt;Mukesh Kumar&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            When combining rows or columns, ensure that the total cell count across every row remains balanced. A missing <code>td</code> will cause table columns to skew and misalign across different browsers!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 4: MULTIMEDIA VIDEO & AUDIO HUB -->
+      <article class="topic-card" id="proj-mediahub" style="border-left: 4px solid #f59e0b;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 04</span>
+            <h2 class="topic-name">🎬 Multimedia Audio-Video Learning Hub with Subtitles</h2>
+          </div>
+          <span class="topic-badge" style="color:#f59e0b; border-color: rgba(245,158,11,0.3);">Media Hub</span>
+        </div>
+        <p class="topic-desc">
+          An accessible video streaming lecture portal integrating the HTML5 <code>&lt;video&gt;</code> and <code>&lt;audio&gt;</code> APIs,WebVTT closed-caption tracks (<code>&lt;track&gt;</code>), and download alternatives.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>media_hub.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Sys-Tech Multimedia Lecture Portal&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Sys-Tech Video Lecture: HTML5 Foundations&lt;/h1&gt;
+    &lt;p&gt;Instructor: Mukesh Kumar • Lecture 01 of 22&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section&gt;
+      &lt;!-- Primary HTML5 Video Player with Fallback & Closed Captions --&gt;
+      &lt;video width="854" height="480" controls poster="assets/lecture_poster.jpg" preload="metadata"&gt;
+        &lt;source src="assets/lecture01.mp4" type="video/mp4"&gt;
+        &lt;source src="assets/lecture01.webm" type="video/webm"&gt;
+        &lt;!-- WebVTT Subtitle Track for Accessibility --&gt;
+        &lt;track src="subtitles_en.vtt" kind="subtitles" srclang="en" label="English Subtitles" default&gt;
+        &lt;track src="subtitles_ur.vtt" kind="subtitles" srclang="ur" label="Urdu Subtitles"&gt;
+        &lt;p&gt;Your browser does not support HTML5 video. &lt;a href="assets/lecture01.mp4" download&gt;Download Video MP4&lt;/a&gt;.&lt;/p&gt;
+      &lt;/video&gt;
+
+      &lt;h2&gt;Audio Podcast Version (Low Bandwidth)&lt;/h2&gt;
+      &lt;audio controls preload="none"&gt;
+        &lt;source src="assets/lecture01.mp3" type="audio/mpeg"&gt;
+        &lt;p&gt;&lt;a href="assets/lecture01.mp3" download&gt;Download MP3 Audio (12 MB)&lt;/a&gt;&lt;/p&gt;
+      &lt;/audio&gt;
+
+      &lt;h3&gt;Lecture Summary & Timestamps&lt;/h3&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;00:00 - 05:20:&lt;/strong&gt; Course Overview & Tool Setup (VS Code)&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;05:21 - 18:40:&lt;/strong&gt; DOCTYPE, HTML Skeleton & Meta Tags&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;18:41 - 32:10:&lt;/strong&gt; Semantic Landmarks for Screen Readers&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            The <code>&lt;track&gt;</code> element supports `.vtt` (Web Video Text Tracks). Adding closed captions allows students in noisy environments or with hearing disabilities to follow the technical lectures with 100% clarity!
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 5: TECHNICAL DOCUMENTATION KNOWLEDGEBASE -->
+      <article class="topic-card" id="proj-docs" style="border-left: 4px solid #a855f7;">
+        <div class="topic-header">
+          <div class="topic-title-group">
+            <span class="topic-badge">Project 05</span>
+            <h2 class="topic-name">📚 Technical Product Documentation & FAQ Knowledgebase</h2>
+          </div>
+          <span class="topic-badge" style="color:#a855f7; border-color: rgba(168,85,247,0.3);">Documentation</span>
+        </div>
+        <p class="topic-desc">
+          A semantic documentation article layout using the native <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> disclosure tags for expandable FAQ accordions with zero JavaScript.
+        </p>
+
+        <div class="code-wrapper">
+          <div class="code-top">
+            <span>technical_docs.html</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;HTML5 Developer Manual | Sys-Tech Umerkot&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Frontend Developer Handbook & FAQ Knowledgebase&lt;/h1&gt;
+    &lt;p&gt;Compiled by Mukesh Kumar • Super Sys-Tech Computers Centre Umerkot&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;article&gt;
+      &lt;h2&gt;Section 1: Code Conventions&lt;/h2&gt;
+      &lt;p&gt;All code submitted for grading must comply with W3C HTML5 standards.&lt;/p&gt;
+      &lt;pre&gt;&lt;code&gt;&amp;lt;!-- Always close self-closing or paired tags properly --&amp;gt;
+&amp;lt;img src="logo.png" alt="SysTech"&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+      &lt;h2&gt;Section 2: Frequently Asked Questions (FAQ)&lt;/h2&gt;
+
+      &lt;!-- Native HTML5 Accordions using Details & Summary --&gt;
+      &lt;details open&gt;
+        &lt;summary&gt;&lt;strong&gt;What is the difference between &amp;lt;div&amp;gt; and &amp;lt;section&amp;gt;?&lt;/strong&gt;&lt;/summary&gt;
+        &lt;p&gt;
+          A &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; has no semantic meaning and should only be used for CSS styling purposes. A &lt;code&gt;&amp;lt;section&amp;gt;&lt;/code&gt; defines a thematic grouping of content, typically with a heading.
+        &lt;/p&gt;
+      &lt;/details&gt;
+
+      &lt;details&gt;
+        &lt;summary&gt;&lt;strong&gt;Why does my form submission fail to upload images?&lt;/strong&gt;&lt;/summary&gt;
+        &lt;p&gt;
+          Ensure your &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; tag has &lt;code&gt;method="POST"&lt;/code&gt; and &lt;code&gt;enctype="multipart/form-data"&lt;/code&gt;.
+        &lt;/p&gt;
+      &lt;/details&gt;
+
+      &lt;details&gt;
+        &lt;summary&gt;&lt;strong&gt;Are HTML5 semantic tags supported in all browsers?&lt;/strong&gt;&lt;/summary&gt;
+        &lt;p&gt;
+          Yes, all modern mobile and desktop browsers (Chrome, Edge, Firefox, Safari) offer full native support for HTML5 semantic elements.
+        &lt;/p&gt;
+      &lt;/details&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="pro-tip">
+          <span class="pro-tip-icon">💡</span>
+          <div>
+            <strong>Mukesh Sir's Architecture Tip:</strong>
+            The <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> elements create 100% accessible, keyboard-navigable collapsible accordions natively without requiring a single line of JavaScript! Adding the <code>open</code> attribute expands the accordion by default.
+          </div>
+        </div>
+      </article>
+
+      <!-- Footer -->
+      <footer>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 12px;">
+          <img src="assets/stc_logo.jpg" alt="STC Logo" style="width: 44px; height: 44px; border-radius: 6px; background: #fff; padding: 3px; object-fit: contain;" onerror="this.style.display='none'">
+          <strong style="color: var(--text-main); font-size: 1.05rem;">Super Sys-Tech Computers Centre Umerkot</strong>
+        </div>
+        <p style="font-style: italic; color: var(--html-color);">"Struggle For Better Education"</p>
+        <p>Official Curriculum & Study Notes • Compiled by <strong>Mukesh Kumar</strong></p>
+        <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">Designed for print, online study, and exam preparation. All rights reserved © 2026.</p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Floating Back to Top Button & Mobile Backdrop -->
+  <button id="floatingTopBtn" class="floating-top-btn no-print" onclick="scrollToTop()" title="Scroll Back to Top">▲</button>
+  <div id="sidebarBackdrop" class="sidebar-backdrop no-print" onclick="toggleSidebar()"></div>
+
+  <script>
+    // 1-Click Copy Code
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-wrapper').querySelector('pre code');
+      const text = codeBlock.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = "✓ Copied!";
+        btn.style.color = "#10b981";
+        btn.style.borderColor = "#10b981";
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.color = "";
+          btn.style.borderColor = "";
+        }, 2000);
+      });
+    }
+
+    // Filter topics in the Left Sidebar
+    function filterSidebarTopics(query) {
+      const q = query.toLowerCase().trim();
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        const text = item.innerText.toLowerCase();
+        item.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    // Switch Sidebar Category Tabs ([All], [Topics], [Projects])
+    function switchSidebarCategory(cat, btn) {
+      document.querySelectorAll('.sb-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const topicItems = document.querySelectorAll('.sidebar-unit-group:not(.unit-projects-group)');
+      const projItems = document.querySelectorAll('.unit-projects-group');
+
+      if (cat === 'all') {
+        topicItems.forEach(g => g.style.display = 'block');
+        projItems.forEach(g => g.style.display = 'block');
+      } else if (cat === 'topics') {
+        topicItems.forEach(g => g.style.display = 'block');
+        projItems.forEach(g => g.style.display = 'none');
+      } else if (cat === 'projects') {
+        topicItems.forEach(g => g.style.display = 'none');
+        projItems.forEach(g => g.style.display = 'block');
+      }
+    }
+
+    // Toggle Left Sidebar (Mobile Drawer & Desktop Full View Collapse)
+    function toggleSidebar() {
+      const isMobile = window.innerWidth <= 1080;
+      const sidebar = document.getElementById('docSidebar');
+      const topBtn = document.getElementById('sidebarToggleBtn');
+      const sidebarCollapseBtn = document.getElementById('sidebarCollapseBtn');
+
+      if (isMobile) {
+        const backdrop = document.getElementById('sidebarBackdrop');
+        const isOpen = sidebar.classList.toggle('open');
+        if (backdrop) backdrop.classList.toggle('active', isOpen);
+      } else {
+        const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
+        if (topBtn) {
+          topBtn.innerHTML = isCollapsed ? "📑 Show TOC" : "◀ Full View";
+          if (isCollapsed) {
+            topBtn.classList.add('active-fullview');
+          } else {
+            topBtn.classList.remove('active-fullview');
+          }
+        }
+        if (sidebarCollapseBtn) {
+          sidebarCollapseBtn.innerHTML = isCollapsed ? "▶ Show TOC" : "◀ Full View";
+        }
+        localStorage.setItem('stc_html_toc_collapsed', isCollapsed ? 'true' : 'false');
+      }
+    }
+
+    // Initialize saved sidebar state on desktop
+    (function initSidebarState() {
+      if (window.innerWidth > 1080) {
+        const savedCollapsed = localStorage.getItem('stc_html_toc_collapsed');
+        if (savedCollapsed === 'true') {
+          document.body.classList.add('sidebar-collapsed');
+          const topBtn = document.getElementById('sidebarToggleBtn');
+          if (topBtn) {
+            topBtn.innerHTML = "📑 Show TOC";
+            topBtn.classList.add('active-fullview');
+          }
+        }
+      }
+    })();
+
+    // Smooth scroll and handle mobile sidebar on item click
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const href = item.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+            item.classList.add('active');
+            history.pushState(null, null, href);
+          }
+        }
+        const sidebar = document.getElementById('docSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (window.innerWidth <= 1080) {
+          sidebar.classList.remove('open');
+          if (backdrop) backdrop.classList.remove('active');
+        }
+      });
+    });
+
+    // Theme Switcher (Dark vs Light Print Preview)
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-theme');
+      const btn = document.getElementById('themeToggleBtn');
+      if (btn) {
+        btn.innerHTML = isLight ? "☀️ Light Mode" : "🌙 Dark Mode";
+      }
+      localStorage.setItem('stc_html_notes_theme', isLight ? 'light' : 'dark');
+    }
+
+    // Initialize Theme on Page Load
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('stc_html_notes_theme');
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        const btn = document.getElementById('themeToggleBtn');
+        if (btn) btn.innerHTML = "☀️ Light Mode";
+      }
+    })();
+
+    // Top Header Search Filter
+    function filterNotes() {
+      const input = document.getElementById('topicSearch').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.topic-card');
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(input) ? 'block' : 'none';
+      });
+    }
+
+    // Floating Back to Top Button Handler
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('floatingTopBtn');
+      if (btn) {
+        btn.style.display = window.scrollY > 350 ? 'flex' : 'none';
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ScrollSpy: Automatically highlight active section in TOC and center it
+    const observerOptions = {
+      root: null,
+      rootMargin: '-80px 0px -70% 0px',
+      threshold: 0
+    };
+
+    const topicObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+          const currentLink = document.querySelector(`.sidebar-item[href="#${id}"]`);
+          if (currentLink) {
+            currentLink.classList.add('active');
+            const sidebarNav = document.getElementById('sidebarNav');
+            if (sidebarNav) {
+              const relTop = currentLink.offsetTop - sidebarNav.offsetTop - (sidebarNav.clientHeight / 2) + (currentLink.clientHeight / 2);
+              sidebarNav.scrollTo({ top: Math.max(0, relTop), behavior: 'smooth' });
+            }
+          }
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.topic-card').forEach(card => {
+      topicObserver.observe(card);
+    });
+
+    // Auto-trigger print if requested via URL
+    if (window.location.search.includes('action=print')) {
+      window.addEventListener('load', () => {
+        setTimeout(() => window.print(), 600);
+      });
+    }
+  </script>
+</body>
+</html>
