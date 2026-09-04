@@ -1,1542 +1,1582 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TaskFlow Pro — Admin Control Panel</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --bg-main: #090d16;
-        --bg-card: #0f172a;
-        --bg-card-hover: #1e293b;
-        --border: #334155;
-        --primary: #38bdf8;
-        --primary-hover: #0ea5e9;
-        --accent: #a855f7;
-        --success: #10b981;
-        --warning: #f59e0b;
-        --danger: #ef4444;
-        --text: #f8fafc;
-        --text-muted: #94a3b8;
-      }
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow Pro — Admin Control Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #090d16;
+      --bg-card: #0f172a;
+      --bg-card-hover: #1e293b;
+      --border: #334155;
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --accent: #a855f7;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
 
-      body {
-        background-color: var(--bg-main);
-        background-image: 
-          radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
-          radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
-        color: var(--text);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    }
 
-      /* Admin Login View */
-      .admin-login-wrapper {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem;
-      }
+    body {
+      background-color: var(--bg-main);
+      background-image:
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-      .login-card {
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        padding: 2.5rem;
-        width: 100%;
-        max-width: 440px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(56, 189, 248, 0.15);
-        position: relative;
-        overflow: hidden;
-      }
+    /* Admin Login View */
+    .admin-login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
 
-      .login-card::before {
-        content: "";
-        position: absolute;
+    .login-card {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(56, 189, 248, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #38bdf8, #a855f7);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .admin-badge-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.4);
+    }
+
+    .login-header h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.4rem;
+    }
+
+    .login-header p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control {
+      width: 100%;
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.8rem 1.4rem;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      color: white;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-secondary {
+      background: #1e293b;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: #334155;
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-danger:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      border-radius: 8px;
+    }
+
+    .credentials-hint {
+      margin-top: 1.5rem;
+      padding: 0.75rem;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px dashed rgba(56, 189, 248, 0.3);
+      border-radius: 10px;
+      font-size: 0.8rem;
+      color: #7dd3fc;
+      text-align: center;
+    }
+
+    .error-box {
+      color: #f87171;
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+      text-align: center;
+      min-height: 1.2rem;
+    }
+
+    /* Admin Dashboard Interface */
+    #adminDashboard {
+      display: none;
+    }
+
+    .admin-navbar {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .admin-brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .admin-brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #f8fafc;
+      letter-spacing: -0.3px;
+    }
+
+    .admin-brand-text span {
+      font-size: 0.7rem;
+      color: #fbbf24;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-link-btn {
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      text-decoration: none;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-link-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .admin-user-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .cloud-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 50px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cloud-status-pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 10px rgba(56, 189, 248, 0.25);
+    }
+
+    .cloud-status-pill.offline {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .cloud-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+    }
+
+    .cloud-status-pill.offline .cloud-dot {
+      background: #fbbf24;
+      box-shadow: 0 0 8px #fbbf24;
+    }
+
+    .timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 420px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .timeline-item {
+      background: #090d16;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .timeline-item.completed {
+      border-left: 3px solid #10b981;
+    }
+
+    .timeline-item.uncompleted {
+      border-left: 3px solid #f59e0b;
+    }
+
+    .timeline-item.reset {
+      border-left: 3px solid #ef4444;
+    }
+
+    /* Main Content */
+    .admin-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+      width: 100%;
+    }
+
+    /* Stats Overview Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #38bdf8, transparent);
+    }
+
+    .stat-icon-wrapper {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .stat-content h3 {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .stat-content .stat-number {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #f8fafc;
+    }
+
+    /* ==================== COLLAPSIBLE SIDEBAR WORKSPACE ==================== */
+    .admin-workspace {
+      display: flex;
+      gap: 1.5rem;
+      width: 100%;
+      position: relative;
+      align-items: flex-start;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Collapsible Registration Sidebar */
+    .admin-sidebar {
+      width: 360px;
+      min-width: 360px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+      position: sticky;
+      top: 80px;
+      max-height: calc(100vh - 100px);
+      display: flex;
+      flex-direction: column;
+      z-index: 50;
+    }
+
+    /* Collapsed State */
+    .admin-workspace.sidebar-collapsed .admin-sidebar {
+      width: 0;
+      min-width: 0;
+      margin-right: -1.5rem;
+      padding: 0;
+      opacity: 0;
+      pointer-events: none;
+      border: none;
+      transform: translateX(-40px);
+    }
+
+    .admin-main-area {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.25rem 1rem;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    }
+
+    .sidebar-close-btn {
+      background: rgba(51, 65, 85, 0.4);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #94a3b8;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-close-btn:hover {
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+
+    .sidebar-body {
+      padding: 1.25rem;
+      overflow-y: auto;
+    }
+
+    /* Mobile Off-canvas Drawer */
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 999;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    @media (max-width: 1024px) {
+      .admin-sidebar {
+        position: fixed;
         top: 0;
         left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #38bdf8, #a855f7);
+        bottom: 0;
+        z-index: 1000;
+        width: 340px;
+        min-width: 340px;
+        max-height: 100vh;
+        border-radius: 0 16px 16px 0;
+        transform: translateX(-100%);
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        margin-right: 0 !important;
+        box-shadow: 10px 0 35px rgba(0, 0, 0, 0.6);
       }
 
-      .login-header {
-        text-align: center;
-        margin-bottom: 2rem;
+      .admin-workspace.sidebar-open .admin-sidebar {
+        transform: translateX(0);
       }
 
-      .admin-badge-icon {
-        width: 56px;
-        height: 56px;
-        background: linear-gradient(135deg, #38bdf8, #818cf8);
-        border-radius: 16px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.8rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.4);
-      }
-
-      .login-header h2 {
-        font-size: 1.5rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        margin-bottom: 0.4rem;
-      }
-
-      .login-header p {
-        color: var(--text-muted);
-        font-size: 0.88rem;
-      }
-
-      .form-group {
-        margin-bottom: 1.25rem;
-      }
-
-      .form-group label {
+      .admin-workspace.sidebar-open .sidebar-backdrop {
         display: block;
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: var(--text-muted);
-        margin-bottom: 0.5rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        opacity: 1;
       }
 
-      .form-control {
-        width: 100%;
-        background: #090d16;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 0.8rem 1rem;
-        color: var(--text);
-        font-size: 0.95rem;
-        outline: none;
-        transition: all 0.2s ease;
-      }
-
-      .form-control:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-      }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 0.8rem 1.4rem;
-        border-radius: 12px;
-        font-size: 0.92rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        border: none;
-        text-decoration: none;
-      }
-
-      .btn-primary {
-        background: linear-gradient(135deg, #38bdf8, #2563eb);
-        color: white;
-        width: 100%;
-        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45);
-      }
-
-      .btn-secondary {
-        background: #1e293b;
-        color: var(--text);
+      .admin-workspace.sidebar-collapsed .admin-sidebar {
+        transform: translateX(-100%);
+        width: 340px;
+        min-width: 340px;
         border: 1px solid var(--border);
       }
+    }
 
-      .btn-secondary:hover {
-        background: #334155;
-      }
+    .panel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
 
-      .btn-danger {
-        background: rgba(239, 68, 68, 0.15);
-        color: #f87171;
-        border: 1px solid rgba(239, 68, 68, 0.3);
-      }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+    }
 
-      .btn-danger:hover {
-        background: #ef4444;
-        color: white;
-      }
+    .panel-header h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-      .btn-sm {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
-        border-radius: 8px;
-      }
+    /* Search & Toolbar */
+    .table-toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
 
-      .credentials-hint {
-        margin-top: 1.5rem;
-        padding: 0.75rem;
-        background: rgba(56, 189, 248, 0.08);
-        border: 1px dashed rgba(56, 189, 248, 0.3);
-        border-radius: 10px;
-        font-size: 0.8rem;
-        color: #7dd3fc;
-        text-align: center;
-      }
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
 
-      .error-box {
-        color: #f87171;
-        font-size: 0.85rem;
-        margin-top: 0.8rem;
-        text-align: center;
-        min-height: 1.2rem;
-      }
+    .search-box input {
+      width: 100%;
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.65rem 1rem 0.65rem 2.4rem;
+      color: white;
+      font-size: 0.88rem;
+      outline: none;
+    }
 
-      /* Admin Dashboard Interface */
-      #adminDashboard {
-        display: none;
-      }
+    .search-box input:focus {
+      border-color: var(--primary);
+    }
 
+    .search-box svg {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+    }
+
+    /* Users Table */
+
+    table.users-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    table.users-table th {
+      background: #090d16;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 0.8rem 1rem;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.users-table td {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+      vertical-align: middle;
+    }
+
+    table.users-table tr:hover {
+      background: rgba(30, 41, 59, 0.4);
+    }
+
+    .user-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-avatar-sm {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      color: #0f172a;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    .user-avatar-sm.admin-avatar {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: white;
+    }
+
+    .user-role-badge {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 50px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .role-admin {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .role-student {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .password-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: monospace;
+      background: #090d16;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      max-width: 140px;
+    }
+
+    .password-text {
+      font-size: 0.82rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .mini-icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      border-radius: 4px;
+    }
+
+    .mini-icon-btn:hover {
+      color: white;
+    }
+
+    .progress-mini-bar {
+      width: 80px;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      overflow: hidden;
+      display: inline-block;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .progress-mini-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #10b981);
+      border-radius: 3px;
+    }
+
+    .actions-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 1rem;
+    }
+
+    .modal-box {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Responsive Media Queries */
+    @media (max-width: 1024px) {
       .admin-navbar {
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border-bottom: 1px solid var(--border);
-        padding: 0.85rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
-        z-index: 100;
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
       }
 
       .admin-brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-      }
-
-      .admin-brand-icon {
-        width: 38px;
-        height: 38px;
-        background: linear-gradient(135deg, #f59e0b, #ef4444);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-      }
-
-      .admin-brand-text h1 {
-        font-size: 1.15rem;
-        font-weight: 800;
-        color: #f8fafc;
-        letter-spacing: -0.3px;
-      }
-
-      .admin-brand-text span {
-        font-size: 0.7rem;
-        color: #fbbf24;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        justify-content: space-between;
+        width: 100%;
       }
 
       .nav-actions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .nav-link-btn {
-        padding: 6px 14px;
-        border-radius: 50px;
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: #cbd5e1;
-        text-decoration: none;
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid var(--border);
-        transition: all 0.2s;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .nav-link-btn:hover {
-        background: rgba(56, 189, 248, 0.15);
-        border-color: var(--primary);
-        color: white;
-      }
-
-      .admin-user-pill {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(245, 158, 11, 0.12);
-        border: 1px solid rgba(245, 158, 11, 0.3);
-        color: #fbbf24;
-        padding: 4px 12px;
-        border-radius: 50px;
-        font-size: 0.82rem;
-        font-weight: 700;
-      }
-
-      .cloud-status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 5px 12px;
-        border-radius: 50px;
-        background: rgba(16, 185, 129, 0.15);
-        color: #34d399;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-
-      .cloud-status-pill:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 2px 10px rgba(56, 189, 248, 0.25);
-      }
-
-      .cloud-status-pill.offline {
-        background: rgba(245, 158, 11, 0.15);
-        color: #fbbf24;
-        border-color: rgba(245, 158, 11, 0.3);
-      }
-
-      .cloud-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #34d399;
-        box-shadow: 0 0 8px #34d399;
-      }
-
-      .cloud-status-pill.offline .cloud-dot {
-        background: #fbbf24;
-        box-shadow: 0 0 8px #fbbf24;
-      }
-
-      .timeline-list {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        max-height: 420px;
-        overflow-y: auto;
-        padding-right: 4px;
-      }
-
-      .timeline-item {
-        background: #090d16;
-        border: 1px solid #334155;
-        border-radius: 10px;
-        padding: 10px 14px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .timeline-item.completed {
-        border-left: 3px solid #10b981;
-      }
-
-      .timeline-item.uncompleted {
-        border-left: 3px solid #f59e0b;
-      }
-
-      .timeline-item.reset {
-        border-left: 3px solid #ef4444;
-      }
-
-      /* Main Content */
-      .admin-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 2rem;
-        width: 100%;
-      }
-
-      /* Stats Overview Cards */
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1.25rem;
-        margin-bottom: 2rem;
-      }
-
-      .stat-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 1.2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .stat-card::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #38bdf8, transparent);
-      }
-
-      .stat-icon-wrapper {
-        width: 52px;
-        height: 52px;
-        border-radius: 14px;
-        background: rgba(56, 189, 248, 0.1);
-        border: 1px solid rgba(56, 189, 248, 0.25);
-        color: #38bdf8;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-      }
-
-      .stat-content h3 {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 4px;
-      }
-
-      .stat-content .stat-number {
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: #f8fafc;
-      }
-
-      /* ==================== COLLAPSIBLE SIDEBAR WORKSPACE ==================== */
-      .admin-workspace {
-        display: flex;
-        gap: 1.5rem;
-        width: 100%;
-        position: relative;
-        align-items: flex-start;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      /* Collapsible Registration Sidebar */
-      .admin-sidebar {
-        width: 360px;
-        min-width: 360px;
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        overflow: hidden;
-        position: sticky;
-        top: 80px;
-        max-height: calc(100vh - 100px);
-        display: flex;
-        flex-direction: column;
-        z-index: 50;
-      }
-
-      /* Collapsed State */
-      .admin-workspace.sidebar-collapsed .admin-sidebar {
-        width: 0;
-        min-width: 0;
-        margin-right: -1.5rem;
-        padding: 0;
-        opacity: 0;
-        pointer-events: none;
-        border: none;
-        transform: translateX(-40px);
-      }
-
-      .admin-main-area {
-        flex: 1;
-        min-width: 0;
-        width: 100%;
-        transition: all 0.3s ease;
-      }
-
-      .sidebar-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.25rem 1.25rem 1rem;
-        border-bottom: 1px solid rgba(51, 65, 85, 0.5);
-      }
-
-      .sidebar-close-btn {
-        background: rgba(51, 65, 85, 0.4);
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        color: #94a3b8;
-        width: 28px;
-        height: 28px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-size: 0.85rem;
-      }
-
-      .sidebar-close-btn:hover {
-        background: #ef4444;
-        color: white;
-        border-color: #ef4444;
-      }
-
-      .sidebar-body {
-        padding: 1.25rem;
-        overflow-y: auto;
-      }
-
-      /* Mobile Off-canvas Drawer */
-      .sidebar-backdrop {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        z-index: 999;
-        display: none;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      @media (max-width: 1024px) {
-        .admin-sidebar {
-          position: fixed;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          z-index: 1000;
-          width: 340px;
-          min-width: 340px;
-          max-height: 100vh;
-          border-radius: 0 16px 16px 0;
-          transform: translateX(-100%);
-          opacity: 1 !important;
-          pointer-events: auto !important;
-          margin-right: 0 !important;
-          box-shadow: 10px 0 35px rgba(0, 0, 0, 0.6);
-        }
-
-        .admin-workspace.sidebar-open .admin-sidebar {
-          transform: translateX(0);
-        }
-
-        .admin-workspace.sidebar-open .sidebar-backdrop {
-          display: block;
-          opacity: 1;
-        }
-
-        .admin-workspace.sidebar-collapsed .admin-sidebar {
-          transform: translateX(-100%);
-          width: 340px;
-          min-width: 340px;
-          border: 1px solid var(--border);
-        }
-      }
-
-      .panel-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      }
-
-      .panel-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.25rem;
-        padding-bottom: 0.8rem;
-        border-bottom: 1px solid rgba(51, 65, 85, 0.6);
-      }
-
-      .panel-header h3 {
-        font-size: 1.1rem;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      /* Search & Toolbar */
-      .table-toolbar {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 1.2rem;
+        justify-content: flex-start;
         flex-wrap: wrap;
-      }
-
-      .search-box {
-        flex: 1;
-        min-width: 200px;
-        position: relative;
-      }
-
-      .search-box input {
-        width: 100%;
-        background: #090d16;
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 0.65rem 1rem 0.65rem 2.4rem;
-        color: white;
-        font-size: 0.88rem;
-        outline: none;
-      }
-
-      .search-box input:focus {
-        border-color: var(--primary);
-      }
-
-      .search-box svg {
-        position: absolute;
-        left: 0.8rem;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 16px;
-        height: 16px;
-        color: var(--text-muted);
-      }
-
-      /* Users Table */
-
-      table.users-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.88rem;
-      }
-
-      table.users-table th {
-        background: #090d16;
-        color: var(--text-muted);
-        text-align: left;
-        padding: 0.8rem 1rem;
-        font-weight: 600;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border-bottom: 1px solid var(--border);
-      }
-
-      table.users-table td {
-        padding: 0.9rem 1rem;
-        border-bottom: 1px solid rgba(51, 65, 85, 0.4);
-        vertical-align: middle;
-      }
-
-      table.users-table tr:hover {
-        background: rgba(30, 41, 59, 0.4);
-      }
-
-      .user-cell {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .user-avatar-sm {
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #38bdf8, #818cf8);
-        color: #0f172a;
-        font-weight: 800;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.85rem;
-      }
-
-      .user-avatar-sm.admin-avatar {
-        background: linear-gradient(135deg, #f59e0b, #ef4444);
-        color: white;
-      }
-
-      .user-role-badge {
-        font-size: 0.72rem;
-        padding: 2px 8px;
-        border-radius: 50px;
-        font-weight: 700;
-        display: inline-block;
-      }
-
-      .role-admin {
-        background: rgba(245, 158, 11, 0.15);
-        color: #fbbf24;
-        border: 1px solid rgba(245, 158, 11, 0.3);
-      }
-
-      .role-student {
-        background: rgba(56, 189, 248, 0.15);
-        color: #38bdf8;
-        border: 1px solid rgba(56, 189, 248, 0.3);
-      }
-
-      .password-container {
-        display: flex;
-        align-items: center;
         gap: 6px;
-        font-family: monospace;
-        background: #090d16;
-        padding: 3px 8px;
-        border-radius: 6px;
-        border: 1px solid rgba(51, 65, 85, 0.6);
-        max-width: 140px;
+        width: 100%;
       }
 
-      .password-text {
-        font-size: 0.82rem;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .mini-icon-btn {
-        background: transparent;
-        border: none;
-        color: var(--text-muted);
-        cursor: pointer;
-        padding: 2px;
-        display: flex;
-        align-items: center;
-        border-radius: 4px;
-      }
-
-      .mini-icon-btn:hover {
-        color: white;
-      }
-
-      .progress-mini-bar {
-        width: 80px;
-        height: 6px;
-        background: #1e293b;
-        border-radius: 3px;
-        overflow: hidden;
-        display: inline-block;
-        margin-right: 6px;
-        vertical-align: middle;
-      }
-
-      .progress-mini-fill {
-        height: 100%;
-        background: linear-gradient(90deg, #38bdf8, #10b981);
-        border-radius: 3px;
-      }
-
-      .actions-group {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      /* Modal */
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.75);
-        backdrop-filter: blur(8px);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
+      .admin-container {
         padding: 1rem;
       }
 
-      .modal-box {
-        background: #0f172a;
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 2rem;
-        max-width: 440px;
-        width: 100%;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      .admin-layout-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
       }
 
-      /* Responsive Media Queries */
-      @media (max-width: 1024px) {
-        .admin-navbar {
-          padding: 0.75rem 1rem;
-          flex-direction: column;
-          align-items: stretch;
-          gap: 10px;
-        }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+    }
 
-        .admin-brand {
-          justify-content: space-between;
-          width: 100%;
-        }
-
-        .nav-actions {
-          justify-content: flex-start;
-          flex-wrap: wrap;
-          gap: 6px;
-          width: 100%;
-        }
-
-        .admin-container {
-          padding: 1rem;
-        }
-
-        .admin-layout-grid {
-          grid-template-columns: 1fr;
-          gap: 1.25rem;
-        }
-
-        .stats-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 0.75rem;
-        }
+    @media (max-width: 640px) {
+      .admin-container {
+        padding: 0.6rem;
       }
 
-      @media (max-width: 640px) {
-        .admin-container {
-          padding: 0.6rem;
-        }
-
-        .stats-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 0.5rem;
-        }
-
-        .stat-card {
-          padding: 0.85rem;
-          gap: 0.6rem;
-          border-radius: 12px;
-        }
-
-        .stat-icon-wrapper {
-          width: 38px;
-          height: 38px;
-          font-size: 1.15rem;
-          border-radius: 8px;
-        }
-
-        .stat-content h3 {
-          font-size: 0.68rem;
-        }
-
-        .stat-content .stat-number {
-          font-size: 1.25rem;
-        }
-
-        .panel-card {
-          padding: 1rem;
-          border-radius: 12px;
-        }
-
-        .panel-header {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 8px;
-        }
-
-        .table-toolbar {
-          flex-direction: column;
-          align-items: stretch;
-        }
-
-        .search-box {
-          width: 100%;
-        }
-
-        #roleFilter {
-          width: 100% !important;
-        }
-
-        .modal-box {
-          padding: 1.2rem;
-          max-width: 95vw;
-          max-height: 90vh;
-        }
-
-        .admin-toast {
-          left: 1rem;
-          right: 1rem;
-          bottom: 1rem;
-          text-align: center;
-          justify-content: center;
-        }
-
-        .nav-link-btn, .cloud-status-pill, .admin-user-pill {
-          padding: 4px 8px;
-          font-size: 0.74rem;
-        }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
       }
 
-      table.users-table {
-        min-width: 660px;
-      }
-
-      .table-responsive {
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        border-radius: 10px;
-        border: 1px solid rgba(51, 65, 85, 0.4);
-      }
-
-      /* Toast Notification */
-      .admin-toast {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        background: #1e293b;
-        border: 1px solid var(--primary);
-        color: white;
-        padding: 0.85rem 1.4rem;
+      .stat-card {
+        padding: 0.85rem;
+        gap: 0.6rem;
         border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        transform: translateY(100px);
-        opacity: 0;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        z-index: 99999;
       }
 
-      .admin-toast.show {
-        transform: translateY(0);
-        opacity: 1;
+      .stat-icon-wrapper {
+        width: 38px;
+        height: 38px;
+        font-size: 1.15rem;
+        border-radius: 8px;
       }
-    </style>
-  </head>
-  <body>
-    <!-- ==================== VIEW 1: ADMIN LOGIN ==================== -->
-    <div id="adminLoginView" class="admin-login-wrapper">
-      <div class="login-card">
-        <div class="login-header">
-          <div class="admin-badge-icon">🛡️</div>
-          <h2>Admin Control Center</h2>
-          <p>TaskFlow Management & Student Registrar</p>
-        </div>
 
-        <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
-          <div class="form-group">
-            <label>Admin Username</label>
-            <input
-              type="text"
-              id="adminUsernameInput"
-              class="form-control"
-              placeholder="e.g. admin"
-              autocomplete="off"
-              required
-            />
-          </div>
+      .stat-content h3 {
+        font-size: 0.68rem;
+      }
 
-          <div class="form-group">
-            <label>Admin Password</label>
-            <input
-              type="password"
-              id="adminPasswordInput"
-              class="form-control"
-              placeholder="••••••••"
-              required
-            />
-          </div>
+      .stat-content .stat-number {
+        font-size: 1.25rem;
+      }
 
-          <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">
-            🔐 Unlock Admin Panel →
-          </button>
-        </form>
+      .panel-card {
+        padding: 1rem;
+        border-radius: 12px;
+      }
 
-        <div id="loginErrorMsg" class="error-box"></div>
+      .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
 
-        <div style="text-align: center; margin-top: 1.5rem;">
-          <a href="index.html" style="color: #94a3b8; font-size: 0.82rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-            ← Return to Student Portal
-          </a>
-        </div>
+      .table-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      #roleFilter {
+        width: 100% !important;
+      }
+
+      .modal-box {
+        padding: 1.2rem;
+        max-width: 95vw;
+        max-height: 90vh;
+      }
+
+      .admin-toast {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .nav-link-btn,
+      .cloud-status-pill,
+      .admin-user-pill {
+        padding: 4px 8px;
+        font-size: 0.74rem;
+      }
+    }
+
+    table.users-table {
+      min-width: 660px;
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 10px;
+      border: 1px solid rgba(51, 65, 85, 0.4);
+    }
+
+    /* Toast Notification */
+    .admin-toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #1e293b;
+      border: 1px solid var(--primary);
+      color: white;
+      padding: 0.85rem 1.4rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 99999;
+    }
+
+    .admin-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ==================== VIEW 1: ADMIN LOGIN ==================== -->
+  <div id="adminLoginView" class="admin-login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="admin-badge-icon">🛡️</div>
+        <h2>Admin Control Center</h2>
+        <p>TaskFlow Management & Student Registrar</p>
       </div>
-    </div>
 
-    <!-- ==================== VIEW 2: ADMIN DASHBOARD ==================== -->
-    <div id="adminDashboard">
-      <!-- Top Navbar -->
-      <nav class="admin-navbar">
-        <a href="#" class="admin-brand">
-          <div class="admin-brand-icon">🛡️</div>
-          <div class="admin-brand-text">
-            <h1>TaskFlow Pro Admin</h1>
-            <span>User Management & LMS Registrar</span>
-          </div>
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div class="form-group">
+          <label>Admin Username</label>
+          <input type="text" id="adminUsernameInput" class="form-control" placeholder="e.g. admin" autocomplete="off"
+            required />
+        </div>
+
+        <div class="form-group">
+          <label>Admin Password</label>
+          <input type="password" id="adminPasswordInput" class="form-control" placeholder="••••••••" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">
+          🔐 Unlock Admin Panel →
+        </button>
+      </form>
+
+      <div id="loginErrorMsg" class="error-box"></div>
+
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <a href="index.html"
+          style="color: #94a3b8; font-size: 0.82rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+          ← Return to Student Portal
         </a>
+      </div>
+    </div>
+  </div>
 
-        <div class="nav-actions">
-          <button class="cloud-status-pill" id="adminCloudStatus" onclick="openSupabaseModal()" title="Supabase Database Status - Click to configure">
-            <span class="cloud-dot"></span>
-            <span id="adminCloudStatusText">Supabase Synced</span>
-          </button>
-          <button class="nav-link-btn" onclick="openLoginLogsModal()" style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; cursor: pointer;" title="View Student Login Logs">
-            📋 Login Activity Logs
-          </button>
-          <a href="index.html" class="nav-link-btn" title="Open Student Portal">
-            📊 Student Portal
-          </a>
-          <a href="roadmap.html" class="nav-link-btn" title="Open Curriculum Roadmap">
-            🗺️ Roadmap
-          </a>
-          <div class="admin-user-pill">
-            <span>👑</span> <span id="adminSessionLabel">admin</span>
-          </div>
-          <button class="btn btn-danger btn-sm" onclick="adminLogout()" title="Logout Admin">
-            🚪 Logout
-          </button>
+  <!-- ==================== VIEW 2: ADMIN DASHBOARD ==================== -->
+  <div id="adminDashboard">
+    <!-- Top Navbar -->
+    <nav class="admin-navbar">
+      <a href="#" class="admin-brand">
+        <div class="admin-brand-icon">🛡️</div>
+        <div class="admin-brand-text">
+          <h1>TaskFlow Pro Admin</h1>
+          <span>User Management & LMS Registrar</span>
         </div>
-      </nav>
+      </a>
 
-      <!-- Main Container -->
-      <div class="admin-container">
-        <!-- Overview Stats Grid -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon-wrapper">👥</div>
-            <div class="stat-content">
-              <h3>Registered Students</h3>
-              <div class="stat-number" id="statTotalUsers">0</div>
-            </div>
-          </div>
+      <div class="nav-actions">
+        <button class="cloud-status-pill" id="adminCloudStatus" onclick="openSupabaseModal()"
+          title="Supabase Database Status - Click to configure">
+          <span class="cloud-dot"></span>
+          <span id="adminCloudStatusText">Supabase Synced</span>
+        </button>
+        <button class="nav-link-btn" onclick="openLoginLogsModal()"
+          style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; cursor: pointer;"
+          title="View Student Login Logs">
+          📋 Login Activity Logs
+        </button>
+        <a href="index.html" class="nav-link-btn" title="Open Student Portal">
+          📊 Student Portal
+        </a>
+        <a href="roadmap.html" class="nav-link-btn" title="Open Curriculum Roadmap">
+          🗺️ Roadmap
+        </a>
+        <div class="admin-user-pill">
+          <span>👑</span> <span id="adminSessionLabel">admin</span>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="adminLogout()" title="Logout Admin">
+          🚪 Logout
+        </button>
+      </div>
+    </nav>
 
-          <div class="stat-card">
-            <div class="stat-icon-wrapper" style="color: #10b981; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.1);">
-              🚀
-            </div>
-            <div class="stat-content">
-              <h3>Curriculum Tasks</h3>
-              <div class="stat-number" id="statTotalTasks">243</div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon-wrapper" style="color: #a855f7; border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.1);">
-              📈
-            </div>
-            <div class="stat-content">
-              <h3>Active Progress Records</h3>
-              <div class="stat-number" id="statActiveRecords">0</div>
-            </div>
-          </div>
-
-          <div class="stat-card" style="cursor: pointer;" onclick="openSupabaseModal()" title="Click to configure Supabase Database">
-            <div class="stat-icon-wrapper" style="color: #38bdf8; border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.1);">
-              ⚡
-            </div>
-            <div class="stat-content">
-              <h3>Database Engine</h3>
-              <div class="stat-number" id="statDbEngine" style="font-size: 1.15rem; color: #34d399;">Supabase Cloud</div>
-            </div>
+    <!-- Main Container -->
+    <div class="admin-container">
+      <!-- Overview Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrapper">👥</div>
+          <div class="stat-content">
+            <h3>Registered Students</h3>
+            <div class="stat-number" id="statTotalUsers">0</div>
           </div>
         </div>
 
-        <!-- Full Width Management Panel -->
-        <div class="panel-card" style="width: 100%;">
-          <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-            <div>
-              <h3 style="margin: 0;">
-                <span>👥</span> Registered Students (<span id="userCountBadge">0</span>)
-              </h3>
-              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 3px;">Manage student credentials, track assignment progress, view activity history</p>
-            </div>
-
-            <!-- Header Action Controls -->
-            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-              <button class="btn btn-primary btn-sm" onclick="openAddStudentModal()" style="border-radius: 8px; font-weight: 700; box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);">
-                ➕ Add New Student
-              </button>
-
-              <button class="btn btn-secondary btn-sm" onclick="exportFullDatabaseJSON()" title="Export database backup">
-                📥 Export JSON
-              </button>
-
-              <label class="btn btn-secondary btn-sm" style="cursor: pointer; margin: 0;" title="Restore database backup">
-                📤 Restore JSON
-                <input type="file" id="dbRestoreInput" accept=".json" style="display: none;" onchange="importFullDatabaseJSON(event)" />
-              </label>
-
-              <button class="btn btn-secondary btn-sm" onclick="confirmResetDefaults()" title="Restore baseline students">
-                ⟳ Reset
-              </button>
-            </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrapper"
+            style="color: #10b981; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.1);">
+            🚀
           </div>
-
-          <!-- Search & Filters Toolbar -->
-          <div class="table-toolbar">
-            <div class="search-box">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <circle cx="11" cy="11" r="8" stroke-width="2"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"></line>
-              </svg>
-              <input
-                type="text"
-                id="userSearchInput"
-                placeholder="Search by student name or username..."
-                oninput="renderUsersTable()"
-              />
-            </div>
-
-            <select id="roleFilter" class="form-control" style="width: auto; padding: 0.65rem 1rem;" onchange="renderUsersTable()">
-              <option value="all">All Roles</option>
-              <option value="student">Students</option>
-              <option value="admin">Admins</option>
-            </select>
+          <div class="stat-content">
+            <h3>Curriculum Tasks</h3>
+            <div class="stat-number" id="statTotalTasks">243</div>
           </div>
+        </div>
 
-          <!-- Users Table -->
-          <div class="table-responsive">
-            <table class="users-table">
-              <thead>
-                <tr>
-                  <th>User / Student Name</th>
-                  <th>Role</th>
-                  <th>Password</th>
-                  <th>Task Progress</th>
-                  <th>Registered</th>
-                  <th style="text-align: right;">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="usersTableBody">
-                <!-- Rendered dynamically by JS -->
-              </tbody>
-            </table>
+        <div class="stat-card">
+          <div class="stat-icon-wrapper"
+            style="color: #a855f7; border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.1);">
+            📈
+          </div>
+          <div class="stat-content">
+            <h3>Active Progress Records</h3>
+            <div class="stat-number" id="statActiveRecords">0</div>
+          </div>
+        </div>
+
+        <div class="stat-card" style="cursor: pointer;" onclick="openSupabaseModal()"
+          title="Click to configure Supabase Database">
+          <div class="stat-icon-wrapper"
+            style="color: #38bdf8; border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.1);">
+            ⚡
+          </div>
+          <div class="stat-content">
+            <h3>Database Engine</h3>
+            <div class="stat-number" id="statDbEngine" style="font-size: 1.15rem; color: #34d399;">Supabase Cloud</div>
+          </div>
+        </div>
+
+        <div class="stat-card" title="Single-Device Strict Policy: Active system device bindings">
+          <div class="stat-icon-wrapper"
+            style="color: #f59e0b; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.1);">
+            🔒
+          </div>
+          <div class="stat-content">
+            <h3>System Device Locks</h3>
+            <div class="stat-number" id="statDeviceLocks" style="font-size: 1.15rem; color: #fbbf24;">0 Bound</div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- ==================== POPUP MODAL 1: ADD STUDENT MODAL ==================== -->
-    <div id="addStudentModal" class="modal-overlay" onclick="closeAddStudentModalOnBackdrop(event)">
-      <div class="modal-box" style="max-width: 480px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(51, 65, 85, 0.6);">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 34px; height: 34px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #38bdf8;">
-              ➕
-            </div>
-            <div>
-              <h3 style="font-size: 1.15rem; font-weight: 700; color: #f8fafc; margin: 0;">Register New Student</h3>
-              <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0;">Create a new student account in database</p>
-            </div>
-          </div>
-          <button class="sidebar-close-btn" onclick="closeAddStudentModal()" title="Close (Esc)">
-            ✕
-          </button>
-        </div>
-
-        <form id="createUserForm" onsubmit="handleCreateUser(event)">
-          <div class="form-group">
-            <label>Student Full Name</label>
-            <input
-              type="text"
-              id="newFullName"
-              class="form-control"
-              placeholder="e.g. Rahul Sharma"
-              autocomplete="off"
-            />
-          </div>
-
-          <div class="form-group">
-            <label>Username <span style="color: #f87171;">*</span></label>
-            <input
-              type="text"
-              id="newUsername"
-              class="form-control"
-              placeholder="e.g. rahul123"
-              autocomplete="off"
-              required
-            />
-            <small style="color: #64748b; font-size: 0.72rem; margin-top: 4px; display: block;">
-              Only lowercase letters, numbers, and underscores.
-            </small>
-          </div>
-
-          <div class="form-group">
-            <label style="display: flex; justify-content: space-between; align-items: center;">
-              <span>Password <span style="color: #f87171;">*</span></span>
-              <a href="#" onclick="generateRandomPassword(); return false;" style="color: #38bdf8; text-decoration: none; font-size: 0.78rem; font-weight: 600;">
-                🎲 Auto Generate
-              </a>
-            </label>
-            <input
-              type="text"
-              id="newPassword"
-              class="form-control"
-              placeholder="Enter or generate password"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label>Account Role</label>
-            <select id="newRole" class="form-control">
-              <option value="student" selected>👨‍💻 Student Developer</option>
-              <option value="instructor">🎓 Instructor / Mentor</option>
-              <option value="admin">🛡️ Administrator</option>
-            </select>
-          </div>
-
-          <div style="display: flex; gap: 10px; margin-top: 1.75rem;">
-            <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeAddStudentModal()">
-              Cancel
-            </button>
-            <button type="submit" class="btn btn-primary" style="flex: 2;">
-              ➕ Register Student
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Edit User Modal -->
-    <div id="editUserModal" class="modal-overlay" onclick="closeEditModalOnBackdrop(event)">
-      <div class="modal-box">
-        <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">🔑 Edit Student Profile</h3>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
-          Update credentials in database for <strong id="editModalUsername" style="color: var(--primary);">username</strong>
-        </p>
-
-        <form onsubmit="handleSaveEditedUser(event)">
-          <input type="hidden" id="editUsernameHidden" />
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" id="editFullNameInput" class="form-control" />
-          </div>
-
-          <div class="form-group">
-            <label>Password</label>
-            <input type="text" id="editPasswordInput" class="form-control" required />
-          </div>
-
-          <div style="display: flex; gap: 10px; margin-top: 1.5rem;">
-            <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeEditModal()">
-              Cancel
-            </button>
-            <button type="submit" class="btn btn-primary" style="flex: 1;">
-              Save to Supabase
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Student Task History Modal -->
-    <div id="studentHistoryModal" class="modal-overlay" onclick="closeHistoryModalOnBackdrop(event)">
-      <div class="modal-box" style="max-width: 600px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
-          <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.2rem;">
-            <span>📜</span> Task Completion History
-          </h3>
-          <button class="btn btn-secondary btn-sm" onclick="closeStudentHistoryModal()">&times;</button>
-        </div>
-
-        <div style="background: #090d16; border: 1px solid #334155; border-radius: 12px; padding: 12px 16px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+      <!-- Full Width Management Panel -->
+      <div class="panel-card" style="width: 100%;">
+        <div class="panel-header"
+          style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
           <div>
-            <h4 id="historyModalStudentName" style="color: #f8fafc; font-size: 1rem; margin-bottom: 2px;">Student Name</h4>
-            <div id="historyModalUsername" style="color: #38bdf8; font-size: 0.8rem;">@username</div>
+            <h3 style="margin: 0;">
+              <span>👥</span> Registered Students (<span id="userCountBadge">0</span>)
+            </h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 3px;">Manage student credentials, strict single-device login locks, track progress</p>
           </div>
-          <div style="text-align: right;">
-            <div id="historyModalProgress" style="font-weight: 800; font-size: 1.1rem; color: #10b981;">0 / 243 Tasks</div>
-            <div style="font-size: 0.75rem; color: #94a3b8;">Current Completion</div>
+
+          <!-- Header Action Controls -->
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-sm" onclick="openAddStudentModal()"
+              style="border-radius: 8px; font-weight: 700; box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);">
+              ➕ Add New Student
+            </button>
+
+            <button class="btn btn-secondary btn-sm" onclick="confirmResetAllDeviceLocks()"
+              title="Reset device locks for all students (allows binding on next login)"
+              style="border-color: rgba(245, 158, 11, 0.45); color: #fbbf24; font-weight: 600;">
+              🔓 Reset All Locks
+            </button>
+
+            <button class="btn btn-secondary btn-sm" onclick="exportFullDatabaseJSON()" title="Export database backup">
+              📥 Export JSON
+            </button>
+
+            <label class="btn btn-secondary btn-sm" style="cursor: pointer; margin: 0;" title="Restore database backup">
+              📤 Restore JSON
+              <input type="file" id="dbRestoreInput" accept=".json" style="display: none;"
+                onchange="importFullDatabaseJSON(event)" />
+            </label>
+
+            <button class="btn btn-secondary btn-sm" onclick="confirmResetDefaults()" title="Restore baseline students">
+              ⟳ Reset
+            </button>
           </div>
         </div>
 
-        <h4 style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 0.5px;">
-          ⏱️ Activity Timeline (Supabase task_history)
-        </h4>
+        <!-- Search & Filters Toolbar -->
+        <div class="table-toolbar">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <circle cx="11" cy="11" r="8" stroke-width="2"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"></line>
+            </svg>
+            <input type="text" id="userSearchInput" placeholder="Search by student name or username..."
+              oninput="renderUsersTable()" />
+          </div>
 
-        <div id="studentHistoryTimeline" class="timeline-list">
-          <div style="text-align: center; color: #64748b; padding: 1.5rem;">Loading activity history...</div>
+          <select id="roleFilter" class="form-control" style="width: auto; padding: 0.65rem 1rem;"
+            onchange="renderUsersTable()">
+            <option value="all">All Roles</option>
+            <option value="student">Students</option>
+            <option value="admin">Admins</option>
+          </select>
+
+          <select id="deviceFilter" class="form-control" style="width: auto; padding: 0.65rem 1rem;"
+            onchange="renderUsersTable()" title="Filter by Device Lock Status">
+            <option value="all">All Devices</option>
+            <option value="locked">🔒 Locked to Device</option>
+            <option value="unlocked">🔓 Unlocked / Available</option>
+          </select>
         </div>
 
-        <div style="margin-top: 1.2rem; text-align: right;">
-          <button class="btn btn-secondary btn-sm" onclick="closeStudentHistoryModal()">Close</button>
+        <!-- Users Table -->
+        <div class="table-responsive">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>User / Student Name</th>
+                <th>Role</th>
+                <th>Password</th>
+                <th>Task Progress</th>
+                <th>Registered</th>
+                <th>Device / System Lock</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <!-- Rendered dynamically by JS -->
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Login Activity Logs Modal -->
-    <div id="loginLogsModal" class="modal-overlay" onclick="closeLoginLogsModalOnBackdrop(event)">
-      <div class="modal-box" style="max-width: 650px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
-          <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.2rem;">
-            <span>📋</span> Student Login Activity Logs
-          </h3>
-          <button class="btn btn-secondary btn-sm" onclick="closeLoginLogsModal()">&times;</button>
+  <!-- ==================== POPUP MODAL 1: ADD STUDENT MODAL ==================== -->
+  <div id="addStudentModal" class="modal-overlay" onclick="closeAddStudentModalOnBackdrop(event)">
+    <div class="modal-box" style="max-width: 480px;">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(51, 65, 85, 0.6);">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div
+            style="width: 34px; height: 34px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #38bdf8;">
+            ➕
+          </div>
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: #f8fafc; margin: 0;">Register New Student</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0;">Create a new student account in database
+            </p>
+          </div>
+        </div>
+        <button class="sidebar-close-btn" onclick="closeAddStudentModal()" title="Close (Esc)">
+          ✕
+        </button>
+      </div>
+
+      <form id="createUserForm" onsubmit="handleCreateUser(event)">
+        <div class="form-group">
+          <label>Student Full Name</label>
+          <input type="text" id="newFullName" class="form-control" placeholder="e.g. Rahul Sharma" autocomplete="off" />
         </div>
 
-        <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1rem;">
-          Live login events captured in the Supabase <code style="color: #facc15;">login_history</code> table.
-        </p>
-
-        <div id="loginLogsContainer" class="timeline-list" style="max-height: 420px;">
-          <div style="text-align: center; color: #64748b; padding: 1.5rem;">Loading login logs...</div>
+        <div class="form-group">
+          <label>Username <span style="color: #f87171;">*</span></label>
+          <input type="text" id="newUsername" class="form-control" placeholder="e.g. rahul123" autocomplete="off"
+            required />
+          <small style="color: #64748b; font-size: 0.72rem; margin-top: 4px; display: block;">
+            Only lowercase letters, numbers, and underscores.
+          </small>
         </div>
 
-        <div style="margin-top: 1.2rem; display: flex; justify-content: space-between; align-items: center;">
-          <button class="btn btn-secondary btn-sm" onclick="fetchAndRenderLoginLogs()">🔄 Refresh Logs</button>
-          <button class="btn btn-primary btn-sm" onclick="closeLoginLogsModal()">Close</button>
+        <div class="form-group">
+          <label style="display: flex; justify-content: space-between; align-items: center;">
+            <span>Password <span style="color: #f87171;">*</span></span>
+            <a href="#" onclick="generateRandomPassword(); return false;"
+              style="color: #38bdf8; text-decoration: none; font-size: 0.78rem; font-weight: 600;">
+              🎲 Auto Generate
+            </a>
+          </label>
+          <input type="text" id="newPassword" class="form-control" placeholder="Enter or generate password" required />
+        </div>
+
+        <div class="form-group">
+          <label>Account Role</label>
+          <select id="newRole" class="form-control">
+            <option value="student" selected>👨‍💻 Student Developer</option>
+            <option value="instructor">🎓 Instructor / Mentor</option>
+            <option value="admin">🛡️ Administrator</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 1.75rem;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeAddStudentModal()">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" style="flex: 2;">
+            ➕ Register Student
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit User Modal -->
+  <div id="editUserModal" class="modal-overlay" onclick="closeEditModalOnBackdrop(event)">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">🔑 Edit Student Profile</h3>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
+        Update credentials in database for <strong id="editModalUsername"
+          style="color: var(--primary);">username</strong>
+      </p>
+
+      <form onsubmit="handleSaveEditedUser(event)">
+        <input type="hidden" id="editUsernameHidden" />
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="editFullNameInput" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="text" id="editPasswordInput" class="form-control" required />
+        </div>
+
+        <!-- Single-Device Lock Status & Reset Box -->
+        <div id="editModalDeviceSection" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(51, 65, 85, 0.7); border-radius: 10px; padding: 12px; margin-bottom: 1.25rem;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between;">
+            <span>🛡️ System Device Lock Status</span>
+            <span id="editModalDeviceBadge" style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px;"></span>
+          </div>
+          <div id="editModalDeviceStatusText" style="font-size: 0.82rem; color: #f8fafc; margin-bottom: 10px; line-height: 1.4;">
+            Checking status...
+          </div>
+          <button type="button" id="editModalResetLockBtn" class="btn btn-secondary btn-sm" onclick="handleEditModalResetDeviceLock()" style="border-color: rgba(245, 158, 11, 0.5); color: #fbbf24; width: 100%;">
+            🔓 Reset Device Lock For This Student
+          </button>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeEditModal()">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">
+            Save to Supabase
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Student Task History Modal -->
+  <div id="studentHistoryModal" class="modal-overlay" onclick="closeHistoryModalOnBackdrop(event)">
+    <div class="modal-box" style="max-width: 600px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+        <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.2rem;">
+          <span>📜</span> Task Completion History
+        </h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeStudentHistoryModal()">&times;</button>
+      </div>
+
+      <div
+        style="background: #090d16; border: 1px solid #334155; border-radius: 12px; padding: 12px 16px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h4 id="historyModalStudentName" style="color: #f8fafc; font-size: 1rem; margin-bottom: 2px;">Student Name
+          </h4>
+          <div id="historyModalUsername" style="color: #38bdf8; font-size: 0.8rem;">@username</div>
+        </div>
+        <div style="text-align: right;">
+          <div id="historyModalProgress" style="font-weight: 800; font-size: 1.1rem; color: #10b981;">0 / 243 Tasks
+          </div>
+          <div style="font-size: 0.75rem; color: #94a3b8;">Current Completion</div>
         </div>
       </div>
-    </div>
 
-    <!-- Supabase Configuration Modal -->
-    <div id="supabaseModal" class="modal-overlay" onclick="closeSupabaseModalOnBackdrop(event)">
-      <div class="modal-box" style="max-width: 500px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
-          <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.2rem;">
-            <span style="color: #34d399;">⚡</span> Supabase Database Setup
-          </h3>
-          <button class="btn btn-secondary btn-sm" onclick="closeSupabaseModal()">&times;</button>
-        </div>
+      <h4
+        style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 0.5px;">
+        ⏱️ Activity Timeline (Supabase task_history)
+      </h4>
 
-        <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1rem; line-height: 1.4;">
-          Connect your project to PostgreSQL on Supabase Cloud to persist all students, authentication records, and task history across devices.
-        </p>
+      <div id="studentHistoryTimeline" class="timeline-list">
+        <div style="text-align: center; color: #64748b; padding: 1.5rem;">Loading activity history...</div>
+      </div>
 
-        <div style="background: #090d16; border: 1px solid #334155; border-radius: 8px; padding: 10px 12px; margin-bottom: 1rem; font-size: 0.8rem; color: #cbd5e1;">
-          <div style="font-weight: 700; color: #38bdf8; margin-bottom: 4px;">📋 Database Schema Setup:</div>
-          <div>Run the SQL script from <code style="color: #facc15;">supabase_schema.sql</code> in your Supabase SQL Editor to initialize tables.</div>
-        </div>
-
-        <form onsubmit="handleSaveSupabaseConfig(event)">
-          <div class="form-group">
-            <label>Supabase Project URL</label>
-            <input type="url" id="modalSupabaseUrl" class="form-control" placeholder="https://xyzproject.supabase.co" />
-          </div>
-
-          <div class="form-group">
-            <label>Supabase Anon Public Key</label>
-            <input type="password" id="modalSupabaseKey" class="form-control" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
-          </div>
-
-          <div id="supabaseConfigMsg" style="min-height: 20px; font-size: 0.82rem; margin-bottom: 10px; text-align: center;"></div>
-
-          <div style="display: flex; gap: 10px; margin-top: 1.2rem;">
-            <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="testSupabaseConnectionUI()">🔌 Test Connection</button>
-            <button type="submit" class="btn btn-primary" style="flex: 1;">💾 Save & Sync</button>
-          </div>
-        </form>
+      <div style="margin-top: 1.2rem; text-align: right;">
+        <button class="btn btn-secondary btn-sm" onclick="closeStudentHistoryModal()">Close</button>
       </div>
     </div>
+  </div>
 
-    <!-- Toast Notification Container -->
-    <div id="adminToast" class="admin-toast">✅ Action Successful</div>
+  <!-- Login Activity Logs Modal -->
+  <div id="loginLogsModal" class="modal-overlay" onclick="closeLoginLogsModalOnBackdrop(event)">
+    <div class="modal-box" style="max-width: 650px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+        <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.2rem;">
+          <span>📋</span> Student Login Activity Logs
+        </h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeLoginLogsModal()">&times;</button>
+      </div>
 
-    <!-- ==================== SUPABASE CLIENT & CONTROLLER ==================== -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase-client.js"></script>
-    <script>
-      // Storage Keys
-      const ADMIN_SESSION_KEY = "taskflow_admin_active_session";
+      <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1rem;">
+        Live login events captured in the Supabase <code style="color: #facc15;">login_history</code> table.
+      </p>
 
-      // Password visibility state map
-      const visiblePasswords = {};
-      let currentUsersList = [];
+      <div id="loginLogsContainer" class="timeline-list" style="max-height: 420px;">
+        <div style="text-align: center; color: #64748b; padding: 1.5rem;">Loading login logs...</div>
+      </div>
 
-      // ---------- Admin Login / Logout Controller ----------
-      async function handleAdminLogin(e) {
-        e.preventDefault();
-        const u = document.getElementById("adminUsernameInput").value.trim().toLowerCase();
-        const p = document.getElementById("adminPasswordInput").value.trim();
-        const errorBox = document.getElementById("loginErrorMsg");
+      <div style="margin-top: 1.2rem; display: flex; justify-content: space-between; align-items: center;">
+        <button class="btn btn-secondary btn-sm" onclick="fetchAndRenderLoginLogs()">🔄 Refresh Logs</button>
+        <button class="btn btn-primary btn-sm" onclick="closeLoginLogsModal()">Close</button>
+      </div>
+    </div>
+  </div>
 
-        if (u === "admin" && p === "admin123") {
-          localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ username: "admin", loggedAt: Date.now() }));
-          errorBox.textContent = "";
-          showAdminDashboard();
-          showToast("🔓 Welcome back, Administrator!");
-          return;
-        }
+  <!-- Supabase Configuration Modal -->
+  <div id="supabaseModal" class="modal-overlay" onclick="closeSupabaseModalOnBackdrop(event)">
+    <div class="modal-box" style="max-width: 500px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+        <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.2rem;">
+          <span style="color: #34d399;">⚡</span> Supabase Database Setup
+        </h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeSupabaseModal()">&times;</button>
+      </div>
 
-        const loginRes = await TaskFlowDB.login(u, p);
-        if (loginRes.success && (loginRes.user.role === "admin" || loginRes.user.role === "instructor")) {
-          localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ username: loginRes.user.username, loggedAt: Date.now() }));
-          errorBox.textContent = "";
-          showAdminDashboard();
-          showToast(`🔓 Welcome back, ${loginRes.user.name}!`);
-        } else {
-          errorBox.textContent = "❌ Invalid admin username or password.";
-        }
+      <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1rem; line-height: 1.4;">
+        Connect your project to PostgreSQL on Supabase Cloud to persist all students, authentication records, and task
+        history across devices.
+      </p>
+
+      <div
+        style="background: #090d16; border: 1px solid #334155; border-radius: 8px; padding: 10px 12px; margin-bottom: 1rem; font-size: 0.8rem; color: #cbd5e1;">
+        <div style="font-weight: 700; color: #38bdf8; margin-bottom: 4px;">📋 Database Schema Setup:</div>
+        <div>Run the SQL script from <code style="color: #facc15;">supabase_schema.sql</code> in your Supabase SQL
+          Editor to initialize tables.</div>
+      </div>
+
+      <form onsubmit="handleSaveSupabaseConfig(event)">
+        <div class="form-group">
+          <label>Supabase Project URL</label>
+          <input type="url" id="modalSupabaseUrl" class="form-control" placeholder="https://xyzproject.supabase.co" />
+        </div>
+
+        <div class="form-group">
+          <label>Supabase Anon Public Key</label>
+          <input type="password" id="modalSupabaseKey" class="form-control"
+            placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
+        </div>
+
+        <div id="supabaseConfigMsg"
+          style="min-height: 20px; font-size: 0.82rem; margin-bottom: 10px; text-align: center;"></div>
+
+        <div style="display: flex; gap: 10px; margin-top: 1.2rem;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="testSupabaseConnectionUI()">🔌 Test
+            Connection</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">💾 Save & Sync</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="adminToast" class="admin-toast">✅ Action Successful</div>
+
+  <!-- ==================== SUPABASE CLIENT & CONTROLLER ==================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script>
+    // Storage Keys
+    const ADMIN_SESSION_KEY = "taskflow_admin_active_session";
+
+    // Password visibility state map
+    const visiblePasswords = {};
+    let currentUsersList = [];
+
+    // ---------- Admin Login / Logout Controller ----------
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById("adminUsernameInput").value.trim().toLowerCase();
+      const p = document.getElementById("adminPasswordInput").value.trim();
+      const errorBox = document.getElementById("loginErrorMsg");
+
+      if (u === "admin" && p === "admin123") {
+        localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ username: "admin", loggedAt: Date.now() }));
+        errorBox.textContent = "";
+        showAdminDashboard();
+        showToast("🔓 Welcome back, Administrator!");
+        return;
       }
 
-      function adminLogout() {
-        localStorage.removeItem(ADMIN_SESSION_KEY);
-        document.getElementById("adminDashboard").style.display = "none";
-        document.getElementById("adminLoginView").style.display = "flex";
-        document.getElementById("adminUsernameInput").value = "";
-        document.getElementById("adminPasswordInput").value = "";
-        showToast("🔒 Admin logged out.");
+      const loginRes = await TaskFlowDB.login(u, p);
+      if (loginRes.success && (loginRes.user.role === "admin" || loginRes.user.role === "instructor")) {
+        localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ username: loginRes.user.username, loggedAt: Date.now() }));
+        errorBox.textContent = "";
+        showAdminDashboard();
+        showToast(`🔓 Welcome back, ${loginRes.user.name}!`);
+      } else {
+        errorBox.textContent = "❌ Invalid admin username or password.";
+      }
+    }
+
+    function adminLogout() {
+      localStorage.removeItem(ADMIN_SESSION_KEY);
+      document.getElementById("adminDashboard").style.display = "none";
+      document.getElementById("adminLoginView").style.display = "flex";
+      document.getElementById("adminUsernameInput").value = "";
+      document.getElementById("adminPasswordInput").value = "";
+      showToast("🔒 Admin logged out.");
+    }
+
+    function checkAdminSession() {
+      const raw = localStorage.getItem(ADMIN_SESSION_KEY);
+      if (raw) {
+        try {
+          const session = JSON.parse(raw);
+          if (session.username) {
+            showAdminDashboard();
+            return true;
+          }
+        } catch (e) { }
+      }
+      document.getElementById("adminDashboard").style.display = "none";
+      document.getElementById("adminLoginView").style.display = "flex";
+      return false;
+    }
+
+    function showAdminDashboard() {
+      document.getElementById("adminLoginView").style.display = "none";
+      document.getElementById("adminDashboard").style.display = "block";
+      updateAdminCloudStatusBadges();
+      renderUsersTable();
+    }
+
+    // ---------- Add Student Popup Modal Controller ----------
+    function openAddStudentModal() {
+      const nameInput = document.getElementById("newFullName");
+      const usernameInput = document.getElementById("newUsername");
+      const passwordInput = document.getElementById("newPassword");
+      const roleInput = document.getElementById("newRole");
+
+      if (nameInput) nameInput.value = "";
+      if (usernameInput) usernameInput.value = "";
+      if (passwordInput) passwordInput.value = "";
+      if (roleInput) roleInput.value = "student";
+
+      const modal = document.getElementById("addStudentModal");
+      if (modal) modal.style.display = "flex";
+      setTimeout(() => {
+        if (nameInput) nameInput.focus();
+      }, 50);
+    }
+
+    function closeAddStudentModal() {
+      const modal = document.getElementById("addStudentModal");
+      if (modal) modal.style.display = "none";
+    }
+
+    function closeAddStudentModalOnBackdrop(e) {
+      if (e.target.id === "addStudentModal") closeAddStudentModal();
+    }
+
+    // ---------- Create User ----------
+    async function handleCreateUser(e) {
+      e.preventDefault();
+      const nameInput = document.getElementById("newFullName");
+      const usernameInput = document.getElementById("newUsername");
+      const passwordInput = document.getElementById("newPassword");
+      const roleInput = document.getElementById("newRole");
+
+      const username = usernameInput.value.trim().toLowerCase().replace(/[^a-z0-9_]/g, "");
+      const password = passwordInput.value.trim();
+      const name = nameInput.value.trim() || username;
+      const role = roleInput.value;
+
+      if (!username || username.length < 2) {
+        alert("Username must be at least 2 characters long.");
+        return;
       }
 
-      function checkAdminSession() {
-        const raw = localStorage.getItem(ADMIN_SESSION_KEY);
-        if (raw) {
-          try {
-            const session = JSON.parse(raw);
-            if (session.username) {
-              showAdminDashboard();
-              return true;
-            }
-          } catch (e) {}
-        }
-        document.getElementById("adminDashboard").style.display = "none";
-        document.getElementById("adminLoginView").style.display = "flex";
-        return false;
+      if (!password || password.length < 3) {
+        alert("Password must be at least 3 characters long.");
+        return;
       }
 
-      function showAdminDashboard() {
-        document.getElementById("adminLoginView").style.display = "none";
-        document.getElementById("adminDashboard").style.display = "block";
-        updateAdminCloudStatusBadges();
-        renderUsersTable();
+      const res = await TaskFlowDB.signup({ username, password, name, role });
+      if (!res.success) {
+        alert(`⚠️ ${res.message}`);
+        return;
       }
 
-      // ---------- Add Student Popup Modal Controller ----------
-      function openAddStudentModal() {
-        const nameInput = document.getElementById("newFullName");
-        const usernameInput = document.getElementById("newUsername");
-        const passwordInput = document.getElementById("newPassword");
-        const roleInput = document.getElementById("newRole");
+      // Reset form and close popup modal
+      nameInput.value = "";
+      usernameInput.value = "";
+      passwordInput.value = "";
+      roleInput.value = "student";
+      closeAddStudentModal();
 
-        if (nameInput) nameInput.value = "";
-        if (usernameInput) usernameInput.value = "";
-        if (passwordInput) passwordInput.value = "";
-        if (roleInput) roleInput.value = "student";
+      await renderUsersTable();
+      showToast(`🎉 Student "@${username}" registered in database!`);
+    }
 
-        const modal = document.getElementById("addStudentModal");
-        if (modal) modal.style.display = "flex";
-        setTimeout(() => {
-          if (nameInput) nameInput.focus();
-        }, 50);
+    // Auto generate random password
+    function generateRandomPassword() {
+      const chars = "abcdefghjkmnpqrstuvwxyz23456789";
+      let pwd = "";
+      for (let i = 0; i < 8; i++) {
+        pwd += chars.charAt(Math.floor(Math.random() * chars.length));
       }
+      document.getElementById("newPassword").value = pwd;
+      showToast(`🎲 Generated Password: ${pwd}`);
+    }
 
-      function closeAddStudentModal() {
-        const modal = document.getElementById("addStudentModal");
-        if (modal) modal.style.display = "none";
-      }
+    // ---------- Render Table & Metrics ----------
+    async function renderUsersTable() {
+      const tbody = document.getElementById("usersTableBody");
+      if (!tbody) return;
 
-      function closeAddStudentModalOnBackdrop(e) {
-        if (e.target.id === "addStudentModal") closeAddStudentModal();
-      }
+      const users = await TaskFlowDB.getAllStudentsWithProgress(243);
+      currentUsersList = users;
 
-      // ---------- Create User ----------
-      async function handleCreateUser(e) {
-        e.preventDefault();
-        const nameInput = document.getElementById("newFullName");
-        const usernameInput = document.getElementById("newUsername");
-        const passwordInput = document.getElementById("newPassword");
-        const roleInput = document.getElementById("newRole");
+      const searchQuery = (document.getElementById("userSearchInput")?.value || "").toLowerCase().trim();
+      const roleFilter = document.getElementById("roleFilter")?.value || "all";
+      const deviceFilter = document.getElementById("deviceFilter")?.value || "all";
 
-        const username = usernameInput.value.trim().toLowerCase().replace(/[^a-z0-9_]/g, "");
-        const password = passwordInput.value.trim();
-        const name = nameInput.value.trim() || username;
-        const role = roleInput.value;
+      tbody.innerHTML = "";
+      let activeProgressCount = 0;
+      let lockedDeviceCount = 0;
 
-        if (!username || username.length < 2) {
-          alert("Username must be at least 2 characters long.");
-          return;
-        }
+      const filtered = users.filter((u) => {
+        const matchSearch = u.username.toLowerCase().includes(searchQuery) || (u.name && u.name.toLowerCase().includes(searchQuery));
+        const matchRole = roleFilter === "all" || u.role === roleFilter;
+        const matchDevice = deviceFilter === "all" ||
+          (deviceFilter === "locked" && u.isLocked) ||
+          (deviceFilter === "unlocked" && !u.isLocked && u.role !== "admin");
+        return matchSearch && matchRole && matchDevice;
+      });
 
-        if (!password || password.length < 3) {
-          alert("Password must be at least 3 characters long.");
-          return;
-        }
+      filtered.forEach((user) => {
+        const isAdmin = user.role === "admin" || user.username.toLowerCase() === "admin";
+        const completedTasks = user.completedCount || 0;
+        if (!isAdmin && completedTasks > 0) activeProgressCount++;
+        if (!isAdmin && user.isLocked) lockedDeviceCount++;
+        const pct = user.percentage || 0;
 
-        const res = await TaskFlowDB.signup({ username, password, name, role });
-        if (!res.success) {
-          alert(`⚠️ ${res.message}`);
-          return;
-        }
+        const isPassVisible = visiblePasswords[user.username] === true;
+        const displayPass = isPassVisible ? user.password : "••••••••";
 
-        // Reset form and close popup modal
-        nameInput.value = "";
-        usernameInput.value = "";
-        passwordInput.value = "";
-        roleInput.value = "student";
-        closeAddStudentModal();
-
-        await renderUsersTable();
-        showToast(`🎉 Student "@${username}" registered in database!`);
-      }
-
-      // Auto generate random password
-      function generateRandomPassword() {
-        const chars = "abcdefghjkmnpqrstuvwxyz23456789";
-        let pwd = "";
-        for (let i = 0; i < 8; i++) {
-          pwd += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        document.getElementById("newPassword").value = pwd;
-        showToast(`🎲 Generated Password: ${pwd}`);
-      }
-
-      // ---------- Render Table & Metrics ----------
-      async function renderUsersTable() {
-        const tbody = document.getElementById("usersTableBody");
-        if (!tbody) return;
-
-        const users = await TaskFlowDB.getAllStudentsWithProgress(243);
-        currentUsersList = users;
-
-        const searchQuery = (document.getElementById("userSearchInput")?.value || "").toLowerCase().trim();
-        const roleFilter = document.getElementById("roleFilter")?.value || "all";
-
-        tbody.innerHTML = "";
-        let activeProgressCount = 0;
-
-        const filtered = users.filter((u) => {
-          const matchSearch = u.username.toLowerCase().includes(searchQuery) || (u.name && u.name.toLowerCase().includes(searchQuery));
-          const matchRole = roleFilter === "all" || u.role === roleFilter;
-          return matchSearch && matchRole;
-        });
-
-        filtered.forEach((user) => {
-          const isAdmin = user.role === "admin" || user.username.toLowerCase() === "admin";
-          const completedTasks = user.completedCount || 0;
-          if (!isAdmin && completedTasks > 0) activeProgressCount++;
-          const pct = user.percentage || 0;
-
-          const isPassVisible = visiblePasswords[user.username] === true;
-          const displayPass = isPassVisible ? user.password : "••••••••";
-
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
             <td>
               <div class="user-cell">
                 <div class="user-avatar-sm ${isAdmin ? 'admin-avatar' : ''}">
@@ -1584,13 +1624,44 @@
               <div>${user.createdAt || '2026-08-21'}</div>
               ${user.lastLogin ? `<div style="font-size: 0.72rem; color: #34d399;">Last: ${new Date(user.lastLogin).toLocaleDateString()}</div>` : ''}
             </td>
+            <td>
+              ${isAdmin ? `
+                <span style="color: #94a3b8; font-size: 0.76rem; font-weight: 600; background: rgba(148, 163, 184, 0.1); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(148, 163, 184, 0.2);">
+                  🛡️ Admin (Any System)
+                </span>
+              ` : user.isLocked ? `
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                  <div>
+                    <span style="display: inline-flex; align-items: center; gap: 4px; background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); padding: 2px 7px; border-radius: 6px; font-size: 0.74rem; font-weight: 700;">
+                      🔒 Bound to System
+                    </span>
+                  </div>
+                  <div style="font-size: 0.72rem; color: #38bdf8; font-family: monospace; max-width: 175px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${user.deviceInfo || 'Registered System'}">
+                    🖥️ ${user.deviceInfo || 'Registered Device'}
+                  </div>
+                  ${user.deviceLockedAt ? `<div style="font-size: 0.68rem; color: #64748b;">Locked: ${new Date(user.deviceLockedAt).toLocaleDateString()}</div>` : ''}
+                </div>
+              ` : `
+                <div>
+                  <span style="display: inline-flex; align-items: center; gap: 4px; background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 7px; border-radius: 6px; font-size: 0.74rem; font-weight: 700;">
+                    🔓 Ready to Bind
+                  </span>
+                  <div style="font-size: 0.7rem; color: #64748b; margin-top: 2px;">
+                    Unlocked (1st login)
+                  </div>
+                </div>
+              `}
+            </td>
             <td style="text-align: right;">
               <div class="actions-group" style="justify-content: flex-end;">
                 ${!isAdmin ? `
                   <button class="btn btn-secondary btn-sm" onclick="viewStudentHistory('${user.username}', '${user.name || user.username}', ${completedTasks})" title="View Student Task History">
                     📜 History
                   </button>
-                  <button class="btn btn-secondary btn-sm" onclick="openEditModal('${user.username}')" title="Edit password/name">
+                  <button class="btn btn-sm" onclick="confirmResetDeviceLock('${user.username}')" style="${user.isLocked ? 'background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.45); color: #fbbf24; font-weight: 700;' : 'background: rgba(51, 65, 85, 0.3); border: 1px solid #334155; color: #64748b;'}" title="${user.isLocked ? 'Reset Device Lock (Allow login on new system)' : 'Student is not currently locked to any device'}">
+                    🔓 ${user.isLocked ? 'Reset Lock' : 'Reset Lock'}
+                  </button>
+                  <button class="btn btn-secondary btn-sm" onclick="openEditModal('${user.username}')" title="Edit password/name/device">
                     ✏️
                   </button>
                   <button class="btn btn-secondary btn-sm" onclick="resetUserProgress('${user.username}')" title="Reset completed tasks">
@@ -1607,59 +1678,67 @@
               </div>
             </td>
           `;
-          tbody.appendChild(tr);
-        });
+        tbody.appendChild(tr);
+      });
 
-        // Update stats (Count students only, excluding admin)
-        const totalStudents = users.filter((u) => u.role !== "admin" && u.username.toLowerCase() !== "admin").length;
-        document.getElementById("statTotalUsers").textContent = totalStudents;
-        document.getElementById("userCountBadge").textContent = `${totalStudents} Students`;
-        document.getElementById("statActiveRecords").textContent = activeProgressCount;
+      // Update stats (Count students only, excluding admin)
+      const totalStudents = users.filter((u) => u.role !== "admin" && u.username.toLowerCase() !== "admin").length;
+      document.getElementById("statTotalUsers").textContent = totalStudents;
+      document.getElementById("userCountBadge").textContent = `${totalStudents} Students`;
+      document.getElementById("statActiveRecords").textContent = activeProgressCount;
+
+      // Update device locks stat
+      const allLockedStudents = users.filter((u) => u.role !== "admin" && u.username.toLowerCase() !== "admin" && u.isLocked).length;
+      const allUnlockedStudents = totalStudents - allLockedStudents;
+      const statDev = document.getElementById("statDeviceLocks");
+      if (statDev) {
+        statDev.textContent = `${allLockedStudents} Bound / ${allUnlockedStudents} Ready`;
       }
+    }
 
-      // Password toggle
-      function togglePasswordVisibility(username) {
-        visiblePasswords[username] = !visiblePasswords[username];
-        renderUsersTable();
-      }
+    // Password toggle
+    function togglePasswordVisibility(username) {
+      visiblePasswords[username] = !visiblePasswords[username];
+      renderUsersTable();
+    }
 
-      function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast(`📋 Copied password to clipboard!`);
-        });
-      }
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`📋 Copied password to clipboard!`);
+      });
+    }
 
-      // ---------- Student Task History Modal ----------
-      async function viewStudentHistory(username, studentName, completedTasks = 0) {
-        document.getElementById("historyModalStudentName").textContent = studentName || username;
-        document.getElementById("historyModalUsername").textContent = `@${username}`;
-        document.getElementById("historyModalProgress").textContent = `${completedTasks} / 243 Tasks`;
+    // ---------- Student Task History Modal ----------
+    async function viewStudentHistory(username, studentName, completedTasks = 0) {
+      document.getElementById("historyModalStudentName").textContent = studentName || username;
+      document.getElementById("historyModalUsername").textContent = `@${username}`;
+      document.getElementById("historyModalProgress").textContent = `${completedTasks} / 243 Tasks`;
 
-        const timelineContainer = document.getElementById("studentHistoryTimeline");
-        timelineContainer.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 1.5rem;">Fetching activity history from Supabase...</div>';
-        document.getElementById("studentHistoryModal").style.display = "flex";
+      const timelineContainer = document.getElementById("studentHistoryTimeline");
+      timelineContainer.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 1.5rem;">Fetching activity history from Supabase...</div>';
+      document.getElementById("studentHistoryModal").style.display = "flex";
 
-        const history = await TaskFlowDB.getStudentTaskHistory(username, 100);
+      const history = await TaskFlowDB.getStudentTaskHistory(username, 100);
 
-        if (!history || history.length === 0) {
-          timelineContainer.innerHTML = `
+      if (!history || history.length === 0) {
+        timelineContainer.innerHTML = `
             <div style="text-align: center; color: #64748b; padding: 2rem 1rem;">
               <div>📭 No task history records logged yet for @${username}.</div>
               <div style="font-size: 0.78rem; margin-top: 6px;">Activity logs will populate automatically when the student completes assignments.</div>
             </div>
           `;
-          return;
-        }
+        return;
+      }
 
-        timelineContainer.innerHTML = "";
-        history.forEach((item) => {
-          const isDone = item.action === "completed";
-          const isReset = item.action === "reset";
-          const dateStr = item.created_at ? new Date(item.created_at).toLocaleString() : "Recently";
+      timelineContainer.innerHTML = "";
+      history.forEach((item) => {
+        const isDone = item.action === "completed";
+        const isReset = item.action === "reset";
+        const dateStr = item.created_at ? new Date(item.created_at).toLocaleString() : "Recently";
 
-          const div = document.createElement("div");
-          div.className = `timeline-item ${isReset ? 'reset' : isDone ? 'completed' : 'uncompleted'}`;
-          div.innerHTML = `
+        const div = document.createElement("div");
+        div.className = `timeline-item ${isReset ? 'reset' : isDone ? 'completed' : 'uncompleted'}`;
+        div.innerHTML = `
             <div>
               <div style="font-weight: 700; color: #f8fafc; font-size: 0.88rem; margin-bottom: 2px;">
                 ${isReset ? '🔄 ' : isDone ? '✅ ' : '⏳ '} ${item.task_name || item.task_id}
@@ -1672,44 +1751,44 @@
               ${dateStr}
             </div>
           `;
-          timelineContainer.appendChild(div);
-        });
-      }
+        timelineContainer.appendChild(div);
+      });
+    }
 
-      function closeStudentHistoryModal() {
-        document.getElementById("studentHistoryModal").style.display = "none";
-      }
+    function closeStudentHistoryModal() {
+      document.getElementById("studentHistoryModal").style.display = "none";
+    }
 
-      function closeHistoryModalOnBackdrop(e) {
-        if (e.target.id === "studentHistoryModal") closeStudentHistoryModal();
-      }
+    function closeHistoryModalOnBackdrop(e) {
+      if (e.target.id === "studentHistoryModal") closeStudentHistoryModal();
+    }
 
-      // ---------- Login Activity Logs Modal ----------
-      async function openLoginLogsModal() {
-        document.getElementById("loginLogsModal").style.display = "flex";
-        await fetchAndRenderLoginLogs();
-      }
+    // ---------- Login Activity Logs Modal ----------
+    async function openLoginLogsModal() {
+      document.getElementById("loginLogsModal").style.display = "flex";
+      await fetchAndRenderLoginLogs();
+    }
 
-      async function fetchAndRenderLoginLogs() {
-        const container = document.getElementById("loginLogsContainer");
-        container.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 1.5rem;">Fetching login records from Supabase...</div>';
+    async function fetchAndRenderLoginLogs() {
+      const container = document.getElementById("loginLogsContainer");
+      container.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 1.5rem;">Fetching login records from Supabase...</div>';
 
-        const logs = await TaskFlowDB.getLoginHistory(50);
-        if (!logs || logs.length === 0) {
-          container.innerHTML = `
+      const logs = await TaskFlowDB.getLoginHistory(50);
+      if (!logs || logs.length === 0) {
+        container.innerHTML = `
             <div style="text-align: center; color: #64748b; padding: 2rem 1rem;">
               <div>📭 No login activity logs recorded yet.</div>
             </div>
           `;
-          return;
-        }
+        return;
+      }
 
-        container.innerHTML = "";
-        logs.forEach((log) => {
-          const dateStr = log.login_at ? new Date(log.login_at).toLocaleString() : "Recently";
-          const div = document.createElement("div");
-          div.className = "timeline-item";
-          div.innerHTML = `
+      container.innerHTML = "";
+      logs.forEach((log) => {
+        const dateStr = log.login_at ? new Date(log.login_at).toLocaleString() : "Recently";
+        const div = document.createElement("div");
+        div.className = "timeline-item";
+        div.innerHTML = `
             <div>
               <div style="font-weight: 700; color: #f8fafc; font-size: 0.88rem; margin-bottom: 2px;">
                 👤 @${log.username}
@@ -1722,292 +1801,401 @@
               ${dateStr}
             </div>
           `;
-          container.appendChild(div);
-        });
-      }
+        container.appendChild(div);
+      });
+    }
 
-      function closeLoginLogsModal() {
-        document.getElementById("loginLogsModal").style.display = "none";
-      }
+    function closeLoginLogsModal() {
+      document.getElementById("loginLogsModal").style.display = "none";
+    }
 
-      function closeLoginLogsModalOnBackdrop(e) {
-        if (e.target.id === "loginLogsModal") closeLoginLogsModal();
-      }
+    function closeLoginLogsModalOnBackdrop(e) {
+      if (e.target.id === "loginLogsModal") closeLoginLogsModal();
+    }
 
-      // ---------- Edit Modal ----------
-      function openEditModal(username) {
-        const user = currentUsersList.find((u) => u.username === username);
-        if (!user) return;
+    // ---------- Edit Modal ----------
+    function openEditModal(username) {
+      const user = currentUsersList.find((u) => u.username === username);
+      if (!user) return;
 
-        document.getElementById("editUsernameHidden").value = user.username;
-        document.getElementById("editModalUsername").textContent = `@${user.username}`;
-        document.getElementById("editFullNameInput").value = user.name || user.username;
-        document.getElementById("editPasswordInput").value = user.password;
+      document.getElementById("editUsernameHidden").value = user.username;
+      document.getElementById("editModalUsername").textContent = `@${user.username}`;
+      document.getElementById("editFullNameInput").value = user.name || user.username;
+      document.getElementById("editPasswordInput").value = user.password;
 
-        document.getElementById("editUserModal").style.display = "flex";
-      }
+      // Update Device Lock section in modal
+      const deviceSection = document.getElementById("editModalDeviceSection");
+      const deviceBadge = document.getElementById("editModalDeviceBadge");
+      const deviceStatusText = document.getElementById("editModalDeviceStatusText");
+      const resetLockBtn = document.getElementById("editModalResetLockBtn");
 
-      function closeEditModal() {
-        document.getElementById("editUserModal").style.display = "none";
-      }
-
-      function closeEditModalOnBackdrop(e) {
-        if (e.target.id === "editUserModal") closeEditModal();
-      }
-
-      async function handleSaveEditedUser(e) {
-        e.preventDefault();
-        const username = document.getElementById("editUsernameHidden").value;
-        const newName = document.getElementById("editFullNameInput").value.trim();
-        const newPassword = document.getElementById("editPasswordInput").value.trim();
-
-        if (!newPassword || newPassword.length < 3) {
-          alert("Password must be at least 3 characters long.");
-          return;
+      if (user.role === "admin" || user.username.toLowerCase() === "admin") {
+        if (deviceSection) deviceSection.style.display = "none";
+      } else {
+        if (deviceSection) deviceSection.style.display = "block";
+        if (user.isLocked) {
+          if (deviceBadge) {
+            deviceBadge.textContent = "🔒 BOUND";
+            deviceBadge.style.background = "rgba(239, 68, 68, 0.2)";
+            deviceBadge.style.color = "#f87171";
+            deviceBadge.style.border = "1px solid rgba(239, 68, 68, 0.4)";
+          }
+          if (deviceStatusText) {
+            const dateStr = user.deviceLockedAt ? ` (Bound on: ${new Date(user.deviceLockedAt).toLocaleDateString()})` : "";
+            deviceStatusText.innerHTML = `This account is locked to: <strong style="color: #38bdf8;">${user.deviceInfo || 'Registered Computer'}</strong>${dateStr}.`;
+          }
+          if (resetLockBtn) {
+            resetLockBtn.disabled = false;
+            resetLockBtn.textContent = "🔓 Reset Device Lock For This Student";
+            resetLockBtn.style.opacity = "1";
+            resetLockBtn.style.cursor = "pointer";
+          }
+        } else {
+          if (deviceBadge) {
+            deviceBadge.textContent = "🔓 UNBOUND";
+            deviceBadge.style.background = "rgba(16, 185, 129, 0.2)";
+            deviceBadge.style.color = "#34d399";
+            deviceBadge.style.border = "1px solid rgba(16, 185, 129, 0.4)";
+          }
+          if (deviceStatusText) {
+            deviceStatusText.innerHTML = `<span style="color: #34d399;">No system is currently locked to this student. Account is available to bind to the next computer the student logs into.</span>`;
+          }
+          if (resetLockBtn) {
+            resetLockBtn.disabled = true;
+            resetLockBtn.textContent = "🔓 Device Lock Already Cleared";
+            resetLockBtn.style.opacity = "0.45";
+            resetLockBtn.style.cursor = "not-allowed";
+          }
         }
+      }
 
-        await TaskFlowDB.updateStudent(username, { name: newName, password: newPassword });
-        closeEditModal();
+      document.getElementById("editUserModal").style.display = "flex";
+    }
+
+    async function handleEditModalResetDeviceLock() {
+      const username = document.getElementById("editUsernameHidden").value;
+      if (!username) return;
+
+      if (confirm(`🔓 Reset device lock for @${username}?\n\nThe student will be able to log in and bind on a new computer.`)) {
+        try {
+          const res = await TaskFlowDB.resetDeviceLock(username);
+          const deviceBadge = document.getElementById("editModalDeviceBadge");
+          const deviceStatusText = document.getElementById("editModalDeviceStatusText");
+          const resetLockBtn = document.getElementById("editModalResetLockBtn");
+
+          if (deviceBadge) {
+            deviceBadge.textContent = "🔓 UNBOUND";
+            deviceBadge.style.background = "rgba(16, 185, 129, 0.2)";
+            deviceBadge.style.color = "#34d399";
+            deviceBadge.style.border = "1px solid rgba(16, 185, 129, 0.4)";
+          }
+          if (deviceStatusText) {
+            deviceStatusText.innerHTML = `<span style="color: #34d399;">✅ Device lock cleared! Student can now log in on a new system.</span>`;
+          }
+          if (resetLockBtn) {
+            resetLockBtn.disabled = true;
+            resetLockBtn.textContent = "🔓 Device Lock Cleared";
+            resetLockBtn.style.opacity = "0.45";
+          }
+
+          await renderUsersTable();
+          showToast(`✅ Device lock reset for @${username}`);
+        } catch (err) {
+          alert("Error: " + (err.message || err));
+        }
+      }
+    }
+
+    function closeEditModal() {
+      document.getElementById("editUserModal").style.display = "none";
+    }
+
+    function closeEditModalOnBackdrop(e) {
+      if (e.target.id === "editUserModal") closeEditModal();
+    }
+
+    async function handleSaveEditedUser(e) {
+      e.preventDefault();
+      const username = document.getElementById("editUsernameHidden").value;
+      const newName = document.getElementById("editFullNameInput").value.trim();
+      const newPassword = document.getElementById("editPasswordInput").value.trim();
+
+      if (!newPassword || newPassword.length < 3) {
+        alert("Password must be at least 3 characters long.");
+        return;
+      }
+
+      await TaskFlowDB.updateStudent(username, { name: newName, password: newPassword });
+      closeEditModal();
+      await renderUsersTable();
+      showToast(`✅ Credentials updated for @${username}`);
+    }
+
+    // ---------- Single & All Device Lock Reset Actions ----------
+    async function confirmResetDeviceLock(username) {
+      if (!username) return;
+      const cleanUser = username.trim().toLowerCase();
+
+      if (confirm(`🔓 Reset device lock for student "@${cleanUser}"?\n\nThis will unbind their current computer and allow them to log in on a new system.`)) {
+        try {
+          const res = await TaskFlowDB.resetDeviceLock(cleanUser);
+          await renderUsersTable();
+          showToast(res.message || `✅ Device lock reset for @${cleanUser}`);
+        } catch (err) {
+          alert("Failed to reset device lock: " + (err.message || err));
+        }
+      }
+    }
+
+    async function confirmResetAllDeviceLocks() {
+      if (confirm(`⚠️ STRICT POLICY RESET:\n\nAre you sure you want to reset device locks for ALL registered students?\n\nEvery student will be permitted to bind to a new computer on their next login.`)) {
+        try {
+          const res = await TaskFlowDB.resetAllDeviceLocks();
+          await renderUsersTable();
+          showToast(res.message || `✅ All student device locks have been reset!`);
+        } catch (err) {
+          alert("Failed to reset all device locks: " + (err.message || err));
+        }
+      }
+    }
+
+    // ---------- User Actions (Clear Progress / Delete) ----------
+    async function resetUserProgress(username) {
+      if (confirm(`Are you sure you want to CLEAR all completed assignment records for "${username}" in database?`)) {
+        await TaskFlowDB.resetUserProgress(username);
         await renderUsersTable();
-        showToast(`✅ Credentials updated for @${username}`);
+        showToast(`🔄 Progress cleared for @${username}`);
+      }
+    }
+
+    async function deleteUser(username) {
+      if (!username) return;
+      const cleanUser = username.trim();
+      if (cleanUser.toLowerCase() === "admin") {
+        alert("Default admin account cannot be deleted.");
+        return;
       }
 
-      // ---------- User Actions (Clear Progress / Delete) ----------
-      async function resetUserProgress(username) {
-        if (confirm(`Are you sure you want to CLEAR all completed assignment records for "${username}" in database?`)) {
-          await TaskFlowDB.resetUserProgress(username);
+      if (confirm(`⚠️ Are you sure you want to permanently DELETE student account "@${cleanUser}"?`)) {
+        try {
+          await TaskFlowDB.deleteStudent(cleanUser);
           await renderUsersTable();
-          showToast(`🔄 Progress cleared for @${username}`);
+          showToast(`🗑️ User "@${cleanUser}" deleted.`);
+        } catch (err) {
+          console.error("Delete error:", err);
+          alert("Delete failed: " + (err.message || err));
         }
       }
+    }
 
-      async function deleteUser(username) {
-        if (!username) return;
-        const cleanUser = username.trim();
-        if (cleanUser.toLowerCase() === "admin") {
-          alert("Default admin account cannot be deleted.");
-          return;
-        }
-
-        if (confirm(`⚠️ Are you sure you want to permanently DELETE student account "@${cleanUser}"?`)) {
-          try {
-            await TaskFlowDB.deleteStudent(cleanUser);
-            await renderUsersTable();
-            showToast(`🗑️ User "@${cleanUser}" deleted.`);
-          } catch (err) {
-            console.error("Delete error:", err);
-            alert("Delete failed: " + (err.message || err));
-          }
-        }
+    // ---------- Full Database Export / Import ----------
+    async function exportFullDatabaseJSON() {
+      const users = await TaskFlowDB.getAllStudentsWithProgress(243);
+      const progressDump = {};
+      for (const u of users) {
+        progressDump[u.username] = await TaskFlowDB.getUserProgress(u.username);
       }
 
-      // ---------- Full Database Export / Import ----------
-      async function exportFullDatabaseJSON() {
-        const users = await TaskFlowDB.getAllStudentsWithProgress(243);
-        const progressDump = {};
-        for (const u of users) {
-          progressDump[u.username] = await TaskFlowDB.getUserProgress(u.username);
-        }
+      const fullBackup = {
+        system: "TaskFlow Pro",
+        exportedAt: new Date().toISOString(),
+        totalUsers: users.length,
+        users: users,
+        progress: progressDump,
+      };
 
-        const fullBackup = {
-          system: "TaskFlow Pro",
-          exportedAt: new Date().toISOString(),
-          totalUsers: users.length,
-          users: users,
-          progress: progressDump,
-        };
+      const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `taskflow_admin_database_backup_${new Date().toISOString().substring(0, 10)}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("📥 Full Database Exported!");
+    }
 
-        const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: "application/json" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = `taskflow_admin_database_backup_${new Date().toISOString().substring(0, 10)}.json`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        showToast("📥 Full Database Exported!");
-      }
-
-      function importFullDatabaseJSON(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-          try {
-            const data = JSON.parse(e.target.result);
-            if (data && Array.isArray(data.users)) {
-              for (const u of data.users) {
-                await TaskFlowDB.signup({ username: u.username, password: u.password, name: u.name, role: u.role });
-              }
-              await renderUsersTable();
-              showToast("✅ Database Restored Successfully!");
-            } else {
-              alert("❌ Invalid database format.");
+    function importFullDatabaseJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data && Array.isArray(data.users)) {
+            for (const u of data.users) {
+              await TaskFlowDB.signup({ username: u.username, password: u.password, name: u.name, role: u.role });
             }
-          } catch (err) {
-            alert("❌ Could not parse JSON file.");
+            await renderUsersTable();
+            showToast("✅ Database Restored Successfully!");
+          } else {
+            alert("❌ Invalid database format.");
           }
-        };
-        reader.readAsText(file);
-        event.target.value = "";
-      }
-
-      async function confirmResetDefaults() {
-        if (confirm("⚠️ Restore baseline students roster?")) {
-          showToast("⟳ Baseline students ready.");
-          await renderUsersTable();
+        } catch (err) {
+          alert("❌ Could not parse JSON file.");
         }
+      };
+      reader.readAsText(file);
+      event.target.value = "";
+    }
+
+    async function confirmResetDefaults() {
+      if (confirm("⚠️ Restore baseline students roster?")) {
+        showToast("⟳ Baseline students ready.");
+        await renderUsersTable();
       }
+    }
 
-      // ---------- Supabase Modal in Admin ----------
-      function openSupabaseModal() {
-        const config = TaskFlowDB.getConfig();
-        const urlInput = document.getElementById("modalSupabaseUrl");
-        const keyInput = document.getElementById("modalSupabaseKey");
-        const msgDiv = document.getElementById("supabaseConfigMsg");
+    // ---------- Supabase Modal in Admin ----------
+    function openSupabaseModal() {
+      const config = TaskFlowDB.getConfig();
+      const urlInput = document.getElementById("modalSupabaseUrl");
+      const keyInput = document.getElementById("modalSupabaseKey");
+      const msgDiv = document.getElementById("supabaseConfigMsg");
 
-        if (urlInput) urlInput.value = config.url || "";
-        if (keyInput) keyInput.value = config.anonKey || "";
-        if (msgDiv) msgDiv.textContent = "";
+      if (urlInput) urlInput.value = config.url || "";
+      if (keyInput) keyInput.value = config.anonKey || "";
+      if (msgDiv) msgDiv.textContent = "";
 
-        document.getElementById("supabaseModal").style.display = "flex";
-      }
+      document.getElementById("supabaseModal").style.display = "flex";
+    }
 
-      function closeSupabaseModal() {
-        document.getElementById("supabaseModal").style.display = "none";
-      }
+    function closeSupabaseModal() {
+      document.getElementById("supabaseModal").style.display = "none";
+    }
 
-      function closeSupabaseModalOnBackdrop(e) {
-        if (e.target.id === "supabaseModal") closeSupabaseModal();
-      }
+    function closeSupabaseModalOnBackdrop(e) {
+      if (e.target.id === "supabaseModal") closeSupabaseModal();
+    }
 
-      async function handleSaveSupabaseConfig(e) {
-        e.preventDefault();
-        const url = document.getElementById("modalSupabaseUrl").value.trim();
-        const key = document.getElementById("modalSupabaseKey").value.trim();
-        const msgDiv = document.getElementById("supabaseConfigMsg");
+    async function handleSaveSupabaseConfig(e) {
+      e.preventDefault();
+      const url = document.getElementById("modalSupabaseUrl").value.trim();
+      const key = document.getElementById("modalSupabaseKey").value.trim();
+      const msgDiv = document.getElementById("supabaseConfigMsg");
 
-        TaskFlowDB.saveConfig(url, key);
-        msgDiv.style.color = "#38bdf8";
-        msgDiv.textContent = "Testing connection...";
+      TaskFlowDB.saveConfig(url, key);
+      msgDiv.style.color = "#38bdf8";
+      msgDiv.textContent = "Testing connection...";
 
-        const test = await TaskFlowDB.testConnection();
-        if (test.success) {
-          msgDiv.style.color = "#34d399";
-          msgDiv.textContent = `✅ Connected to Supabase Database successfully!`;
-          updateAdminCloudStatusBadges();
-          showToast("⚡ Connected to Supabase Cloud!");
-          setTimeout(() => {
-            closeSupabaseModal();
-            renderUsersTable();
-          }, 1200);
-        } else {
-          msgDiv.style.color = "#fbbf24";
-          msgDiv.textContent = `⚠️ Saved. (${test.message})`;
-          updateAdminCloudStatusBadges();
-        }
-      }
-
-      async function testSupabaseConnectionUI() {
-        const url = document.getElementById("modalSupabaseUrl").value.trim();
-        const key = document.getElementById("modalSupabaseKey").value.trim();
-        const msgDiv = document.getElementById("supabaseConfigMsg");
-
-        if (!url || !key) {
-          msgDiv.style.color = "#f87171";
-          msgDiv.textContent = "❌ Please enter both URL and Anon Key first.";
-          return;
-        }
-
-        TaskFlowDB.saveConfig(url, key);
-        msgDiv.style.color = "#38bdf8";
-        msgDiv.textContent = "Testing connection...";
-
-        const test = await TaskFlowDB.testConnection();
-        if (test.success) {
-          msgDiv.style.color = "#34d399";
-          msgDiv.textContent = `✅ Success! Supabase Database accessible.`;
-        } else {
-          msgDiv.style.color = "#f87171";
-          msgDiv.textContent = `❌ ${test.message}`;
-        }
+      const test = await TaskFlowDB.testConnection();
+      if (test.success) {
+        msgDiv.style.color = "#34d399";
+        msgDiv.textContent = `✅ Connected to Supabase Database successfully!`;
         updateAdminCloudStatusBadges();
-      }
-
-      function updateAdminCloudStatusBadges() {
-        const isCloud = TaskFlowDB.isCloudActive();
-        const statusPill = document.getElementById("adminCloudStatus");
-        const statusText = document.getElementById("adminCloudStatusText");
-        const engineLabel = document.getElementById("statDbEngine");
-
-        if (statusPill) {
-          statusPill.className = isCloud ? "cloud-status-pill" : "cloud-status-pill offline";
-        }
-        if (statusText) {
-          statusText.textContent = isCloud ? "Supabase Synced" : "Local Mode (Click to setup)";
-        }
-        if (engineLabel) {
-          engineLabel.textContent = isCloud ? "Supabase Cloud" : "Local Storage";
-          engineLabel.style.color = isCloud ? "#34d399" : "#fbbf24";
-        }
-      }
-
-      // Close modals on ESC key
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          closeAddStudentModal();
-          closeEditModal();
-          closeStudentHistoryModal();
-          closeLoginLogsModal();
+        showToast("⚡ Connected to Supabase Cloud!");
+        setTimeout(() => {
           closeSupabaseModal();
-        }
-      });
+          renderUsersTable();
+        }, 1200);
+      } else {
+        msgDiv.style.color = "#fbbf24";
+        msgDiv.textContent = `⚠️ Saved. (${test.message})`;
+        updateAdminCloudStatusBadges();
+      }
+    }
 
-      // Toast utility
-      function showToast(msg) {
-        const toast = document.getElementById("adminToast");
-        toast.textContent = msg;
-        toast.classList.add("show");
-        setTimeout(() => toast.classList.remove("show"), 3500);
+    async function testSupabaseConnectionUI() {
+      const url = document.getElementById("modalSupabaseUrl").value.trim();
+      const key = document.getElementById("modalSupabaseKey").value.trim();
+      const msgDiv = document.getElementById("supabaseConfigMsg");
+
+      if (!url || !key) {
+        msgDiv.style.color = "#f87171";
+        msgDiv.textContent = "❌ Please enter both URL and Anon Key first.";
+        return;
       }
 
-      // Initial Bootstrap
-      window.addEventListener("DOMContentLoaded", () => {
-        updateAdminCloudStatusBadges();
-        checkAdminSession();
-      });
+      TaskFlowDB.saveConfig(url, key);
+      msgDiv.style.color = "#38bdf8";
+      msgDiv.textContent = "Testing connection...";
 
-      // Expose globally
-      window.openAddStudentModal = openAddStudentModal;
-      window.closeAddStudentModal = closeAddStudentModal;
-      window.closeAddStudentModalOnBackdrop = closeAddStudentModalOnBackdrop;
-      window.deleteUser = deleteUser;
-      window.resetUserProgress = resetUserProgress;
-      window.viewStudentHistory = viewStudentHistory;
-      window.closeStudentHistoryModal = closeStudentHistoryModal;
-      window.closeHistoryModalOnBackdrop = closeHistoryModalOnBackdrop;
-      window.openLoginLogsModal = openLoginLogsModal;
-      window.closeLoginLogsModal = closeLoginLogsModal;
-      window.closeLoginLogsModalOnBackdrop = closeLoginLogsModalOnBackdrop;
-      window.fetchAndRenderLoginLogs = fetchAndRenderLoginLogs;
-      window.openEditModal = openEditModal;
-      window.closeEditModal = closeEditModal;
-      window.closeEditModalOnBackdrop = closeEditModalOnBackdrop;
-      window.handleSaveEditedUser = handleSaveEditedUser;
-      window.openSupabaseModal = openSupabaseModal;
-      window.closeSupabaseModal = closeSupabaseModal;
-      window.closeSupabaseModalOnBackdrop = closeSupabaseModalOnBackdrop;
-      window.handleSaveSupabaseConfig = handleSaveSupabaseConfig;
-      window.testSupabaseConnectionUI = testSupabaseConnectionUI;
-      window.handleCreateUser = handleCreateUser;
-      window.handleAdminLogin = handleAdminLogin;
-      window.adminLogout = adminLogout;
-      window.renderUsersTable = renderUsersTable;
-      window.togglePasswordVisibility = togglePasswordVisibility;
-      window.copyToClipboard = copyToClipboard;
-      window.generateRandomPassword = generateRandomPassword;
-      window.exportFullDatabaseJSON = exportFullDatabaseJSON;
-      window.importFullDatabaseJSON = importFullDatabaseJSON;
-      window.confirmResetDefaults = confirmResetDefaults;
-    </script>
-  </body>
+      const test = await TaskFlowDB.testConnection();
+      if (test.success) {
+        msgDiv.style.color = "#34d399";
+        msgDiv.textContent = `✅ Success! Supabase Database accessible.`;
+      } else {
+        msgDiv.style.color = "#f87171";
+        msgDiv.textContent = `❌ ${test.message}`;
+      }
+      updateAdminCloudStatusBadges();
+    }
+
+    function updateAdminCloudStatusBadges() {
+      const isCloud = TaskFlowDB.isCloudActive();
+      const statusPill = document.getElementById("adminCloudStatus");
+      const statusText = document.getElementById("adminCloudStatusText");
+      const engineLabel = document.getElementById("statDbEngine");
+
+      if (statusPill) {
+        statusPill.className = isCloud ? "cloud-status-pill" : "cloud-status-pill offline";
+      }
+      if (statusText) {
+        statusText.textContent = isCloud ? "Supabase Synced" : "Local Mode (Click to setup)";
+      }
+      if (engineLabel) {
+        engineLabel.textContent = isCloud ? "Supabase Cloud" : "Local Storage";
+        engineLabel.style.color = isCloud ? "#34d399" : "#fbbf24";
+      }
+    }
+
+    // Close modals on ESC key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeAddStudentModal();
+        closeEditModal();
+        closeStudentHistoryModal();
+        closeLoginLogsModal();
+        closeSupabaseModal();
+      }
+    });
+
+    // Toast utility
+    function showToast(msg) {
+      const toast = document.getElementById("adminToast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3500);
+    }
+
+    // Initial Bootstrap
+    window.addEventListener("DOMContentLoaded", () => {
+      updateAdminCloudStatusBadges();
+      checkAdminSession();
+    });
+
+    // Expose globally
+    window.openAddStudentModal = openAddStudentModal;
+    window.closeAddStudentModal = closeAddStudentModal;
+    window.closeAddStudentModalOnBackdrop = closeAddStudentModalOnBackdrop;
+    window.deleteUser = deleteUser;
+    window.resetUserProgress = resetUserProgress;
+    window.viewStudentHistory = viewStudentHistory;
+    window.closeStudentHistoryModal = closeStudentHistoryModal;
+    window.closeHistoryModalOnBackdrop = closeHistoryModalOnBackdrop;
+    window.openLoginLogsModal = openLoginLogsModal;
+    window.closeLoginLogsModal = closeLoginLogsModal;
+    window.closeLoginLogsModalOnBackdrop = closeLoginLogsModalOnBackdrop;
+    window.fetchAndRenderLoginLogs = fetchAndRenderLoginLogs;
+    window.openEditModal = openEditModal;
+    window.closeEditModal = closeEditModal;
+    window.closeEditModalOnBackdrop = closeEditModalOnBackdrop;
+    window.handleSaveEditedUser = handleSaveEditedUser;
+    window.openSupabaseModal = openSupabaseModal;
+    window.closeSupabaseModal = closeSupabaseModal;
+    window.closeSupabaseModalOnBackdrop = closeSupabaseModalOnBackdrop;
+    window.handleSaveSupabaseConfig = handleSaveSupabaseConfig;
+    window.testSupabaseConnectionUI = testSupabaseConnectionUI;
+    window.handleCreateUser = handleCreateUser;
+    window.handleAdminLogin = handleAdminLogin;
+    window.adminLogout = adminLogout;
+    window.renderUsersTable = renderUsersTable;
+    window.togglePasswordVisibility = togglePasswordVisibility;
+    window.copyToClipboard = copyToClipboard;
+    window.generateRandomPassword = generateRandomPassword;
+    window.exportFullDatabaseJSON = exportFullDatabaseJSON;
+    window.importFullDatabaseJSON = importFullDatabaseJSON;
+    window.confirmResetDefaults = confirmResetDefaults;
+  </script>
+</body>
+
 </html>

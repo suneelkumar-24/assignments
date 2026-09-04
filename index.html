@@ -440,6 +440,25 @@
         white-space: nowrap;
       }
 
+      /* Device Lock Security Pill */
+      .device-lock-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        color: #34d399;
+        padding: 0 10px;
+        height: 34px;
+        border-radius: 50px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        cursor: default;
+        flex-shrink: 0;
+        white-space: nowrap;
+        box-sizing: border-box;
+      }
+
       /* User Profile Pill */
       .user-profile-pill {
         display: inline-flex;
@@ -1331,6 +1350,12 @@
           <div class="cloud-status-pill" id="headerCloudStatus" onclick="openSupabaseModal()" title="Supabase Database - Click to configure">
             <span class="cloud-dot"></span>
             <span id="headerCloudStatusText">Supabase Synced</span>
+          </div>
+
+          <!-- Single-Device Lock Status Indicator -->
+          <div class="device-lock-pill" id="headerDeviceLockPill" title="Strict Security Policy: This account is locked to this system">
+            <span>🔒</span>
+            <span id="headerDeviceLockText">System Bound</span>
           </div>
 
           <!-- Focus Timer Widget -->
@@ -3469,7 +3494,34 @@ let c = (scale === "F") ? (temp - 32) * 5 / 9 : temp;
         }
 
         if (!result.success) {
-          errorDiv.textContent = `❌ ${result.message}`;
+          if (result.isDeviceLocked) {
+            const lockedDev = result.lockedDevice || "Another Registered Computer";
+            const lockedDate = result.lockedAt ? new Date(result.lockedAt).toLocaleDateString() : "";
+            errorDiv.innerHTML = `
+              <div style="background: rgba(239, 68, 68, 0.12); border: 1.5px solid rgba(239, 68, 68, 0.45); border-radius: 12px; padding: 14px; text-align: left; margin-top: 12px; box-shadow: 0 8px 25px rgba(239, 68, 68, 0.15);">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                  <span style="font-size: 1.3rem;">⛔</span>
+                  <strong style="color: #f87171; font-size: 0.95rem;">System Lock Active (Policy Restriction)</strong>
+                </div>
+                <p style="color: #cbd5e1; font-size: 0.84rem; line-height: 1.45; margin: 0 0 8px 0;">
+                  Yeh Student ID pehle se kisi aur computer / browser par locked hai:
+                </p>
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; font-family: monospace; color: #38bdf8; font-size: 0.82rem; border: 1px dashed rgba(56, 189, 248, 0.4);">
+                  🖥️ <strong>Locked Device:</strong> ${lockedDev} ${lockedDate ? `<br><span style="color: #94a3b8; font-size: 0.74rem;">Bound since: ${lockedDate}</span>` : ''}
+                </div>
+                <p style="color: #94a3b8; font-size: 0.8rem; line-height: 1.4; margin: 0 0 10px 0;">
+                  Policy ke mutabiq har student apni ID sirf <strong>ak hi system</strong> par login kar sakta hai. Agar aapne computer change kiya hai toh <strong>Admin se login lock reset</strong> karwayen.
+                </p>
+                <div style="display: flex; justify-content: flex-end;">
+                  <a href="admin.html" style="color: #38bdf8; font-size: 0.8rem; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                    🛡️ Contact Admin / Admin Panel →
+                  </a>
+                </div>
+              </div>
+            `;
+          } else {
+            errorDiv.textContent = `❌ ${result.message}`;
+          }
           return;
         }
 
@@ -3503,7 +3555,11 @@ let c = (scale === "F") ? (temp - 32) * 5 / 9 : temp;
           await loadAssignments();
           await loadUserProgress();
           renderDashboard();
-          showSyncToast(`👋 Welcome back, ${currentUser.name}!`);
+          if (result.isNewDeviceBinding) {
+            showSyncToast(`🔒 Device Bound: Logged into this system!`);
+          } else {
+            showSyncToast(`👋 Welcome back, ${currentUser.name}!`);
+          }
         } catch (e) {
           buildTasksList();
           await loadUserProgress();
@@ -3515,6 +3571,23 @@ let c = (scale === "F") ? (temp - 32) * 5 / 9 : temp;
       async function autoRestoreSession() {
         const sessionUser = restoreSession();
         if (sessionUser && sessionUser.username) {
+          // Verify that this device is still authorized for this student ID
+          try {
+            const verification = await TaskFlowDB.verifyDeviceLock(sessionUser.username);
+            if (!verification.valid) {
+              logout();
+              const errorDiv = document.getElementById("loginError");
+              if (errorDiv) {
+                errorDiv.innerHTML = `
+                  <div style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 10px; padding: 12px; margin-top: 10px; text-align: left; color: #fde68a; font-size: 0.84rem;">
+                    <strong>⚠️ Session Invalidation:</strong> Account device lock was reset by Admin or bound to another system. Please log in again to bind to this system.
+                  </div>
+                `;
+              }
+              return false;
+            }
+          } catch(e) {}
+
           currentUser = {
             username: sessionUser.username,
             name: sessionUser.username,
@@ -3548,7 +3621,7 @@ let c = (scale === "F") ? (temp - 32) * 5 / 9 : temp;
         document.getElementById("dashboard").style.display = "none";
         document.getElementById("username").value = "";
         document.getElementById("password").value = "";
-        document.getElementById("loginError").textContent = "";
+        document.getElementById("loginError").innerHTML = "";
         updateCloudStatusBadges();
       }
 

@@ -83,6 +83,75 @@
     localStorage.setItem(LOCAL_USERS_STORAGE_KEY, JSON.stringify(list || []));
   }
 
+  // ==================== DEVICE FINGERPRINTING & HARDWARE BINDING ====================
+  const DEVICE_UUID_STORAGE_KEY = "taskflow_device_uuid";
+  const LOCAL_DEVICE_LOCKS_KEY = "taskflow_device_locks";
+
+  function getDeviceFingerprint() {
+    let devId = null;
+    try {
+      devId = localStorage.getItem(DEVICE_UUID_STORAGE_KEY);
+      if (!devId) {
+        if (typeof window !== "undefined" && window.crypto && window.crypto.randomUUID) {
+          devId = window.crypto.randomUUID();
+        } else {
+          devId = "dev_" + Math.random().toString(36).substring(2, 12) + "_" + Date.now();
+        }
+        localStorage.setItem(DEVICE_UUID_STORAGE_KEY, devId);
+      }
+    } catch (e) {
+      devId = "dev_session_" + Math.random().toString(36).substring(2, 10);
+    }
+
+    const ua = (typeof navigator !== "undefined" && navigator.userAgent) ? navigator.userAgent : "";
+    let os = "Desktop PC";
+    if (ua.includes("Win")) os = "Windows PC";
+    else if (ua.includes("Mac")) os = "macOS Mac";
+    else if (ua.includes("Linux")) os = "Linux PC";
+    else if (ua.includes("Android")) os = "Android Device";
+    else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS Apple Device";
+
+    let browser = "Browser";
+    if (ua.includes("Edg/")) browser = "Edge";
+    else if (ua.includes("Chrome/") && !ua.includes("Edg/")) browser = "Chrome";
+    else if (ua.includes("Firefox/")) browser = "Firefox";
+    else if (ua.includes("Safari/") && !ua.includes("Chrome/")) browser = "Safari";
+    else if (ua.includes("OPR/") || ua.includes("Opera/")) browser = "Opera";
+
+    const res = (typeof window !== "undefined" && window.screen && window.screen.width)
+      ? `${window.screen.width}x${window.screen.height}`
+      : "";
+    const info = `${os} • ${browser}${res ? " (" + res + ")" : ""}`;
+
+    return {
+      deviceId: devId,
+      deviceInfo: info,
+      userAgent: ua,
+    };
+  }
+
+  function getLocalDeviceLocks() {
+    try {
+      const raw = localStorage.getItem(LOCAL_DEVICE_LOCKS_KEY);
+      if (raw) return JSON.parse(raw) || {};
+    } catch (e) {}
+    return {};
+  }
+
+  function saveLocalDeviceLock(username, lockData) {
+    try {
+      const locks = getLocalDeviceLocks();
+      const cleanUser = (username || "").toLowerCase().trim();
+      if (!cleanUser) return;
+      if (lockData) {
+        locks[cleanUser] = lockData;
+      } else {
+        delete locks[cleanUser];
+      }
+      localStorage.setItem(LOCAL_DEVICE_LOCKS_KEY, JSON.stringify(locks));
+    } catch (e) {}
+  }
+
   // ==================== TASKFLOW DB API ====================
   const TaskFlowDB = {
     init: initClient,
@@ -124,14 +193,253 @@
       }
     },
 
-    // ---------- USER AUTHENTICATION ----------
-    async login(username, password) {
+    // ---------- DEVICE FINGERPRINT & SYSTEM LOCK UTILITIES ----------
+    getDeviceFingerprint() {
+      return getDeviceFingerprint();
+    },
+
+    async getDeviceLock(username) {
+      const cleanUser = (username || "").trim().toLowerCase();
+      if (!cleanUser) return { isLocked: false, deviceId: null, deviceInfo: null, lockedAt: null };
+
+      // 1. Try Supabase users table directly
+      if (client) {
+        try {
+          const { data, error } = await client
+            .from("users")
+            .select("device_id, device_info, device_locked_at")
+            .eq("username", cleanUser)
+            .maybeSingle();
+
+          if (!error && data && data.device_id) {
+            return {
+              isLocked: true,
+              deviceId: data.device_id,
+              deviceInfo: data.device_info || "Registered System",
+              lockedAt: data.device_locked_at,
+              source: "supabase_users",
+            };
+          }
+        } catch (e) {
+          // Column may not exist yet in schema cache
+        }
+
+        // 2. Try task_progress table with system lock key '__SYS_DEVICE_LOCK__'
+        try {
+          const { data: progLock, error: progErr } = await client
+            .from("task_progress")
+            .select("category, updated_at")
+            .eq("username", cleanUser)
+            .eq("task_id", "__SYS_DEVICE_LOCK__")
+            .maybeSingle();
+
+          if (!progErr && progLock && progLock.category) {
+            const parsed = JSON.parse(progLock.category);
+            if (parsed && parsed.deviceId) {
+              return {
+                isLocked: true,
+                deviceId: parsed.deviceId,
+                deviceInfo: parsed.deviceInfo || "Registered System",
+                lockedAt: parsed.lockedAt || progLock.updated_at,
+                source: "supabase_cloud_sync",
+              };
+            }
+          }
+        } catch (e) {}
+      }
+
+      // 3. Fallback to LocalStorage
+      const localLocks = getLocalDeviceLocks();
+      if (localLocks[cleanUser] && localLocks[cleanUser].deviceId) {
+        return {
+          isLocked: true,
+          deviceId: localLocks[cleanUser].deviceId,
+          deviceInfo: localLocks[cleanUser].deviceInfo || "Registered System",
+          lockedAt: localLocks[cleanUser].lockedAt,
+          source: "local",
+        };
+      }
+
+      return { isLocked: false, deviceId: null, deviceInfo: null, lockedAt: null };
+    },
+
+    async lockDevice(username, deviceId, deviceInfo) {
+      const cleanUser = (username || "").trim().toLowerCase();
+      const now = new Date().toISOString();
+      const lockData = {
+        deviceId: deviceId,
+        deviceInfo: deviceInfo || "Registered System",
+        lockedAt: now,
+      };
+
+      // Save locally
+      saveLocalDeviceLock(cleanUser, lockData);
+
+      // Save to Supabase Cloud
+      if (client) {
+        // A. Try updating users table
+        try {
+          await client
+            .from("users")
+            .update({
+              device_id: deviceId,
+              device_info: deviceInfo,
+              device_locked_at: now,
+            })
+            .eq("username", cleanUser);
+        } catch (e) {}
+
+        // B. Also upsert to task_progress for instant cross-device synchronization
+        try {
+          await client.from("task_progress").upsert(
+            {
+              username: cleanUser,
+              task_id: "__SYS_DEVICE_LOCK__",
+              category: JSON.stringify(lockData),
+              is_completed: true,
+              updated_at: now,
+            },
+            { onConflict: "username,task_id" }
+          );
+        } catch (e) {
+          console.warn("Could not save cloud device lock:", e);
+        }
+      }
+
+      return { success: true, lockData };
+    },
+
+    async resetDeviceLock(username) {
+      const cleanUser = (username || "").trim().toLowerCase();
+      if (!cleanUser) return { success: false, message: "Invalid username." };
+
+      // Clear from LocalStorage
+      saveLocalDeviceLock(cleanUser, null);
+
+      if (client) {
+        // 1. Clear from users table
+        try {
+          await client
+            .from("users")
+            .update({
+              device_id: null,
+              device_info: null,
+              device_locked_at: null,
+            })
+            .eq("username", cleanUser);
+        } catch (e) {}
+
+        // 2. Delete from task_progress
+        try {
+          await client
+            .from("task_progress")
+            .delete()
+            .eq("username", cleanUser)
+            .eq("task_id", "__SYS_DEVICE_LOCK__");
+        } catch (e) {}
+
+        // 3. Log audit event
+        try {
+          await client.from("task_history").insert([
+            {
+              username: cleanUser,
+              task_id: "DEVICE_LOCK_RESET",
+              task_name: "Admin Reset System Device Lock",
+              category: "security",
+              action: "reset",
+              created_at: new Date().toISOString(),
+            },
+          ]);
+        } catch (e) {}
+      }
+
+      return {
+        success: true,
+        message: `Device lock for @${cleanUser} has been successfully reset. Student can now log in and bind to a new device.`,
+      };
+    },
+
+    async resetAllDeviceLocks() {
+      // Clear all local locks
+      localStorage.removeItem(LOCAL_DEVICE_LOCKS_KEY);
+
+      if (client) {
+        // Clear in users table
+        try {
+          await client
+            .from("users")
+            .update({
+              device_id: null,
+              device_info: null,
+              device_locked_at: null,
+            })
+            .neq("role", "admin");
+        } catch (e) {}
+
+        // Delete from task_progress
+        try {
+          await client
+            .from("task_progress")
+            .delete()
+            .eq("task_id", "__SYS_DEVICE_LOCK__");
+        } catch (e) {}
+
+        // Log audit event
+        try {
+          await client.from("task_history").insert([
+            {
+              username: "system_admin",
+              task_id: "ALL_DEVICE_LOCKS_RESET",
+              task_name: "Admin Reset All Student Device Locks",
+              category: "security",
+              action: "reset_all",
+              created_at: new Date().toISOString(),
+            },
+          ]);
+        } catch (e) {}
+      }
+
+      return {
+        success: true,
+        message: "All student device locks have been successfully reset!",
+      };
+    },
+
+    async verifyDeviceLock(username, currentDeviceId) {
+      const cleanUser = (username || "").trim().toLowerCase();
+      if (!cleanUser) return { valid: false, reason: "No username provided" };
+
+      const currentDev = currentDeviceId || getDeviceFingerprint().deviceId;
+      const lock = await this.getDeviceLock(cleanUser);
+
+      // If no lock exists (not bound yet or admin reset it)
+      if (!lock.isLocked || !lock.deviceId) {
+        return { valid: true, isUnbound: true };
+      }
+
+      if (lock.deviceId === currentDev) {
+        return { valid: true, lock };
+      }
+
+      return {
+        valid: false,
+        reason: "Device mismatch",
+        lockedDevice: lock.deviceInfo,
+        lockedAt: lock.lockedAt,
+      };
+    },
+
+    // ---------- USER AUTHENTICATION WITH STRICT DEVICE LOCK ----------
+    async login(username, password, clientDevice = null) {
       const cleanUser = (username || "").trim().toLowerCase();
       const cleanPass = (password || "").trim();
 
       if (!cleanUser || !cleanPass) {
         return { success: false, message: "Please enter username and password." };
       }
+
+      const activeClientDevice = clientDevice || getDeviceFingerprint();
+      let authenticatedUser = null;
 
       // Try Supabase Cloud first
       if (client) {
@@ -144,27 +452,21 @@
 
           if (!error && data) {
             if (data.password === cleanPass) {
+              authenticatedUser = {
+                id: data.id,
+                username: data.username,
+                name: data.name || data.username,
+                role: data.role || "student",
+                createdAt: data.created_at,
+                source: "supabase",
+              };
+
               // Update last_login in background
               client
                 .from("users")
                 .update({ last_login: new Date().toISOString() })
                 .eq("username", cleanUser)
                 .then(() => {});
-
-              // Record login history
-              this.recordLoginHistory(cleanUser);
-
-              return {
-                success: true,
-                user: {
-                  id: data.id,
-                  username: data.username,
-                  name: data.name || data.username,
-                  role: data.role || "student",
-                  createdAt: data.created_at,
-                  source: "supabase",
-                },
-              };
             } else {
               return { success: false, message: "Invalid password." };
             }
@@ -175,25 +477,65 @@
       }
 
       // Fallback to LocalStorage
-      const localUsers = getLocalUsers();
-      const matched = localUsers.find(
-        (u) => u.username.toLowerCase() === cleanUser && u.password === cleanPass
-      );
-      if (matched) {
-        this.recordLoginHistory(cleanUser);
-        return {
-          success: true,
-          user: {
+      if (!authenticatedUser) {
+        const localUsers = getLocalUsers();
+        const matched = localUsers.find(
+          (u) => u.username.toLowerCase() === cleanUser && u.password === cleanPass
+        );
+        if (matched) {
+          authenticatedUser = {
             username: matched.username,
             name: matched.name || matched.username,
             role: matched.role || "student",
             createdAt: matched.createdAt || "2026-08-21",
             source: "local",
-          },
-        };
+          };
+        }
       }
 
-      return { success: false, message: "Invalid username or password." };
+      if (!authenticatedUser) {
+        return { success: false, message: "Invalid username or password." };
+      }
+
+      // Record login history
+      this.recordLoginHistory(cleanUser);
+
+      // ==========================================================
+      // STRICT SINGLE-DEVICE LOGIN POLICY ENFORCEMENT
+      // ==========================================================
+      // Admin is exempt so they can manage students from any device
+      const isAdmin = authenticatedUser.role === "admin" || authenticatedUser.username.toLowerCase() === "admin";
+
+      if (!isAdmin) {
+        const lock = await this.getDeviceLock(cleanUser);
+
+        if (lock.isLocked && lock.deviceId) {
+          // A device is already bound to this student account
+          if (lock.deviceId !== activeClientDevice.deviceId) {
+            // REJECT LOGIN: Device mismatch!
+            const lockedInfo = lock.deviceInfo || "Another Computer / System";
+            const lockedDateStr = lock.lockedAt ? ` (Locked on: ${new Date(lock.lockedAt).toLocaleDateString()})` : "";
+            return {
+              success: false,
+              isDeviceLocked: true,
+              lockedDevice: lockedInfo,
+              lockedAt: lock.lockedAt,
+              message: `🚫 Strict Policy Restriction: This Student ID is already locked to another system [${lockedInfo}${lockedDateStr}]. Each student is strictly permitted to log in on only ONE system. Please contact the Administrator to reset your device lock.`,
+            };
+          }
+        } else {
+          // First login or lock was reset by Admin: Bind to this system now!
+          await this.lockDevice(cleanUser, activeClientDevice.deviceId, activeClientDevice.deviceInfo);
+          authenticatedUser.isNewDeviceBinding = true;
+        }
+      }
+
+      return {
+        success: true,
+        user: authenticatedUser,
+        isNewDeviceBinding: authenticatedUser.isNewDeviceBinding || false,
+        deviceInfo: activeClientDevice.deviceInfo,
+      };
     },
 
     // ---------- STUDENT SIGNUP / REGISTRATION ----------
@@ -556,20 +898,27 @@
       return { success: true, message: "Password updated in local storage." };
     },
 
-    // ---------- ADMIN: ALL STUDENTS WITH PROGRESS ----------
+    // ---------- ADMIN: ALL STUDENTS WITH PROGRESS & DEVICE LOCKS ----------
     async getAllStudentsWithProgress(totalTaskCount = 243) {
       let users = [];
 
-      // 1. Fetch users from Supabase
+      // 1. Fetch users from Supabase (with device lock columns if present)
       if (client) {
         try {
           const { data, error } = await client
             .from("users")
-            .select("id, username, password, name, role, created_at, last_login")
+            .select("id, username, password, name, role, created_at, last_login, device_id, device_info, device_locked_at")
             .order("id", { ascending: true });
 
           if (!error && Array.isArray(data) && data.length > 0) {
             users = data;
+          } else if (error && (error.code === "PGRST204" || error.message?.includes("column"))) {
+            // Migration not run yet: fallback to baseline columns
+            const { data: fallbackData } = await client
+              .from("users")
+              .select("id, username, password, name, role, created_at, last_login")
+              .order("id", { ascending: true });
+            if (Array.isArray(fallbackData)) users = fallbackData;
           }
         } catch (e) {
           console.warn("Supabase users list fetch failed:", e);
@@ -580,26 +929,42 @@
         users = getLocalUsers();
       }
 
-      // 2. Fetch all completed task counts
+      // 2. Fetch completed task counts AND cloud device locks in one query
       let progressCounts = {};
+      let cloudDeviceLocks = {};
       if (client) {
         try {
           const { data: progData, error: progErr } = await client
             .from("task_progress")
-            .select("username")
+            .select("username, task_id, category, updated_at")
             .eq("is_completed", true);
 
           if (!progErr && Array.isArray(progData)) {
             progData.forEach((row) => {
-              const u = row.username.toLowerCase();
-              progressCounts[u] = (progressCounts[u] || 0) + 1;
+              const u = (row.username || "").toLowerCase().trim();
+              if (row.task_id === "__SYS_DEVICE_LOCK__") {
+                try {
+                  const parsed = JSON.parse(row.category);
+                  if (parsed && parsed.deviceId) {
+                    cloudDeviceLocks[u] = {
+                      deviceId: parsed.deviceId,
+                      deviceInfo: parsed.deviceInfo || "Registered System",
+                      lockedAt: parsed.lockedAt || row.updated_at,
+                    };
+                  }
+                } catch (e) {}
+              } else {
+                progressCounts[u] = (progressCounts[u] || 0) + 1;
+              }
             });
           }
         } catch (e) {}
       }
 
+      const localLocks = getLocalDeviceLocks();
+
       return users.map((u) => {
-        const username = u.username.toLowerCase();
+        const username = (u.username || "").toLowerCase().trim();
         let completedCount = progressCounts[username];
 
         if (completedCount === undefined) {
@@ -608,7 +973,7 @@
             const raw = localStorage.getItem(`taskflow_progress_${username}`);
             if (raw) {
               const map = JSON.parse(raw);
-              completedCount = Object.keys(map).filter((k) => map[k] === true).length;
+              completedCount = Object.keys(map).filter((k) => map[k] === true && k !== "__SYS_DEVICE_LOCK__").length;
             } else {
               completedCount = 0;
             }
@@ -618,6 +983,19 @@
         }
 
         const percentage = Math.min(100, Math.round((completedCount / totalTaskCount) * 100));
+
+        // Determine device lock status
+        let devLock = cloudDeviceLocks[username] || null;
+        if (!devLock && u.device_id) {
+          devLock = {
+            deviceId: u.device_id,
+            deviceInfo: u.device_info || "Registered System",
+            lockedAt: u.device_locked_at,
+          };
+        }
+        if (!devLock && localLocks[username]) {
+          devLock = localLocks[username];
+        }
 
         return {
           id: u.id,
@@ -629,6 +1007,11 @@
           lastLogin: u.last_login || null,
           completedCount: completedCount,
           percentage: percentage,
+          // Device Lock metadata
+          deviceId: devLock ? devLock.deviceId : null,
+          deviceInfo: devLock ? devLock.deviceInfo : null,
+          deviceLockedAt: devLock ? (devLock.lockedAt || devLock.device_locked_at) : null,
+          isLocked: !!(devLock && devLock.deviceId),
         };
       });
     },
