@@ -1324,278 +1324,405 @@
 
       <div class="syllabus-grid" style="--section-color: var(--php-color); --section-shadow: rgba(129, 140, 248, 0.15); --section-bg: rgba(129, 140, 248, 0.1);">
         
+        <!-- Topic 67 -->
         <div class="card">
           <div class="card-num">67</div>
-          <h2 class="card-title"><span>PHP</span> 67. PHP Introduction & Tags</h2>
+          <h2 class="card-title"><span>PHP</span> 67. PHP Introduction, Server Execution & Tags</h2>
           <ul class="bullet-list">
-            <li>What is PHP & Server-Side Execution</li>
-            <li>PHP Tags (&lt;?php ... ?&gt;)</li>
-            <li>PHP in HTML</li>
-            <li>PHP CLI vs Web Server (Apache/Nginx)</li>
+            <li>What is PHP (Hypertext Preprocessor) & Server-Side Execution</li>
+            <li>PHP History (1995 to PHP 8.x) & Client-Server Request Cycle</li>
+            <li>Standard Opening & Closing tags (&lt;?php ... ?&gt;), Short echo tag</li>
+            <li>IDE vs Text Editors & The Defect Lifecycle (Error vs Defect vs Bug)</li>
+            <li>Configuring XAMPP/WAMP htdocs, Apache web server & PHP CLI</li>
           </ul>
         </div>
 
+        <!-- Topic 68 -->
         <div class="card">
           <div class="card-num">68</div>
-          <h2 class="card-title"><span>PHP</span> 68. Output Methods</h2>
+          <h2 class="card-title"><span>PHP</span> 68. Output Methods: echo, print, print_r & var_dump</h2>
           <ul class="bullet-list">
-            <li>echo statement</li>
-            <li>print statement</li>
-            <li>print_r() for arrays</li>
-            <li>var_dump() type debugging</li>
+            <li>echo statement (multiple parameters, faster, no return value)</li>
+            <li>print statement (single parameter, returns 1)</li>
+            <li>print_r() for human-readable array and object formatting</li>
+            <li>var_dump() for deep type debugging (data types, lengths & values)</li>
+            <li>Embedding dynamic PHP variables inside HTML tags</li>
           </ul>
         </div>
 
+        <!-- Topic 69 -->
         <div class="card">
           <div class="card-num">69</div>
-          <h2 class="card-title"><span>PHP</span> 69. Variables & Constants</h2>
+          <h2 class="card-title"><span>PHP</span> 69. Variables, Variable Scope & Constants</h2>
           <ul class="bullet-list">
-            <li>Variable Syntax ($var)</li>
-            <li>Variable Scope (local, global, static)</li>
-            <li>define() Constants</li>
-            <li>const keyword</li>
+            <li>Variable declaration syntax ($var), loosely typed rules</li>
+            <li>Variable Scopes: local scope, global scope & global keyword</li>
+            <li>Superglobal $GLOBALS array access across scopes</li>
+            <li>static variables (retaining state between function calls)</li>
+            <li>Constants: define() vs const & Magic Constants (__DIR__, __FILE__)</li>
           </ul>
         </div>
 
+        <!-- Topic 70 -->
         <div class="card">
           <div class="card-num">70</div>
-          <h2 class="card-title"><span>PHP</span> 70. Data Types & Casting</h2>
+          <h2 class="card-title"><span>PHP</span> 70. PHP Data Types & Explicit Type Casting</h2>
           <ul class="bullet-list">
-            <li>String & Concatenation (.)</li>
-            <li>Integer & Float</li>
-            <li>Boolean & NULL</li>
-            <li>Type Casting & Strict Types</li>
+            <li>Scalar Types: String, Integer, Float, Boolean</li>
+            <li>Compound Types: Array, Object</li>
+            <li>Special Types: NULL, Resource (Database & File pointers)</li>
+            <li>Type inspection: gettype(), is_int(), is_string(), is_array()</li>
+            <li>Explicit Type Casting: (int), (float), (string), (bool), (array)</li>
           </ul>
         </div>
 
+        <!-- Topic 71 -->
         <div class="card">
           <div class="card-num">71</div>
-          <h2 class="card-title"><span>PHP</span> 71. Operators & Expressions</h2>
+          <h2 class="card-title"><span>PHP</span> 71. Operators, Expressions & Comparison (== vs ===)</h2>
           <ul class="bullet-list">
-            <li>Arithmetic Operators (+, -, *, /, %)</li>
-            <li>Assignment Operators (=, +=, -=, .=)</li>
-            <li>Comparison Operators (==, ===, !=, &lt;, &gt;)</li>
-            <li>Spaceship Operator (&lt;=&gt;) & Null Coalescing (??)</li>
+            <li>Arithmetic Operators (+, -, *, /, %, ** exponentiation)</li>
+            <li>Assignment & Combined Operators (=, +=, -=, *=, /=, .=)</li>
+            <li>Comparison: Loose (==, !=) vs Strict type-safe (===, !==)</li>
+            <li>Spaceship Operator (&lt;=&gt;) for 3-way sorting comparisons</li>
+            <li>Logical Operators (&amp;&amp;, ||, !, and, or, xor)</li>
+            <li>Ternary Operator ( ? : ) & Null Coalescing Operator ( ?? )</li>
           </ul>
         </div>
 
+        <!-- Topic 72 -->
         <div class="card">
           <div class="card-num">72</div>
-          <h2 class="card-title"><span>PHP</span> 72. Conditional Logic</h2>
+          <h2 class="card-title"><span>PHP</span> 72. Conditional Statements (if, if-else, if-elseif-else)</h2>
           <ul class="bullet-list">
-            <li>if statement</li>
-            <li>if-else statement</li>
-            <li>if-elseif-else</li>
-            <li>Nested Conditions</li>
-            <li>Ternary Operator ( ? : )</li>
+            <li>Decision making flow & Boolean expressions</li>
+            <li>if statement & if-else statement</li>
+            <li>if-elseif-else multi-condition branching ladder</li>
+            <li>Nested conditional statements & best practices</li>
+            <li>Truthy and Falsy evaluations in PHP</li>
           </ul>
         </div>
 
+        <!-- Topic 73 -->
         <div class="card">
           <div class="card-num">73</div>
-          <h2 class="card-title"><span>PHP</span> 73. Switch & Match</h2>
+          <h2 class="card-title"><span>PHP</span> 73. Switch Statement vs Modern PHP 8 match Expression</h2>
           <ul class="bullet-list">
-            <li>switch statement</li>
-            <li>case, break & default</li>
-            <li>PHP 8 match expressions</li>
+            <li>switch statement syntax, case labels & default clause</li>
+            <li>The break statement & intentional fall-through behavior</li>
+            <li>Modern PHP 8 match expression: strict comparison & direct return</li>
+            <li>Comparing switch vs match for cleaner backend code</li>
           </ul>
         </div>
 
+        <!-- Topic 74 -->
         <div class="card">
           <div class="card-num">74</div>
-          <h2 class="card-title"><span>PHP</span> 74. Loops & Iterations</h2>
+          <h2 class="card-title"><span>PHP</span> 74. Loops in PHP: while, do-while, for & foreach</h2>
           <ul class="bullet-list">
-            <li>for loop</li>
-            <li>while loop</li>
-            <li>do-while loop</li>
-            <li>foreach loop</li>
-            <li>break & continue</li>
+            <li>while loop (entry-controlled iteration)</li>
+            <li>do-while loop (guaranteed at least one execution)</li>
+            <li>for loop (counter initialization, test condition, increment)</li>
+            <li>foreach loop (array iteration with $key =&gt; $value)</li>
+            <li>Loop control: break (single/multi-level) & continue</li>
+            <li>The goto statement: syntax, jump labels & proper usage (STC Day-5)</li>
           </ul>
         </div>
 
+        <!-- Topic 75 -->
         <div class="card">
           <div class="card-num">75</div>
-          <h2 class="card-title"><span>PHP</span> 75. Functions & Type Hinting</h2>
+          <h2 class="card-title"><span>PHP</span> 75. Functions, Arguments & Type Hinting</h2>
           <ul class="bullet-list">
-            <li>Function Declaration</li>
-            <li>Parameters & Arguments</li>
-            <li>Default Argument Values</li>
-            <li>Return Types & Type Hinting</li>
-            <li>Anonymous Functions & Arrow Functions</li>
+            <li>Function declaration, naming & modular reusability</li>
+            <li>Formal parameters vs actual arguments, Default values</li>
+            <li>Passing arguments by value vs by reference (&amp;$var) (STC Functions Day-2)</li>
+            <li>return statement, Return types & strict_types declaration</li>
+            <li>Variable functions, Anonymous closures & Arrow functions (fn() =&gt;)</li>
           </ul>
         </div>
 
+        <!-- Topic 76 -->
         <div class="card">
           <div class="card-num">76</div>
-          <h2 class="card-title"><span>PHP</span> 76. Arrays (All Types)</h2>
+          <h2 class="card-title"><span>PHP</span> 76. Arrays in Depth: Indexed, Associative & Multidimensional</h2>
           <ul class="bullet-list">
-            <li>Indexed Arrays</li>
-            <li>Associative Arrays (Key-Value)</li>
-            <li>Multidimensional Arrays</li>
-            <li>Iterating Arrays with foreach</li>
+            <li>What is an Array: Single variable holding collection of elements</li>
+            <li>Indexed Arrays: numeric zero-based indices & element assignment</li>
+            <li>Associative Arrays: custom key =&gt; value pairs</li>
+            <li>Multidimensional Arrays: nested arrays, matrices & table grids</li>
+            <li>Iterating multidimensional structures using nested foreach</li>
           </ul>
         </div>
 
+        <!-- Topic 77 -->
         <div class="card">
           <div class="card-num">77</div>
-          <h2 class="card-title"><span>PHP</span> 77. Array Functions</h2>
+          <h2 class="card-title"><span>PHP</span> 77. Essential Built-in Array Functions</h2>
           <ul class="bullet-list">
-            <li>count(), in_array()</li>
-            <li>array_push(), array_pop()</li>
-            <li>array_merge(), array_keys()</li>
-            <li>sort(), rsort(), asort(), ksort()</li>
-            <li>array_map(), array_filter()</li>
+            <li>range() and list() array destructuring (STC Arrays Day-2)</li>
+            <li>count(), in_array(), array_key_exists(), array_keys(), array_values()</li>
+            <li>array_slice() and array_splice() for subsets and in-place replacement</li>
+            <li>array_push(), array_pop(), array_shift(), array_unshift()</li>
+            <li>Sorting: sort(), rsort(), asort(), ksort(), arsort(), krsort()</li>
+            <li>array_walk(), array_map(), array_filter() functional transformations</li>
           </ul>
         </div>
 
+        <!-- Topic 78 -->
         <div class="card">
           <div class="card-num">78</div>
-          <h2 class="card-title"><span>PHP</span> 78. String Functions</h2>
+          <h2 class="card-title"><span>PHP</span> 78. Core String Manipulation Functions</h2>
           <ul class="bullet-list">
-            <li>strlen(), str_word_count()</li>
-            <li>str_replace(), strpos()</li>
-            <li>substr(), strtolower(), strtoupper()</li>
-            <li>trim(), htmlspecialchars()</li>
-            <li>explode() & implode()</li>
+            <li>4 String syntaxes: Single-quoted, Double-quoted, Heredoc, Nowdoc</li>
+            <li>strlen(), str_word_count() length inspections</li>
+            <li>strpos(), stripos(), strrpos() search with character offsets</li>
+            <li>substr(), strstr(), str_replace(), str_ireplace() extraction & replacement</li>
+            <li>trim(), ltrim(), rtrim(), stripslashes(), htmlspecialchars() cleaning</li>
+            <li>explode(), implode(), strcmp(), strcasecmp() splitting & comparison</li>
+            <li>STC special binary encoding: convert_uuencode() & convert_uudecode()</li>
           </ul>
         </div>
 
+        <!-- Topic 79 -->
         <div class="card">
           <div class="card-num">79</div>
-          <h2 class="card-title"><span>PHP</span> 79. Math & Date/Time</h2>
+          <h2 class="card-title"><span>PHP</span> 79. Math Operations & Date/Time Management</h2>
           <ul class="bullet-list">
-            <li>rand(), min(), max(), abs()</li>
-            <li>round(), ceil(), floor()</li>
-            <li>date(), time(), strtotime()</li>
-            <li>DateTime Object & Timezones</li>
+            <li>What is a UNIX Timestamp (seconds since Jan 1 1970 00:00:00 GMT)</li>
+            <li>time(), microtime(), mktime(hour, min, sec, month, day, year)</li>
+            <li>date() format specifiers (Y, m, d, H, i, s, l, F, A)</li>
+            <li>strtotime() natural language parsing ("+1 week", "next Monday")</li>
+            <li>checkdate(), getdate(), idate() calendar validation</li>
+            <li>date_default_timezone_set("Asia/Karachi") timezone management</li>
           </ul>
         </div>
 
+        <!-- Topic 80 -->
         <div class="card">
           <div class="card-num">80</div>
-          <h2 class="card-title"><span>PHP</span> 80. Superglobals</h2>
+          <h2 class="card-title"><span>PHP</span> 80. Superglobal Variables ($_SERVER, $_GET, $_POST, etc.)</h2>
           <ul class="bullet-list">
-            <li>$GLOBALS</li>
-            <li>$_SERVER</li>
-            <li>$_GET & $_POST</li>
-            <li>$_REQUEST & $_ENV</li>
+            <li>HTTP request lifecycle: Client browser to server execution</li>
+            <li>GET method vs POST method (URLs, visibility, length limits & security)</li>
+            <li>$_GET, $_POST, $_REQUEST, and $_SERVER superglobals</li>
+            <li>Self-processing forms: action="&lt;?php echo $_SERVER['PHP_SELF']; ?&gt;"</li>
+            <li>Sticky forms: Retaining user input values upon failed validation</li>
           </ul>
         </div>
 
+        <!-- Topic 81 -->
         <div class="card">
           <div class="card-num">81</div>
-          <h2 class="card-title"><span>PHP</span> 81. Form Handling & Validation</h2>
+          <h2 class="card-title"><span>PHP</span> 81. Secure Form Handling, Sanitization & Validation</h2>
           <ul class="bullet-list">
-            <li>$_POST Form Submission</li>
-            <li>$_GET Query Strings</li>
-            <li>empty() & isset() Checks</li>
-            <li>filter_var() (Email, URL, Int)</li>
-            <li>Sticky Forms (Retaining Values)</li>
+            <li>Defensive programming & Input validation strategies</li>
+            <li>Presence checks: isset() vs empty() vs strlen()</li>
+            <li>XSS Prevention: htmlspecialchars() & htmlentities()</li>
+            <li>filter_var() sanitization & validation (EMAIL, URL, INT)</li>
+            <li>Handling Checkboxes (arrays name[]), Radio buttons & Select dropdowns</li>
+            <li>CSRF (Cross-Site Request Forgery) protection concepts</li>
           </ul>
         </div>
 
+        <!-- Topic 82 -->
         <div class="card">
           <div class="card-num">82</div>
-          <h2 class="card-title"><span>PHP</span> 82. Sessions & Authentication</h2>
+          <h2 class="card-title"><span>PHP</span> 82. Sessions & Authentication (Login State Management)</h2>
           <ul class="bullet-list">
-            <li>session_start()</li>
-            <li>$_SESSION Storage</li>
-            <li>session_regenerate_id()</li>
-            <li>session_unset() & session_destroy()</li>
-            <li>User Login & Protected Pages</li>
+            <li>What is a Session: Server-side state tracking across stateless HTTP</li>
+            <li>PHPSESSID cookie & server session file storage (sess_*)</li>
+            <li>session_start() requirements: Must precede any output or whitespace</li>
+            <li>Storing, reading & modifying session variables ($_SESSION['user'])</li>
+            <li>Session timeout: session.gc_maxlifetime (default 1440s / 24 mins)</li>
+            <li>unset($_SESSION['key']), session_unset(), session_destroy()</li>
+            <li>Building Login/Logout authentication guards & protected dashboards</li>
           </ul>
         </div>
 
+        <!-- Topic 83 -->
         <div class="card">
           <div class="card-num">83</div>
-          <h2 class="card-title"><span>PHP</span> 83. Cookies Management</h2>
+          <h2 class="card-title"><span>PHP</span> 83. Cookies Management (setcookie, Expiration, Reading)</h2>
           <ul class="bullet-list">
-            <li>setcookie()</li>
-            <li>$_COOKIE Access</li>
-            <li>Cookie Expiration & Path</li>
-            <li>Secure & HttpOnly Flags</li>
-            <li>Deleting Cookies</li>
+            <li>What is a Cookie: Client-side files stored by browser (4KB limit, per-domain)</li>
+            <li>setcookie() 6 parameters: name, value, expire, path, domain, secure, httponly</li>
+            <li>setrawcookie() without urlencoding & rawurlencode() handling (STC Cookie Day-1)</li>
+            <li>Session cookies vs Persistent cookies (expiration timestamp)</li>
+            <li>Deleting cookies: Setting expiration to past timestamp (time() - 3600 or 1)</li>
+            <li>Setting cookies via HTTP header('Set-Cookie: ...') & JavaScript document.cookie</li>
+            <li>STC Official Lab Assignment: AJAX-Based Live Email Box System</li>
           </ul>
         </div>
 
+        <!-- Topic 84 -->
         <div class="card">
           <div class="card-num">84</div>
-          <h2 class="card-title"><span>PHP</span> 84. File Uploading</h2>
+          <h2 class="card-title"><span>PHP</span> 84. File Uploading & Verification ($_FILES)</h2>
           <ul class="bullet-list">
-            <li>enctype="multipart/form-data"</li>
-            <li>$_FILES Array Properties</li>
-            <li>move_uploaded_file()</li>
-            <li>Validating File Size & MIME Types</li>
+            <li>HTML form requirements: method="POST" enctype="multipart/form-data"</li>
+            <li>Structure of $_FILES array: name, type, tmp_name, error, size</li>
+            <li>Upload error codes (UPLOAD_ERR_OK, UPLOAD_ERR_INI_SIZE, etc.)</li>
+            <li>Security validations: file size limit, allowed MIME types & extension check</li>
+            <li>Generating unique filenames (uniqid()) to prevent overwriting</li>
+            <li>move_uploaded_file() function & target directory permissions</li>
           </ul>
         </div>
 
+        <!-- Topic 85 -->
         <div class="card">
           <div class="card-num">85</div>
-          <h2 class="card-title"><span>PHP</span> 85. File System (I/O)</h2>
+          <h2 class="card-title"><span>PHP</span> 85. File System Handling: Read, Write, Append</h2>
           <ul class="bullet-list">
-            <li>file_get_contents(), file_put_contents()</li>
-            <li>fopen(), fread(), fwrite(), fclose()</li>
-            <li>file_exists(), is_file(), is_dir()</li>
-            <li>unlink() (delete file), mkdir()</li>
+            <li>File pointer operations with fopen(): Modes ('r', 'w', 'a', 'r+', 'w+', 'a+')</li>
+            <li>Reading files: fread(), fgets() line-by-line, fgetc(), feof(), fclose()</li>
+            <li>Writing & appending: fwrite(), fputs(), fclose()</li>
+            <li>High-level helpers: file_get_contents(), file_put_contents(), readfile()</li>
+            <li>File inspection: file_exists(), is_file(), is_dir(), filesize(), filemtime()</li>
+            <li>Directory management: opendir(), readdir(), closedir(), mkdir(), rmdir(), scandir()</li>
           </ul>
         </div>
 
+        <!-- Topic 86 -->
         <div class="card">
           <div class="card-num">86</div>
-          <h2 class="card-title"><span>PHP</span> 86. Error Handling & Exceptions</h2>
+          <h2 class="card-title"><span>PHP</span> 86. Error Handling & Exceptions (try, catch, finally)</h2>
           <ul class="bullet-list">
-            <li>error_reporting(), ini_set()</li>
-            <li>try, catch, finally Blocks</li>
-            <li>throw new Exception()</li>
-            <li>Custom Exception Classes</li>
+            <li>The 4 Runtime Error Levels: Notices, Warnings, Fatal Errors, Parse Errors (STC)</li>
+            <li>php.ini configuration: display_errors, error_reporting, log_errors, error_log</li>
+            <li>Runtime configuration: error_reporting(E_ALL), ini_set('display_errors', 1)</li>
+            <li>Custom error handlers with set_error_handler() & trigger_error()</li>
+            <li>Object-Oriented Exception handling: try, catch, finally blocks</li>
+            <li>throw new Exception() & building Custom Exception classes</li>
           </ul>
         </div>
 
+        <!-- Topic 87 -->
         <div class="card">
           <div class="card-num">87</div>
-          <h2 class="card-title"><span>PHP</span> 87. OOP Basics (Classes & Objects)</h2>
+          <h2 class="card-title"><span>PHP</span> 87. OOP Fundamentals: Classes, Objects, Constructor & Destructor</h2>
           <ul class="bullet-list">
-            <li>class & new instance</li>
-            <li>Properties & Methods</li>
-            <li>$this keyword</li>
-            <li>__construct() & __destruct()</li>
-            <li>public, private, protected</li>
+            <li>Procedural programming vs Object-Oriented Programming (OOP)</li>
+            <li>Defining Classes and instantiating Objects using new keyword</li>
+            <li>Class Properties (variables) and Methods (functions)</li>
+            <li>The $this pseudo-variable (referencing current object instance)</li>
+            <li>Magic Constructor __construct() for automated initialization</li>
+            <li>Magic Destructor __destruct() for automated cleanup</li>
+            <li>Encapsulation & Access Modifiers: public, private, protected</li>
+            <li>Getters and Setters methods for controlled property access</li>
           </ul>
         </div>
 
+        <!-- Topic 88 -->
         <div class="card">
           <div class="card-num">88</div>
-          <h2 class="card-title"><span>PHP</span> 88. OOP Advanced</h2>
+          <h2 class="card-title"><span>PHP</span> 88. Advanced OOP: Access Modifiers, Inheritance & Method Overriding</h2>
           <ul class="bullet-list">
-            <li>Inheritance (extends)</li>
-            <li>Method Overriding & parent::</li>
-            <li>Interfaces & abstract classes</li>
-            <li>Traits & Namespaces (use)</li>
+            <li>Class Inheritance using extends keyword (Child extends Parent)</li>
+            <li>Method Overriding (specializing parent behavior in child classes)</li>
+            <li>Calling parent methods using parent:: construct</li>
+            <li>Static properties and methods: static keyword & self:: operator</li>
+            <li>Abstract Classes and Abstract Methods (enforcing blueprint implementation)</li>
+            <li>Interfaces: interface & implements keywords for multi-contract polymorphism</li>
           </ul>
         </div>
 
+        <!-- Topic 89 -->
         <div class="card">
           <div class="card-num">89</div>
-          <h2 class="card-title"><span>PHP</span> 89. MySQL Database & PDO</h2>
+          <h2 class="card-title"><span>PHP</span> 89. MySQL Database with PDO (Prepared Statements & CRUD)</h2>
           <ul class="bullet-list">
-            <li>PDO Connection & DSN</li>
-            <li>Prepared Statements (prepare, execute)</li>
-            <li>bindParam() & bindValue()</li>
-            <li>fetchAll(PDO::FETCH_ASSOC)</li>
-            <li>SQL Injection Prevention</li>
-            <li>CRUD Operations</li>
+            <li>Connecting PHP to MySQL: mysqli extension vs PHP Data Objects (PDO)</li>
+            <li>RDBMS, Primary/Foreign Keys, Joins (INNER, LEFT, RIGHT) & Normalization</li>
+            <li>Executing queries, checking connections & error reporting</li>
+            <li>Complete CRUD implementation (Create, Read, Update, Delete)</li>
+            <li>SQL Injection vulnerability demonstration & prevention</li>
+            <li>Prepared Statements: Parameterized queries, placeholders (?), bindParam(), execute()</li>
           </ul>
         </div>
 
+        <!-- Topic 90 -->
         <div class="card">
           <div class="card-num">90</div>
-          <h2 class="card-title"><span>PHP</span> 90. JSON & RESTful APIs</h2>
+          <h2 class="card-title"><span>PHP</span> 90. JSON Handling & Building RESTful APIs</h2>
           <ul class="bullet-list">
             <li>header('Content-Type: application/json')</li>
-            <li>json_encode() & json_decode()</li>
-            <li>http_response_code() (200, 400, 404, 500)</li>
-            <li>file_get_contents('php://input')</li>
-            <li>Building REST Endpoints</li>
+            <li>json_encode() array serialization & json_decode() parsing</li>
+            <li>http_response_code() (200 OK, 400 Bad Request, 404 Not Found, 500 Error)</li>
+            <li>file_get_contents('php://input') for reading raw JSON payloads</li>
+            <li>Building RESTful API endpoints for mobile & frontend apps</li>
+          </ul>
+        </div>
+
+        <!-- Topic 91 -->
+        <div class="card">
+          <div class="card-num">91</div>
+          <h2 class="card-title"><span>PHP</span> 91. AJAX Asynchronous Communication with PHP Backend</h2>
+          <ul class="bullet-list">
+            <li>What is AJAX (Asynchronous JavaScript and XML) & Background communication</li>
+            <li>Purpose of AJAX: Eliminating page reloads & conserving bandwidth</li>
+            <li>Creating XMLHttpRequest & modern JavaScript fetch() API</li>
+            <li>Sending GET/POST requests to PHP backend endpoints</li>
+            <li>Processing JSON responses & dynamic DOM updating</li>
+            <li>Real-world lab: Live search bar & instant username availability check</li>
+          </ul>
+        </div>
+
+        <!-- Topic 92 -->
+        <div class="card">
+          <div class="card-num">92</div>
+          <h2 class="card-title"><span>PHP</span> 92. PDF Reporting in PHP (FPDF Library)</h2>
+          <ul class="bullet-list">
+            <li>Why PDF Reporting: Immutable, saveable, downloadable, printable records</li>
+            <li>Introduction to the FPDF Library (Open-source pure PHP class)</li>
+            <li>Initializing FPDF: AddPage(), SetFont(), Cell(), MultiCell(), Ln()</li>
+            <li>Positioning, margins, borders, alignments & colors</li>
+            <li>Inserting graphics and logos: Image() function with coordinates & dimensions</li>
+            <li>Custom Header() and Footer() methods with dynamic page numbering</li>
+            <li>Generating dynamic printable PDF vouchers/marksheets from MySQL database</li>
+          </ul>
+        </div>
+
+        <!-- Topic 93 -->
+        <div class="card">
+          <div class="card-num">93</div>
+          <h2 class="card-title"><span>PHP</span> 93. Sending Email & PHP Built-in Modules (GD Library & CAPTCHA)</h2>
+          <ul class="bullet-list">
+            <li>The PHP mail() function syntax & parameters (to, subject, message, headers)</li>
+            <li>Configuring SMTP and sendmail in php.ini for local XAMPP / live servers</li>
+            <li>Formatting plain text emails vs Rich HTML emails with MIME headers</li>
+            <li>Adding custom From, Reply-To, Cc, and Bcc headers</li>
+            <li>PHP Extensions & Modules: The GD Library for dynamic image generation</li>
+            <li>Creating dynamic CAPTCHA images with PHP GD to secure forms</li>
+          </ul>
+        </div>
+
+        <!-- Topic 94 -->
+        <div class="card">
+          <div class="card-num">94</div>
+          <h2 class="card-title"><span>PHP</span> 94. Remote Web Hosting, cPanel & Production Deployment</h2>
+          <ul class="bullet-list">
+            <li>Web Hosting fundamentals: Shared, VPS, Dedicated & Cloud Hosting</li>
+            <li>Domain names, Domain Registration, DNS records & Nameservers</li>
+            <li>cPanel (Control Panel) navigation, File Manager & Directory structure</li>
+            <li>File Transfer Protocol (FTP): Connecting via FileZilla & transferring PHP files</li>
+            <li>Remote Database Setup: Creating MySQL database, user & privileges in cPanel</li>
+            <li>Exporting local database via phpMyAdmin and importing into remote host</li>
+            <li>Configuring live production database connection strings & securing credentials</li>
+          </ul>
+        </div>
+
+        <!-- Topic 95 -->
+        <div class="card">
+          <div class="card-num">95</div>
+          <h2 class="card-title"><span>PHP</span> 95. Online Blogging Application (SRS Specification & System Architecture)</h2>
+          <ul class="bullet-list">
+            <li>STC Official Capstone Final Project SRS Document Breakdown</li>
+            <li>System Architecture: Responsive UI (Bootstrap), PHP 8 OOP, MySQL RDBMS</li>
+            <li>3-Tier User Roles: Public Visitor, Author Dashboard, Master Admin Portal</li>
+            <li>Normalized 4-Table Database Design (users, categories, posts, comments)</li>
+            <li>Featured image uploads, AJAX comment moderation & real-time search</li>
+            <li>Exporting monthly performance analytics as PDF reports (FPDF)</li>
           </ul>
         </div>
 
@@ -1760,6 +1887,24 @@
           <div class="project-icon">🗄️</div>
           <h3 class="project-name">MySQL PDO Store Management</h3>
           <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Full relational database CRUD, PDO prepared statements, transactions, and search queries.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(129,140,248,0.3); background: rgba(99, 102, 241, 0.05);">
+          <span class="project-badge" style="background: rgba(99,102,241,0.2); color: #a5b4fc;">PHP 7 • CAPSTONE</span>
+          <div class="project-icon">📰</div>
+          <h3 class="project-name">Online Blogging Application (SRS)</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">STC official final project SRS: User authentication, roles, post CRUD, categories, AJAX comments & admin dashboard.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(129,140,248,0.3); background: rgba(99, 102, 241, 0.05);">
+          <span class="project-badge" style="background: rgba(99,102,241,0.2); color: #a5b4fc;">PHP 8 • LAB</span>
+          <div class="project-icon">📬</div>
+          <h3 class="project-name">AJAX Live Email Box System</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">STC Cookies & AJAX assignment: Persistent cookie auth, dynamic compose, inbox, sent, drafts & trash without page reloads.</p>
+        </div>
+        <div class="project-card" style="border-color: rgba(129,140,248,0.3); background: rgba(99, 102, 241, 0.05);">
+          <span class="project-badge" style="background: rgba(99,102,241,0.2); color: #a5b4fc;">PHP 9 • REPORTING</span>
+          <div class="project-icon">📄</div>
+          <h3 class="project-name">Dynamic FPDF Report Engine</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">STC PDF Reporting module: Custom headers/footers, logo watermarks, and auto-generated printable invoices/marksheets.</p>
         </div>
       </div>
     </div>

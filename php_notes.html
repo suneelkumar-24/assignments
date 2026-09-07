@@ -1382,8 +1382,8 @@
           <input type="text" id="sidebarSearchInput" placeholder="Filter topics in TOC..." oninput="filterSidebarTopics(this.value)">
         </div>
         <div class="sidebar-tabs">
-          <button class="sb-tab active" onclick="switchSidebarCategory('all', this)">All (34)</button>
-          <button class="sb-tab" onclick="switchSidebarCategory('topics', this)">📘 Topics (24)</button>
+          <button class="sb-tab active" onclick="switchSidebarCategory('all', this)">All (39)</button>
+          <button class="sb-tab" onclick="switchSidebarCategory('topics', this)">📘 Topics (29)</button>
           <button class="sb-tab" onclick="switchSidebarCategory('projects', this)">🚀 Projects (10)</button>
         </div>
       </div>
@@ -1438,9 +1438,14 @@
 
         <!-- Unit 6 -->
         <div class="sidebar-unit-group">
-          <div class="sidebar-unit-title">Unit 06 • Database & APIs</div>
+          <div class="sidebar-unit-title">Unit 06 • Database, APIs & Deployment</div>
           <a href="#topic89" class="sidebar-item"><span class="sidebar-num">89</span> MySQL PDO Database (CRUD)</a>
           <a href="#topic90" class="sidebar-item"><span class="sidebar-num">90</span> JSON & RESTful APIs</a>
+          <a href="#topic91" class="sidebar-item"><span class="sidebar-num">91</span> AJAX Asynchronous PHP</a>
+          <a href="#topic92" class="sidebar-item"><span class="sidebar-num">92</span> PDF Reporting (FPDF)</a>
+          <a href="#topic93" class="sidebar-item"><span class="sidebar-num">93</span> Email & GD CAPTCHA</a>
+          <a href="#topic94" class="sidebar-item"><span class="sidebar-num">94</span> Web Hosting & Deployment</a>
+          <a href="#topic95" class="sidebar-item" style="color: #10b981; font-weight: 700;"><span class="sidebar-num" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">95</span> Blog System (STC SRS)</a>
         </div>
 
         <!-- Unit 7: Real-World Full-Stack Management Systems -->
@@ -1577,6 +1582,18 @@
         </div>
       </div>
     </article>
+
+    
+      <div class="section-label" style="margin-top: 20px;">Development Environment &amp; The Bug Lifecycle (From STC IDE Lecture)</div>
+      <p style="font-size: 0.92rem; margin-bottom: 10px;">
+        To write and debug professional PHP, developers use an Integrated Development Environment (IDE) like VS Code or PhpStorm rather than plain text editors (Notepad). The STC curriculum defines the formal defect lifecycle:
+      </p>
+      <ul class="concept-points">
+        <li><strong>Text Editor vs IDE:</strong> Text editors edit plain text; an IDE provides an integrated suite with syntax highlighting, IntelliSense auto-completion, terminal CLI, and step-by-step debuggers (Xdebug).</li>
+        <li><strong>Error:</strong> A mistake made by a programmer/developer during coding syntax or logic.</li>
+        <li><strong>Defect:</strong> When the testing team executes the software and finds any variance between expected and actual output, the error becomes a <em>Defect</em>.</li>
+        <li><strong>Bug:</strong> When the development team formally acknowledges and accepts the defect for fixing, it is officially classified as a <em>Bug</em>. (Origin: First computer bug found by Grace Hopper in 1947 inside Harvard Mark II).</li>
+      </ul>
 
     <!-- Topic 68 -->
     <article class="topic-card" id="topic68">
@@ -2013,6 +2030,25 @@
       </div>
     </article>
 
+    
+      <div class="section-label" style="margin-top: 20px;">The goto Statement &amp; Jump Labels (STC Looping &amp; Branching Day-5)</div>
+      <p style="font-size: 0.92rem; margin-bottom: 10px;">
+        The <code>goto</code> operator jumps execution unconditionally to another labeled section in the PHP script. The target point is specified by a label name followed by a colon (e.g. <code>my_label:</code>).
+      </p>
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>example_goto.php</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>&lt;?php
+<span class="kw">goto</span> target_destination;
+<span class="kw">echo</span> <span class="str">"This line is completely skipped."</span>;
+
+target_destination:
+<span class="kw">echo</span> <span class="str">"Execution jumped directly to target_destination label!"</span>;
+?&gt;</code></pre>
+      </div>
+
     <!-- ==================== UNIT 3 ==================== -->
     <div class="unit-banner">
       <div>
@@ -2168,6 +2204,31 @@
       </div>
     </article>
 
+    
+      <div class="section-label" style="margin-top: 20px;">Advanced Array Functions (From STC Arrays Day-2)</div>
+      <ul class="concept-points">
+        <li><code>range(start, end, step)</code>: Generates an array containing a sequence of numbers or letters (e.g., <code>range(1, 10, 2)</code> or <code>range('A', 'Z')</code>).</li>
+        <li><code>list($a, $b, $c) = $arr</code>: Assigns variables as if they were an array, retrieving multiple values at once into separate variables.</li>
+        <li><code>array_slice($arr, offset, length)</code>: Extracts a slice/subset of an array without modifying the original array.</li>
+        <li><code>array_splice(&amp;$arr, offset, length, $replacement)</code>: Removes a portion of an array and replaces it with other elements in-place.</li>
+        <li><code>array_walk(&amp;$arr, callback)</code>: Applies a user-defined callback function to every element of an array.</li>
+      </ul>
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>stc_arrays_day2.php</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>&lt;?php
+<span class="cmt">// 1. range()</span>
+<span class="var">$years</span> = <span class="fn">range</span>(<span class="fn">2020</span>, <span class="fn">2026</span>); <span class="cmt">// [2020, 2021, 2022, 2023, 2024, 2025, 2026]</span>
+
+<span class="cmt">// 2. list()</span>
+<span class="var">$colors</span> = [<span class="str">"Red"</span>, <span class="str">"Green"</span>, <span class="str">"Indigo"</span>];
+<span class="fn">list</span>(<span class="var">$firstColor</span>, <span class="var">$secondColor</span>) = <span class="var">$colors</span>;
+<span class="kw">echo</span> <span class="str">"Selected: $firstColor and $secondColor"</span>; <span class="cmt">// Output: Selected: Red and Green</span>
+?&gt;</code></pre>
+      </div>
+
     <!-- Topic 78 -->
     <article class="topic-card" id="topic78">
       <div class="topic-header">
@@ -2219,6 +2280,26 @@
         First Tag: html
       </div>
     </article>
+
+    
+      <div class="section-label" style="margin-top: 20px;">Binary Encoding &amp; UUEncode (STC String &amp; Security Lecture)</div>
+      <p style="font-size: 0.92rem; margin-bottom: 10px;">
+        <code>convert_uuencode()</code> translates arbitrary data (including binary data or special characters) into printable ASCII text, preventing corruption during transmission over 7-bit channels. <code>convert_uudecode()</code> restores the original string.
+      </p>
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>uuencode_demo.php</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>&lt;?php
+<span class="var">$data</span> = <span class="str">"Super Sys-Tech Computers Centre Umerkot"</span>;
+<span class="var">$encoded</span> = <span class="fn">convert_uuencode</span>(<span class="var">$data</span>);
+<span class="var">$decoded</span> = <span class="fn">convert_uudecode</span>(<span class="var">$encoded</span>);
+
+<span class="kw">echo</span> <span class="str">"Encoded: "</span> . <span class="var">$encoded</span> . <span class="str">"&lt;br&gt;"</span>;
+<span class="kw">echo</span> <span class="str">"Decoded: "</span> . <span class="var">$decoded</span>;
+?&gt;</code></pre>
+      </div>
 
     <!-- Topic 79 -->
     <article class="topic-card" id="topic79">
@@ -2430,6 +2511,37 @@
       </div>
     </article>
 
+    
+      <div class="section-label" style="margin-top: 20px;">Advanced Cookie Techniques (From STC Cookies Day-1 &amp; Day-2)</div>
+      <ul class="concept-points">
+        <li><strong>setrawcookie():</strong> Exactly like <code>setcookie()</code> except the cookie value will NOT be automatically URL-encoded when sent to the browser. Values with spaces or special characters should be manually encoded with <code>rawurlencode()</code>.</li>
+        <li><strong>Header Set-Cookie:</strong> Cookies are fundamentally HTTP headers! You can issue a cookie directly using <code>header("Set-Cookie: user=Mukesh; expires=Sat, 17-Aug-2026 12:00:00 GMT; path=/");</code>.</li>
+        <li><strong>JavaScript Cookie Access:</strong> Client-side JavaScript can create and read cookies via <code>document.cookie = "username=Mukesh; expires=...";</code> unless the cookie was marked with the <code>HttpOnly</code> security flag!</li>
+      </ul>
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>stc_cookies_methods.php</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>&lt;?php
+<span class="cmt">// Method 1: setrawcookie with rawurlencode</span>
+<span class="fn">setrawcookie</span>(<span class="str">'student_city'</span>, <span class="fn">rawurlencode</span>(<span class="str">'Umerkot Sindh'</span>), <span class="fn">time</span>() + <span class="fn">3600</span>, <span class="str">'/'</span>);
+
+<span class="cmt">// Method 2: header Set-Cookie</span>
+<span class="fn">header</span>(<span class="str">'Set-Cookie: center_code=STC-99; max-age=86400; path=/; samesite=lax'</span>);
+
+<span class="kw">echo</span> <span class="str">"Both advanced cookies registered successfully!"</span>;
+?&gt;</code></pre>
+      </div>
+
+      <div class="pro-tip" style="margin-top: 15px; border-left-color: #f59e0b;">
+        <span class="pro-tip-icon">📬</span>
+        <div>
+          <strong>STC Official Lab Assignment: AJAX Email Box System</strong><br>
+          <em>"Make an Email Box System using AJAX with user login (use persistent cookies for 'Remember Me'). The dashboard should feature Compose Email, Inbox, Drafts, Sent, and Trash with real-time MySQL database storage."</em>
+        </div>
+      </div>
+
     <!-- Topic 84 -->
     <article class="topic-card" id="topic84">
       <div class="topic-header">
@@ -2562,6 +2674,31 @@
 ?&gt;</code></pre>
       </div>
     </article>
+
+    
+      <div class="section-label" style="margin-top: 20px;">The 4 PHP Runtime Error Levels (From STC Error Reporting Lecture)</div>
+      <ul class="concept-points">
+        <li><strong>1. Notices (E_NOTICE):</strong> Minor non-critical occurrences (e.g. using an uninitialized variable). Script execution continues normally.</li>
+        <li><strong>2. Warnings (E_WARNING):</strong> Serious errors (e.g. <code>include('missing_file.php')</code>), but the script will NOT halt; execution proceeds.</li>
+        <li><strong>3. Fatal Errors (E_ERROR):</strong> Critical issues (e.g. calling an undefined function <code>foo()</code> or instantiating a non-existent class). PHP terminates immediately!</li>
+        <li><strong>4. Parse Errors (E_PARSE):</strong> Syntax compilation errors (e.g. missing semicolon or mismatched braces). The script cannot even compile or begin execution.</li>
+      </ul>
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>error_config.php</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>&lt;?php
+<span class="cmt">// In Development: Report everything</span>
+<span class="fn">error_reporting</span>(E_ALL);
+<span class="fn">ini_set</span>(<span class="str">'display_errors'</span>, <span class="fn">1</span>);
+
+<span class="cmt">// In Production: Hide on screen, log to secure file</span>
+<span class="fn">ini_set</span>(<span class="str">'display_errors'</span>, <span class="fn">0</span>);
+<span class="fn">ini_set</span>(<span class="str">'log_errors'</span>, <span class="fn">1</span>);
+<span class="fn">ini_set</span>(<span class="str">'error_log'</span>, <span class="fn">__DIR__</span> . <span class="str">'/server_errors.log'</span>);
+?&gt;</code></pre>
+      </div>
 
     <!-- Topic 87 -->
     <article class="topic-card" id="topic87">
@@ -2839,6 +2976,539 @@
         <div>
           <strong>Mukesh Sir's Pro Tip:</strong>
           Use <code>json_encode($data)</code> to convert a PHP array into a JSON string. Use <code>json_decode($json, true)</code> with the second argument set to <code>true</code> to convert incoming JSON payloads back into an associative PHP array!
+        </div>
+      </div>
+    </article>
+
+    
+    <!-- Topic 91 -->
+    <article class="topic-card" id="topic91">
+      <div class="topic-header">
+        <div class="topic-title-group">
+          <span class="topic-badge">Topic 91</span>
+          <h2 class="topic-name">AJAX Asynchronous Communication with PHP Backend</h2>
+        </div>
+        <span class="topic-level">Advanced</span>
+      </div>
+      <p class="topic-desc">
+        <strong>AJAX</strong> (<em>Asynchronous JavaScript and XML</em>) is a web development technique that allows web pages to send and receive data from the server asynchronously in the background. Instead of submitting a form and reloading the entire page, AJAX transmits small HTTP requests to a PHP script, which processes data, interacts with MySQL, and sends back lightweight JSON. The JavaScript on the page then immediately updates the DOM without any page flicker or reload.
+      </p>
+
+      <div class="section-label">Key Concepts & Advantages (From STC AJAX Lecture)</div>
+      <ul class="concept-points">
+        <li><strong>Prevents Unnecessary Reloading:</strong> Eliminates painful full-page redraws, saving user time and drastically reducing server bandwidth consumption.</li>
+        <li><strong>Client Engine:</strong> Modern browsers use <code>fetch()</code> or <code>XMLHttpRequest</code> to communicate with backend PHP endpoints.</li>
+        <li><strong>Server Response:</strong> The PHP script outputs structured JSON using <code>header('Content-Type: application/json')</code> and <code>json_encode($data)</code>.</li>
+        <li><strong>Real-World Use Cases:</strong> Real-time username / email availability checks during registration, live search bars, instant comment posting, and dynamic dropdown menus.</li>
+      </ul>
+
+      <div class="section-label">Practical Code Example: Real-Time Username Availability Checker</div>
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>check_user.php (PHP Server Endpoint)</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code><span class="cmt">&lt;?php</span>
+<span class="cmt">// Set header to JSON response</span>
+<span class="fn">header</span>(<span class="str">'Content-Type: application/json'</span>);
+
+<span class="cmt">// Simulated registered database usernames</span>
+<span class="var">$taken_users</span> = [<span class="str">'mukesh'</span>, <span class="str">'admin'</span>, <span class="str">'hayee'</span>, <span class="str">'ali'</span>, <span class="str">'aslam'</span>];
+
+<span class="var">$username</span> = <span class="fn">trim</span>(<span class="var">$_GET</span>[<span class="str">'username'</span>] ?? <span class="str">''</span>);
+
+<span class="kw">if</span> (<span class="fn">empty</span>(<span class="var">$username</span>)) {
+    <span class="kw">echo</span> <span class="fn">json_encode</span>([<span class="str">'status'</span> =&gt; <span class="str">'error'</span>, <span class="str">'message'</span> =&gt; <span class="str">'Username required'</span>]);
+    <span class="kw">exit</span>;
+}
+
+<span class="kw">if</span> (<span class="fn">in_array</span>(<span class="fn">strtolower</span>(<span class="var">$username</span>), <span class="var">$taken_users</span>)) {
+    <span class="kw">echo</span> <span class="fn">json_encode</span>([<span class="str">'available'</span> =&gt; <span class="kw">false</span>, <span class="str">'message'</span> =&gt; <span class="str">'❌ Username is already taken!'</span>]);
+} <span class="kw">else</span> {
+    <span class="kw">echo</span> <span class="fn">json_encode</span>([<span class="str">'available'</span> =&gt; <span class="kw">true</span>, <span class="str">'message'</span> =&gt; <span class="str">'✅ Username is available!'</span>]);
+}
+<span class="cmt">?&gt;</span></code></pre>
+      </div>
+
+      <div class="code-wrapper" style="margin-top: 15px;">
+        <div class="code-top">
+          <span>frontend_ajax.html (Client Fetch Integration)</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code><span class="cmt">&lt;!-- Frontend HTML &amp; JS --&gt;</span>
+&lt;input type="text" id="username" placeholder="Enter username..." onkeyup="checkUsername(this.value)"&gt;
+&lt;span id="status"&gt;&lt;/span&gt;
+
+&lt;script&gt;
+function checkUsername(val) {
+    if (val.length &lt; 3) {
+        document.getElementById('status').innerHTML = '';
+        return;
+    }
+    fetch('check_user.php?username=' + encodeURIComponent(val))
+        .then(response =&gt; response.json())
+        .then(data =&gt; {
+            const statusEl = document.getElementById('status');
+            statusEl.innerText = data.message;
+            statusEl.style.color = data.available ? '#10b981' : '#ef4444';
+        });
+}
+&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="output-box">
+        <strong>Simulated AJAX Live Output:</strong>
+        <p>User types <code>mukesh</code> ➔ <span style="color: #ef4444; font-weight: 700;">❌ Username is already taken!</span></p>
+        <p>User types <code>mukesh_kumar</code> ➔ <span style="color: #10b981; font-weight: 700;">✅ Username is available!</span></p>
+      </div>
+
+      <div class="pro-tip">
+        <span class="pro-tip-icon">💡</span>
+        <div>
+          <strong>STC Pro Tip:</strong>
+          When building AJAX endpoints in PHP, never output raw HTML or print extra whitespace before or after <code>&lt;?php ?&gt;</code>. Any unexpected whitespace corrupts the JSON response and causes JavaScript's <code>response.json()</code> parser to fail!
+        </div>
+      </div>
+    </article>
+
+    <!-- Topic 92 -->
+    <article class="topic-card" id="topic92">
+      <div class="topic-header">
+        <div class="topic-title-group">
+          <span class="topic-badge">Topic 92</span>
+          <h2 class="topic-name">PDF Reporting in PHP (FPDF Library)</h2>
+        </div>
+        <span class="topic-level">Advanced</span>
+      </div>
+      <p class="topic-desc">
+        In real-world business applications (e.g. ERPs, billing systems, student management portals), clients require official, printable, and saveable documents such as Fee Vouchers, Salary Slips, Invoices, and Marks Sheets. <strong>FPDF</strong> is a free, pure PHP class that generates high-quality PDF files directly on the server without requiring any external PDF extensions.
+      </p>
+
+      <div class="section-label">Why PDF Reporting? (STC Lecture Core Points)</div>
+      <ul class="concept-points">
+        <li><strong>Immutable Layout:</strong> HTML web pages look different on different screens and printers; PDFs preserve exact coordinates, fonts, and print margins everywhere.</li>
+        <li><strong>Saveable & Secure:</strong> Can be saved locally, emailed as attachments, and protected with digital passwords and permissions.</li>
+        <li><strong>Core FPDF Methods:</strong>
+          <ul style="margin-left: 20px; margin-top: 6px;">
+            <li><code>AddPage([orientation, size])</code>: Creates a new page ('P' for Portrait, 'L' for Landscape).</li>
+            <li><code>SetFont(family, style, size)</code>: Configures typeface (e.g., 'Arial', 'B' for Bold, 14pt).</li>
+            <li><code>Cell(w, h, txt, border, ln, align, fill)</code>: Prints a rectangular cell with text.</li>
+            <li><code>MultiCell(w, h, txt, border, align, fill)</code>: Prints multiline text with automated word-wrapping.</li>
+            <li><code>Image(file, x, y, w, h)</code>: Embeds institutional logos, watermarks, or signatures.</li>
+            <li><code>Ln([h])</code>: Inserts a line break.</li>
+            <li><code>Output([dest, name])</code>: Sends PDF to browser ('I' for inline view, 'D' for forced download).</li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="section-label">Practical Code Example: Super Sys-Tech Fee Voucher Generator</div>
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>generate_voucher.php (FPDF Report Engine)</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code><span class="cmt">&lt;?php</span>
+<span class="kw">require</span>(<span class="str">'fpdf/fpdf.php'</span>);
+
+<span class="kw">class</span> <span class="fn">VoucherPDF</span> <span class="kw">extends</span> <span class="fn">FPDF</span> {
+    <span class="cmt">// Page Header</span>
+    <span class="kw">function</span> <span class="fn">Header</span>() {
+        <span class="var">$this</span>-&gt;<span class="fn">SetFont</span>(<span class="str">'Arial'</span>, <span class="str">'B'</span>, <span class="fn">16</span>);
+        <span class="var">$this</span>-&gt;<span class="fn">SetTextColor</span>(<span class="fn">30</span>, <span class="fn">27</span>, <span class="fn">75</span>);
+        <span class="var">$this</span>-&gt;<span class="fn">Cell</span>(<span class="fn">0</span>, <span class="fn">10</span>, <span class="str">'SUPER SYS-TECH COMPUTERS CENTRE UMERKOT'</span>, <span class="fn">0</span>, <span class="fn">1</span>, <span class="str">'C'</span>);
+        <span class="var">$this</span>-&gt;<span class="fn">SetFont</span>(<span class="str">'Arial'</span>, <span class="str">'I'</span>, <span class="fn">10</span>);
+        <span class="var">$this</span>-&gt;<span class="fn">Cell</span>(<span class="fn">0</span>, <span class="fn">6</span>, <span class="str">'Official Student Course Fee Receipt &amp; Marksheet'</span>, <span class="fn">0</span>, <span class="fn">1</span>, <span class="str">'C'</span>);
+        <span class="var">$this</span>-&gt;<span class="fn">Ln</span>(<span class="fn">5</span>);
+    }
+
+    <span class="cmt">// Page Footer</span>
+    <span class="kw">function</span> <span class="fn">Footer</span>() {
+        <span class="var">$this</span>-&gt;<span class="fn">SetY</span>(-<span class="fn">15</span>);
+        <span class="var">$this</span>-&gt;<span class="fn">SetFont</span>(<span class="str">'Arial'</span>, <span class="str">'I'</span>, <span class="fn">8</span>);
+        <span class="var">$this</span>-&gt;<span class="fn">Cell</span>(<span class="fn">0</span>, <span class="fn">10</span>, <span class="str">'Page '</span> . <span class="var">$this</span>-&gt;<span class="fn">PageNo</span>() . <span class="str">' | Verified by Mukesh Kumar (Director STC)'</span>, <span class="fn">0</span>, <span class="fn">0</span>, <span class="str">'C'</span>);
+    }
+}
+
+<span class="cmt">// Instantiate and build report</span>
+<span class="var">$pdf</span> = <span class="kw">new</span> <span class="fn">VoucherPDF</span>();
+<span class="var">$pdf</span>-&gt;<span class="fn">AddPage</span>();
+<span class="var">$pdf</span>-&gt;<span class="fn">SetFont</span>(<span class="str">'Arial'</span>, <span class="str">''</span>, <span class="fn">11</span>);
+
+<span class="cmt">// Student Details Box</span>
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">100</span>, <span class="fn">8</span>, <span class="str">'Student Name: Mukesh Kumar'</span>, <span class="fn">1</span>, <span class="fn">0</span>, <span class="str">'L'</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">90</span>, <span class="fn">8</span>, <span class="str">'Roll No: STC-2026-089'</span>, <span class="fn">1</span>, <span class="fn">1</span>, <span class="str">'L'</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">100</span>, <span class="fn">8</span>, <span class="str">'Course: Full-Stack PHP &amp; MySQL Track'</span>, <span class="fn">1</span>, <span class="fn">0</span>, <span class="str">'L'</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">90</span>, <span class="fn">8</span>, <span class="str">'Date: '</span> . <span class="fn">date</span>(<span class="str">'d-M-Y'</span>), <span class="fn">1</span>, <span class="fn">1</span>, <span class="str">'L'</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Ln</span>(<span class="fn">6</span>);
+
+<span class="cmt">// Table Header</span>
+<span class="var">$pdf</span>-&gt;<span class="fn">SetFillColor</span>(<span class="fn">99</span>, <span class="fn">102</span>, <span class="fn">241</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">SetTextColor</span>(<span class="fn">255</span>, <span class="fn">255</span>, <span class="fn">255</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">SetFont</span>(<span class="str">'Arial'</span>, <span class="str">'B'</span>, <span class="fn">11</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">20</span>, <span class="fn">9</span>, <span class="str">'Sr #'</span>, <span class="fn">1</span>, <span class="fn">0</span>, <span class="str">'C'</span>, <span class="kw">true</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">120</span>, <span class="fn">9</span>, <span class="str">'Module / Fee Description'</span>, <span class="fn">1</span>, <span class="fn">0</span>, <span class="str">'L'</span>, <span class="kw">true</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">50</span>, <span class="fn">9</span>, <span class="str">'Amount (PKR)'</span>, <span class="fn">1</span>, <span class="fn">1</span>, <span class="str">'R'</span>, <span class="kw">true</span>);
+
+<span class="cmt">// Table Rows</span>
+<span class="var">$pdf</span>-&gt;<span class="fn">SetTextColor</span>(<span class="fn">0</span>, <span class="fn">0</span>, <span class="fn">0</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">SetFont</span>(<span class="str">'Arial'</span>, <span class="str">''</span>, <span class="fn">10</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">20</span>, <span class="fn">8</span>, <span class="str">'1'</span>, <span class="fn">1</span>, <span class="fn">0</span>, <span class="str">'C'</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">120</span>, <span class="fn">8</span>, <span class="str">'PHP Core &amp; Modern Syntax Mastery'</span>, <span class="fn">1</span>, <span class="fn">0</span>, <span class="str">'L'</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">50</span>, <span class="fn">8</span>, <span class="str">'3,000 /-'</span>, <span class="fn">1</span>, <span class="fn">1</span>, <span class="str">'R'</span>);
+
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">20</span>, <span class="fn">8</span>, <span class="str">'2'</span>, <span class="fn">1</span>, <span class="fn">0</span>, <span class="str">'C'</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">120</span>, <span class="fn">8</span>, <span class="str">'MySQL Database &amp; PDO Prepared Statements'</span>, <span class="fn">1</span>, <span class="fn">0</span>, <span class="str">'L'</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">50</span>, <span class="fn">8</span>, <span class="str">'3,500 /-'</span>, <span class="fn">1</span>, <span class="fn">1</span>, <span class="str">'R'</span>);
+
+<span class="cmt">// Total Row</span>
+<span class="var">$pdf</span>-&gt;<span class="fn">SetFont</span>(<span class="str">'Arial'</span>, <span class="str">'B'</span>, <span class="fn">11</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">140</span>, <span class="fn">9</span>, <span class="str">'Total Paid:'</span>, <span class="fn">1</span>, <span class="fn">0</span>, <span class="str">'R'</span>);
+<span class="var">$pdf</span>-&gt;<span class="fn">Cell</span>(<span class="fn">50</span>, <span class="fn">9</span>, <span class="str">'PKR 6,500 /-'</span>, <span class="fn">1</span>, <span class="fn">1</span>, <span class="str">'R'</span>);
+
+<span class="cmt">// Output to browser for display</span>
+<span class="var">$pdf</span>-&gt;<span class="fn">Output</span>(<span class="str">'I'</span>, <span class="str">'Fee_Voucher_STC.pdf'</span>);
+<span class="cmt">?&gt;</span></code></pre>
+      </div>
+
+      <div class="output-box">
+        <strong>Expected Browser Action:</strong>
+        <p>A pristine, vector-rendered, printable PDF file opens directly in the browser's PDF reader viewer, styled with centered headers, a data table with blue accents, and an automated page number footer.</p>
+      </div>
+
+      <div class="pro-tip">
+        <span class="pro-tip-icon">💡</span>
+        <div>
+          <strong>STC Pro Tip:</strong>
+          FPDF expects dimensions in millimeters by default. The standard A4 width is 210mm. If your left and right margins are 10mm each, your printable width is exactly <code>190mm</code>. Make sure the sum of your cell widths never exceeds 190mm to avoid awkward horizontal clipping!
+        </div>
+      </div>
+    </article>
+
+    <!-- Topic 93 -->
+    <article class="topic-card" id="topic93">
+      <div class="topic-header">
+        <div class="topic-title-group">
+          <span class="topic-badge">Topic 93</span>
+          <h2 class="topic-name">Sending Email & PHP Built-in Modules (GD Library & CAPTCHA)</h2>
+        </div>
+        <span class="topic-level">Advanced</span>
+      </div>
+      <p class="topic-desc">
+        Server-side applications frequently need to send automated emails (e.g. account verification, password resets, order receipts) and process media dynamically. PHP comes with the native <code>mail()</code> function and powerful extensions like the <strong>GD Library</strong> for dynamic image rendering and CAPTCHA security verification.
+      </p>
+
+      <div class="section-label">1. Sending Email in PHP: mail() Function Syntax</div>
+      <p style="font-size: 0.92rem; margin-bottom: 10px;">
+        Syntax: <code>mail(string $to, string $subject, string $message [, string $additional_headers])</code>
+      </p>
+      <ul class="concept-points">
+        <li><strong>To:</strong> Receiver email address (or comma-separated list).</li>
+        <li><strong>Subject:</strong> Subject line of the email.</li>
+        <li><strong>Message:</strong> The email body. Can be plain text or HTML formatted.</li>
+        <li><strong>Headers:</strong> Crucial for setting <code>From:</code>, <code>Cc:</code>, <code>Bcc:</code>, and MIME types: <code>Content-Type: text/html; charset=UTF-8</code>.</li>
+      </ul>
+
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>send_html_email.php</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code><span class="cmt">&lt;?php</span>
+<span class="var">$to</span> = <span class="str">"student@example.com"</span>;
+<span class="var">$subject</span> = <span class="str">"Welcome to Super Sys-Tech Computers Centre"</span>;
+
+<span class="var">$message</span> = <span class="str">'
+&lt;html&gt;
+&lt;body style="font-family: Arial, sans-serif; background-color: #f4f4f5; padding: 20px;"&gt;
+    &lt;div style="background: #ffffff; padding: 25px; border-radius: 10px; border-top: 5px solid #6366f1;"&gt;
+        &lt;h2 style="color: #1e1b4b;"&gt;Congratulations on Enrolling!&lt;/h2&gt;
+        &lt;p&gt;Dear Student, your enrollment in the Full-Stack Web Development track is confirmed.&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Instructor:&lt;/strong&gt; Mukesh Kumar&lt;br&gt;&lt;strong&gt;Location:&lt;/strong&gt; Umerkot&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;'</span>;
+
+<span class="cmt">// Headers for HTML mail</span>
+<span class="var">$headers</span>  = <span class="str">"MIME-Version: 1.0
+
+"</span>;
+<span class="var">$headers</span> .= <span class="str">"Content-type: text/html; charset=UTF-8
+
+"</span>;
+<span class="var">$headers</span> .= <span class="str">"From: Super Sys-Tech &lt;noreply@supersystech.edu.pk&gt;
+
+"</span>;
+<span class="var">$headers</span> .= <span class="str">"Reply-To: info@supersystech.edu.pk
+
+"</span>;
+
+<span class="kw">if</span> (<span class="fn">mail</span>(<span class="var">$to</span>, <span class="var">$subject</span>, <span class="var">$message</span>, <span class="var">$headers</span>)) {
+    <span class="kw">echo</span> <span class="str">"Email dispatched successfully!"</span>;
+} <span class="kw">else</span> {
+    <span class="kw">echo</span> <span class="str">"Failed to send email. Check SMTP configuration in php.ini."</span>;
+}
+<span class="cmt">?&gt;</span></code></pre>
+      </div>
+
+      <div class="section-label" style="margin-top: 25px;">2. Dynamic CAPTCHA Image Generation with GD Library</div>
+      <p style="font-size: 0.92rem; margin-bottom: 10px;">
+        The <strong>GD Library</strong> allows PHP to create images, draw shapes, render fonts, and output JPG/PNG data directly. A classic STC security exercise is creating a dynamic CAPTCHA:
+      </p>
+
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>captcha.php (GD Image Engine)</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code><span class="cmt">&lt;?php</span>
+<span class="fn">session_start</span>();
+<span class="cmt">// Generate random 6-character string</span>
+<span class="var">$captcha_code</span> = <span class="fn">substr</span>(<span class="fn">str_shuffle</span>(<span class="str">"23456789ABCDEFGHJKLMNPQRSTUVWXYZ"</span>), <span class="fn">0</span>, <span class="fn">6</span>);
+<span class="var">$_SESSION</span>[<span class="str">'captcha'</span>] = <span class="var">$captcha_code</span>;
+
+<span class="cmt">// Create a 130x40 canvas image</span>
+<span class="var">$img</span> = <span class="fn">imagecreatetruecolor</span>(<span class="fn">130</span>, <span class="fn">40</span>);
+<span class="var">$bg_color</span> = <span class="fn">imagecolorallocate</span>(<span class="var">$img</span>, <span class="fn">238</span>, <span class="fn">242</span>, <span class="fn">255</span>); <span class="cmt">// Light indigo</span>
+<span class="var">$text_color</span> = <span class="fn">imagecolorallocate</span>(<span class="var">$img</span>, <span class="fn">79</span>, <span class="fn">70</span>, <span class="fn">229</span>);  <span class="cmt">// Deep indigo</span>
+<span class="var">$noise_color</span> = <span class="fn">imagecolorallocate</span>(<span class="var">$img</span>, <span class="fn">199</span>, <span class="fn">210</span>, <span class="fn">254</span>);
+
+<span class="fn">imagefilledrectangle</span>(<span class="var">$img</span>, <span class="fn">0</span>, <span class="fn">0</span>, <span class="fn">130</span>, <span class="fn">40</span>, <span class="var">$bg_color</span>);
+
+<span class="cmt">// Add background security noise lines</span>
+<span class="kw">for</span> (<span class="var">$i</span> = <span class="fn">0</span>; <span class="var">$i</span> &lt; <span class="fn">5</span>; <span class="var">$i</span>++) {
+    <span class="fn">imageline</span>(<span class="var">$img</span>, <span class="fn">0</span>, <span class="fn">rand</span>(<span class="fn">0</span>, <span class="fn">40</span>), <span class="fn">130</span>, <span class="fn">rand</span>(<span class="fn">0</span>, <span class="fn">40</span>), <span class="var">$noise_color</span>);
+}
+
+<span class="cmt">// Draw random characters</span>
+<span class="fn">imagestring</span>(<span class="var">$img</span>, <span class="fn">5</span>, <span class="fn">35</span>, <span class="fn">12</span>, <span class="var">$captcha_code</span>, <span class="var">$text_color</span>);
+
+<span class="cmt">// Tell browser this is an image</span>
+<span class="fn">header</span>(<span class="str">'Content-Type: image/png'</span>);
+<span class="fn">imagepng</span>(<span class="var">$img</span>);
+<span class="fn">imagedestroy</span>(<span class="var">$img</span>);
+<span class="cmt">?&gt;</span></code></pre>
+      </div>
+
+      <div class="output-box">
+        <strong>Expected Browser Output:</strong>
+        <p>When visited as <code>&lt;img src="captcha.php"&gt;</code> inside an HTML login form, a crisp PNG image displaying a distorted code like <code style="font-size:1.1rem; color:#4f46e5; font-weight:800;">7K9X2B</code> is generated, and verified on form submission using <code>$_POST['captcha'] === $_SESSION['captcha']</code>.</p>
+      </div>
+
+      <div class="pro-tip">
+        <span class="pro-tip-icon">💡</span>
+        <div>
+          <strong>Mukesh Sir's Pro Tip:</strong>
+          Always destroy image resources using <code>imagedestroy($img)</code> at the end of GD scripts! This immediately frees up server RAM, especially on busy production systems handling hundreds of concurrent visits.
+        </div>
+      </div>
+    </article>
+
+    <!-- Topic 94 -->
+    <article class="topic-card" id="topic94">
+      <div class="topic-header">
+        <div class="topic-title-group">
+          <span class="topic-badge">Topic 94</span>
+          <h2 class="topic-name">Remote Web Hosting, cPanel & Production Deployment</h2>
+        </div>
+        <span class="topic-level">Advanced</span>
+      </div>
+      <p class="topic-desc">
+        Building PHP projects on your local machine (XAMPP <code>localhost</code>) is only the first step. To make your web application accessible to the world 24/7, you must deploy it to a <strong>Remote Web Server</strong>. This module covers domain registration, DNS records, FTP file transfer, cPanel management, and remote database configuration.
+      </p>
+
+      <div class="section-label">Core Web Hosting Architecture (From STC Hosting Lecture)</div>
+      <ul class="concept-points">
+        <li><strong>Web Hosting:</strong> A high-performance server computer permanently connected to the high-speed internet, storing website files and databases for global access.</li>
+        <li><strong>Types of Web Hosting:</strong>
+          <ul style="margin-left: 20px; margin-top: 6px;">
+            <li><strong>Shared Hosting:</strong> Multiple websites share one server's resources. Highly cost-effective for beginners.</li>
+            <li><strong>VPS (Virtual Private Server):</strong> Server is partitioned into virtual dedicated machines with root access.</li>
+            <li><strong>Dedicated Server:</strong> An entire physical machine dedicated exclusively to your high-traffic application.</li>
+          </ul>
+        </li>
+        <li><strong>Domain & DNS:</strong> A human-readable address (e.g. <code>supersystech.com</code>). DNS (Domain Name System) translates this name into the server's numeric IP address via Nameservers (e.g. <code>ns1.hosting.com</code>).</li>
+        <li><strong>cPanel (Control Panel):</strong> The industry-standard web graphical interface for managing files, databases, emails, and SSL certificates.</li>
+      </ul>
+
+      <div class="section-label">Step-by-Step Production Deployment Checklist</div>
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>deployment_checklist.txt</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>========================================================================
+🚀 STEP-BY-STEP LIVE DEPLOYMENT WORKFLOW (STC STANDARD)
+========================================================================
+
+1. PREPARE LOCAL FILES & DATABASE
+   - Export your local database: Open http://localhost/phpmyadmin
+   - Select your database (e.g., 'stc_portal') -> Click 'Export' -> Download 'database.sql'
+   - In PHP code, replace localhost DB credentials with dynamic environment variables.
+
+2. CONNECT VIA FTP (FILEZILLA)
+   - Host: ftp.yourdomain.com (or server IP)
+   - Username: your_cpanel_user
+   - Password: your_cpanel_password
+   - Port: 21
+   - Navigate to 'public_html/' directory on remote host.
+   - Drag and upload all your PHP, HTML, CSS, JS and image assets.
+
+3. CREATE REMOTE MYSQL DATABASE IN CPANEL
+   - Open cPanel -> Click 'MySQL Databases'
+   - Create new database: e.g. 'cpaneluser_stc_portal'
+   - Create new user: e.g. 'cpaneluser_dbadmin' with strong password
+   - Assign user to database with 'ALL PRIVILEGES'
+
+4. IMPORT SQL DATA VIA REMOTE PHPMYADMIN
+   - In cPanel -> Open 'phpMyAdmin'
+   - Select your newly created remote database
+   - Click 'Import' -> Choose 'database.sql' -> Click 'Go'
+
+5. UPDATE CONFIGURATION FILE
+   - Edit your db_connect.php in public_html:
+     $host = "localhost";
+     $user = "cpaneluser_dbadmin";
+     $pass = "Your_Secure_Remote_Password!";
+     $dbname = "cpaneluser_stc_portal";
+========================================================================</code></pre>
+      </div>
+
+      <div class="output-box">
+        <strong>Live Production Verification:</strong>
+        <p>Visiting <code>https://yourdomain.com/index.php</code> serves your application securely with HTTPS padlock, connected to the remote MySQL database with 99.9% uptime.</p>
+      </div>
+
+      <div class="pro-tip">
+        <span class="pro-tip-icon">💡</span>
+        <div>
+          <strong>Security Pro Tip:</strong>
+          Never leave <code>display_errors = On</code> in your production server's <code>php.ini</code>! If a database error occurs, displaying it on screen exposes database usernames, table structures, and file paths to attackers. Set <code>display_errors = Off</code> and <code>log_errors = On</code> to write errors silently to a protected log file.
+        </div>
+      </div>
+    </article>
+
+    <!-- Topic 95 -->
+    <article class="topic-card" id="topic95">
+      <div class="topic-header">
+        <div class="topic-title-group">
+          <span class="topic-badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981; border-color: rgba(16, 185, 129, 0.4);">Topic 95 • CAPSTONE</span>
+          <h2 class="topic-name">Online Blogging Application (SRS Specification & System Architecture)</h2>
+        </div>
+        <span class="topic-level" style="color: #10b981; border-color: rgba(16, 185, 129, 0.4);">STC Final Project</span>
+      </div>
+      <p class="topic-desc">
+        This is the official <strong>Software Requirement Specifications (SRS) Capstone Project</strong> of the Super Sys-Tech Computers Centre (STC) curriculum. Students are required to design, develop, and deploy an enterprise-grade, role-based <strong>Online Blogging Application</strong> that integrates all foundational PHP, MySQL, AJAX, and Security concepts mastered throughout the course.
+      </p>
+
+      <div class="section-label">1. System Information & Technology Stack (STC SRS Document)</div>
+      <ul class="concept-points">
+        <li><strong>Platform:</strong> Responsive Web Application (Desktop, Tablet & Mobile).</li>
+        <li><strong>Frontend Stack:</strong> HTML5, CSS3, JavaScript (ES6), AJAX, Bootstrap Grid System.</li>
+        <li><strong>Backend Engine:</strong> PHP 8.x (Modular OOP & PDO Prepared Statements).</li>
+        <li><strong>Database System:</strong> MySQL RDBMS (Normalized 3NF relational schema with Foreign Key constraints).</li>
+        <li><strong>Security Layers:</strong> Bcrypt password hashing (<code>password_hash()</code>), PDO parameterized queries, XSS sanitization (<code>htmlspecialchars()</code>), and CSRF tokens.</li>
+      </ul>
+
+      <div class="section-label">2. User Roles & Core Functional Modules</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px;">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px;">
+          <h4 style="color: #38bdf8; margin-bottom: 8px;">👤 1. Public Visitor Module</h4>
+          <ul style="font-size: 0.88rem; color: var(--text-muted); padding-left: 18px; line-height: 1.6;">
+            <li>Browse published articles with pagination.</li>
+            <li>Filter articles by category or tags.</li>
+            <li>Real-time AJAX keyword search.</li>
+            <li>Submit comments under articles (pending admin moderation).</li>
+            <li>Register for an author account.</li>
+          </ul>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px;">
+          <h4 style="color: #818cf8; margin-bottom: 8px;">✍️ 2. Author Dashboard Module</h4>
+          <ul style="font-size: 0.88rem; color: var(--text-muted); padding-left: 18px; line-height: 1.6;">
+            <li>Secure session login with "Remember Me" persistent cookie.</li>
+            <li>Create, Edit, Draft, and Delete personal posts.</li>
+            <li>Featured image upload with $_FILES size & MIME validation.</li>
+            <li>View total read counts and user comments on personal posts.</li>
+            <li>Update author bio, avatar, and password.</li>
+          </ul>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px;">
+          <h4 style="color: #10b981; margin-bottom: 8px;">🛡️ 3. Master Admin Control Portal</h4>
+          <ul style="font-size: 0.88rem; color: var(--text-muted); padding-left: 18px; line-height: 1.6;">
+            <li>Full CRUD on Categories (slugs, icons, status).</li>
+            <li>User management: Block, activate, or promote user roles.</li>
+            <li>Moderate pending comments (Approve / Reject via AJAX).</li>
+            <li>Export monthly traffic and top-performing articles as PDF reports (FPDF).</li>
+            <li>System health and activity audit logs.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-label">3. Relational Database Schema Architecture</div>
+      <div class="code-wrapper">
+        <div class="code-top">
+          <span>schema_blog.sql (MySQL Database Design)</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code><span class="cmt">-- Online Blogging Application SQL Schema</span>
+<span class="kw">CREATE DATABASE IF NOT EXISTS</span> `stc_blog_db` <span class="kw">DEFAULT CHARACTER SET</span> utf8mb4 <span class="kw">COLLATE</span> utf8mb4_unicode_ci;
+<span class="kw">USE</span> `stc_blog_db`;
+
+<span class="cmt">-- 1. Users &amp; Roles Table</span>
+<span class="kw">CREATE TABLE</span> `users` (
+    `user_id` <span class="kw">INT AUTO_INCREMENT PRIMARY KEY</span>,
+    `full_name` <span class="kw">VARCHAR</span>(<span class="fn">100</span>) <span class="kw">NOT NULL</span>,
+    `email` <span class="kw">VARCHAR</span>(<span class="fn">150</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    `password_hash` <span class="kw">VARCHAR</span>(<span class="fn">255</span>) <span class="kw">NOT NULL</span>,
+    `role` <span class="kw">ENUM</span>(<span class="str">'admin'</span>, <span class="str">'author'</span>, <span class="str">'subscriber'</span>) <span class="kw">DEFAULT</span> <span class="str">'author'</span>,
+    `avatar` <span class="kw">VARCHAR</span>(<span class="fn">255</span>) <span class="kw">DEFAULT</span> <span class="str">'default.png'</span>,
+    `status` <span class="kw">TINYINT</span>(<span class="fn">1</span>) <span class="kw">DEFAULT</span> <span class="fn">1</span>,
+    `created_at` <span class="kw">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>
+) <span class="kw">ENGINE</span>=InnoDB;
+
+<span class="cmt">-- 2. Categories Table</span>
+<span class="kw">CREATE TABLE</span> `categories` (
+    `category_id` <span class="kw">INT AUTO_INCREMENT PRIMARY KEY</span>,
+    `title` <span class="kw">VARCHAR</span>(<span class="fn">100</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    `slug` <span class="kw">VARCHAR</span>(<span class="fn">120</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    `created_at` <span class="kw">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>
+) <span class="kw">ENGINE</span>=InnoDB;
+
+<span class="cmt">-- 3. Posts Table</span>
+<span class="kw">CREATE TABLE</span> `posts` (
+    `post_id` <span class="kw">INT AUTO_INCREMENT PRIMARY KEY</span>,
+    `author_id` <span class="kw">INT NOT NULL</span>,
+    `category_id` <span class="kw">INT NOT NULL</span>,
+    `title` <span class="kw">VARCHAR</span>(<span class="fn">255</span>) <span class="kw">NOT NULL</span>,
+    `slug` <span class="kw">VARCHAR</span>(<span class="fn">280</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    `content` <span class="kw">LONGTEXT NOT NULL</span>,
+    `featured_image` <span class="kw">VARCHAR</span>(<span class="fn">255</span>) <span class="kw">DEFAULT NULL</span>,
+    `views` <span class="kw">INT DEFAULT</span> <span class="fn">0</span>,
+    `status` <span class="kw">ENUM</span>(<span class="str">'published'</span>, <span class="str">'draft'</span>) <span class="kw">DEFAULT</span> <span class="str">'published'</span>,
+    `created_at` <span class="kw">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>,
+    <span class="kw">FOREIGN KEY</span> (`author_id`) <span class="kw">REFERENCES</span> `users`(`user_id`) <span class="kw">ON DELETE CASCADE</span>,
+    <span class="kw">FOREIGN KEY</span> (`category_id`) <span class="kw">REFERENCES</span> `categories`(`category_id`) <span class="kw">ON DELETE CASCADE</span>
+) <span class="kw">ENGINE</span>=InnoDB;
+
+<span class="cmt">-- 4. Comments Table (Moderated)</span>
+<span class="kw">CREATE TABLE</span> `comments` (
+    `comment_id` <span class="kw">INT AUTO_INCREMENT PRIMARY KEY</span>,
+    `post_id` <span class="kw">INT NOT NULL</span>,
+    `author_name` <span class="kw">VARCHAR</span>(<span class="fn">100</span>) <span class="kw">NOT NULL</span>,
+    `author_email` <span class="kw">VARCHAR</span>(<span class="fn">150</span>) <span class="kw">NOT NULL</span>,
+    `comment_text` <span class="kw">TEXT NOT NULL</span>,
+    `is_approved` <span class="kw">TINYINT</span>(<span class="fn">1</span>) <span class="kw">DEFAULT</span> <span class="fn">0</span>,
+    `created_at` <span class="kw">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>,
+    <span class="kw">FOREIGN KEY</span> (`post_id`) <span class="kw">REFERENCES</span> `posts`(`post_id`) <span class="kw">ON DELETE CASCADE</span>
+) <span class="kw">ENGINE</span>=InnoDB;</code></pre>
+      </div>
+
+      <div class="pro-tip">
+        <span class="pro-tip-icon">🏆</span>
+        <div>
+          <strong>STC Final Project Milestone:</strong>
+          Successfully building and deploying this Online Blogging Application qualifies the student for the Senior Backend Certificate at Super Sys-Tech Computers Centre Umerkot, proving complete proficiency across PHP 8, Database Modeling, OOP, RESTful AJAX, and Production Server Hosting.
         </div>
       </div>
     </article>
