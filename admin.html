@@ -687,6 +687,12 @@
       color: white;
     }
 
+    .user-avatar-sm.mentor-avatar {
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      color: white;
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.35);
+    }
+
     .user-role-badge {
       font-size: 0.72rem;
       padding: 2px 8px;
@@ -699,6 +705,12 @@
       background: rgba(245, 158, 11, 0.15);
       color: #fbbf24;
       border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .role-mentor {
+      background: rgba(168, 85, 247, 0.18);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.38);
     }
 
     .role-student {
@@ -1129,8 +1141,9 @@
           <select id="roleFilter" class="form-control" style="width: auto; padding: 0.65rem 1rem;"
             onchange="renderUsersTable()">
             <option value="all">All Roles</option>
-            <option value="student">Students</option>
-            <option value="admin">Admins</option>
+            <option value="student">👨‍💻 Students</option>
+            <option value="instructor">🎓 Mentors</option>
+            <option value="admin">🛡️ Admins</option>
           </select>
 
           <select id="deviceFilter" class="form-control" style="width: auto; padding: 0.65rem 1rem;"
@@ -1235,9 +1248,9 @@
   <!-- Edit User Modal -->
   <div id="editUserModal" class="modal-overlay" onclick="closeEditModalOnBackdrop(event)">
     <div class="modal-box">
-      <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">🔑 Edit Student Profile</h3>
+      <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">🔑 Edit User Profile & Role</h3>
       <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
-        Update credentials in database for <strong id="editModalUsername"
+        Update credentials and access permissions in database for <strong id="editModalUsername"
           style="color: var(--primary);">username</strong>
       </p>
 
@@ -1251,6 +1264,18 @@
         <div class="form-group">
           <label>Password</label>
           <input type="text" id="editPasswordInput" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+          <label>Account Role & Access Level</label>
+          <select id="editRoleSelect" class="form-control" onchange="handleEditModalRoleChange()">
+            <option value="student">👨‍💻 Student Developer (1-Device Lock Policy)</option>
+            <option value="instructor">🎓 Instructor / Mentor (🌐 Multi-Device Access)</option>
+            <option value="admin">🛡️ Administrator (Full Control)</option>
+          </select>
+          <small style="color: #38bdf8; font-size: 0.74rem; margin-top: 4px; display: block;">
+            ✨ Mentors & Admins can access from ANY device without 1-device lock restrictions.
+          </small>
         </div>
 
         <!-- Single-Device Lock Status & Reset Box -->
@@ -1419,13 +1444,18 @@
       }
 
       const loginRes = await TaskFlowDB.login(u, p);
-      if (loginRes.success && (loginRes.user.role === "admin" || loginRes.user.role === "instructor")) {
-        localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ username: loginRes.user.username, loggedAt: Date.now() }));
+      if (loginRes.success && (loginRes.user.role === "admin" || loginRes.user.role === "instructor" || loginRes.user.role === "mentor")) {
+        localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({
+          username: loginRes.user.username,
+          name: loginRes.user.name || loginRes.user.username,
+          role: loginRes.user.role,
+          loggedAt: Date.now()
+        }));
         errorBox.textContent = "";
         showAdminDashboard();
-        showToast(`🔓 Welcome back, ${loginRes.user.name}!`);
+        showToast(`🔓 Welcome back, ${loginRes.user.name || loginRes.user.username}!`);
       } else {
-        errorBox.textContent = "❌ Invalid admin username or password.";
+        errorBox.textContent = "❌ Invalid username or password (Admin/Mentor access only).";
       }
     }
 
@@ -1435,7 +1465,7 @@
       document.getElementById("adminLoginView").style.display = "flex";
       document.getElementById("adminUsernameInput").value = "";
       document.getElementById("adminPasswordInput").value = "";
-      showToast("🔒 Admin logged out.");
+      showToast("🔒 Logged out successfully.");
     }
 
     function checkAdminSession() {
@@ -1457,6 +1487,27 @@
     function showAdminDashboard() {
       document.getElementById("adminLoginView").style.display = "none";
       document.getElementById("adminDashboard").style.display = "block";
+
+      try {
+        const raw = localStorage.getItem(ADMIN_SESSION_KEY);
+        if (raw) {
+          const sess = JSON.parse(raw);
+          const labelEl = document.getElementById("adminSessionLabel");
+          if (labelEl) {
+            if (sess.username?.toLowerCase() === "suneel" || sess.role === "instructor" || sess.role === "mentor") {
+              const parentPill = labelEl.closest(".admin-user-pill");
+              if (parentPill) {
+                parentPill.innerHTML = `<span>🎓</span> <span id="adminSessionLabel">${sess.name || "Sir Suneel"} (Mentor)</span>`;
+              } else {
+                labelEl.textContent = `${sess.name || "Sir Suneel"} (Mentor)`;
+              }
+            } else {
+              labelEl.textContent = sess.username || "admin";
+            }
+          }
+        }
+      } catch (e) {}
+
       updateAdminCloudStatusBadges();
       renderUsersTable();
     }
@@ -1558,18 +1609,23 @@
 
       const filtered = users.filter((u) => {
         const matchSearch = u.username.toLowerCase().includes(searchQuery) || (u.name && u.name.toLowerCase().includes(searchQuery));
-        const matchRole = roleFilter === "all" || u.role === roleFilter;
+        const isUserMentor = u.role === "instructor" || u.role === "mentor" || u.username.toLowerCase() === "suneel";
+        const matchRole = roleFilter === "all" || 
+          (roleFilter === "instructor" && isUserMentor) ||
+          (roleFilter === "student" && !isUserMentor && u.role !== "admin" && u.username.toLowerCase() !== "admin") ||
+          (roleFilter === "admin" && (u.role === "admin" || u.username.toLowerCase() === "admin"));
         const matchDevice = deviceFilter === "all" ||
           (deviceFilter === "locked" && u.isLocked) ||
-          (deviceFilter === "unlocked" && !u.isLocked && u.role !== "admin");
+          (deviceFilter === "unlocked" && !u.isLocked && u.role !== "admin" && !isUserMentor);
         return matchSearch && matchRole && matchDevice;
       });
 
       filtered.forEach((user) => {
         const isAdmin = user.role === "admin" || user.username.toLowerCase() === "admin";
+        const isMentor = user.role === "instructor" || user.role === "mentor" || user.username.toLowerCase() === "suneel";
         const completedTasks = user.completedCount || 0;
-        if (!isAdmin && completedTasks > 0) activeProgressCount++;
-        if (!isAdmin && user.isLocked) lockedDeviceCount++;
+        if (!isAdmin && !isMentor && completedTasks > 0) activeProgressCount++;
+        if (!isAdmin && !isMentor && user.isLocked) lockedDeviceCount++;
         const pct = user.percentage || 0;
 
         const isPassVisible = visiblePasswords[user.username] === true;
@@ -1579,7 +1635,7 @@
         tr.innerHTML = `
             <td>
               <div class="user-cell">
-                <div class="user-avatar-sm ${isAdmin ? 'admin-avatar' : ''}">
+                <div class="user-avatar-sm ${isAdmin ? 'admin-avatar' : isMentor ? 'mentor-avatar' : ''}">
                   ${user.username.charAt(0).toUpperCase()}
                 </div>
                 <div>
@@ -1589,8 +1645,8 @@
               </div>
             </td>
             <td>
-              <span class="user-role-badge ${isAdmin ? 'role-admin' : 'role-student'}">
-                ${isAdmin ? '👑 Super Admin' : user.role === 'instructor' ? '🎓 Mentor' : '👨‍💻 Student'}
+              <span class="user-role-badge ${isAdmin ? 'role-admin' : isMentor ? 'role-mentor' : 'role-student'}">
+                ${isAdmin ? '👑 Super Admin' : isMentor ? '🎓 Mentor' : '👨‍💻 Student'}
               </span>
             </td>
             <td>
@@ -1608,6 +1664,10 @@
               ${isAdmin ? `
                 <span style="color: #fbbf24; font-weight: 700; font-size: 0.78rem; background: rgba(245, 158, 11, 0.12); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.25);">
                   🛡️ System Admin (N/A)
+                </span>
+              ` : isMentor ? `
+                <span style="color: #c084fc; font-weight: 700; font-size: 0.78rem; background: rgba(168, 85, 247, 0.12); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(168, 85, 247, 0.25);">
+                  🎓 Course Mentor (N/A)
                 </span>
               ` : `
                 <div>
@@ -1629,6 +1689,13 @@
                 <span style="color: #94a3b8; font-size: 0.76rem; font-weight: 600; background: rgba(148, 163, 184, 0.1); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(148, 163, 184, 0.2);">
                   🛡️ Admin (Any System)
                 </span>
+              ` : isMentor ? `
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                  <span style="display: inline-flex; align-items: center; gap: 4px; background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.35); padding: 2px 7px; border-radius: 6px; font-size: 0.74rem; font-weight: 700;">
+                    🌐 Multi-Device (Any Device)
+                  </span>
+                  <div style="font-size: 0.7rem; color: #94a3b8; margin-top: 1px;">1-Device Lock Disabled</div>
+                </div>
               ` : user.isLocked ? `
                 <div style="display: flex; flex-direction: column; gap: 3px;">
                   <div>
@@ -1654,14 +1721,21 @@
             </td>
             <td style="text-align: right;">
               <div class="actions-group" style="justify-content: flex-end;">
-                ${!isAdmin ? `
+                ${isMentor ? `
+                  <button class="btn btn-secondary btn-sm" onclick="openEditModal('${user.username}')" title="Edit Mentor Profile, Role, Password">
+                    ✏️ Edit
+                  </button>
+                  <button class="btn btn-danger btn-sm" onclick="deleteUser('${user.username}')" title="Delete account">
+                    🗑️
+                  </button>
+                ` : !isAdmin ? `
                   <button class="btn btn-secondary btn-sm" onclick="viewStudentHistory('${user.username}', '${user.name || user.username}', ${completedTasks})" title="View Student Task History">
                     📜 History
                   </button>
                   <button class="btn btn-sm" onclick="confirmResetDeviceLock('${user.username}')" style="${user.isLocked ? 'background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.45); color: #fbbf24; font-weight: 700;' : 'background: rgba(51, 65, 85, 0.3); border: 1px solid #334155; color: #64748b;'}" title="${user.isLocked ? 'Reset Device Lock (Allow login on new system)' : 'Student is not currently locked to any device'}">
-                    🔓 ${user.isLocked ? 'Reset Lock' : 'Reset Lock'}
+                    🔓 Reset Lock
                   </button>
-                  <button class="btn btn-secondary btn-sm" onclick="openEditModal('${user.username}')" title="Edit password/name/device">
+                  <button class="btn btn-secondary btn-sm" onclick="openEditModal('${user.username}')" title="Edit password/name/role/device">
                     ✏️
                   </button>
                   <button class="btn btn-secondary btn-sm" onclick="resetUserProgress('${user.username}')" title="Reset completed tasks">
@@ -1681,15 +1755,17 @@
         tbody.appendChild(tr);
       });
 
-      // Update stats (Count students only, excluding admin)
-      const totalStudents = users.filter((u) => u.role !== "admin" && u.username.toLowerCase() !== "admin").length;
-      document.getElementById("statTotalUsers").textContent = totalStudents;
-      document.getElementById("userCountBadge").textContent = `${totalStudents} Students`;
+      // Update stats (Count students and mentors separately)
+      const studentsOnly = users.filter((u) => u.role !== "admin" && u.role !== "instructor" && u.role !== "mentor" && u.username.toLowerCase() !== "admin" && u.username.toLowerCase() !== "suneel");
+      const mentorsOnly = users.filter((u) => u.role === "instructor" || u.role === "mentor" || u.username.toLowerCase() === "suneel");
+      const totalRegistered = users.filter((u) => u.role !== "admin" && u.username.toLowerCase() !== "admin").length;
+      document.getElementById("statTotalUsers").textContent = totalRegistered;
+      document.getElementById("userCountBadge").textContent = `${studentsOnly.length} Students • ${mentorsOnly.length} Mentors`;
       document.getElementById("statActiveRecords").textContent = activeProgressCount;
 
-      // Update device locks stat
-      const allLockedStudents = users.filter((u) => u.role !== "admin" && u.username.toLowerCase() !== "admin" && u.isLocked).length;
-      const allUnlockedStudents = totalStudents - allLockedStudents;
+      // Update device locks stat (Applies strictly to single-device bound students)
+      const allLockedStudents = studentsOnly.filter((u) => u.isLocked).length;
+      const allUnlockedStudents = studentsOnly.length - allLockedStudents;
       const statDev = document.getElementById("statDeviceLocks");
       if (statDev) {
         statDev.textContent = `${allLockedStudents} Bound / ${allUnlockedStudents} Ready`;
@@ -1823,17 +1899,50 @@
       document.getElementById("editFullNameInput").value = user.name || user.username;
       document.getElementById("editPasswordInput").value = user.password;
 
-      // Update Device Lock section in modal
+      const roleSelect = document.getElementById("editRoleSelect");
+      if (roleSelect) {
+        const userRole = user.role || (user.username.toLowerCase() === "admin" ? "admin" : user.username.toLowerCase() === "suneel" ? "instructor" : "student");
+        roleSelect.value = userRole;
+      }
+
+      updateEditModalDeviceUI(user, roleSelect ? roleSelect.value : user.role);
+
+      document.getElementById("editUserModal").style.display = "flex";
+    }
+
+    function handleEditModalRoleChange() {
+      const username = document.getElementById("editUsernameHidden").value;
+      const user = currentUsersList.find((u) => u.username === username);
+      const selectedRole = document.getElementById("editRoleSelect")?.value;
+      updateEditModalDeviceUI(user, selectedRole);
+    }
+
+    function updateEditModalDeviceUI(user, currentRole) {
       const deviceSection = document.getElementById("editModalDeviceSection");
       const deviceBadge = document.getElementById("editModalDeviceBadge");
       const deviceStatusText = document.getElementById("editModalDeviceStatusText");
       const resetLockBtn = document.getElementById("editModalResetLockBtn");
+      if (!deviceSection) return;
 
-      if (user.role === "admin" || user.username.toLowerCase() === "admin") {
-        if (deviceSection) deviceSection.style.display = "none";
+      const isExempt = currentRole === "admin" || currentRole === "instructor" || currentRole === "mentor" || user?.username?.toLowerCase() === "admin" || user?.username?.toLowerCase() === "suneel";
+
+      if (isExempt) {
+        deviceSection.style.display = "block";
+        if (deviceBadge) {
+          deviceBadge.textContent = "🌐 MULTI-DEVICE ACTIVE";
+          deviceBadge.style.background = "rgba(168, 85, 247, 0.2)";
+          deviceBadge.style.color = "#c084fc";
+          deviceBadge.style.border = "1px solid rgba(168, 85, 247, 0.4)";
+        }
+        if (deviceStatusText) {
+          deviceStatusText.innerHTML = `<span style="color: #c084fc; font-weight: 700;">✨ 1-Device Lock Policy Disabled:</span> <span style="color: #e2e8f0;">Mentors and Administrators can log in and access from <strong>any computer, laptop, phone, or tablet</strong> without single-device restrictions!</span>`;
+        }
+        if (resetLockBtn) {
+          resetLockBtn.style.display = "none";
+        }
       } else {
-        if (deviceSection) deviceSection.style.display = "block";
-        if (user.isLocked) {
+        if (resetLockBtn) resetLockBtn.style.display = "block";
+        if (user && user.isLocked) {
           if (deviceBadge) {
             deviceBadge.textContent = "🔒 BOUND";
             deviceBadge.style.background = "rgba(239, 68, 68, 0.2)";
@@ -1858,7 +1967,7 @@
             deviceBadge.style.border = "1px solid rgba(16, 185, 129, 0.4)";
           }
           if (deviceStatusText) {
-            deviceStatusText.innerHTML = `<span style="color: #34d399;">No system is currently locked to this student. Account is available to bind to the next computer the student logs into.</span>`;
+            deviceStatusText.innerHTML = `<span style="color: #34d399;">No system is currently locked to this student. Account is ready to bind to the next computer the student logs into.</span>`;
           }
           if (resetLockBtn) {
             resetLockBtn.disabled = true;
@@ -1868,8 +1977,6 @@
           }
         }
       }
-
-      document.getElementById("editUserModal").style.display = "flex";
     }
 
     async function handleEditModalResetDeviceLock() {
@@ -1919,16 +2026,17 @@
       const username = document.getElementById("editUsernameHidden").value;
       const newName = document.getElementById("editFullNameInput").value.trim();
       const newPassword = document.getElementById("editPasswordInput").value.trim();
+      const newRole = document.getElementById("editRoleSelect")?.value || "student";
 
       if (!newPassword || newPassword.length < 3) {
         alert("Password must be at least 3 characters long.");
         return;
       }
 
-      await TaskFlowDB.updateStudent(username, { name: newName, password: newPassword });
+      await TaskFlowDB.updateStudent(username, { name: newName, password: newPassword, role: newRole });
       closeEditModal();
       await renderUsersTable();
-      showToast(`✅ Credentials updated for @${username}`);
+      showToast(`✅ Profile and Role updated for @${username} (${newRole === 'instructor' ? '🎓 Mentor' : newRole})`);
     }
 
     // ---------- Single & All Device Lock Reset Actions ----------

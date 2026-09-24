@@ -1379,6 +1379,11 @@
           <!-- Rank Badge -->
           <span class="rank-badge" id="rankBadge">🌱 Novice</span>
 
+          <!-- Mentor Admin Panel Link (visible for mentors & admins) -->
+          <a href="admin.html" id="mentorAdminBtn" class="smart-btn" style="display: none; background: rgba(168, 85, 247, 0.18); border: 1px solid rgba(168, 85, 247, 0.45); color: #c084fc; text-decoration: none; font-weight: 700;" title="Open Admin & Mentor Panel">
+            🛡️ Admin Panel
+          </a>
+
           <!-- User Profile Badge & Settings Trigger -->
           <div class="user-profile-pill" onclick="openProfileModal()" title="Click to view profile & change password">
             <div class="user-avatar-circle" id="userAvatarLetter">U</div>
@@ -1960,7 +1965,15 @@
         if (raw) {
           try {
             const parsed = JSON.parse(raw);
-            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              const suneelUser = parsed.find((u) => u.username && u.username.toLowerCase() === "suneel");
+              if (suneelUser && suneelUser.role !== "instructor") {
+                suneelUser.role = "instructor";
+                suneelUser.name = "Sir Suneel";
+                localStorage.setItem("taskflow_users_db", JSON.stringify(parsed));
+              }
+              return parsed;
+            }
           } catch (e) {}
         }
         // Initialize localStorage if not present
@@ -2362,6 +2375,8 @@
         if (currentUser) {
           const sessionData = {
             username: currentUser.username,
+            name: currentUser.name || currentUser.username,
+            role: currentUser.role || (currentUser.username.toLowerCase() === "suneel" ? "instructor" : "student"),
             timestamp: Date.now(),
           };
           localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
@@ -2376,13 +2391,14 @@
         try {
           const session = JSON.parse(raw);
           if (session.username && session.timestamp) {
-            // optional: expire after 30 days but fine for typical use
             const userExists = USERS.find(
-              (u) => u.username === session.username,
+              (u) => u.username.toLowerCase() === session.username.toLowerCase(),
             );
-            if (userExists) {
-              return { username: session.username };
-            }
+            return {
+              username: session.username,
+              name: session.name || (userExists ? userExists.name : session.username),
+              role: session.role || (userExists ? userExists.role : (session.username.toLowerCase() === "suneel" ? "instructor" : "student"))
+            };
           }
         } catch (e) {
           console.warn(e);
@@ -2617,10 +2633,26 @@
         const pendingCount = totalCount - completedCount;
 
         // User info
+        const isMentor = currentUser.role === "instructor" || currentUser.role === "mentor" || currentUser.username.toLowerCase() === "suneel";
         const usernameEl = document.getElementById("currentUsername");
-        if (usernameEl) usernameEl.textContent = currentUser.username;
+        if (usernameEl) {
+          if (isMentor) {
+            usernameEl.innerHTML = `🎓 ${currentUser.name || currentUser.username} <span style="font-size: 0.68rem; background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 2px 6px; border-radius: 4px; margin-left: 3px;">Mentor</span>`;
+          } else {
+            usernameEl.textContent = currentUser.name || currentUser.username;
+          }
+        }
         const avatarLetter = document.getElementById("userAvatarLetter");
-        if (avatarLetter) avatarLetter.textContent = currentUser.username.charAt(0).toUpperCase();
+        if (avatarLetter) {
+          avatarLetter.textContent = (currentUser.name || currentUser.username).charAt(0).toUpperCase();
+          if (isMentor) {
+            avatarLetter.style.background = "linear-gradient(135deg, #a855f7, #6366f1)";
+          }
+        }
+        const mentorBtn = document.getElementById("mentorAdminBtn");
+        if (mentorBtn) {
+          mentorBtn.style.display = (isMentor || currentUser.role === "admin") ? "inline-flex" : "none";
+        }
 
         // Overall Stats
         document.getElementById("overallPercent").textContent = `${overallPct}%`;
@@ -3540,11 +3572,16 @@ let c = (scale === "F") ? (temp - 32) * 5 / 9 : temp;
         currentUser = {
           username: result.user.username,
           name: result.user.name,
-          role: result.user.role || "student",
+          role: result.user.role || (result.user.username.toLowerCase() === "suneel" ? "instructor" : "student"),
           source: result.user.source || "supabase",
         };
 
-        document.getElementById("currentUsername").innerHTML = `👤 ${currentUser.username}`;
+        const isUserMentor = currentUser.role === "instructor" || currentUser.role === "mentor" || currentUser.username.toLowerCase() === "suneel";
+        if (isUserMentor) {
+          document.getElementById("currentUsername").innerHTML = `🎓 ${currentUser.name || currentUser.username} <span style="font-size: 0.68rem; background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 2px 6px; border-radius: 4px; margin-left: 3px;">Mentor</span>`;
+        } else {
+          document.getElementById("currentUsername").innerHTML = `👤 ${currentUser.name || currentUser.username}`;
+        }
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("dashboard").style.display = "block";
 
@@ -3590,10 +3627,15 @@ let c = (scale === "F") ? (temp - 32) * 5 / 9 : temp;
 
           currentUser = {
             username: sessionUser.username,
-            name: sessionUser.username,
-            role: "student",
+            name: sessionUser.name || sessionUser.username,
+            role: sessionUser.role || (sessionUser.username.toLowerCase() === "suneel" ? "instructor" : "student"),
           };
-          document.getElementById("currentUsername").innerHTML = `👤 ${currentUser.username}`;
+          const isRestoreMentor = currentUser.role === "instructor" || currentUser.role === "mentor" || currentUser.username.toLowerCase() === "suneel";
+          if (isRestoreMentor) {
+            document.getElementById("currentUsername").innerHTML = `🎓 ${currentUser.name || currentUser.username} <span style="font-size: 0.68rem; background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 2px 6px; border-radius: 4px; margin-left: 3px;">Mentor</span>`;
+          } else {
+            document.getElementById("currentUsername").innerHTML = `👤 ${currentUser.name || currentUser.username}`;
+          }
           document.getElementById("loginPage").style.display = "none";
           document.getElementById("dashboard").style.display = "block";
           updateCloudStatusBadges();

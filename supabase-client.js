@@ -56,6 +56,7 @@
   // Baseline mock users if local fallback is active
   const FALLBACK_BASELINE_USERS = [
     { username: "admin", password: "admin123", name: "Super Administrator", role: "admin", createdAt: "2026-08-21" },
+    { username: "suneel", password: "asdf1234", name: "Sir Suneel", role: "instructor", createdAt: "2026-08-21" },
     { username: "papu", password: "umerkot123", name: "Papu", role: "student", createdAt: "2026-08-21" },
     { username: "motiram", password: "umerkot123", name: "Motiram", role: "student", createdAt: "2026-08-21" },
     { username: "saqib", password: "sug99", name: "Saqib", role: "student", createdAt: "2026-08-21" },
@@ -202,23 +203,33 @@
       const cleanUser = (username || "").trim().toLowerCase();
       if (!cleanUser) return { isLocked: false, deviceId: null, deviceInfo: null, lockedAt: null };
 
+      // Admins and Mentors/Instructors (including @suneel) have unrestricted multi-device access
+      if (cleanUser === "admin" || cleanUser === "suneel") {
+        return { isLocked: false, isExempt: true, deviceId: null, deviceInfo: "Unrestricted (Multi-Device)", lockedAt: null };
+      }
+
       // 1. Try Supabase users table directly
       if (client) {
         try {
           const { data, error } = await client
             .from("users")
-            .select("device_id, device_info, device_locked_at")
+            .select("role, device_id, device_info, device_locked_at")
             .eq("username", cleanUser)
             .maybeSingle();
 
-          if (!error && data && data.device_id) {
-            return {
-              isLocked: true,
-              deviceId: data.device_id,
-              deviceInfo: data.device_info || "Registered System",
-              lockedAt: data.device_locked_at,
-              source: "supabase_users",
-            };
+          if (!error && data) {
+            if (data.role === "admin" || data.role === "instructor" || data.role === "mentor") {
+              return { isLocked: false, isExempt: true, deviceId: null, deviceInfo: "Unrestricted (Multi-Device)", lockedAt: null };
+            }
+            if (data.device_id) {
+              return {
+                isLocked: true,
+                deviceId: data.device_id,
+                deviceInfo: data.device_info || "Registered System",
+                lockedAt: data.device_locked_at,
+                source: "supabase_users",
+              };
+            }
           }
         } catch (e) {
           // Column may not exist yet in schema cache
@@ -249,6 +260,12 @@
       }
 
       // 3. Fallback to LocalStorage
+      const localUsers = getLocalUsers();
+      const localMatch = localUsers.find((u) => u.username.toLowerCase() === cleanUser);
+      if (localMatch && (localMatch.role === "admin" || localMatch.role === "instructor" || localMatch.role === "mentor")) {
+        return { isLocked: false, isExempt: true, deviceId: null, deviceInfo: "Unrestricted (Multi-Device)", lockedAt: null };
+      }
+
       const localLocks = getLocalDeviceLocks();
       if (localLocks[cleanUser] && localLocks[cleanUser].deviceId) {
         return {
@@ -409,8 +426,14 @@
       const cleanUser = (username || "").trim().toLowerCase();
       if (!cleanUser) return { valid: false, reason: "No username provided" };
 
-      const currentDev = currentDeviceId || getDeviceFingerprint().deviceId;
+      if (cleanUser === "admin" || cleanUser === "suneel") {
+        return { valid: true, isExempt: true };
+      }
+
       const lock = await this.getDeviceLock(cleanUser);
+      if (lock.isExempt) {
+        return { valid: true, isExempt: true };
+      }
 
       // If no lock exists (not bound yet or admin reset it)
       if (!lock.isLocked || !lock.deviceId) {
@@ -503,10 +526,15 @@
       // ==========================================================
       // STRICT SINGLE-DEVICE LOGIN POLICY ENFORCEMENT
       // ==========================================================
-      // Admin is exempt so they can manage students from any device
-      const isAdmin = authenticatedUser.role === "admin" || authenticatedUser.username.toLowerCase() === "admin";
+      // Admin and Mentors/Instructors (including @suneel) are EXEMPT from 1-device restrictions
+      // so they can log in and access from ANY computer, laptop, phone, or browser without restriction!
+      const isExempt = authenticatedUser.role === "admin" ||
+                       authenticatedUser.role === "instructor" ||
+                       authenticatedUser.role === "mentor" ||
+                       authenticatedUser.username.toLowerCase() === "admin" ||
+                       authenticatedUser.username.toLowerCase() === "suneel";
 
-      if (!isAdmin) {
+      if (!isExempt) {
         const lock = await this.getDeviceLock(cleanUser);
 
         if (lock.isLocked && lock.deviceId) {
@@ -528,6 +556,9 @@
           await this.lockDevice(cleanUser, activeClientDevice.deviceId, activeClientDevice.deviceInfo);
           authenticatedUser.isNewDeviceBinding = true;
         }
+      } else {
+        // Clear any lingering device lock for exempt accounts
+        saveLocalDeviceLock(cleanUser, null);
       }
 
       return {
@@ -984,6 +1015,9 @@
 
         const percentage = Math.min(100, Math.round((completedCount / totalTaskCount) * 100));
 
+        const role = u.role || (username === "suneel" ? "instructor" : "student");
+        const isMentorOrAdmin = role === "admin" || role === "instructor" || role === "mentor" || username === "admin" || username === "suneel";
+
         // Determine device lock status
         let devLock = cloudDeviceLocks[username] || null;
         if (!devLock && u.device_id) {
@@ -997,21 +1031,24 @@
           devLock = localLocks[username];
         }
 
+        const isLocked = !isMentorOrAdmin && !!(devLock && devLock.deviceId);
+
         return {
           id: u.id,
           username: u.username,
           password: u.password,
-          name: u.name || u.username,
-          role: u.role || "student",
+          name: u.name || (username === "suneel" ? "Sir Suneel" : u.username),
+          role: role,
           createdAt: (u.created_at || u.createdAt || "2026-08-21").substring(0, 10),
           lastLogin: u.last_login || null,
           completedCount: completedCount,
           percentage: percentage,
           // Device Lock metadata
-          deviceId: devLock ? devLock.deviceId : null,
-          deviceInfo: devLock ? devLock.deviceInfo : null,
-          deviceLockedAt: devLock ? (devLock.lockedAt || devLock.device_locked_at) : null,
-          isLocked: !!(devLock && devLock.deviceId),
+          deviceId: isMentorOrAdmin ? null : (devLock ? devLock.deviceId : null),
+          deviceInfo: isMentorOrAdmin ? "Multi-Device (Unrestricted)" : (devLock ? devLock.deviceInfo : null),
+          deviceLockedAt: isMentorOrAdmin ? null : (devLock ? (devLock.lockedAt || devLock.device_locked_at) : null),
+          isLocked: isLocked,
+          isExempt: isMentorOrAdmin,
         };
       });
     },
@@ -1043,12 +1080,23 @@
     async updateStudent(username, { name, password, role }) {
       const cleanUser = (username || "").toLowerCase();
 
+      // If user is becoming a mentor or admin, clear any device lock
+      const isBecomingExempt = role === "admin" || role === "instructor" || role === "mentor" || cleanUser === "suneel";
+      if (isBecomingExempt) {
+        await this.resetDeviceLock(cleanUser);
+      }
+
       if (client) {
         try {
           const updates = {};
           if (name !== undefined) updates.name = name;
           if (password !== undefined) updates.password = password;
           if (role !== undefined) updates.role = role;
+          if (isBecomingExempt) {
+            updates.device_id = null;
+            updates.device_info = null;
+            updates.device_locked_at = null;
+          }
 
           const { error } = await client.from("users").update(updates).eq("username", cleanUser);
           if (error) throw error;
@@ -1058,7 +1106,7 @@
       }
 
       const localUsers = getLocalUsers();
-      const user = localUsers.find((u) => u.username === cleanUser);
+      const user = localUsers.find((u) => u.username.toLowerCase() === cleanUser);
       if (user) {
         if (name !== undefined) user.name = name;
         if (password !== undefined) user.password = password;

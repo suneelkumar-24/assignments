@@ -106,6 +106,7 @@ CREATE POLICY "Allow public all login_history" ON public.login_history FOR ALL U
 INSERT INTO public.users (username, password, name, role)
 VALUES
     ('admin', 'admin123', 'Super Administrator', 'admin'),
+    ('suneel', 'asdf1234', 'Sir Suneel', 'instructor'),
     ('papu', 'umerkot123', 'Papu', 'student'),
     ('motiram', 'umerkot123', 'Motiram', 'student'),
     ('saqib', 'sug99', 'Saqib', 'student'),
